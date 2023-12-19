@@ -1,0 +1,18 @@
+{
+  "defs": [
+    {
+      "defName": "FloorBase",
+      "description": "Default Floor",
+      "texturePath": "Default Path",
+      "supports": "DefaultSupport",
+      "statBases": null
+    },
+    {
+      "defName": "Grass",
+      "description": "it's grassy",
+      "texturePath": "something grass/todo",
+      "supports": "Heavy",
+      "statBases": null
+    }
+  ]
+}

@@ -1,18 +1,17 @@
 using Godot;
 using System;
-
 /*
-	defiens the base attrabutes shared by any thing
-	in the game
-	this includes thing slike name and it's 
-	description
+	is the base definition of all 'things' in Aomation
+    extends Resource, and is menat to be biult on top 
+    and expanded inorder to create more complex 
+    'things'
 */
-public partial class BaseAttrabutes : Resource
+public partial class Thing : Resource
 {
 	protected string thingName;
 	protected string thingDescription;
 
-	[Export]
+   	[Export]
 	public string Name{
 		get => thingName;
 		set => thingName = value;
@@ -22,10 +21,5 @@ public partial class BaseAttrabutes : Resource
 	public string Description{
 		get => thingDescription;
 		set => thingDescription = value;
-	}
-
-	public BaseAttrabutes(){
-		thingName = null;
-		thingDescription = null;
 	}
 }

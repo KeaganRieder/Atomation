@@ -1,4 +1,5 @@
 using Godot;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text.Json;
@@ -16,8 +17,7 @@ public static class JsonReader
         if (File.Exists(filePath))
         {
             string jsonData = File.ReadAllText(filePath);
-            GD.Print(jsonData);
-            DataType convertedData = JsonSerializer.Deserialize<DataType>(jsonData);
+            DataType convertedData = JsonConvert.DeserializeObject<DataType>(jsonData);
             return convertedData;
         }
         else
@@ -29,7 +29,6 @@ public static class JsonReader
 
     public static DataType ReadDefFile<DataType>(string filepath, string fileName){
         string file = DATA_PATH + DEF_PATH + filepath + fileName;
-        GD.Print(file);
         return ReadJson <DataType>(file);
     }
 

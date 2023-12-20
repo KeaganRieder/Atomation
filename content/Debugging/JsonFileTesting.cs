@@ -33,15 +33,15 @@ public partial class JsonFileTesting : Node
 			},
 		};
 		
-		JsonWriter.WriteDefFile(filePath, fileName, terrain_natural.defs);
+		// JsonWriter.WriteDefFile(filePath, fileName, terrain_natural);
 		
-		// DefFile<TerrainDef>test = new();
-	 	// test = JsonReader.ReadDefFile<DefFile<TerrainDef>>(filePath, fileName);
-		// GD.Print( "test \n" +
-		// 	JsonConvert.SerializeObject(test, Formatting.Indented, new JsonSerializerSettings{
-		// 	NullValueHandling = NullValueHandling.Ignore,
-		// 	})
-		// );
+		DefFile<TerrainDef>test = new();
+	 	test = JsonReader.ReadDefFile<DefFile<TerrainDef>>(filePath, fileName);
+		GD.Print( "test \n" +
+			JsonConvert.SerializeObject(test, Formatting.Indented, new JsonSerializerSettings{
+			NullValueHandling = NullValueHandling.Ignore,
+			})
+		);
 		base._Ready();
 	}
 

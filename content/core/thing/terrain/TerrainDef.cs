@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 
-public class FloorDef
+public class TerrainDef
 {
     public string defName = "";
     public string description = "";

@@ -8,6 +8,11 @@ using System;
 */
 public partial class CompThing : Thing
 {
-    protected Stat[] stats;
+    protected StatBase[] stats;
+
+    public CompThing(string name, string description)
+        : base(name, description) {
+        stats = new StatBase[0];
+    }
 
 }

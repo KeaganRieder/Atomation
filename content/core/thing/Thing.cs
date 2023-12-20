@@ -8,18 +8,12 @@ using System;
 */
 public partial class Thing : Resource
 {
-	protected string thingName;
-	protected string thingDescription;
+	public string Name{ get; set; }
+	public string Description{get; set;	}
 
-   	[Export]
-	public string Name{
-		get => thingName;
-		set => thingName = value;
+	public Thing(string name, string description){
+		Name = name;
+		Description = description;
 	}
 
-	[Export]
-	public string Description{
-		get => thingDescription;
-		set => thingDescription = value;
-	}
 }

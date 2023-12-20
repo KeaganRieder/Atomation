@@ -1,18 +1,20 @@
-{
-  "defs": [
-    {
-      "defName": "FloorBase",
-      "description": "Default Floor",
-      "texturePath": "Default Path",
-      "supports": "DefaultSupport",
-      "statBases": null
-    },
-    {
-      "defName": "Grass",
-      "description": "it's grassy",
-      "texturePath": "something grass/todo",
-      "supports": "Heavy",
-      "statBases": null
+[
+  {
+    "defName": "FloorBase",
+    "description": "Default Floor",
+    "texturePath": "Default Path",
+    "supports": "DefaultSupport"
+  },
+  {
+    "defName": "Grass",
+    "description": "it's grassy",
+    "texturePath": "something grass/todo",
+    "supports": "Heavy",
+    "statBases": {
+      "Flammability": 1.5,
+      "WorkToBuild": 0.0,
+      "WalkSpeed": 0.5,
+      "Beauty": 0.5
     }
-  ]
-}
+  }
+]

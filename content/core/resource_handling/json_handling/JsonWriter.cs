@@ -24,6 +24,7 @@ public static class JsonWriter
         string directory = ProjectSettings.GlobalizePath(FileManger.DEF_FOLDER+filePath);
         JsonSerializerSettings settings = new JsonSerializerSettings{
             NullValueHandling = NullValueHandling.Ignore, //ignore all empty values sense if a def has empty it's default value
+            // TypeNameHandling = TypeNameHandling.Objects,
         };
 
         if (!Directory.Exists(directory))

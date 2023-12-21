@@ -6,10 +6,10 @@ using Newtonsoft.Json;
 public partial class JsonFileTesting : Node
 {
 	public DefFile<BiomeDef> fileFormatting = new DefFile<BiomeDef>();
-	public ResourceDataBase test = new ResourceDataBase();
+	public ResourceManger test = new ResourceManger();
 	public override void _Ready()
 	{
-		test.LoadResources();
+		test = new ResourceManger();
 		// string filePath = "terrain/";
 		// string fileName = "newtype.json";
 		// fileFormatting.defs = new BiomeDef[2]{
@@ -37,25 +37,25 @@ public partial class JsonFileTesting : Node
 		// 	},
 		// };
 		
-		// JsonWriter.WriteDefFile(filePath, fileName, new TerrainDef{
-		// 	defName = "default",
-		// 	description = "default",
-		// 	statBases = new Dictionary<string, float>{
-		// 		{"default" , 0}
-		// 	},
-		// 	graphicData = new GraphicData{
-		// 		graphicSize = new Vector2(0,0),
-		// 		color = new(0,0,0,0),
-		// 		edgeType = default,
-		// 	}
-		// });
+		//JsonWriter.WriteDefFile(filePath, fileName, new TerrainDef{
+		//	defName = "default",
+		//	description = "default",
+		//	statBases = new Dictionary<string, float>{
+		//		{"default" , 0}
+		//	},
+		//	graphicData = new GraphicData{
+		//		graphicSize = new Vector2(0,0),
+		//		color = new(0,0,0,0),
+		//		edgeType = default,
+		//	}
+		//});
 		
 		// DefFile<TerrainDef>test = new();
-	 	// test = JsonReader.ReadDefFile<DefFile<TerrainDef>>(filePath, fileName);
+	 	//test = JsonReader.ReadDefFile<DefFile<TerrainDef>>(filePath, fileName);
 		GD.Print( "cached terrain \n" +
-			JsonConvert.SerializeObject(test.BiomeDefs, Formatting.Indented, new JsonSerializerSettings{
-			NullValueHandling = NullValueHandling.Ignore,
-			})
+		 	JsonConvert.SerializeObject(test.TerrainDefs.contents, Formatting.Indented, new JsonSerializerSettings{
+		 	NullValueHandling = NullValueHandling.Ignore,
+		 	})
 		);
 		base._Ready();
 	}

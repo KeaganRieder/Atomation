@@ -16,8 +16,10 @@ public partial class Thing : Resource
 		Description = description;
 	}
 	public Thing(ThingDef def){
-		Name = def.defName;
-		Description = def.description;
+		Name = def.DefName;
+		Description = def.Description;
 	}
 
 }
+
+

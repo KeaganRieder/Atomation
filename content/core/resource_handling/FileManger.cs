@@ -17,7 +17,6 @@ public class FileManger{
     public const string TEXTURE_FOLDER = "resources/textures";
     public const string AUDIO_FOLDER = "resources/audio";
 
-
     public FileManger(){
         // temp = new();
     }

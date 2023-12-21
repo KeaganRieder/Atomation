@@ -8,8 +8,5 @@ public class TerrainDef : ThingDef
     public Dictionary<string, float> statBases;
     public GraphicData graphicData;
 
-    //todo graphic stuff
-    // colors
-    //egde type
     //todo add cost
 }

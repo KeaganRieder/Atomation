@@ -1,0 +1,26 @@
+{
+  "defs": [
+	{
+	  "defName": "default",
+	  "description": "default biome"
+	},
+	{
+	  "genReqs": {
+		"maxTemperature": 0.7,
+		"minTemperature": 0.3,
+		"maxMoisture": 0.7,
+		"minMoisture": 0.3,
+		"height": 0.5
+	  },
+	  "tileTypes": {
+		"water": 0.1,
+		"sand": 0.3,
+		"grass": 0.5,
+		"rock": 0.7,
+		"mountain": 0.7
+	  },
+	  "defName": "Plains",
+	  "description": "a plains, found normally in neutral areas"
+	}
+  ]
+}

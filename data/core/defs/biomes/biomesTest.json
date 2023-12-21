@@ -1,34 +1,34 @@
 {
   "$type": "DefFile`1[[BiomeDef, Atomation]], Atomation",
   "defs": {
-    "$type": "BiomeDef[], Atomation",
-    "$values": [
-      {
-        "$type": "BiomeDef, Atomation",
-        "defName": "default",
-        "description": "default biome"
-      },
-      {
-        "$type": "BiomeDef, Atomation",
-        "genReqs": {
-          "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Single, System.Private.CoreLib]], System.Private.CoreLib",
-          "maxTemperature": 0.7,
-          "minTemperature": 0.3,
-          "maxMoisture": 0.7,
-          "minMoisture": 0.3,
-          "height": 0.5
-        },
-        "tileTypes": {
-          "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Single, System.Private.CoreLib]], System.Private.CoreLib",
-          "water": 0.1,
-          "sand": 0.3,
-          "grass": 0.5,
-          "rock": 0.7,
-          "mountain": 0.7
-        },
-        "defName": "Plains",
-        "description": "a plains, found normally in neutral areas"
-      }
-    ]
+	"$type": "BiomeDef[], Atomation",
+	"$values": [
+	  {
+		"$type": "BiomeDef, Atomation",
+		"defName": "default",
+		"description": "default biome"
+	  },
+	  {
+		"$type": "BiomeDef, Atomation",
+		"genReqs": {
+		  "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Single, System.Private.CoreLib]], System.Private.CoreLib",
+		  "maxTemperature": 0.7,
+		  "minTemperature": 0.3,
+		  "maxMoisture": 0.7,
+		  "minMoisture": 0.3,
+		  "height": 0.5
+		},
+		"tileTypes": {
+		  "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Single, System.Private.CoreLib]], System.Private.CoreLib",
+		  "water": 0.1,
+		  "sand": 0.3,
+		  "grass": 0.5,
+		  "rock": 0.7,
+		  "mountain": 0.7
+		},
+		"defName": "Plains",
+		"description": "a plains, found normally in neutral areas"
+	  }
+	]
   }
 }

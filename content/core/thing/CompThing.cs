@@ -14,5 +14,10 @@ public partial class CompThing : Thing
         : base(name, description) {
         stats = new StatBase[0];
     }
+    
+     public CompThing(ThingDef def)
+        : base(def) {
+        stats = new StatBase[0];
+    }
 
 }

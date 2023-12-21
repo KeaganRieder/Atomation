@@ -5,6 +5,8 @@
 	  "description": "default biome"
 	},
 	{
+	  "defName": "Plains",
+	  "description": "a plains, found normally in neutral areas",
 	  "genReqs": {
 		"maxTemperature": 0.7,
 		"minTemperature": 0.3,
@@ -18,9 +20,7 @@
 		"grass": 0.5,
 		"rock": 0.7,
 		"mountain": 0.7
-	  },
-	  "defName": "Plains",
-	  "description": "a plains, found normally in neutral areas"
+	  }	  
 	}
   ]
 }

@@ -1,7 +1,5 @@
-public class StatDef
+public class StatDef : ThingDef
 {    
-    public string defName = "";
-    public string description = "";
     public float baseValue;
     public float minValue;
     public float maxValue;

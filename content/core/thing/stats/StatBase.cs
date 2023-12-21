@@ -18,7 +18,7 @@ public partial class StatBase : Thing
         minValue = min;
         maxValue = max;
     }
-     public StatBase(StatDef def) : base(def.defName,def.description){
+     public StatBase(StatDef def) : base(def){
         baseValue = def.baseValue;
         minValue = def.minValue;
         maxValue = def.maxValue;

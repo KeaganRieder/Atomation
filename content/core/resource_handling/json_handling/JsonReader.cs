@@ -1,8 +1,6 @@
 using Godot;
 using Newtonsoft.Json;
-using System;
 using System.IO;
-using System.Text.Json;
 /*
 	defines a class which handles the reading of 
     json files. theres only one type of this class
@@ -10,9 +8,6 @@ using System.Text.Json;
 */
 public static class JsonReader
 {
-    public const string DATA_PATH = "data/";
-    public const string DEF_PATH = "core/defs/";
-
     public static DataType ReadJson<DataType>(string filePath){
         if (File.Exists(filePath))
         {
@@ -28,10 +23,8 @@ public static class JsonReader
     }
 
     public static DataType ReadDefFile<DataType>(string filepath, string fileName){
-        string file = DATA_PATH + DEF_PATH + filepath + fileName;
+        string file =  FileManger.DEF_FOLDER + filepath + fileName;
         return ReadJson <DataType>(file);
-    }
-
-    
+    }  
 
 }

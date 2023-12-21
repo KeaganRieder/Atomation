@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 /*
-    defines what a biome is
+    defines a biomes definition file
 */
 public class BiomeDef : ThingDef{
     // public string defName = "";

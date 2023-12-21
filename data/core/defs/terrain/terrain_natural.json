@@ -1,0 +1,32 @@
+{
+  "defs": [
+    {
+      "defName": "FloorBase",
+      "description": "Default Floor",
+      "texturePath": "Default Path",
+      "supports": "DefaultSupport"
+    },
+    {
+      "defName": "dirt",
+      "description": "it's grassy",
+      "texturePath": "something grass/todo",
+      "supports": "Heavy",
+      "statBases": {
+        "Flammability": 1.5,
+        "WorkToBuild": 0.0,
+        "WalkSpeed": 0.5,
+        "Beauty": 0.5
+      },
+      "graphicData": {
+        "graphicSize": {"X": 0.0, "Y": 0.0},
+        "color": {
+          "R": 0.0,
+          "G": 0.0,
+          "B": 0.0,
+          "A": 0.0
+        },
+        "edgeType": 0
+      }
+    }
+  ]
+}

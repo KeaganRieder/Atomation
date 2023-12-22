@@ -1,5 +1,9 @@
 using Godot;
 using System;
+
+// [JsonConstructor] can be used to let tell the json to use this
+//constructor on deseralization
+
 /*
 	is the base definition of all 'things' in Aomation
     extends Resource, and is menat to be biult on top 
@@ -8,8 +12,8 @@ using System;
 */
 public partial class Thing : Resource
 {
-	public string Name{ get; set; }
-	public string Description{get; set;	}
+	public string Name{get;}
+	public string Description{get;}
 
 	public Thing(string name, string description){
 		Name = name;
@@ -19,7 +23,7 @@ public partial class Thing : Resource
 		Name = def.DefName;
 		Description = def.Description;
 	}
-
 }
+
 
 

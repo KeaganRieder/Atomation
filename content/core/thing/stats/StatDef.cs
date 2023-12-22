@@ -1,7 +1,7 @@
 public class StatDef : ThingDef
 {    
-    public float baseValue;
-    public float minValue;
-    public float maxValue;
+    public float baseValue {get; set;}
+    public float minValue {get; set;}
+    public float maxValue {get; set;}
     //todo add more maybe
 }

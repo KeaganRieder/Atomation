@@ -8,9 +8,15 @@ public class Biome{
     
     private string name;
     private string description;
-    public Dictionary<string, float> genReq;
+    // public Dictionary<string, float> genReq; 
 
     public Biome(BiomeDef def){
 
     }
+
+    public void GetTerrain(){
+        
+    }
+
+
 }

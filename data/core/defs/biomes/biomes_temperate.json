@@ -1,0 +1,38 @@
+{
+  "defs": [
+	{
+	  "defName": "Plains",
+	  "description": "a vast and empty plains generally found in temperate enviorments",
+	  "genReqs": {
+		"maxTemperature": 0.7,
+		"minTemperature": 0.3,
+		"maxMoisture": 0.7,
+		"minMoisture": 0.3,
+		"height": 0.5
+	  },
+	  "terrainByHeight": {
+		"ShallowWater": 0.2,
+		"Sand": 0.3,
+		"Grass": 0.5,
+		"Soil": 0.7,
+		"Gravel": 0.8
+	  }	  
+	},
+	{
+		"defName": "GravelPlains",
+		"description": "a vast and empty plains generally found in temperate enviorments",
+		"genReqs": {
+		  "maxTemperature": 0.7,
+		  "minTemperature": 0.3,
+		  "maxMoisture": 0.7,
+		  "minMoisture": 0.3,
+		  "height": 0.7
+		},
+		"terrainByHeight": {
+		  "Grass": 0.3,
+		  "Soil": 0.4,
+		  "Gravel": 0.6
+		}	  
+	}
+  ]
+}

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 /*
 	is the base definition of all 'complex things' in Aomation
     extends Thing, adding properties shared by all compelex things
@@ -8,16 +9,20 @@ using System;
 */
 public partial class CompThing : Thing
 {
-    protected StatBase[] stats;
+    protected Dictionary<string,StatBase> stats;
 
     public CompThing(string name, string description)
         : base(name, description) {
-        stats = new StatBase[0];
+        stats = null;
     }
     
-     public CompThing(ThingDef def)
+    public CompThing(ThingDef def)
         : base(def) {
-        stats = new StatBase[0];
+        stats = new Dictionary<string,StatBase>();
+    }
+
+    public void initalizeStats(){
+        //todo
     }
 
 }

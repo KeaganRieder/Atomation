@@ -1,0 +1,19 @@
+{
+  "defs": [
+	{
+	  "defName": "dessert",
+	  "description": "a vast and empty plains generally found in temperate enviorments",
+	  "genReqs": {
+		"maxTemperature": 1,
+		"minTemperature": 0.6,
+		"maxMoisture": 0.2,
+		"minMoisture": 0,
+		"height": 0.7
+	  },
+	  "terrainByHeight": {
+		"Sand": 0.5,
+		"Gravel": 0.6
+	  }	  
+	}
+  ]
+}

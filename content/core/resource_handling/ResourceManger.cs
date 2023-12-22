@@ -19,7 +19,7 @@ public class ResourceManger{
 
     public ResourceManger(){
 
-        // StatDataBase = new DefDatabase<StatDef>(STATS_FOLDER);
+        StatDataBase = new DefDatabase<StatDef>(STATS_FOLDER);
         TerrainDefs = new DefDatabase<TerrainDef>(TERRAIN_FOLDER);
         BiomeDefs = new DefDatabase<BiomeDef>(BIOMES_FOLDER);
     }

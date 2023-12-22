@@ -1,32 +1,59 @@
 {
   "defs": [
     {
-      "defName": "FloorBase",
-      "description": "Default Floor",
-      "texturePath": "Default Path",
-      "supports": "DefaultSupport"
+      "defName": "NaturalTerrainBase",
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
     },
     {
-      "defName": "dirt",
-      "description": "it's grassy",
-      "texturePath": "something grass/todo",
-      "supports": "Heavy",
+      "defName": "Grass",
+      "texturePath": "terrain/natural/grass",
       "statBases": {
-        "Flammability": 1.5,
-        "WorkToBuild": 0.0,
-        "WalkSpeed": 0.5,
-        "Beauty": 0.5
+        "Fertility": 1,
+        "WalkSpeed": 0.7,
+        "Beauty": 0
       },
       "graphicData": {
-        "graphicSize": {"X": 0.0, "Y": 0.0},
-        "color": {
-          "R": 0.0,
-          "G": 0.0,
-          "B": 0.0,
-          "A": 0.0
-        },
-        "edgeType": 0
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "defName": "Soil",
+      "texturePath": "terrain/natural/soil",
+      "statBases": {
+        "Fertility": 1,
+        "WalkSpeed": 0.7,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "defName": "Gravel",
+      "texturePath": "terrain/natural/gravel",
+      "statBases": {
+        "Fertility": 0.5,
+        "WalkSpeed": 0.7,
+        "Beauty": -1
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "defName": "sand",
+      "texturePath": "terrain/natural/sand",
+      "statBases": {
+        "Fertility": 0,
+        "WalkSpeed": 0.7,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
       }
     }
+   
   ]
 }

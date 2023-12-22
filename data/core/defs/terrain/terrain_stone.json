@@ -1,0 +1,34 @@
+{
+  "defs": [
+    {
+      "defName": "StoneTerrainBase",
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "defName": "Slate",
+      "texturePath": "terrain/natural/slate",
+      "statBases": {
+        "WalkSpeed": 0.7,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "defName": "marble",
+      "texturePath": "terrain/natural/slate",
+      "statBases": {
+        "WalkSpeed": 0.7,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    }
+    
+   
+  ]
+}

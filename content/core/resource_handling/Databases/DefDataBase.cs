@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Godot;
 
-public class DefDatabase<defType> where defType : IThingDef {
+public class DefDatabase<defType> where defType : IThing {
     
     public Dictionary<string,defType> contents = new Dictionary<string, defType>();
 
@@ -18,7 +18,7 @@ public class DefDatabase<defType> where defType : IThingDef {
 
                 foreach (defType def in defFile.defs)
                 {    
-                    CacheFileData(def.DefName, def);        
+                    CacheFileData(def.Name, def);        
                 }
             }
         }

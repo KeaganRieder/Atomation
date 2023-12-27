@@ -1,0 +1,65 @@
+{
+  "defs": [
+    {
+      "Name": "WaterBase",
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    }, 
+    {
+      "Name": "Marsh",
+      "texturePath": "terrain/natural/marsh",
+      "statBases": {
+        "WalkSpeed": 0.6,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },   
+    {
+      "Name": "ShallowOcean",
+      "texturePath": "terrain/natural/shallow_ocean",
+      "statBases": {
+        "WalkSpeed": 0.6,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "Name": "ShallowWater",
+      "texturePath": "terrain/natural/shallow_water",
+      "statBases": {
+        "WalkSpeed": 0.6,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "Name": "ChestDeepOcean",
+      "texturePath": "terrain/natural/deep_ocean",
+      "statBases": {
+        "WalkSpeed": 0.4,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }
+    },
+    {
+      "Name": "DeepOcean",
+      "texturePath": "terrain/natural/deep_ocean",
+      "statBases": {
+        "WalkSpeed": 0.0,
+        "Beauty": 0
+      },
+      "graphicData": {
+        "color": { "R": 0.0,"G": 0.0,"B": 0.5,"A": 0.0}
+      }
+    } 
+  ]
+}

@@ -1,18 +1,28 @@
 using Godot;
+using Newtonsoft.Json;
 using System;
 
-/*
-    class which handles an object graphic 
-*/
+public enum EdgeType{
+    Default,
+    Rough, 
+    Smooth,
+}
+/// <summary>
+/// manges manipluating and handling a thinsg texture/graphic
+/// applying any mansk or other modifcation to it
+/// </summary>
 public partial class Graphic : Resource{
-    
+ 
+    [JsonProperty]
     private string texturePath;
+    [JsonProperty]
     private Vector2 graphicSize;
+    [JsonProperty]
     private Color color {get; set;}
 
-    public Graphic(GraphicData data, string texturePath){
+    public Graphic(string texturePath,Color color){
         this.texturePath = texturePath;
-        color = data.color;
+        this.color = color;
     }
 
     public void ReadTexture(){

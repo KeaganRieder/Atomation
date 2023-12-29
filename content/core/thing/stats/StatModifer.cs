@@ -1,23 +1,15 @@
 using Godot;
 using System;
-/*
-	expands upon StatBase to allow for more stat modifers to
-    be define
-    these are 
-    todo make modifer types and look into improveing
-*/
+
+/// <summary>
+/// a stat which is a used to a perstnat modifers onto a compStat
+/// </summary>
 public partial class StatModifer : StatBase
 {
-    public int Order{get; set;} 
-
     public StatModifer(string name, string description, float baseValue, int order)
-         : base(name, description, baseValue, 0 ,0){
+         : base(name, description, baseValue){
         Count = 1;
         Order = order;
-    }
-     public StatModifer(StatDef def) : base(def){
-        Count = 1;
-        Order = 0;//todo
     }
 
     public int Count{

@@ -1,34 +1,37 @@
 {
   "defs": [
     {
-      "defName": "StoneTerrainBase",
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
-    },
-    {
-      "defName": "Slate",
-      "texturePath": "terrain/natural/slate",
-      "statBases": {
-        "WalkSpeed": 0.7,
-        "Beauty": 0
+      "name": "Slate",
+      "label": "Slate",
+      "description": "",
+      "stats": {
+        "Fertility": {
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Fertility",
+          "description": "Objects Fetrility"
+        },
+        "WalkSpeed": {
+          "baseValue": 0.7,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "WalkSpeed",
+          "description": "effect on WalkSpeed"
+        },
+        "Beauty": {
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Beauty",
+          "description": "object Beauty"
+        }
       },
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
-    },
-    {
-      "defName": "marble",
-      "texturePath": "terrain/natural/slate",
-      "statBases": {
-        "WalkSpeed": 0.7,
-        "Beauty": 0
-      },
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
+      "graphic": {
+        "texturePath": "terrain/natural/slate",
+        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }      
     }
     
-   
   ]
 }

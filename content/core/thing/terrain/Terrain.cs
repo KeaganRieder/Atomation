@@ -1,20 +1,18 @@
 using Godot;
 using System;
-/*
-	defines what a floor is using thinsg defined in
-    CompThing and thing
-*/
+using System.Collections.Generic;
+
+/// <summary>
+/// terrain are things like floor in atomation
+/// </summary>
 public partial class Terrain : CompThing
 {
-    //todo make default constructor
-    public Terrain(string name, string description)
-        : base(name, description) {
-        stats = new StatBase[0];
-    }
-    public Terrain(TerrainDef def) 
-        : base(def){
-        //todo
-    }
-
+    public Terrain(): this("Default","Default"){}
+    public Terrain(string name, string description) : base(name, description) {}
+    public Terrain(string name, string description, Dictionary<string,StatBase> stats, Graphic graphic) : base(name,description){}
   
 }
+
+
+
+

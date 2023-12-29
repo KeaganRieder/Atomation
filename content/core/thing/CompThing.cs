@@ -1,28 +1,31 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-/*
-	is the base definition of all 'complex things' in Aomation
-    extends Thing, adding properties shared by all compelex things
-    will be used asand expanded upon inorder to define specific 
-    complex things like floors and charcters
-*/
-public partial class CompThing : Thing
+using Newtonsoft.Json;
+
+/// <summary>
+/// base defintion for all complex things, used to define
+/// values which all complex thing share
+/// </summary>
+public partial class CompThing : IThing
 {
+    [JsonProperty("name")]
+    public string Name{get; set;}
+    [JsonProperty("label")]
+    public string Label{get; set;}
+    [JsonProperty("description")]
+    public string Description{get; set;}
+    [JsonProperty]
     protected Dictionary<string,StatBase> stats;
+    [JsonProperty]
+    protected Graphic graphic;
 
-    public CompThing(string name, string description)
-        : base(name, description) {
-        stats = null;
-    }
-    
-    public CompThing(ThingDef def)
-        : base(def) {
-        stats = new Dictionary<string,StatBase>();
-    }
+    public CompThing(string name, string description) {Description = description; Name = name; Label = name;}
+    public CompThing(string name, string description, Dictionary<string,StatBase> stats, Graphic graphic)
+        : this(name,description){
 
-    public void initalizeStats(){
-        //todo
-    }
+        this.stats = stats;
+        this.graphic = graphic;
+    }   
 
 }

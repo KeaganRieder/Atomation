@@ -1,29 +1,40 @@
 using Godot;
+using Newtonsoft.Json;
 using System;
-/*
-	is the base definition fo rall stats, and is used
-    for stats which can't have modifers applyed to them
-    it's also is expanded upon by compStats to allow for 
-    modifers
-*/
+using System.Collections.Generic;
+
+
+/// <summary>
+/// a stat which doesn't hold modifer and can't act as one,
+/// meant to be stats which are sort of persitant 
+/// </summary>
 public partial class StatBase : Thing
 {
+    //base values
+    [JsonProperty]
     protected float baseValue;
-    protected float minValue;
-    protected float maxValue;
+    [JsonProperty]
+    protected float minValue = 0;
+    [JsonProperty]
+    protected float maxValue = 0;
 
-    public StatBase(string name, string description, float baseVal, float min, float max)
+    //complex stat values
+    protected float currentVal = 0;
+    protected bool updateStat;
+    protected Dictionary<string, StatModifer> modifers; // only for prolonged modifers\
+
+    //stat modifer values
+    [JsonProperty("order")]
+    protected int Order{get; set;}  = 0;
+
+    //constrcutors
+    public StatBase() : this("default", "default", 0){}
+    public StatBase(string name, string description, float baseVal)
         : base(name, description){
         baseValue = baseVal;
-        minValue = min;
-        maxValue = max;
     }
-     public StatBase(StatDef def) : base(def){
-        baseValue = def.baseValue;
-        minValue = def.minValue;
-        maxValue = def.maxValue;
-    }
-
+    
+    // public StatBase(StatDef def) : this(def.DefName,def.Description, def.baseValue){}
     public virtual float Value{
         get => baseValue;
         set {baseValue = Math.Clamp(value, minValue, maxValue);}

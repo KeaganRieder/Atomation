@@ -6,12 +6,11 @@ using Newtonsoft.Json;
 public partial class JsonFileTesting : Node
 {
 	public DefFile<Terrain> fileFormatting = new DefFile<Terrain>();
-	public ResourceManger test = new ResourceManger();
+	// public Defs defsTest = new Defs();
 	public override void _Ready()
 	{
-		test = new ResourceManger();
-		// string filePath = "terrain/";
-		// string fileName = "newtype.json";
+		// test = new ResourceManger();
+		
 		// fileFormatting.defs = new BiomeDef[2]{
 		// 	new BiomeDef{
 		// 		defName = "default",
@@ -46,15 +45,37 @@ public partial class JsonFileTesting : Node
 		// 	graphic = new Graphic(),
 		// });
 		
-		// DefFile<TerrainDef>test = new();
-	 	// test = JsonReader.ReadDefFile<DefFile<TerrainDef>>(filePath, fileName);
+		// DefFile<Terrain>test = new();
+	 	// test = JsonReader.ReadDefFile<DefFile<Terrain>>(filePath, fileName);
+		Defs.LoadDefs();
 		GD.Print( "cached terrain \n" +
-		 	JsonConvert.SerializeObject(test.TerrainDefs.contents, Formatting.Indented, new JsonSerializerSettings{
+		 	JsonConvert.SerializeObject(Defs.terrainDefs.Contents, Formatting.Indented, new JsonSerializerSettings{
 		 	NullValueHandling = NullValueHandling.Ignore,
 		 	})
 		);
 		base._Ready();
+		// InitalizeFile();
 	}
 
 	//todo make test for reading
+
+	public void InitalizeFile(){
+		string filePath = "terrain/";
+		string fileName = "newgraphic.json";
+		Dictionary<string,StatBase> temp =  new Dictionary<string, StatBase>{
+				{"Fertility", new StatBase("Fertility","Objects Fetrility",1)},
+				{"WalkSpeed", new StatBase("WalkSpeed","effect on WalkSpeed ",.8f)},
+				{"Beauty", new StatBase("Fertility","Objects Beauty",0)}};
+		Graphic tmepg = new Graphic("terrain/natural/grass",new Color());
+
+
+
+		fileFormatting.defs = new Terrain[1]{
+			new("Grass","",temp,tmepg),
+
+			
+		};
+		
+		JsonWriter.WriteDefFile(filePath, fileName, tmepg);
+	}
 }

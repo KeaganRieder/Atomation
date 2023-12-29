@@ -13,7 +13,7 @@ public class Chunk
 
     public Chunk(Vector2 cords)
     {
-        origin = cords * Data.ChunkSize; //setting chunsk global pos
+        origin = cords * MapData.ChunkSize; //setting chunsk global pos
         ChunkNode = new Node2D();       
     }
 

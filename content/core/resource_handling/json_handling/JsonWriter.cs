@@ -22,10 +22,7 @@ public static class JsonWriter
     }
     public static void WriteDefFile(string filePath, string fileName, object obj){
         string directory = ProjectSettings.GlobalizePath(FileManger.DEF_FOLDER+filePath);
-        JsonSerializerSettings settings = new JsonSerializerSettings{
-            NullValueHandling = NullValueHandling.Ignore, //ignore all empty values sense if a def has empty it's default value
-            // TypeNameHandling = TypeNameHandling.Objects,
-        };
+        JsonSerializerSettings settings = new JsonSerializerSettings{};
 
         if (!Directory.Exists(directory))
         {

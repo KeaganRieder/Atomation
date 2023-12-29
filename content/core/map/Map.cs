@@ -4,7 +4,7 @@ using Godot;
 /// <summary>
 /// holds data for the map
 /// </summary>
-public struct Data{
+public struct MapData{
 	public const int ChunkSize = 32;
 	public const float MAX_VIEW_DIST  = 64;
 
@@ -24,12 +24,12 @@ public struct Data{
 /// </summary>
 public partial class Map : Node{
 
-	public static Data mapData;
+	public static MapData mapData;
 	private MapGenerator mapGenerator;
 
 	public Map(){
-		mapData.Width = 100;
-		mapData.Height = 100;
+		mapData.Width = 512;
+		mapData.Height = 512;
 		GD.Print($"Width:{mapData.Width} height:{mapData.Height}");
 		mapGenerator = new MapGenerator();
 	}
@@ -37,11 +37,17 @@ public partial class Map : Node{
 
 	public override void _Ready()
 	{
-		GD.Print("test gen");
-		mapGenerator.GenerateChunk();
-
 		base._Ready();
-
+		GD.Print("test gen");
+		// Sprite2D test = new Sprite2D();
+		// AddChild(test);
+		// NoiseTexture2D texture2D = new NoiseTexture2D(){
+		// 	Width = mapData.Width,
+		// 	Height = mapData.Height
+		// };
+	
 		
+		// mapGenerator.GenerateChunk(texture2D);
+		// test.Texture = texture2D;	
 	}
 }

@@ -2,30 +2,22 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-/*
-	expands upon StatBase to allow for more compelx stats
-    to be defien, with min/max values and the abilty to
-    have modifers applied
-    these modifers will only apply to more complex things
-*/
+
+/// <summary>
+/// stat which can be modifed through persiant modifed and single/instant
+/// modifers (eg. dmg or a potion)
+/// todo
+/// </summary>
 public partial class CompStat : StatBase
 {
-    private float currentVal;
-    private bool updateStat;
-    private Dictionary<string, StatModifer> modifers; // only for prolonged modifers
-
     public CompStat(string name, string description, float baseValue, float minValue, float maxValue)
-        : base(name, description, baseValue, minValue, maxValue){
+        : base(name, description, baseValue){
         modifers = new Dictionary<string, StatModifer>();
         updateStat = false;
         currentVal = baseValue;
-    }
-     public CompStat(StatDef def) 
-        : base(def){
-        modifers = new Dictionary<string, StatModifer>();
-        updateStat = false;
-        currentVal = def.baseValue;
-    }
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+    }    
 
     public override float Value{
         get {

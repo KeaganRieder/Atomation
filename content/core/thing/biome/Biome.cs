@@ -1,22 +1,20 @@
-
-/*
-    defines what a biome is 
-*/
 using System.Collections.Generic;
 
-public class Biome{
+/// <summary>
+/// store various tables used during generation to place things like tiles and
+/// resources 
+/// </summary>
+public partial class Biome {
     
-    private string name;
-    private string description;
-    // public Dictionary<string, float> genReq; 
+  private string name;
+  private float minTemp;
+  private Dictionary<string,float> terrain;
+  //add plants later
 
-    public Biome(BiomeDef def){
+  public Biome(){
 
-    }
-
-    public void GetTerrain(){
-        
-    }
+  }
 
 
+  
 }

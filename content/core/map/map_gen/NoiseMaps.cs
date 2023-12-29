@@ -7,7 +7,7 @@ using Godot;
 /// </summary>
 public class NoiseMap
 {  
-    protected FastNoiseLite fastNoiseLite;
+    public FastNoiseLite fastNoiseLite{get; private set;}
     
     public NoiseMap(){
 
@@ -17,13 +17,15 @@ public class NoiseMap
         fastNoiseLite.FractalWeightedStrength = 0;
     }
     public NoiseMap(int seed, int octaves, float frequency,float lacunarity, float fractalGain){
-        fastNoiseLite = new FastNoiseLite();
-        fastNoiseLite.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
-        fastNoiseLite.Seed = seed;
-        fastNoiseLite.FractalLacunarity = lacunarity;
-        fastNoiseLite.Frequency = frequency;
-        fastNoiseLite.FractalOctaves = octaves;
-        fastNoiseLite.FractalGain = fractalGain;
+        fastNoiseLite = new FastNoiseLite
+        {
+            FractalType = FastNoiseLite.FractalTypeEnum.Fbm,
+            Seed = seed,
+            FractalLacunarity = lacunarity,
+            Frequency = frequency,
+            FractalOctaves = octaves,
+            FractalGain = fractalGain
+        };
     }
     
     public float GetNoise(int x, int y){

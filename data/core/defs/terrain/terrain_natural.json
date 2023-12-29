@@ -1,59 +1,132 @@
 {
   "defs": [
     {
-      "defName": "NaturalTerrainBase",
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
+      "name": "Grass",
+      "label": "Grass",
+      "description": "",
+      "stats": {
+        "Fertility": {
+          "baseValue": 1.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Fertility",
+          "description": "Objects Fetrility"
+        },
+        "WalkSpeed": {
+          "baseValue": 0.8,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "WalkSpeed",
+          "description": "effect on WalkSpeed"
+        },
+        "Beauty": {
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Beauty",
+          "description": "object Beauty"
+        }
+      },
+      "graphic": {
+        "texturePath": "terrain/natural/grass",
+        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }      
     },
     {
-      "defName": "Grass",
-      "texturePath": "terrain/natural/grass",
-      "statBases": {
-        "Fertility": 1,
-        "WalkSpeed": 0.7,
-        "Beauty": 0
+      "name": "Soil",
+      "label": "Soil",
+      "description": "",
+      "stats": {
+        "Fertility": {
+          "baseValue": 1.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Fertility",
+          "description": "Objects Fetrility"
+        },
+        "WalkSpeed": {
+          "baseValue": 0.8,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "WalkSpeed",
+          "description": "effect on WalkSpeed"
+        },
+        "Beauty": {
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Beauty",
+          "description": "object Beauty"
+        }
       },
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
+      "graphic": {
+        "texturePath": "terrain/natural/soil",
+        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }      
     },
     {
-      "defName": "Soil",
-      "texturePath": "terrain/natural/soil",
-      "statBases": {
-        "Fertility": 1,
-        "WalkSpeed": 0.7,
-        "Beauty": 0
+      "name": "Gravel",
+      "label": "Gravel",
+      "description": "",
+      "stats": {
+        "Fertility": {
+          "baseValue": 0.5,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Fertility",
+          "description": "Objects Fetrility"
+        },
+        "WalkSpeed": {
+          "baseValue": 0.7,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "WalkSpeed",
+          "description": "effect on WalkSpeed"
+        },
+        "Beauty": {
+          "baseValue": -1.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Beauty",
+          "description": "object Beauty"
+        }
       },
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
+      "graphic": {
+        "texturePath": "terrain/natural/gravel",
+        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }      
     },
     {
-      "defName": "Gravel",
-      "texturePath": "terrain/natural/gravel",
-      "statBases": {
-        "Fertility": 0.5,
-        "WalkSpeed": 0.7,
-        "Beauty": -1
+      "name": "Sand",
+      "label": "Sand",
+      "description": "",
+      "stats": {
+        "Fertility": {
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Fertility",
+          "description": "Objects Fetrility"
+        },
+        "WalkSpeed": {
+          "baseValue": 0.7,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "WalkSpeed",
+          "description": "effect on WalkSpeed"
+        },
+        "Beauty": {
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
+          "name": "Beauty",
+          "description": "object Beauty"
+        }
       },
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
-    },
-    {
-      "defName": "sand",
-      "texturePath": "terrain/natural/sand",
-      "statBases": {
-        "Fertility": 0,
-        "WalkSpeed": 0.7,
-        "Beauty": 0
-      },
-      "graphicData": {
-        "color": { "R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }
+      "graphic": {
+        "texturePath": "terrain/natural/sand",
+        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
+      }      
     }
-   
   ]
 }

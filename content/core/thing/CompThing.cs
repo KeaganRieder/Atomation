@@ -17,9 +17,11 @@ public partial class CompThing : IThing
     public string Description{get; set;}
     [JsonProperty]
     protected Dictionary<string,StatBase> stats;
+
     [JsonProperty]
     protected Graphic graphic;
-
+    protected Node2D node;
+ 
     public CompThing(string name, string description) {Description = description; Name = name; Label = name;}
     public CompThing(string name, string description, Dictionary<string,StatBase> stats, Graphic graphic)
         : this(name,description){
@@ -27,5 +29,12 @@ public partial class CompThing : IThing
         this.stats = stats;
         this.graphic = graphic;
     }   
+ 
+    public virtual void SetNode(Node2D nodeObj){
+        node = nodeObj; 
+    }
+    public virtual Node2D GetNode(){
+        return node;
+    }
 
 }

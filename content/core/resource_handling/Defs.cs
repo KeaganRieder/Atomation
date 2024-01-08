@@ -15,15 +15,15 @@ public static class Defs
     public const string BIOME_DEFS_PATH = "data/core/defs/biomes";
 
     //cached dictionary
-    public static DefDatabase<Terrain> terrainDefs;
-    // private static DefDatabase<BiomeDef> biomeDefs;
+    public static DefDatabase<Terrain> TerrainDefs;
+    public static DefDatabase<Biome> BiomeDefs;
     
     public static void LoadDefs(){
         GD.Print($"Reading Defs");
         try
         {
-            terrainDefs = new DefDatabase<Terrain>(TERRAIN_DEFS_PATH);
-            // biomeDefs = new DefDatabase<BiomeDef>(BIOME_DEFS_PATH); s
+            TerrainDefs = new DefDatabase<Terrain>(TERRAIN_DEFS_PATH);
+            BiomeDefs = new DefDatabase<Biome>(BIOME_DEFS_PATH); 
         }
         catch (Exception error)
         {
@@ -34,8 +34,7 @@ public static class Defs
     public static Terrain CreatTerrain(string name){
         try
         {
-            // return new Terrain(terrainDefs[name]);
-            return default;
+            return TerrainDefs[name];
         }
         catch (Exception error)
         {

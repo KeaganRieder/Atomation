@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 /// <summary>
@@ -6,57 +7,93 @@ using Godot;
 /// various values, it is eitehr loaded or unloaded depedning on where 
 /// the player is, as well as other aspects
 /// </summary>
+
+//look at the old chunk obj in world gen on git
 public class Chunk
 {
-    public Node2D ChunkNode{get; set;}
-    private Vector2 origin;  
+    public const int CHUNK_SIZE = 32;
 
-    public Chunk(Vector2 cords)
-    {
-        origin = cords * MapData.ChunkSize; //setting chunsk global pos
-        ChunkNode = new Node2D();       
+    public Node2D ChunkObj{get; set;}
+    public Vector2 origin;
+    private bool rendered;
+
+    private Dictionary<Vector2, Terrain> floor; // maybe make new class for this?
+
+
+    //constructors
+    public Chunk(){
+        floor = new Dictionary<Vector2, Terrain>();
+    }
+    public Chunk(Vector2 cords) : this(){
+        origin = cords;
+        rendered = true;
+        // floor = new Dictionary<Vector2, Terrain>();
     }
 
-    
-    //chunk rendering 
-    public void UpdateChunk()
-    {
-        //todo
-    }
-    public bool IsRendered
-    {
-        get => IsRendered;
-        set
+
+    //geting compents
+    public Terrain Floor(Vector2 key){
+ 
+        if (floor.ContainsKey(key))
         {
-            IsRendered = value;
-            UpdateChunk();
+            return floor[key];
         }
+        return default;
     }
-}
+    public void Floor(Vector2 key, Terrain value){
+        floor[key] = value;
+        //todo add checks for floor support, and if it is placeAble  
+    }
 
-/*
- public GeneratedChunk GenerateChunk(Vector2 position, Transform chunk)
-    {
-        GeneratedChunk generatedChunk = new GeneratedChunk();
-        PerlinNoiseMap perlinNoiseMap = new(MapData.CHUNK_SIZE, MapData.CHUNK_SIZE, 
-        data.seed, noiseScale, octaves, data.avgElevation, lacunarity, position+ offset, NoiseMap.NormalizationMode.Global);
-        perlinNoiseMap.ApplyCurve(heightCurve, heightCurveMultipler);
-        float[,] elevationMap = perlinNoiseMap.GetNoiseMap();
 
-        for (int x = 0; x < MapData.CHUNK_SIZE; x++)
+
+    //rendering stuff
+    public bool Rendered(Vector2 veiwerCords){
+        float veiwerDist = veiwerCords.DistanceSquaredTo(origin);
+        GD.Print($"Veiwer cords {veiwerCords} are {veiwerDist} from chunk at {origin}");
+        return veiwerDist <= ChunkHandler.MAX_VIEW_DIST;
+    }
+    public void Rendered(bool state){
+        rendered = state;
+    }
+
+    public void ShowOutLine(){
+        for (int x = 0; x < CHUNK_SIZE; x++)
         {
-            for (int y = 0; y < MapData.CHUNK_SIZE; y++)
+            for (int y = 0; y < CHUNK_SIZE; y++)
             {
-                float noiseValue = elevationMap[x, y];
-
-                Color color = new Color(noiseValue, noiseValue, noiseValue);//get rid of
-
-                int tileXCords = x + ((int)position.x);
-                int tileYCords = y + ((int)position.y);
-                Tile generatedTile = new Tile(x, y, chunk, sprite, color);
-
-                generatedChunk.chunkGround.Add(new Vector2(tileXCords, tileYCords),generatedTile);
-
+                // node.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), color,1);//ver
+                // node.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), color, 1);//hor
             }
         }
+    }
+
+}
+/*
+public void ShowOutline(Node2D node){
+        //todo
+        Color color = new Color(255,0,0);
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                node.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), color,1);//ver
+                node.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), color, 1);//hor
+            }
+        }
+        node.DrawLine(GetWorldPosition(0, 0), GetWorldPosition(Width, 0), Colors.Green, 1);
+        node.DrawLine(GetWorldPosition(0, 0), GetWorldPosition(0, Height), Colors.Green, 1);
+        node.DrawLine(GetWorldPosition(0, Height), GetWorldPosition(Width, Height), Colors.Green, 1);
+        node.DrawLine(GetWorldPosition(Width, 0), GetWorldPosition(Width, Height), Colors.Green, 1);
+    }
+
+    public Vector2 GetWorldPosition(int x, int y){
+        return new Vector2(x,y) * CELLSIZE + origin;
+    }
+    private Vector2 normalizeCords(Vector2 worldPostion)
+    {
+        int x = Mathf.FloorToInt((worldPostion - origin).X / CELLSIZE);
+        int y = Mathf.FloorToInt((worldPostion - origin).Y / CELLSIZE);
+        return new Vector2(x,y);
+    }
 */

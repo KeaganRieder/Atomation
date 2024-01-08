@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Godot;
+using Newtonsoft.Json;
 
 public class DefDatabase<defType> where defType : IThing  {
   
-    public Dictionary<string,defType> Contents = new Dictionary<string, defType>();
+    public Dictionary<string,string> Contents = new Dictionary<string, string>();
 
     public defType this[string key]{
         get{
             if (Contents.ContainsKey(key))
             {
-                return Contents[key];
+                return JsonConvert.DeserializeObject<defType>(Contents[key]);
             }
             else
             {
@@ -42,7 +43,7 @@ public class DefDatabase<defType> where defType : IThing  {
     public void CacheFileData(string name, defType obj){
         try
         {
-           Contents.Add(name, obj);
+           Contents.Add(name, JsonConvert.SerializeObject(obj));
         }
         catch (Exception  Error)
         {

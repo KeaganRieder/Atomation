@@ -11,7 +11,7 @@ public enum EdgeType{
 /// manges manipluating and handling a thinsg texture/graphic
 /// applying any mansk or other modifcation to it
 /// </summary>
-public partial class Graphic : Resource{
+public partial class Graphic {
  
     [JsonProperty]
     private string texturePath;
@@ -26,10 +26,18 @@ public partial class Graphic : Resource{
     }
 
     public void ReadTexture(){
-
+        //todo
     }
     public void ReadMasks(){
+        //todo
+    }
 
+    public ColorRect GetTexture(){
+        Vector2 size = new Vector2(WorldMap.CELL_SIZE,WorldMap.CELL_SIZE);
+        return new ColorRect(){
+            Color = color,
+            Size = size,
+        }; 
     }
 
 

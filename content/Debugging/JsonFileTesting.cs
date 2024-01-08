@@ -49,7 +49,7 @@ public partial class JsonFileTesting : Node
 	 	// test = JsonReader.ReadDefFile<DefFile<Terrain>>(filePath, fileName);
 		Defs.LoadDefs();
 		GD.Print( "cached terrain \n" +
-		 	JsonConvert.SerializeObject(Defs.terrainDefs.Contents, Formatting.Indented, new JsonSerializerSettings{
+		 	JsonConvert.SerializeObject(Defs.TerrainDefs.Contents, Formatting.Indented, new JsonSerializerSettings{
 		 	NullValueHandling = NullValueHandling.Ignore,
 		 	})
 		);

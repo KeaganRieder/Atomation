@@ -127,14 +127,12 @@ public class MapGenerator
                 float elevation = noiseMaps[ELEVATION_MAP_IDX][x,y];
                 Color color = GetColor(elevation);//(elevation,elevation,elevation)
                 Graphic graphic = new Graphic("",color);
-                Node2D tempNode  =  new Node2D()
-                {
+                
+                Terrain terrain = new Terrain(ID, "", null, graphic){
                     Position = new Vector2(x*WorldMap.CELL_SIZE, y*WorldMap.CELL_SIZE),
-                    Name = ID
                 };
-                Terrain terrain = new Terrain("", "", null, graphic);
-                terrain.SetNode(tempNode);
-                map.AddChild(tempNode);
+                terrain.AddChild(graphic.GetTexture());
+                map.AddChild(terrain);
                 tileID++;
             }
         }        

@@ -16,6 +16,7 @@ public partial class WorldMap : Node2D
 	//map componets
 	private MapGenerator mapGenerator;
 	private ChunkHandler chunkHandler;
+	private Controls controls;
    
 	public WorldMap(){
 		Width = 64;
@@ -31,12 +32,17 @@ public partial class WorldMap : Node2D
 			Persistence = .6f,
 		};
 		// chunkHandler = new ChunkHandler(mapGenerator);
+		controls = new Controls();
+		controls.LoadKeys();
+		
 	}
 
 	public override void _Ready(){
 		base._Ready();
 		GD.Print("test gen");
-		mapGenerator.GenerateMap(this);
-	}	
+		// mapGenerator.GenerateMap(this);
+	}
+
+	
 
 }

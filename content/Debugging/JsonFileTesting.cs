@@ -47,35 +47,32 @@ public partial class JsonFileTesting : Node
 		
 		// DefFile<Terrain>test = new();
 	 	// test = JsonReader.ReadDefFile<DefFile<Terrain>>(filePath, fileName);
-		Defs.LoadDefs();
-		GD.Print( "cached terrain \n" +
-		 	JsonConvert.SerializeObject(Defs.TerrainDefs.Contents, Formatting.Indented, new JsonSerializerSettings{
-		 	NullValueHandling = NullValueHandling.Ignore,
-		 	})
-		);
+		// Defs.LoadDefs();
+		// GD.Print( "cached terrain \n" +
+		//  	JsonConvert.SerializeObject(Defs.TerrainDefs.Contents, Formatting.Indented, new JsonSerializerSettings{
+		//  	NullValueHandling = NullValueHandling.Ignore,
+		//  	})
+		// );
 		base._Ready();
-		// InitalizeFile();
+		InitalizeFile();
 	}
 
 	//todo make test for reading
 
 	public void InitalizeFile(){
-		string filePath = "terrain/";
-		string fileName = "newgraphic.json";
-		Dictionary<string,StatBase> temp =  new Dictionary<string, StatBase>{
-				{"Fertility", new StatBase("Fertility","Objects Fetrility",1)},
-				{"WalkSpeed", new StatBase("WalkSpeed","effect on WalkSpeed ",.8f)},
-				{"Beauty", new StatBase("Fertility","Objects Beauty",0)}};
-		Graphic tmepg = new Graphic("terrain/natural/grass",new Color());
+		string filePath = "data/settings/";
+		string fileName = "key_bindings.json";
+		// Dictionary<string,StatBase> temp =  new Dictionary<string, StatBase>{
+		// 		{"Fertility", new StatBase("Fertility","Objects Fetrility",1)},
+		// 		{"WalkSpeed", new StatBase("WalkSpeed","effect on WalkSpeed ",.8f)},
+		// 		{"Beauty", new StatBase("Fertility","Objects Beauty",0)}};
+		// Graphic tmepg = new Graphic("terrain/natural/grass",new Color());
 
-
-
-		fileFormatting.defs = new Terrain[1]{
-			new("Grass","",temp,tmepg),
-
-			
-		};
+		// fileFormatting.defs = new Terrain[1]{
+		// 	new("Grass","",temp,tmepg),
+		// };
+		Controls controls = new Controls();
 		
-		JsonWriter.WriteDefFile(filePath, fileName, tmepg);
+		JsonWriter.WriteDefFile(filePath, fileName, controls);
 	}
 }

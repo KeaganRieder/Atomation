@@ -7,20 +7,18 @@ using Newtonsoft.Json;
 /// base defintion for all complex things, used to define
 /// values which all complex thing share
 /// </summary>
-public partial class CompThing : IThing
+public partial class CompThing : Node2D, IThing
 {
-    [JsonProperty("name")]
-    public string Name{get; set;}
+    // [JsonProperty("name")]
+    // public string Name{get => base.Name; set{ base.Name;}
     [JsonProperty("label")]
     public string Label{get; set;}
     [JsonProperty("description")]
     public string Description{get; set;}
     [JsonProperty]
     protected Dictionary<string,StatBase> stats;
-
     [JsonProperty]
     protected Graphic graphic;
-    protected Node2D node;
  
     public CompThing(string name, string description) {Description = description; Name = name; Label = name;}
     public CompThing(string name, string description, Dictionary<string,StatBase> stats, Graphic graphic)
@@ -29,12 +27,5 @@ public partial class CompThing : IThing
         this.stats = stats;
         this.graphic = graphic;
     }   
- 
-    public virtual void SetNode(Node2D nodeObj){
-        node = nodeObj; 
-    }
-    public virtual Node2D GetNode(){
-        return node;
-    }
 
 }

@@ -1,0 +1,8 @@
+{
+  "keyBindings": {
+    "MoveLeft": 65,
+    "MoveRight": 68,
+    "MoveUp": 87,
+    "MoveDown": 83
+  }
+}

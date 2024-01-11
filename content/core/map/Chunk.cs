@@ -19,7 +19,6 @@ public class Chunk
 
     private Dictionary<Vector2, Terrain> floor; // maybe make new class for this?
 
-
     //constructors
     public Chunk(){
         floor = new Dictionary<Vector2, Terrain>();
@@ -29,7 +28,6 @@ public class Chunk
         rendered = true;
         // floor = new Dictionary<Vector2, Terrain>();
     }
-
 
     //geting compents
     public Terrain Floor(Vector2 key){

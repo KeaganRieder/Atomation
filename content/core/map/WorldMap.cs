@@ -9,6 +9,7 @@ using Godot;
 public partial class WorldMap : Node2D
 {
 	public const float CELL_SIZE = 16; 
+	public int Test{get; set;} = 100;
 	public int Width{get; set;}
 	public int Height{get; set;}
 	public Vector2 MapSize{get => new Vector2(Width,Height);}
@@ -16,11 +17,12 @@ public partial class WorldMap : Node2D
 	//map componets
 	private MapGenerator mapGenerator;
 	private ChunkHandler chunkHandler;
-	private Controls controls;
+	private Node2D PlayerNode;
    
 	public WorldMap(){
 		Width = 64;
 		Height = 64;
+
 		//todo
 		mapGenerator = new MapGenerator(Width,Height)
 		{
@@ -31,18 +33,22 @@ public partial class WorldMap : Node2D
 			Lacunarity = 2,
 			Persistence = .6f,
 		};
-		// chunkHandler = new ChunkHandler(mapGenerator);
-		controls = new Controls();
-		controls.LoadKeys();
-		
+
+		chunkHandler = new ChunkHandler(mapGenerator);	
+		PlayerNode = new Node2D(){Name = "player"};	
+		AddChild(PlayerNode);
 	}
 
 	public override void _Ready(){
 		base._Ready();
 		GD.Print("test gen");
-		// mapGenerator.GenerateMap(this);
+		mapGenerator.GenerateMap(this);
 	}
 
-	
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+	}
+
 
 }

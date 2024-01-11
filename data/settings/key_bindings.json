@@ -2,7 +2,14 @@
   "keyBindings": {
     "MoveLeft": 65,
     "MoveRight": 68,
-    "MoveUp": 87,
-    "MoveDown": 83
+    "MoveUp": 83,
+    "MoveDown": 87
+  },
+  "mouseBindings": {
+    "LeftClick": 1,
+    "RightClick": 2,
+    "ZoomIn": 4,
+    "ZoomOut": 5
   }
+  
 }

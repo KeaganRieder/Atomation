@@ -34,20 +34,24 @@ public partial class WorldMap : Node2D
 			Persistence = .6f,
 		};
 
-		chunkHandler = new ChunkHandler(mapGenerator);	
-		PlayerNode = new Node2D(){Name = "player"};	
+		chunkHandler = new ChunkHandler(mapGenerator, this);	
+		PlayerNode = new Node2D(){Name = "player"};
+		PlayerNode.AddChild(new ColorRect(){Color = new Color(100,100,100), Size = new Vector2(16,16)});	
 		AddChild(PlayerNode);
 	}
 
 	public override void _Ready(){
 		base._Ready();
 		GD.Print("test gen");
-		mapGenerator.GenerateMap(this);
+		chunkHandler.UpdateChunks(PlayerNode.Position,mapGenerator);
+		// mapGenerator.GenerateMap(this);
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+		chunkHandler.UpdateChunks(PlayerNode.Position,mapGenerator);
+		
 	}
 
 

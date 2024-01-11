@@ -6,5 +6,5 @@ using Godot;
 /// </summary>
 public class Main
 {
-    
+	
 }

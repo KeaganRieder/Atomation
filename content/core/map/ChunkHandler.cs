@@ -15,6 +15,7 @@ public class ChunkHandler
     private Dictionary<Vector2,Chunk> chunks;
 
     private MapGenerator generator;
+    private Node2D map;
 
     public ChunkHandler(){
 
@@ -22,8 +23,8 @@ public class ChunkHandler
         lastUpdatedChunks = new List<Chunk>();
         chunks = new Dictionary<Vector2, Chunk>();
     }
-    public ChunkHandler(MapGenerator generator) : this(){
-
+    public ChunkHandler(MapGenerator generator, Node2D map) : this(){
+        this.map = map;
         this.generator = generator;
     }
 
@@ -38,7 +39,7 @@ public class ChunkHandler
                 // return default;
             }
         }
-        set{
+        private set{
             chunks[key] = value;
         }
     }
@@ -53,6 +54,7 @@ public class ChunkHandler
         int chunkYCord = Mathf.RoundToInt(globalY / Chunk.CHUNK_SIZE);
         return new Vector2(chunkXCord, chunkYCord);
     }
+
     /// <summary>
     /// normalize the provided global cords to chunk cords
     /// divide global cords by chunkSize(32) and round to int
@@ -62,13 +64,15 @@ public class ChunkHandler
         return GetChunkCords(cords.X, cords.Y);
     }
 
-    public void UpdateChunks(Vector2 veiwerPostion){
+    /// <summary>
+    /// handles updating and creating new chunks if they haven't been loaded yet
+    /// </summary>
+    public void UpdateChunks(Vector2 veiwerPostion, MapGenerator mapGenerator){
         for (int i = 0; i < lastUpdatedChunks.Count; i++)
         {
             lastUpdatedChunks[i].Rendered(false);
         }
         lastUpdatedChunks.Clear();
-
         Vector2 currentCords = GetChunkCords(veiwerPostion);
 
         //run to each cord surround player and check to see if current chunk
@@ -78,13 +82,12 @@ public class ChunkHandler
             for (int yOffset = -visableChunks; yOffset <= visableChunks; yOffset++)
             {
                 Vector2 veiwedChunkCord = new Vector2(currentCords.X + xOffset, currentCords.Y + yOffset);
-
-                UpdateChunk(veiwedChunkCord);
+                UpdateChunk(veiwedChunkCord, mapGenerator);
             }
         }
     }
 
-    private void UpdateChunk(Vector2 chunkCord){
+    private void UpdateChunk(Vector2 chunkCord, MapGenerator mapGenerator){
        
         if (chunks.TryGetValue(chunkCord, out var chunk))
         {
@@ -94,7 +97,11 @@ public class ChunkHandler
             }
         }
         else{
-            chunks.Add(chunkCord, new Chunk(chunkCord));
+            // mapGenerator
+            GD.Print("added newly laoded chunk");
+            Chunk newChunk = new Chunk(chunkCord, new Node2D());
+            map.AddChild(newChunk.ChunkNode);    
+            chunks.Add(chunkCord, newChunk);
         }
     }
 }

@@ -8,16 +8,12 @@ using Godot;
 /// generates the map preveiw before finalizlation, which then it generates new
 /// chunks when the chunk hanlder regensters a new one is laoded
 /// </summary>
-
-//todo make this be able to handle ui when that point is reached
 public class MapGenerator
 {
     public const int ELEVATION_MAP_IDX = 0;
     public const int MOISTURE_MAP_IDX = 1;
     public const int TEMPETURE_MAP_IDX = 2;
     // public const int ELEVATION_MAP_IDX = 0;
-
-    
 
     public bool Update{get;set;}
     public bool Preveiw{get;set;}
@@ -31,6 +27,7 @@ public class MapGenerator
     private float frequency;
     private float lacunarity;
     private float persistence;
+
    
     public MapGenerator(int width, int height){
         MapSize = new Vector2(width,height);
@@ -158,13 +155,12 @@ public class MapGenerator
         }
     }
 
-
     /// <summary>
     /// called by chunkhandler to generate a new chunk, if it finds
     /// an area loaded that needs a new chunk
     /// </summary>
-    public Chunk GenerateChunk(){
-        //todo
+    public Chunk GenerateChunk(Vector2 chunkCord){
+
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
@@ -180,9 +176,7 @@ public class MapGenerator
                 // }
             }
         }
-        return default;
-    }
-    
-
-   
+        // Chunk GeneratedChunk = 
+        return new Chunk();
+    }  
 }

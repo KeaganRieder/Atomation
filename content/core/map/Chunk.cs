@@ -15,19 +15,23 @@ public class Chunk
 
     public Node2D ChunkNode{get; set;}
     public Vector2 position {get; private set;}
-
     private Dictionary<Vector2, Terrain> floor; // maybe make new class for this?
+
+    private float bounds;
 
     //constructors
     public Chunk(){
         floor = new Dictionary<Vector2, Terrain>();
     }
-    public Chunk(Vector2 cords, Node2D ChunkObj) : this(){
+    public Chunk(Vector2 cords, Node2D parentNode) : this(){
         position = cords * CHUNK_SIZE ;
-        ChunkNode = ChunkObj;
-        ChunkObj.Name = $"Chunk: {position}";
-        ChunkObj.Position = position;
-        ChunkObj.AddChild(new ColorRect(){Color = new Color(255), Size = new Vector2(32,32)});
+        ChunkNode = new Node2D(){
+        Name = $"Chunk {position}",
+        Position = position
+        };
+        ChunkNode.AddChild(new ColorRect(){Color = new Color(255), Size = new Vector2(32,32)});
+        parentNode.AddChild(ChunkNode);
+        
         // floor = new Dictionary<Vector2, Terrain>();
     }
 
@@ -45,12 +49,23 @@ public class Chunk
     }
 
     //rendering stuff
-    public bool Rendered(Vector2 veiwerCords){
-        float veiwerDist = veiwerCords.DistanceTo(position); 
-        ChunkNode.Visible = veiwerDist <= ChunkHandler.MAX_VIEW_DIST;
+    public void UpdateChunk(Vector2 veiwerCords){
+        float distToVeiwer = (position/CHUNK_SIZE).DistanceTo(veiwerCords); 
+        // if (distToVeiwer <= ChunkHandler.MAX_LOAD_DIST == false)
+        // {
+        //     GD.Print("unreandered");
+        //     GD.Print($"{ChunkNode.Name} {distToVeiwer/CHUNK_SIZE}");
+        //     GD.Print($"veiwer cords {veiwerCords}");
+        //     GD.Print($"Chunk cords {position}");
+        //     GD.Print($"___________________________");
+        // }
+        bool visible = distToVeiwer <= ChunkHandler.MAX_LOAD_DIST;
+        SetRenderState(visible);
+    }
+    public bool Rendered(){
         return ChunkNode.Visible;
     }
-    public void Rendered(bool state){
+    public void SetRenderState(bool state){
         ChunkNode.Visible  = state;
     }
 }

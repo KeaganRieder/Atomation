@@ -43,14 +43,14 @@ public partial class WorldMap : Node2D
 	public override void _Ready(){
 		base._Ready();
 		GD.Print("test gen");
-		chunkHandler.UpdateChunks(PlayerNode.Position,mapGenerator);
+		chunkHandler.UpdateRenderedChunks(PlayerNode.Position,mapGenerator);
 		// mapGenerator.GenerateMap(this);
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-		chunkHandler.UpdateChunks(PlayerNode.Position,mapGenerator);
+		chunkHandler.UpdateRenderedChunks(PlayerNode.Position,mapGenerator);
 		
 	}
 

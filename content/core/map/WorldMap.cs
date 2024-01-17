@@ -15,26 +15,26 @@ public partial class WorldMap : Node2D
 	public Vector2 MapSize{get => new Vector2(Width,Height);}
 
 	//map componets
-	private MapGenerator mapGenerator;
+	private WorldGenerator mapGenerator;
 	private ChunkHandler chunkHandler;
 	private Node2D PlayerNode;
    
 	public WorldMap(){
-		Width = 64;
-		Height = 64;
+		Width = 100;
+		Height = 100;
 
 		//todo
-		mapGenerator = new MapGenerator(Width,Height)
+		mapGenerator = new WorldGenerator(Width,Height)
 		{
 			Seed = 0,
-			Octaves = 6,
+			HeightOctaves = 6,
 			ZoomLevel = 75,
-			Frequency = 2,
-			Lacunarity = 2,
-			Persistence = .6f,
+			HeightFrequency = 2,
+			HeightLacunarity = 2,
+			HeightPersistence = .6f,
 		};
 
-		chunkHandler = new ChunkHandler(mapGenerator, this);	
+		chunkHandler = new ChunkHandler(this);	
 		PlayerNode = new Node2D(){Name = "player"};
 		PlayerNode.AddChild(new ColorRect(){Color = new Color(100,100,100), Size = new Vector2(16,16)});	
 		AddChild(PlayerNode);

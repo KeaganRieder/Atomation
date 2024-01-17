@@ -7,44 +7,47 @@ using Godot;
 /// various values, it is eitehr loaded or unloaded depedning on where 
 /// the player is, as well as other aspects
 /// </summary>
-
-
 public class Chunk 
 {
     public const int CHUNK_SIZE = 32;
 
     public Node2D ChunkNode{get; set;}
     public Vector2 position {get; private set;}
-    private Dictionary<Vector2, Terrain> floor; // maybe make new class for this?
-
-    private float bounds;
+    private Dictionary<Vector2, Terrain> terrain; // maybe make new class for this?
 
     //constructors
     public Chunk(){
-        floor = new Dictionary<Vector2, Terrain>();
+        terrain = new Dictionary<Vector2, Terrain>();
     }
     public Chunk(Vector2 cords, Node2D parentNode) : this(){
-        position = cords * CHUNK_SIZE ;
-        ChunkNode = new Node2D(){
-        Name = $"Chunk {position}",
-        Position = position
-        };
-        ChunkNode.AddChild(new ColorRect(){Color = new Color(255), Size = new Vector2(32,32)});
-        parentNode.AddChild(ChunkNode);
+        position = cords * CHUNK_SIZE;
+        // ChunkNode = new Node2D(){
+        // Name = $"Chunk {position}",
+        // Position = position
+        // };
+
+        // ChunkNode.AddChild(new ColorRect(){Color = new Color(255), Size = new Vector2(32,32)});
+        // parentNode.AddChild(ChunkNode);
         
         // floor = new Dictionary<Vector2, Terrain>();
+    }
+    public Chunk(GeneratedChunk chunkData) : this(){
+        // position = cords * CHUNK_SIZE;
+        terrain = chunkData.Terrain;
+        ChunkNode = chunkData.ChunkNode;
+        position = ChunkNode.Position;
     }
 
     //geting compents
     public Terrain Floor(Vector2 key){
-        if (floor.ContainsKey(key))
+        if (terrain.ContainsKey(key))
         {
-            return floor[key];
+            return terrain[key];
         }
         return default;
     }
     public void Floor(Vector2 key, Terrain value){
-        floor[key] = value;
+        terrain[key] = value;
         //todo add checks for floor support, and if it is placeAble  
     }
 

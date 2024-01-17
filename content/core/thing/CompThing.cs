@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 /// base defintion for all complex things, used to define
 /// values which all complex thing share
 /// </summary>
+/// //todo get rid of node2d
 public partial class CompThing : Node2D, IThing
 {
     // [JsonProperty("name")]

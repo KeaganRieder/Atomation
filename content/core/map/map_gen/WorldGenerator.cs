@@ -81,7 +81,7 @@ public class WorldGenerator
         int tileID = 0; 
         
         //todo make check for if at world bounds
-        Dictionary<Vector2, Terrain> generatedTerrain = new();
+        Dictionary<Vector2, Tile> generatedTerrain = new();
         Node2D ChunkNode = new Node2D(){
             Name = $"Chunk {chunkCord}",
             Position = chunkCord*WorldMap.CELL_SIZE
@@ -97,16 +97,12 @@ public class WorldGenerator
                 string ID = $"Tile{tileID}";
                 float elevation = elevationMap[x, y];
 
-                Color color = new Color(elevation,elevation,elevation);//(elevation,elevation,elevation);
-                Graphic graphic = new Graphic("",color);
-                Vector2 cords =NormalizeCords( x,  y);
-
-                Terrain terrain = new Terrain(ID, "", null, graphic){
-                    Position = cords,
-                };
+                Vector2 cords = NormalizeCords( x,  y);
+                TileData tileData = new TileData(cords,elevation, 0, 0);
+                Tile tile = new(tileData);
                
-                ChunkNode.AddChild(terrain);
-                generatedTerrain.Add(cords,terrain);
+                ChunkNode.AddChild(tile);
+                generatedTerrain.Add(cords,tile);
                 tileID++;
             }
         }

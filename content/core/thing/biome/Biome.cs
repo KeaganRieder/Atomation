@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 /// store various tables used during generation to place things like tiles and
 /// resources 
 /// </summary>
-public class Biome : IThing {
+public class BiomeOld : IThing {
   
   [JsonProperty("label")]
 	public string Label{get; set;}
@@ -20,10 +20,10 @@ public class Biome : IThing {
   private Dictionary<float,string> terrain;
   //add plants later
 
-  public Biome(){
+  public BiomeOld(){
 
   }
-  public Biome(Dictionary<float,string> terrain){
+  public BiomeOld(Dictionary<float,string> terrain){
     this.terrain = terrain;
   }
 

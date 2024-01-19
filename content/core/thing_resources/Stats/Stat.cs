@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Godot;
 using Newtonsoft.Json;
 
@@ -7,101 +8,91 @@ using Newtonsoft.Json;
 /// </summary>
 public partial class Stat : StatBase
 {
-
     [JsonProperty]
-    protected float current;
+    protected float currentVal;
     [JsonProperty]
     protected float minValue;
     [JsonProperty]
     protected float maxValue;
-    protected Dictionary<string, StatModifer> valueModifers;
-    protected Dictionary<string, StatModifer> maxModifers;
-
+    protected Dictionary<string, StatModifer> modifers;
     private bool updateValues = false;
 
     public Stat(){
-        valueModifers = new Dictionary<string, StatModifer>();
-        maxModifers = new Dictionary<string, StatModifer>();
+        modifers = new Dictionary<string, StatModifer>();
+    }
+    public Stat(string name, string description, float baseVal, float min, float max){
+        modifers = new Dictionary<string, StatModifer>();
+        this.name = name;
+        this.description = description;
+        baseValue = baseVal;
+        currentVal = baseVal;
+        minValue = min;
+        maxValue = max;
     }
 
     public override float Value{
         get{
             if (updateValues)
             {
-                ApplyBaseModifers();
-                ApplyMaxModifers();
-                updateValues = false;
+                ApplyModifers();
+                return currentVal;
             }
-            return  current;
+            return currentVal;
         }
         set
         {
             baseValue = value;
         }
     }
+    [JsonIgnore]
     public float Min{get => minValue; private set{minValue = value;}}
-    public float Man{get => maxValue; private set{maxValue = value;}}
+    [JsonIgnore]
+    public float MaX{get => maxValue; private set{maxValue = value;}}
 
-    //todo overload += and -= operators to apply instant dmg or healing
+    public static float operator +(Stat obj, float val){
+        obj.baseValue = Mathf.Clamp(obj.baseValue + val, obj.minValue,obj.MaX);
+        obj.currentVal = Mathf.Clamp(obj.currentVal + val, obj.minValue,obj.MaX);
+        return obj.Value;
+    }
+    public static float operator -(Stat obj, float val){
+        obj.baseValue = Mathf.Clamp(obj.baseValue - val, obj.minValue,obj.MaX);
+        obj.currentVal = Mathf.Clamp(obj.currentVal - val, obj.minValue,obj.MaX);
+        return obj.Value;
+    }
 
-    public void AddMaxModifer(StatModifer modifer){
-        if (!maxModifers.ContainsKey(modifer.Name))
+    public void AddModifer(StatModifer modifer){
+        if (modifers.ContainsKey(modifer.Name))
         {
-            maxModifers.Add(modifer.Name,modifer);
-            updateValues = true;
+            GD.Print($"Warning modifer {modifer.Name} is already present in {this.Name}");
         }
         else
         {
-            //output warning
+            modifers.Add(modifer.Name,modifer);
         }
     }
-    public void RemoveMaxModifer(StatModifer modifer){
-        if (!maxModifers.ContainsKey(modifer.Name))
+    public void RemoveModifer(StatModifer modifer){
+        if (modifers.ContainsKey(modifer.Name))
         {
-            throw new KeyNotFoundException($"modifer {modifer.Name} wasn't found in {this.Name}");
+            modifers.Add(modifer.Name,modifer);
+           
         }
         else
         {
-            maxModifers.Remove(modifer.Name);
-            updateValues = true;
+            throw new KeyNotFoundException($"Modifer {modifer.Name} isn't presnt in {this.name}");
         }
     }
+   
+    private void ApplyModifers(){
+        currentVal = baseValue;
+        foreach (StatModifer modifer in modifers.Values)
+        {
+            if (currentVal == minValue || currentVal == maxValue)
+            {
+                break;
+            }
+            currentVal = Mathf.Clamp(currentVal + modifer.Value, Min, MaX);
+        }
 
-    public void AddBaseModifer(StatModifer modifer){
-        if (!valueModifers.ContainsKey(modifer.Name))
-        {
-           valueModifers.Remove(modifer.Name); 
-           updateValues = true;
-        }
-        else
-        {
-            //output warning
-        }
-    }
-    public void RemoveBaseModifer(StatModifer modifer){
-        if (!valueModifers.ContainsKey(modifer.Name))
-        {
-            throw new KeyNotFoundException($"modifer {modifer.Name} wasn't found in {this.Name}");
-        }
-        else
-        {
-            valueModifers.Remove(modifer.Name);
-            updateValues = true;
-        }
-    }
-
-    public void ApplyInstatntModifer(int value){
-        //maybe want to just make it re apply modifers after this?
-        baseValue = Mathf.Clamp(baseValue + value, minValue, maxValue);
-        baseValue = Mathf.Clamp(current + value, minValue, maxValue);
-    }
-
-    private void ApplyBaseModifers(){
-        //todo
-        
-    }
-    private void ApplyMaxModifers(){
-        //todo
+        updateValues = false;
     }
 }
-

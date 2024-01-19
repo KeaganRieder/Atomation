@@ -12,10 +12,20 @@ public abstract partial class CompThingNew : ThingNew
     [JsonProperty("graphic data")]
     protected Graphic graphic;
     [JsonProperty("stats")]
-    protected Dictionary<string, StatBase> stats; //this needs work
+    protected Dictionary<string, StatBase> stats; 
 
-    // public virtual Node2D ObjNode{get => objNode; set{objNode = value;}}
+    // public virtual Node2D ObjNode{get => objNode; set{objNode = value;}} maybe?
+    [JsonIgnore]
     public virtual Graphic Graphic{get => graphic; set{graphic = value;}}
-    // public virtual StatBase StatSheet{get => stats; set{graphic = value;}}
+    public virtual StatBase Stat(string statId){
+        if (stats.TryGetValue(statId, out var stat))
+        {
+            return stat;
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Error: Stat {statId} isn't present in {this.name}");
+        }
+    }
 
 }

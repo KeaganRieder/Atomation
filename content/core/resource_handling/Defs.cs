@@ -16,14 +16,14 @@ public static class Defs
 
     //cached dictionary
     public static DefDatabase<Terrain> TerrainDefs;
-    public static DefDatabase<Biome> BiomeDefs;
+    public static DefDatabase<BiomeOld> BiomeDefs;
     
     public static void LoadDefs(){
         GD.Print($"Reading Defs");
         try
         {
             TerrainDefs = new DefDatabase<Terrain>(TERRAIN_DEFS_PATH);
-            BiomeDefs = new DefDatabase<Biome>(BIOME_DEFS_PATH); 
+            BiomeDefs = new DefDatabase<BiomeOld>(BIOME_DEFS_PATH); 
         }
         catch (Exception error)
         {

@@ -4,9 +4,40 @@ using System.IO;
 using Godot;
 using Newtonsoft.Json;
 
-public class DefDatabase<defType> where defType : IThing  {
+public class DefDatabase<defType> where defType : IThingNew  {
   
-    public Dictionary<string,string> Contents = new Dictionary<string, string>();
+    public Dictionary<string,string> Contents;
+
+    public DefDatabase(string folderPath){
+        Contents = new Dictionary<string, string>();
+        if (Directory.Exists(folderPath))
+        {            
+            string[] files = Directory.GetFiles(folderPath);
+            foreach (string filePath in files)
+            {
+                DefFile<defType> defFile = JsonReader.ReadJson<DefFile<defType>>(filePath);
+                foreach (defType def in defFile.defs)
+                {    
+                    CacheFileData(def.Name, def);        
+                }
+            }
+        }
+        else
+        {
+            throw new FileNotFoundException($"file read failed: {folderPath} missing");
+        }
+    }
+    
+    public void CacheFileData(string name, defType obj){
+        try
+        {
+           Contents.Add(name, JsonConvert.SerializeObject(obj));
+        }
+        catch (Exception  Error)
+        {
+            GD.PrintErr($"Error failed to add key: {Error.Message}");
+        }
+    }
 
     public defType this[string key]{
         get{
@@ -18,36 +49,6 @@ public class DefDatabase<defType> where defType : IThing  {
             {
                 throw new KeyNotFoundException($"Key '{key}' not found in the dictionary.");
             }
-        }
-    }
-
-    public DefDatabase(string folderPath){
-        if (Directory.Exists(folderPath))
-        {            
-            string[] files = Directory.GetFiles(folderPath);
-            foreach (string filePath in files)
-            {
-                DefFile<defType> defFile = JsonReader.ReadJson<DefFile<defType>>(filePath);
-                foreach (defType def in defFile.defs)
-                {    
-                    CacheFileData(def.Label, def);        
-                }
-            }
-        }
-        else
-        {
-            throw new FileNotFoundException($"Error file read failed: {folderPath} missing");
-        }
-    }
-
-    public void CacheFileData(string name, defType obj){
-        try
-        {
-           Contents.Add(name, JsonConvert.SerializeObject(obj));
-        }
-        catch (Exception  Error)
-        {
-            GD.PrintErr($"Error failed to add key: {Error.Message}");
         }
     }
 }

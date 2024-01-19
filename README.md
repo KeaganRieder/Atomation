@@ -1,8 +1,6 @@
 # About
-Atomation is an Automation colony-simulation game, set in a post apoclicyse. Where the goal thats currently plann is to have the player mange 
-an eventaully automate the survail of a colony, well cleaning the planet. evetually relasiing this in some regard is the long term goal.
+Atomation is an Automation colony-simulation game set in a post-apocalyptic. Where the goal that is currently planned to have the player manage 
+and eventually automate the survival of a city, as well as clean the planet. Eventually, releasing this in some regard is the long-term goal.
 
-However currently it's serving as a way for me to learn both more about C# and the Godot game engine.
+However, currently, it's serving as a way for me to learn more about C# and the Godot game engine.
 
-# Todo
-currently it's still very rough, how ever once more is finsihed and the 'foundtaion' are done more will be here

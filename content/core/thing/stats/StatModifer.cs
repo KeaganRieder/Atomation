@@ -4,9 +4,9 @@ using System;
 /// <summary>
 /// a stat which is a used to a perstnat modifers onto a compStat
 /// </summary>
-public partial class StatModifer : StatBase
+public partial class StatModiferOld : StatBaseOld
 {
-    public StatModifer(string name, string description, float baseValue, int order)
+    public StatModiferOld(string name, string description, float baseValue, int order)
          : base(name, description, baseValue){
         Count = 1;
         Order = order;

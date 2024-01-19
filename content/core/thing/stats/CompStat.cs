@@ -8,11 +8,11 @@ using System.Linq.Expressions;
 /// modifers (eg. dmg or a potion)
 /// todo
 /// </summary>
-public partial class CompStat : StatBase
+public partial class CompStat : StatBaseOld
 {
     public CompStat(string name, string description, float baseValue, float minValue, float maxValue)
         : base(name, description, baseValue){
-        modifers = new Dictionary<string, StatModifer>();
+        modifers = new Dictionary<string, StatModiferOld>();
         updateStat = false;
         currentVal = baseValue;
         this.minValue = minValue;
@@ -35,7 +35,7 @@ public partial class CompStat : StatBase
     public void ApplyModifers(){
         updateStat = false;
         currentVal = baseValue;
-        foreach (StatModifer modifer in modifers.Values)
+        foreach (StatModiferOld modifer in modifers.Values)
         {
             if (currentVal <= minValue || currentVal >= maxValue)
             {
@@ -45,7 +45,7 @@ public partial class CompStat : StatBase
             Math.Clamp(currentVal += modifer.Value, minValue, maxValue);
         }
     }
-    public void AddModifer(StatModifer mod){
+    public void AddModifer(StatModiferOld mod){
         updateStat = true;
         if (modifers.ContainsKey(mod.Name))
         {
@@ -56,7 +56,7 @@ public partial class CompStat : StatBase
         }
         
     }
-    public void RemoveModifer(StatModifer mod){
+    public void RemoveModifer(StatModiferOld mod){
         try
         {
             if (modifers.ContainsKey(mod.Name))

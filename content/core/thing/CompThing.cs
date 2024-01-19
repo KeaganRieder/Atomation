@@ -17,12 +17,12 @@ public partial class CompThing : Node2D, IThing
     [JsonProperty("description")]
     public string Description{get; set;}
     [JsonProperty]
-    protected Dictionary<string,StatBase> stats;
+    protected Dictionary<string,StatBaseOld> stats;
     [JsonProperty]
     protected Graphic graphic;
  
     public CompThing(string name, string description) {Description = description; Name = name; Label = name;}
-    public CompThing(string name, string description, Dictionary<string,StatBase> stats, Graphic graphic)
+    public CompThing(string name, string description, Dictionary<string,StatBaseOld> stats, Graphic graphic)
         : this(name,description){
 
         this.stats = stats;

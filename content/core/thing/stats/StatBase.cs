@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// a stat which doesn't hold modifer and can't act as one,
 /// meant to be stats which are sort of persitant 
 /// </summary>
-public partial class StatBase : Thing
+public partial class StatBaseOld : Thing
 {
     //base values
     [JsonProperty]
@@ -21,15 +21,15 @@ public partial class StatBase : Thing
     //complex stat values
     protected float currentVal = 0;
     protected bool updateStat;
-    protected Dictionary<string, StatModifer> modifers; // only for prolonged modifers\
+    protected Dictionary<string, StatModiferOld> modifers; // only for prolonged modifers\
 
     //stat modifer values
     [JsonProperty("order")]
     protected int Order{get; set;}  = 0;
 
     //constrcutors
-    public StatBase() : this("default", "default", 0){}
-    public StatBase(string name, string description, float baseVal)
+    public StatBaseOld() : this("default", "default", 0){}
+    public StatBaseOld(string name, string description, float baseVal)
         : base(name, description){
         baseValue = baseVal;
     }

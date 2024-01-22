@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 public partial class Player : Node2D
 {
     [JsonProperty]
-    private Dictionary<string,StatBaseOld> stats; 
+    private Dictionary<string,StatBase> stats; 
 
     [JsonProperty]
     private Graphic graphic;
@@ -19,8 +19,8 @@ public partial class Player : Node2D
     private Camera camera;
 
     public Player(){
-        stats = new Dictionary<string, StatBaseOld>(){
-            {"MoveSpeed", new StatBaseOld("MoveSpeed","players MoveSpeed",1)}
+        stats = new Dictionary<string, StatBase>(){
+            {"MoveSpeed", new Stat("MoveSpeed","players MoveSpeed",1,0.1f,2)}
         };  
 
         graphic = new Graphic("", new Color(255,255,100));

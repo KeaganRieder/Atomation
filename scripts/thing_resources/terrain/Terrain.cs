@@ -18,4 +18,6 @@ public partial class TerrainNew : CompThingNew
         this.stats = stats;
         this.graphic = graphic;
     }
+
+    //todo add geters and seters for stats all Terrain have
 }

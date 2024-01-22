@@ -1,5 +1,6 @@
-
-
+/// <summary>
+/// enum used to decide how the map is currently being displayed
+/// </summary>
 public enum MapVisuals
 {
     Default = 0,

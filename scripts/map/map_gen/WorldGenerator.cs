@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Godot;
 
-
-
 /// <summary>
 /// the games world generators, which manange and oversees
 /// the running/executaion of genesteps to genertate the game
@@ -15,6 +13,7 @@ public class WorldGenerator
     private int MaxMapHeight{get;set;}
     private int seed;
     private float zoomLevel = 1;
+    
 
     //noiseMaps
     private NoiseMap elevationMap;

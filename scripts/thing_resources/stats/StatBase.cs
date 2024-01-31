@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// base definition for all stats
 /// </summary>
-public abstract partial class StatBase : ThingNew
+public abstract partial class StatBase : Thing
 {
     [JsonProperty]
     protected float baseValue;

@@ -7,6 +7,17 @@ public enum EdgeType{
     Rough, 
     Smooth,
 }
+
+/// <summary>
+/// class mainly used to store and transfer configurtaion data
+/// used to create a new graphic
+/// </summary>
+public class GraphicData
+{
+    public string texturePath{get; set;}
+    public Color color {get; set;}
+}
+
 /// <summary>
 /// manges manipluating and handling a thinsg texture/graphic
 /// applying any mansk or other modifcation to it
@@ -23,6 +34,10 @@ public partial class Graphic {
     public Graphic(string texturePath,Color color){
         this.texturePath = texturePath;
         this.color = color;
+    }
+    public Graphic(GraphicData configs){
+        texturePath = configs.texturePath;
+        color = configs.color;
     }
 
     public void ReadTexture(){

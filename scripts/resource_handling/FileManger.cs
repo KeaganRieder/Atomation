@@ -29,10 +29,7 @@ public partial class FileManger : Node{
     public const string TEXTURE_FOLDER = "resources/textures";
     public const string AUDIO_FOLDER = "resources/audio";
 
-    DefResources defResources;
-
     public FileManger(){
-        defResources = new DefResources(); 
     }
     
     public override void _Ready(){
@@ -43,74 +40,74 @@ public partial class FileManger : Node{
     // JsonReader
     public void LoadFiles(){
         GD.Print("Loading Respurces");
-        defResources.LoadResources();//todo make this threaded
+        DefResources.LoadResources();//todo make this threaded
     }
 
     /// <summary>
     /// used for debuging/inital file cretaion only
     /// </summary>
     public void FormatFiles(){
-        TerrainNew[] natural = new TerrainNew[]{
-            new TerrainNew("Grass","", new Dictionary<string, StatBase>{
+        Terrain[] natural = new Terrain[]{
+            new Terrain("Grass","", new Dictionary<string, StatBase>{
                 {"Fertility", new Stat("Fertility", "Objects fertility",1.0f,0,0)},
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.8f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/grass", new Color())
             ),
-            new TerrainNew("Soil","", new Dictionary<string, StatBase>{
+            new Terrain("Soil","", new Dictionary<string, StatBase>{
                 {"Fertility", new Stat("Fertility", "Objects fertility",1.0f,0,0)},
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.8f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/soil", new Color())
             ),
-            new TerrainNew("Gravel","", new Dictionary<string, StatBase>{
+            new Terrain("Gravel","", new Dictionary<string, StatBase>{
                 {"Fertility", new Stat("Fertility", "Objects fertility",0.5f,0,0)},
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.6f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",-1.0f,0,0)}
             }, new Graphic("terrain/natural/gravel", new Color())
             ),
-            new TerrainNew("Sand","", new Dictionary<string, StatBase>{
+            new Terrain("Sand","", new Dictionary<string, StatBase>{
                 {"Fertility", new Stat("Fertility", "Objects fertility",0.0f,0,0)},
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.7f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/sand", new Color())
             )
         };
-        TerrainNew[] water = new TerrainNew[]{
-            new TerrainNew("Marsh","", new Dictionary<string, StatBase>{
+        Terrain[] water = new Terrain[]{
+            new Terrain("Marsh","", new Dictionary<string, StatBase>{
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.5f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/grass", new Color())
             ),
-            new TerrainNew("ShallowOcean","", new Dictionary<string, StatBase>{
+            new Terrain("ShallowOcean","", new Dictionary<string, StatBase>{
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.5f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/soil", new Color())
             ),
-            new TerrainNew("ShallowWater","", new Dictionary<string, StatBase>{
+            new Terrain("ShallowWater","", new Dictionary<string, StatBase>{
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.5f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",-1.0f,0,0)}
             }, new Graphic("terrain/natural/shallow_water", new Color())
             ),
-            new TerrainNew("ChestDeepOcean","", new Dictionary<string, StatBase>{
+            new Terrain("ChestDeepOcean","", new Dictionary<string, StatBase>{
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.4f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/chest_deep_ocean", new Color())
             ),
-            new TerrainNew("DeepOcean","", new Dictionary<string, StatBase>{
+            new Terrain("DeepOcean","", new Dictionary<string, StatBase>{
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.0f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/deep_ocean", new Color())
             )
         };
-        TerrainNew[] stone = new TerrainNew[]{
-            new TerrainNew("Slate","", new Dictionary<string, StatBase>{
+        Terrain[] stone = new Terrain[]{
+            new Terrain("Slate","", new Dictionary<string, StatBase>{
                 {"Fertility", new Stat("Fertility", "Objects fertility",0.0f,0,0)},
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.7f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
             }, new Graphic("terrain/natural/slate", new Color())
             ),
-            new TerrainNew("marble","", new Dictionary<string, StatBase>{
+            new Terrain("marble","", new Dictionary<string, StatBase>{
                 {"Fertility", new Stat("Fertility", "Objects fertility",0.0f,0,0)},
                 {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.7f,0,0)},
                 {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
@@ -122,9 +119,9 @@ public partial class FileManger : Node{
             new Biome("tempForest",.5f,.5f,.5f),
         };
 
-        DefFile<TerrainNew> naturalDefs = new DefFile<TerrainNew>(natural);
-        DefFile<TerrainNew> waterDefs = new DefFile<TerrainNew>(water);
-        DefFile<TerrainNew> stoneDefs = new DefFile<TerrainNew>(stone);
+        DefFile<Terrain> naturalDefs = new DefFile<Terrain>(natural);
+        DefFile<Terrain> waterDefs = new DefFile<Terrain>(water);
+        DefFile<Terrain> stoneDefs = new DefFile<Terrain>(stone);
 
         DefFile<Biome> temperateBiomeDefs = new DefFile<Biome>(temperateBiomes);
         

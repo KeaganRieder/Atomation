@@ -5,38 +5,46 @@ using Godot;
 /// <summary>
 /// defines the generation step for generating the terrian
 /// </summary>
-public class GenStepTerrain
+public class GenStepTerrain : GenStep
 {
-    private float waterLevel = .2f;
-    private float mounatinSize = .8f; //no mountains is anything above 1
+    private  GeneratedChunk generatedChunk;
+    private GenData genData;
+    private Dictionary<Vector2, Terrain> generatedTerrain;
 
-    Dictionary<Vector2, Tile> generatedTerrain;
-
-    public GenStepTerrain(float waterLevel, float mounatinSize){
-        // generatedTerrain = new Dictionary<Vector2, Tile>();
-        this.waterLevel = waterLevel;
-        this.mounatinSize = mounatinSize;
+    public GenStepTerrain(GenData genData){
+        this.genData = genData;
+        generatedTerrain = new Dictionary<Vector2, Terrain>();    
     }
 
-    public float WaterLevel{
-        get=> waterLevel; 
-        set{waterLevel = Math.Clamp(value,.2f,.5f);}
-    }
-    public float MounatinSize{
-        get=> mounatinSize; 
-        set{mounatinSize = Math.Clamp(value,.7f,1f);}
-    }
+    public GeneratedChunk RunStep(GeneratedChunk generatedChunk){
+        this.generatedChunk = generatedChunk;
+        GenerateTerrain();
+        // GenerateElevation();
 
-    public void RunStep(){
-        /*out GeneratedChunk chunk data*/
-
+        return this.generatedChunk;
     }
 
     public void GenerateTerrain(){
-
+        for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
+        {
+            for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
+            {
+                float elevation = genData.ElevationMap[x,y];
+                //get tile based on data 
+                Vector2 cords = NormalizeCords(x,y);
+                Terrain terrainTile = DefResources.Terrain(GetTerrain(elevation));
+                generatedTerrain.Add(cords,terrainTile);
+            }
+        }
+        // generatedChunk.Terrain = generatedTerrain;
     }
     public void GenerateElevation(){
         
+    }
+
+    //tempory function tell biomes are working
+    private string GetTerrain(float elevation){
+        return "";
     }
 
 

@@ -20,19 +20,30 @@ public class NoiseMap : NoiseObject
     /// <summary>
     /// creates a NoiseMap object which is set to generate simplex noise
     /// </summary>
-    public NoiseMap(int seed, Vector2 seedOffset, float zoomLevel, int octaves, 
+    public NoiseMap(int seed, float zoomLevel, int octaves, 
         float frequency, float persistence, float lacunarity){
         
         noiseLite = new FastNoiseLite(){
             NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth
         };
         Seed = seed;
-        Offset = seedOffset;
-        ZoomLevel = zoomLevel;
+        ZoomLevel = zoomLevel; //maybe make zoom level change able later
         Octaves = octaves;
         Frequency = frequency;
         Persistence = persistence;
         Lacunarity = lacunarity;        
+    }
+    public NoiseMap(NoiseMapConfig config){
+        
+        noiseLite = new FastNoiseLite(){
+            NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth
+        };
+        Seed = seed;
+        ZoomLevel = config.zoom; 
+        Octaves = config.octaves;
+        Frequency = config.frequency;
+        Persistence = config.persistence;
+        Lacunarity = config.lacunarity;        
     }
 
     public override int Seed{

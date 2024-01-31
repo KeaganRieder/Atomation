@@ -22,10 +22,9 @@ public partial class WorldMap : Node2D
 	public WorldMap(){
 		Width = 100;
 		Height = 100;
-
-		//todo
-		mapGenerator = new WorldGenerator(Width,Height)
-		{
+		GenData genData = new GenData(){
+			MaxMapWidth = Width,
+			MaxMapHeight = Height,
 			Seed = 0,
 			HeightOctaves = 6,
 			ZoomLevel = 75,
@@ -33,6 +32,8 @@ public partial class WorldMap : Node2D
 			HeightLacunarity = 2,
 			HeightPersistence = .6f,
 		};
+		//todo
+		mapGenerator = new WorldGenerator(genData);
 
 		chunkHandler = new ChunkHandler(this);	
 		PlayerNode = new Node2D(){Name = "player"};

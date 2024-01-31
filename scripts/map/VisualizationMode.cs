@@ -1,7 +1,7 @@
 /// <summary>
 /// enum used to decide how the map is currently being displayed
 /// </summary>
-public enum MapVisuals
+public enum MapVisualizationMode
 {
     Default = 0,
     Graphics = 1,

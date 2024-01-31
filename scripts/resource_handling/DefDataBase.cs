@@ -4,7 +4,7 @@ using System.IO;
 using Godot;
 using Newtonsoft.Json;
 
-public class DefDatabase<defType> where defType : IThingNew  {
+public class DefDatabase<defType> where defType : IThing  { // IThingDef{
   
     public Dictionary<string,string> Contents;
 

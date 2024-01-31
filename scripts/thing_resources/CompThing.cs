@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 /// compThing defines the foundtaions of all complex obejct that 
 /// appear in the game world. 
 /// </summary>
-public abstract partial class CompThingNew : ThingNew
+public abstract partial class CompThing : Thing
 {
     // protected Node2D objNode;
     [JsonProperty("graphic data")]

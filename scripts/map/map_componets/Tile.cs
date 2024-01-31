@@ -27,7 +27,7 @@ public partial class Tile : Node2D
     private float heat;
     private float moisture;
 
-    private TerrainNew tileResource;
+    private Terrain tileResource;
     
     public Tile(TileData data){
         Name = $"Tile {data.Position}";
@@ -39,11 +39,11 @@ public partial class Tile : Node2D
         tileResource = null;
         DisplayMode();
     }
-    public Tile(TileData data, TerrainNew resource) : this(data){       
+    public Tile(TileData data, Terrain resource) : this(data){       
         tileResource = resource;
     }
 
-    public TerrainNew Resource{get => tileResource; set{tileResource = value;}}
+    public Terrain Resource{get => tileResource; set{tileResource = value;}}
 
     public void DisplayMode(){
         //todo add differnt types of display modes (to be used during debuging and other stuff)

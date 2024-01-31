@@ -9,71 +9,26 @@ using Godot;
 public class WorldGenerator
 {
     //general values
-    public int MaxMapWidth{get;set;}
-    private int MaxMapHeight{get;set;}
-    private int seed;
-    private float zoomLevel = 1;
-    
+    // public int MaxMapWidth{get;set;}
+    // private int MaxMapHeight{get;set;}
+    // private int seed;
+    // private float zoomLevel = 1;
+    private GenData genData;
+    private GenerationData generationData;
 
-    //noiseMaps
-    private NoiseMap elevationMap;
-    // private NoiseCombiner heatMap;
-    // private NoiseMap moistureMap;
-
-    public WorldGenerator(int width, int height){
-        
-        MaxMapWidth = width;
-        MaxMapHeight = height;
-
-        // make defaults at some point
-        // new NoiseMap(int seed, Vector2 seedOffset, float zoomLevel, int octaves, 
-        // float frequency, float persistence, float lacunarity)
-        elevationMap = new NoiseMap();
+    public WorldGenerator(GenData genData){
+        this.genData = genData;
     }
-
-    public int Seed{
-        get => seed;
-        set{
-            seed = value;
-            elevationMap.Seed = value;
-        }
-    }
-    public float ZoomLevel{
-        get => zoomLevel;
-        set{
-            zoomLevel = value;
-            elevationMap.ZoomLevel = value;
-        }
-    }
-    public int HeightOctaves{
-        get => elevationMap.Octaves;
-        set{
-            elevationMap.Octaves = value;
-        }
-    }
-    public float HeightFrequency{
-        get => elevationMap.Frequency;
-        set{
-            elevationMap.Frequency = value;
-        }
-    }
-    public float HeightPersistence{
-        get => elevationMap.Persistence;
-        set{
-            elevationMap.Persistence = value;
-        }
-    }
-    public float HeightLacunarity{
-        get => elevationMap.Lacunarity;
-        set{
-            elevationMap.Lacunarity = value;
-        }
-    }
-
+    public GenData GenData{get=>genData; set{genData = value;}}
+   
     public Vector2 NormalizeCords(int x, int y){
         float xCord = x * WorldMap.CELL_SIZE;
         float yCord = y * WorldMap.CELL_SIZE;
         return new Vector2(xCord,yCord);
+    }
+
+    public void ExecuteGenSteps(){
+        //todo
     }
 
     public GeneratedChunk GenerateChunk(Vector2 chunkCord, Node2D map){
@@ -87,14 +42,14 @@ public class WorldGenerator
         };
         map.AddChild(ChunkNode);
 
-        elevationMap.Offset = chunkCord;
+        GenData.ElevationMap.Offset = chunkCord;
 
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
             {
                 string ID = $"Tile{tileID}";
-                float elevation = elevationMap[x, y];
+                float elevation = GenData.ElevationMap[x, y];
 
                 Vector2 cords = NormalizeCords( x,  y);
                 TileData tileData = new TileData(cords,elevation, 0, 0);
@@ -106,5 +61,9 @@ public class WorldGenerator
             }
         }
         return new GeneratedChunk(generatedTerrain,ChunkNode);
-    }   
+    }  
+
+
+
+
 }

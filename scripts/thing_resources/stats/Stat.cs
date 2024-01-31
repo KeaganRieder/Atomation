@@ -29,6 +29,15 @@ public partial class Stat : StatBase
         minValue = min;
         maxValue = max;
     }
+    public Stat(StatDef config){
+        modifers = new Dictionary<string, StatModifer>();
+        name = config.Name;
+        description = config.Description;
+        baseValue = config.baseValue;
+        currentVal = baseValue;
+        minValue = config.minValue;
+        maxValue =  config.maxValue;
+    }
 
     public override float Value{
         get{

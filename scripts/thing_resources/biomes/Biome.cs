@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 /// biomes are used to determine the types of terrain based on
 /// the provide elevation, mositure and tempeture
 /// </summary>
-public class Biome : IThingNew{
+public class Biome : IThing{
     [JsonProperty("name")]
     private string name = "";
     [JsonProperty("height")]
@@ -16,13 +16,19 @@ public class Biome : IThingNew{
     [JsonProperty("moisture")]
     private float moistureValue;
     [JsonProperty("terrain types")]
-    private Dictionary<float, string> terrain;
+    private Dictionary<float, string> terrain; //todo
 
     public Biome(string name, float heightValue, float heatValue, float moistureValue){
         this.name = name;
         this.heightValue = heightValue;  
         this.heatValue = heatValue;  
         this.moistureValue = moistureValue;  
+    }
+    public Biome(BiomeDef configs){
+        name = configs.Name;
+        heightValue = configs.heightValue;  
+        heatValue = configs.heatValue;  
+        moistureValue = configs.moistureValue;  
     }
 
     public string Name{get => name; set{name = value;}}

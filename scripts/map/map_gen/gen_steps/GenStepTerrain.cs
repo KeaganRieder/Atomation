@@ -8,10 +8,10 @@ using Godot;
 public class GenStepTerrain : GenStep
 {
     private  GeneratedChunk generatedChunk;
-    private GenData genData;
+    private GenConfigs genData;
     private Dictionary<Vector2, Terrain> generatedTerrain;
 
-    public GenStepTerrain(GenData genData){
+    public GenStepTerrain(GenConfigs genData){
         this.genData = genData;
         generatedTerrain = new Dictionary<Vector2, Terrain>();    
     }
@@ -25,17 +25,17 @@ public class GenStepTerrain : GenStep
     }
 
     public void GenerateTerrain(){
-        for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
-        {
-            for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
-            {
-                float elevation = genData.ElevationMap[x,y];
-                //get tile based on data 
-                Vector2 cords = NormalizeCords(x,y);
-                Terrain terrainTile = DefResources.Terrain(GetTerrain(elevation));
-                generatedTerrain.Add(cords,terrainTile);
-            }
-        }
+        // for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
+        // {
+        //     for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
+        //     {
+        //         float elevation = genData.ElevationMap[x,y];
+        //         //get tile based on data 
+        //         Vector2 cords = NormalizeCords(x,y);
+        //         Terrain terrainTile = DefResources.Terrain(GetTerrain(elevation));
+        //         generatedTerrain.Add(cords,terrainTile);
+        //     }
+        // }
         // generatedChunk.Terrain = generatedTerrain;
     }
     public void GenerateElevation(){

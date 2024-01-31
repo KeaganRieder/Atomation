@@ -22,18 +22,38 @@ public partial class WorldMap : Node2D
 	public WorldMap(){
 		Width = 100;
 		Height = 100;
-		GenData genData = new GenData(){
-			MaxMapWidth = Width,
-			MaxMapHeight = Height,
-			Seed = 0,
-			HeightOctaves = 6,
-			ZoomLevel = 75,
-			HeightFrequency = 2,
-			HeightLacunarity = 2,
-			HeightPersistence = .6f,
+		//note zoom level may need a be something like 1000
+		GenConfigs genConfig = new GenConfigs(){
+			worldBounds = new Vector2I(Width,Height),
+			seaLevel = -0.1f,
+			mounatinSize = 0.2f,
+			elevationMapConfigs = new NoiseMapConfig(){
+				seed = 0,
+				octaves = 6,
+				zoom = 75,
+				frequency = 2,
+				lacunarity = 2,
+				persistence = 0.6f,
+			},
+			moistureMapConfigs = new NoiseMapConfig(){
+				seed = 0,
+				octaves = 6,
+				zoom = 75,
+				frequency = 2,
+				lacunarity = 2,
+				persistence = 0.6f,
+			},
+			heatMapConfigs = new NoiseMapConfig(){
+				seed = 0,
+				octaves = 6,
+				zoom = 75,
+				frequency = 2,
+				lacunarity = 2,
+				persistence = 0.6f,
+			}
 		};
-		//todo
-		mapGenerator = new WorldGenerator(genData);
+		
+		mapGenerator = new WorldGenerator(genConfig);
 
 		chunkHandler = new ChunkHandler(this);	
 		PlayerNode = new Node2D(){Name = "player"};

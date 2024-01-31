@@ -1,6 +1,34 @@
 using Godot;
 
 /// <summary>
+/// config data used for setting how noise maps are generated
+/// </summary>
+public class NoiseMapConfig
+{
+    public int seed;
+    public int octaves;
+    public float zoom;
+    public float frequency;
+    public float persistence;
+    public float lacunarity;
+    /// <summary>
+    /// the distance a point is from the center position
+    /// </summary>
+    public Vector2 offset;
+    /// <summary>
+    /// the max distance a vertice/point can be form the center point
+    /// NOTE: this is mainly used in the generation of the heat map
+    /// </summary>
+    public Vector2 maxDistance;
+    /// <summary>
+    /// the center points cords
+    /// NOTE: this is mainly used in the generation of the heat map
+    /// </summary>
+    public Vector2 centerPoint;
+
+}
+
+/// <summary>
 /// noise map generates a noise map of various types 
 /// based on the a type choosen when it's constructed
 /// </summary>
@@ -33,17 +61,29 @@ public class NoiseMap : NoiseObject
         Persistence = persistence;
         Lacunarity = lacunarity;        
     }
+    /// <summary>
+    /// creates a NoiseMap object which is set to generate simplex noise
+    /// </summary>
     public NoiseMap(NoiseMapConfig config){
         
         noiseLite = new FastNoiseLite(){
             NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth
         };
-        Seed = seed;
+        Seed = config.seed;
         ZoomLevel = config.zoom; 
         Octaves = config.octaves;
         Frequency = config.frequency;
         Persistence = config.persistence;
         Lacunarity = config.lacunarity;        
+    }
+
+    public void UpdateConfigs(NoiseMapConfig config){
+        Seed = config.seed;
+        ZoomLevel = config.zoom; 
+        Octaves = config.octaves;
+        Frequency = config.frequency;
+        Persistence = config.persistence;
+        Lacunarity = config.lacunarity;    
     }
 
     public override int Seed{
@@ -110,11 +150,13 @@ public class NoiseMap : NoiseObject
 
     public override float this[int x, int y]{
         get{
+            //ensure range of noise is between values -1 and 1
             return noiseLite.GetNoise2D(x,y);
         }
     }
     public override float this[Vector2 cords]{
         get{
+            //ensure range of noise is between values -1 and 1
             return noiseLite.GetNoise2Dv(cords);
         }
     } 

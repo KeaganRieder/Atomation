@@ -2,38 +2,60 @@ using System.Collections.Generic;
 using Godot;
 
 /// <summary>
+/// class which is used to pass a collection of data that relates to the 
+/// configuration of world world generation.
+/// this data is passed between the many world generation classes
+/// </summary>
+public class GenConfigs
+{
+    //general configs
+    /// <summary>
+    /// bounderys/max size of the world
+    /// x = width
+    /// y = height
+    /// </summary>
+    public Vector2I worldBounds;
+      
+    //generation configs    
+    public NoiseMapConfig elevationMapConfigs;
+    public NoiseMapConfig moistureMapConfigs;
+    public NoiseMapConfig heatMapConfigs;
+
+    //terrain configs
+    public float seaLevel = .2f;
+    public float mounatinSize = .8f; //no mountains is anything above 1
+    
+}
+
+/// <summary>
 /// the games world generators, which manange and oversees
 /// the running/executaion of genesteps to genertate the game
 /// world or chunks with in it
 /// </summary>
 public class WorldGenerator
 {
-    //general values
-    // public int MaxMapWidth{get;set;}
-    // private int MaxMapHeight{get;set;}
-    // private int seed;
-    // private float zoomLevel = 1;
-    private GenData genData;
+    //configs
+    private GenConfigs genConfig;
     private GenerationData generationData;
+    // genSteps
+    private GenStepNoise genStepNoise;
 
-    public WorldGenerator(GenData genData){
-        this.genData = genData;
-    }
-    public GenData GenData{get=>genData; set{genData = value;}}
-   
-    public Vector2 NormalizeCords(int x, int y){
-        float xCord = x * WorldMap.CELL_SIZE;
-        float yCord = y * WorldMap.CELL_SIZE;
-        return new Vector2(xCord,yCord);
+    public WorldGenerator(GenConfigs genConfig){
+        this.genConfig = genConfig;
+        genStepNoise = new GenStepNoise(genConfig);
     }
 
-    public void ExecuteGenSteps(){
-        //todo
-    }
+    //getters and setters
+    public GenConfigs GenConfig{get{return genConfig;} set{genConfig = value;}}
+    public GenStepNoise GenStepNoise{get{return GenStepNoise;} set{GenStepNoise = value;}}
 
+    public void ExecuteGenSteps(Vector2 origin, Node2D map){
+        generationData = genStepNoise.RunStep(origin);
+    }
+///CordConversionUtility
     public GeneratedChunk GenerateChunk(Vector2 chunkCord, Node2D map){
         int tileID = 0; 
-        
+        ExecuteGenSteps(chunkCord,map);
         //todo make check for if at world bounds
         Dictionary<Vector2, Tile> generatedTerrain = new();
         Node2D ChunkNode = new Node2D(){
@@ -42,16 +64,16 @@ public class WorldGenerator
         };
         map.AddChild(ChunkNode);
 
-        GenData.ElevationMap.Offset = chunkCord;
+        // GenData.ElevationMap.Offset = chunkCord;
 
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
             {
                 string ID = $"Tile{tileID}";
-                float elevation = GenData.ElevationMap[x, y];
+                float elevation = generationData.elevationMap[x, y];
 
-                Vector2 cords = NormalizeCords( x,  y);
+                Vector2 cords = CordConversionUtility.CellSizeCords( x,  y);
                 TileData tileData = new TileData(cords,elevation, 0, 0);
                 Tile tile = new(tileData);
                

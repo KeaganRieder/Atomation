@@ -48,8 +48,36 @@ public partial class Tile : Node2D
     public void DisplayMode(){
         //todo add differnt types of display modes (to be used during debuging and other stuff)
         AddChild(new ColorRect(){
-            Color = new Color(height,height,height),
+            Color = HeatMapColor(height),
             Size = new Vector2(WorldMap.CELL_SIZE,WorldMap.CELL_SIZE),
         });
+    }
+     public Color HeatMapColor(float value){
+       
+        //hottest
+        if (value <= -0.25)
+        {
+            return new Color(255,0,0);
+        }
+        //hot
+        else if (value < 0.25)
+        {
+            return new Color(200,200,0);
+        }
+        //cold
+        else if (value < 0.5)
+        {
+            return new Color(0,255,255);
+        }
+        //coldest
+        else if (value < .75)
+        {
+            return new Color(0,0,255);
+        }
+        else
+        {
+             GD.Print(value);
+            return new Color(0,0,0);
+        }
     }
 }

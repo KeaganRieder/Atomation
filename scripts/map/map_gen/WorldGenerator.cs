@@ -52,7 +52,7 @@ public class WorldGenerator
     public void ExecuteGenSteps(Vector2 origin, Node2D map){
         generationData = genStepNoise.RunStep(origin);
     }
-///CordConversionUtility
+
     public GeneratedChunk GenerateChunk(Vector2 chunkCord, Node2D map){
         int tileID = 0; 
         ExecuteGenSteps(chunkCord,map);

@@ -55,8 +55,11 @@ public class GenStepNoise : GenStep
 
     //GenerationData
     public GenerationData RunStep(Vector2 origin){
+        elevationMap.Offset = origin;
+        heatMap.Offset = origin;
+        moistureMap.Offset = origin;
         GenerationData generationData = new(){
-            elevationMap =  GenerateWorldHeat(origin, 0),
+            elevationMap =  GenarateHeatMap(origin, 0),
             //GenerateElevationMap(origin),
             // heatMap = GenarateHeatMap(origin),
         };
@@ -69,8 +72,7 @@ public class GenStepNoise : GenStep
     /// </summary>
     private float[,] GenerateElevationMap(Vector2 origin){
         float[,] elevation = new float[Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE];
-        elevationMap.Offset = origin;
-
+        
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
@@ -118,19 +120,21 @@ public class GenStepNoise : GenStep
         //4.2cos ((x - 1)π/6) + 13.7
     } 
 
-    private float[,] GenarateHeatMap(Vector2 origin){
-        float[,] heat = new float[Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE];
-        //GenerateWorldHeat(origin, 0);
+    private float[,] GenarateHeatMap(Vector2 origin,int center){
+        float[,] worldHeat = new float[Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE];
+        float[,] equatorHeat = GenerateWorldHeat(origin,center);
 
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {
-
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
             {
-                
+                float heat = heatMap[x,y] * equatorHeat[x,y];
+                heat += elevationMap[x,y]; //make this base on curve at least the second height
+                // GD.Print());
+                worldHeat[x,y] = heat;
             }
         }
-        return heat;
+        return worldHeat;
     }
 
     

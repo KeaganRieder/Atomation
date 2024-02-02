@@ -20,6 +20,7 @@ public struct TileData{
 /// <summary>
 /// this is the visual represntation of certain 'thing_resources like 
 /// the terrain, also holds x,y cords and other usful data
+/// todo clean/ rewrite
 /// </summary>
 public partial class Tile : Node2D
 {
@@ -53,31 +54,43 @@ public partial class Tile : Node2D
         });
     }
      public Color HeatMapColor(float value){
-       
+        Gradient heatGradient = new Gradient();
+
+        //  
+        heatGradient.AddPoint(-1f, new Color("#FF0000"));  //red hottest
+        heatGradient.AddPoint(-0.5f, new Color("#FFFF00")); //yellow hot
+        // heatGradient.AddPoint(-0.5f, new Color("#00FF00")); // green, temperate 
+        heatGradient.AddPoint(0f, new Color("#000000")); // dark green, temperate 
+        // heatGradient.AddPoint(0.5f, new Color("#00FF00")); // green, temperate    
+        heatGradient.AddPoint(.5f, new Color("#00FFFF")); //cyan cold
+        heatGradient.AddPoint(1f, new Color("#0000FF")); //blue coldest
+
+        return heatGradient.Sample(value);
+
         //hottest
-        if (value <= -0.25)
-        {
-            return new Color(255,0,0);
-        }
-        //hot
-        else if (value < 0.25)
-        {
-            return new Color(200,200,0);
-        }
-        //cold
-        else if (value < 0.5)
-        {
-            return new Color(0,255,255);
-        }
-        //coldest
-        else if (value < .75)
-        {
-            return new Color(0,0,255);
-        }
-        else
-        {
-             GD.Print(value);
-            return new Color(0,0,0);
-        }
+        // if (value <= -0.25)
+        // {
+        //     return new Color(255,0,0);
+        // }
+        // //hot
+        // else if (value < 0.25)
+        // {
+        //     return new Color(200,200,0);
+        // }
+        // //cold
+        // else if (value < 0.5)
+        // {
+        //     return new Color(0,255,255);
+        // }
+        // //coldest
+        // else if (value < .75)
+        // {
+        //     return new Color(0,0,255);
+        // }
+        // else
+        // {
+        //     //  GD.Print(value);
+        //     return new Color(0,0,0);
+        // }
     }
 }

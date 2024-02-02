@@ -59,8 +59,9 @@ public class GenStepNoise : GenStep
         heatMap.Offset = origin;
         moistureMap.Offset = origin;
         GenerationData generationData = new(){
-            elevationMap =  GenarateHeatMap(origin, 0),
-            //GenerateElevationMap(origin),
+            // elevationMap =  GenerateWorldHeat(origin, 0),
+            //  elevationMap =GenerateElevationMap(origin),\
+            elevationMap = GenarateHeatMap(origin,32,32),
             // heatMap = GenarateHeatMap(origin),
         };
        
@@ -98,7 +99,7 @@ public class GenStepNoise : GenStep
     }
 
     //kinda works 
-    private float[,] GenerateWorldHeat(Vector2 origin, int center){
+    private float[,] GenerateWorldHeat(Vector2 origin, int center, int maxDistance){
         float[,] noiseMap = new float[Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE];
 
         // dicide the tempeture based on distnace from central point/equator
@@ -108,7 +109,7 @@ public class GenStepNoise : GenStep
 
             //calaculate noise value based on it's distnace
             // well also ensuring that it's within the bounds
-            float noise = Math.Abs(sampleY - center) / (64*2);//need a figure out this
+            float noise = Math.Abs(sampleY - center) /maxDistance;//need a figure out this
 
             for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
             {
@@ -117,20 +118,19 @@ public class GenStepNoise : GenStep
             }
         }
         return noiseMap;
-        //4.2cos ((x - 1)π/6) + 13.7
     } 
 
-    private float[,] GenarateHeatMap(Vector2 origin,int center){
+    private float[,] GenarateHeatMap(Vector2 origin,int center, int maxDistance){
         float[,] worldHeat = new float[Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE];
-        float[,] equatorHeat = GenerateWorldHeat(origin,center);
+        float[,] equatorHeat = GenerateWorldHeat(origin,center,maxDistance);
 
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
-            {
+            {   
                 float heat = heatMap[x,y] * equatorHeat[x,y];
-                heat += elevationMap[x,y]; //make this base on curve at least the second height
-                // GD.Print());
+                float heightCurve = Mathf.Sin(elevationMap[x,y]);
+                heat += heightCurve;// * elevationMap[x,y];
                 worldHeat[x,y] = heat;
             }
         }

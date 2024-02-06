@@ -20,8 +20,8 @@ public partial class WorldMap : Node2D
 	private Node2D PlayerNode;
    
 	public WorldMap(){
-		Width = 100;
-		Height = 100;
+		Width = 256;
+		Height = 256;
 		//note zoom level may need a be something like 1000
 		GenConfigs genConfig = new GenConfigs(){
 			worldBounds = new Vector2I(Width,Height),

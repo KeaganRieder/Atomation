@@ -23,13 +23,13 @@ public partial class Player : Node2D
             {"MoveSpeed", new Stat("MoveSpeed","players MoveSpeed",1,0.1f,2)}
         };  
 
-        graphic = new Graphic("", new Color(255,255,100));
+        graphic = new Graphic("", new Color(255,255,100),this);
         body = new CharacterBody2D(){Name = "body"};  
         camera = new Camera();
 
         AddChild(body);
         AddChild(camera);
-        AddChild(graphic.GetTexture());
+        // AddChild(graphic.GetTexture());
         
         controls = new Controls(); //this is tempory need to be move to a manegr class at some point
         controls.LoadBindings();

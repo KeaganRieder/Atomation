@@ -21,6 +21,7 @@ public class GraphicData
 /// <summary>
 /// manges manipluating and handling a thinsg texture/graphic
 /// applying any mansk or other modifcation to it
+/// TODO: clean up and make other varients
 /// </summary>
 public partial class Graphic {
  
@@ -31,30 +32,28 @@ public partial class Graphic {
     [JsonProperty]
     private Color color {get; set;}
 
-    public Graphic(string texturePath,Color color){
+    private ColorRect colorRect;
+
+    public Graphic(string texturePath, Color color, Node2D parent){
         this.texturePath = texturePath;
         this.color = color;
+
+        colorRect = new ColorRect(){
+           Size = new Vector2(WorldMap.CELL_SIZE,WorldMap.CELL_SIZE),
+           Color = color,
+        };
+        parent.AddChild(colorRect);
     }
-    public Graphic(GraphicData configs){
+    public Graphic(GraphicData configs,Node2D parent){
         texturePath = configs.texturePath;
         color = configs.color;
-    }
 
-    public void ReadTexture(){
-        //todo
-    }
-    public void ReadMasks(){
-        //todo
-    }
-
-    public ColorRect GetTexture(){
-        Vector2 size = new Vector2(WorldMap.CELL_SIZE,WorldMap.CELL_SIZE);
-        return new ColorRect(){
-            Color = color,
-            Size = size,
-        }; 
-    }
-
+        colorRect = new ColorRect(){
+           Size = new Vector2(WorldMap.CELL_SIZE,WorldMap.CELL_SIZE),
+           Color = color,
+        };
+        parent.AddChild(colorRect);
+    }  
 
 
 }

@@ -36,7 +36,6 @@ public class WorldGenerator
 {
     //configs
     private GenConfigs genConfig;
-    private GenerationData generationData;
     // genSteps
     private GenStepNoise genStepNoise;
 
@@ -49,41 +48,67 @@ public class WorldGenerator
     public GenConfigs GenConfig{get{return genConfig;} set{genConfig = value;}}
     public GenStepNoise GenStepNoise{get{return GenStepNoise;} set{GenStepNoise = value;}}
 
-    public void ExecuteGenSteps(Vector2 origin, Node2D map){
-        generationData = genStepNoise.RunStep(origin);
+    public void ExecuteGenSteps(Vector2 origin, Node2D parent){
+        
+        // generationData = 
     }
 
-    public GeneratedChunk GenerateChunk(Vector2 chunkCord, Node2D map){
-        int tileID = 0; 
-        ExecuteGenSteps(chunkCord,map);
-        //todo make check for if at world bounds
-        Dictionary<Vector2, Tile> generatedTerrain = new();
-        Node2D ChunkNode = new Node2D(){
-            Name = $"Chunk {chunkCord}",
-            Position = chunkCord*WorldMap.CELL_SIZE
-        };
-        map.AddChild(ChunkNode);
+    public Chunk GenerateChunk(Vector2 origin, Node2D parent){
+        //making chunk position be based on chunk cords rather then global
+        //chunk cords go in intervals of CHUNK_SIZE rather thne by 1 like global ones
+        Vector2 chunkPos = origin * Chunk.CHUNK_SIZE;
 
-        // GenData.ElevationMap.Offset = chunkCord;
+        Chunk chunk = new Chunk(chunkPos, parent);
+
+        Dictionary<Vector2, Terrain> generatedTerrain = genStepNoise.RunStep(chunkPos, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
             {
-                string ID = $"Tile{tileID}";
-                float elevation = generationData.elevationMap[x, y];
-
-                Vector2 cords = CordConversionUtility.CellSizeCords( x,  y);
-                TileData tileData = new TileData(cords,elevation, 0, 0);
-                Tile tile = new(tileData);
-               
-                ChunkNode.AddChild(tile);
-                generatedTerrain.Add(cords,tile);
-                tileID++;
+                Vector2 cords = new Vector2(x,y);
+                Terrain terrain = generatedTerrain[cords];
+                // GD.Print(terrain.TerrainObj.Name);
+                terrain.Display(TerrainDispalyMode.Heat);
+                // parent.AddChild(terrain.TerrainObj);
+                chunk.ChunkTerrain(cords,terrain);
             }
         }
-        return new GeneratedChunk(generatedTerrain,ChunkNode);
-    }  
+
+        return chunk;
+    }
+
+    // public GeneratedChunk GenerateChunk(Vector2 chunkCord, Node2D map){
+    //     // int tileID = 0; 
+    //     // // ExecuteGenSteps(chunkCord,map);
+    //     // //todo make check for if at world bounds
+    //     //  = new();
+    //     // Node2D ChunkNode = new Node2D(){
+    //     //     Name = $"Chunk {chunkCord}",
+    //     //     Position = chunkCord*WorldMap.CELL_SIZE
+    //     // };
+    //     // map.AddChild(ChunkNode);
+
+    //     // // GenData.ElevationMap.Offset = chunkCord;
+
+    //     // for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
+    //     // {
+    //     //     for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
+    //     //     {
+    //     //         string ID = $"Tile{tileID}";
+    //     //         // float elevation = generationData.elevationMap[x, y];
+
+    //     //         Vector2 cords = CordConversionUtility.CellSizeCords( x,  y);
+    //     //         // TileData tileData = new TileData(cords,elevation, 0, 0);
+    //     //         // Tile tile = new(tileData);
+               
+    //     //         ChunkNode.AddChild(tile);
+    //     //         generatedTerrain.Add(cords,tile);
+    //     //         tileID++;
+    //     //     }
+    //     // }
+    //     return default;
+    // }  
 
 
 

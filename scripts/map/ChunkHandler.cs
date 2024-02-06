@@ -72,12 +72,12 @@ public class ChunkHandler
         }
     }
 
-    private void UpdateChunk(Vector2 chunkCord, WorldGenerator mapGenerator)
+    private void UpdateChunk(Vector2 globalCord, WorldGenerator mapGenerator)
     {
         //check if chunk has been loaded before
-        if (chunks.TryGetValue(chunkCord, out var chunk))
+        if (chunks.TryGetValue(globalCord, out var chunk))
         {
-            chunk.UpdateChunk(chunkCord);
+            chunk.UpdateChunk(globalCord);
             if (chunk.Rendered())
             {
                 lastUpdatedChunks.Add(chunk);
@@ -86,8 +86,7 @@ public class ChunkHandler
         //it hasn't so create new chunk
         else
         {
-            chunks.Add(chunkCord, new Chunk(
-                mapGenerator.GenerateChunk(chunkCord*Chunk.CHUNK_SIZE,map)));
+            chunks.Add(globalCord, mapGenerator.GenerateChunk(globalCord, map));
         }
     }
 }

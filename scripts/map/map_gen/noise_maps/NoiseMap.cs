@@ -34,9 +34,16 @@ public class NoiseMapConfig
 /// </summary>
 public class NoiseMap : NoiseObject
 {
+    // The number of noise layers that are sampled to get the final value for fractal noise types.
     private int octaves;
+    // Frequency of the noise which warps the space. 
+    // Low frequency results in smooth noise while high frequency results in rougher, more granular noise.
     private float frequency;
+    //A low value places more emphasis on the lower frequency base layers, 
+    //while a high value puts more emphasis on the higher frequency layers
     private float persistence;
+    // Frequency multiplier between subsequent octaves.
+    // Increasing this value results in higher octaves producing noise with finer details and a rougher appearance.
     private float lacunarity;
     private FastNoiseLite noiseLite;
 
@@ -74,7 +81,8 @@ public class NoiseMap : NoiseObject
         Octaves = config.octaves;
         Frequency = config.frequency;
         Persistence = config.persistence;
-        Lacunarity = config.lacunarity;        
+        Lacunarity = config.lacunarity;  
+        // noiseLite.peri      
     }
 
     public void UpdateConfigs(NoiseMapConfig config){

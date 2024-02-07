@@ -51,7 +51,7 @@ public class Chunk
     {
         chunkTerrain[key] = terrain;
         chunkNode.AddChild(chunkTerrain[key].TerrainObj);
-        chunkTerrain[key].Display(TerrainDispalyMode.Height);
+        chunkTerrain[key].Display(TerrainDispalyMode.Default);
     }
 
     //rendering stuff

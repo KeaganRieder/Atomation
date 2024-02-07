@@ -61,14 +61,28 @@ public partial class Terrain : CompThing
         terrainObj.AddChild(colorRect);
 
         heatGradient = new Gradient();
-        heatGradient.AddPoint(-0.8f,Colors.DarkRed); //hotest
-        heatGradient.AddPoint(-0.5f,Colors.Orange); //hotter
-        heatGradient.AddPoint(-0.25f,Colors.Yellow); // hot
-        heatGradient.AddPoint(0.25f,Colors.Green); //cold
-        heatGradient.AddPoint(0.5f,Colors.Cyan); //colder
-        heatGradient.AddPoint(0.8f,Colors.DarkBlue); //coldest
+      
+        // heatGradient.AddPoint(-1f,Colors.DarkRed); //hotest
+        // heatGradient.AddPoint(-0.8f,Colors.Red); //hotest
+        // heatGradient.AddPoint(-0.5f,Colors.Orange); //hotter
+        // heatGradient.AddPoint(-0.2f,Colors.Yellow); // hot
+        // // heatGradient.AddPoint(0.0f,Colors.Green); //cold
+        // heatGradient.AddPoint(0.2f,Colors.SeaGreen); //cold
+        // heatGradient.AddPoint(0.5f,Colors.Cyan); //colder
+        // heatGradient.AddPoint(0.8f,Colors.Blue); //coldest
+        // heatGradient.AddPoint(1f,Colors.DarkBlue);
+      
+        heatGradient.AddPoint(0f,Colors.DarkRed);
+        heatGradient.AddPoint(0.18f,Colors.Orange);
+        heatGradient.AddPoint(0.3f,Colors.Yellow); //cold
+        heatGradient.AddPoint(0.5f,Colors.Green);
+        heatGradient.AddPoint(0.6f,Colors.Cyan);
+        heatGradient.AddPoint(0.8f,Colors.Blue); //coldest
+        heatGradient.AddPoint(1f,Colors.DarkBlue);
 
         heightGradient = new Gradient();
+
+        
 
         moistureGradient = new Gradient();    
     }
@@ -101,7 +115,7 @@ public partial class Terrain : CompThing
         Color color;
         if (dispalyMode == TerrainDispalyMode.Default)
         {
-            color = HeightColor(heightValue); //todo make graphic rather then color
+            color = DefaultColor(heightValue); //todo make graphic rather then color
         }
         else if (dispalyMode == TerrainDispalyMode.Height)
         {
@@ -117,12 +131,43 @@ public partial class Terrain : CompThing
         }
         colorRect.Color = color;
     }
+    private Color DefaultColor(float value){
+        if (value < 0.1)
+        {
+            return new Color(Colors.DarkBlue);
+        }
+        if (value < 0.2)
+        {
+            return new Color(Colors.Blue);
+        }
+        if (value < 0.3)
+        {
+            return new Color(Colors.Yellow);
+        }
+        else if (value < 0.5)
+        {
+            return new Color(Colors.Green);
+        }
+        else if (value < .6)
+        {
+            return new Color(Colors.DarkGreen);
+        }
+        else 
+        {
+            return new Color(Colors.Gray);
+        }
+    }
+
     private Color HeatColor(float value){
-       return heatGradient.Sample(value);
+
+        return heatGradient.Sample(value);
     }
     private Color HeightColor(float value){
         //todos
         return new Color(value,value,value);
+
+       
+
     }
     private Color MoistureColor(float value){
         //todo

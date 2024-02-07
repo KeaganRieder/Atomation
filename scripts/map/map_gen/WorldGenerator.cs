@@ -77,40 +77,4 @@ public class WorldGenerator
 
         return chunk;
     }
-
-    // public GeneratedChunk GenerateChunk(Vector2 chunkCord, Node2D map){
-    //     // int tileID = 0; 
-    //     // // ExecuteGenSteps(chunkCord,map);
-    //     // //todo make check for if at world bounds
-    //     //  = new();
-    //     // Node2D ChunkNode = new Node2D(){
-    //     //     Name = $"Chunk {chunkCord}",
-    //     //     Position = chunkCord*WorldMap.CELL_SIZE
-    //     // };
-    //     // map.AddChild(ChunkNode);
-
-    //     // // GenData.ElevationMap.Offset = chunkCord;
-
-    //     // for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
-    //     // {
-    //     //     for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
-    //     //     {
-    //     //         string ID = $"Tile{tileID}";
-    //     //         // float elevation = generationData.elevationMap[x, y];
-
-    //     //         Vector2 cords = CordConversionUtility.CellSizeCords( x,  y);
-    //     //         // TileData tileData = new TileData(cords,elevation, 0, 0);
-    //     //         // Tile tile = new(tileData);
-               
-    //     //         ChunkNode.AddChild(tile);
-    //     //         generatedTerrain.Add(cords,tile);
-    //     //         tileID++;
-    //     //     }
-    //     // }
-    //     return default;
-    // }  
-
-
-
-
 }

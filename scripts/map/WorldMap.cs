@@ -29,11 +29,11 @@ public partial class WorldMap : Node2D
 			mounatinSize = 0.2f,
 			elevationMapConfigs = new NoiseMapConfig(){
 				seed = 0,
-				octaves = 6,
-				zoom = 75,
-				frequency = 2,
-				lacunarity = 2,
-				persistence = 0.6f,
+				octaves = 4,
+				zoom = 100,
+				frequency = 1,
+				lacunarity = 3,
+				persistence = 0.5f,
 			},
 			moistureMapConfigs = new NoiseMapConfig(){
 				seed = 0,

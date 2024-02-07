@@ -76,6 +76,7 @@ public class GenStepNoise : GenStep
         {
             for (int y = 0; y < height; y++)
             {
+                // GD.Print(elevation[x,y]);
                 Vector2 cords = new Vector2(x,y);
                 if (terrainTiles.ContainsKey(cords))
                 {
@@ -90,6 +91,7 @@ public class GenStepNoise : GenStep
                     {
                         HeatValue = worldHeat[x,y],
                         HeightValue = elevation[x,y],
+                        
                         MoistureValue = 0
                     };
                     terrainTiles.Add(new Vector2(x,y), terrain);
@@ -110,29 +112,15 @@ public class GenStepNoise : GenStep
         {
             for (int y = 0; y < height; y++)
             {         
-                elevation[x,y] = elevationMap[x,y];       
-                // //set all value sto represnt the sea level
-                // if (elevationMap[x,y] < seaLevel)
-                // {
-                //     elevation[x,y] = 0;
-                // }
-                // //set all value sto represnt a mountain
-                // else if (elevationMap[x,y] >= mountainSize)
-                // {
-                //     elevation[x,y] = 1;
-                // }
-                // //set all value sto represnt the ground
-                // else{
-                //     elevation[x,y] = 0.5f;
-                // }
+                elevation[x,y] = Mathf.Clamp(Mathf.Abs(elevationMap[x,y]),0,1);  
             }
         }
 
         return elevation;
     }
 
-    //kinda works add ints for width and height
-    private float[,] GenerateWorldHeat(Vector2 origin, int width, int height){
+    //this works
+    private float[,] GenerateWorldHeat(Vector2 origin, float maxDistance,int width, int height){
         float[,] noiseMap = new float[width, height];
 
         // dicide the tempeture based on distnace from central point/equator
@@ -142,7 +130,7 @@ public class GenStepNoise : GenStep
 
             //calaculate noise value based on it's distnace
             // well also ensuring that it's within the bounds
-            float noise = Math.Abs(sampleY - equatorHeight) /maxFromEquator;//need a figure out this
+            float noise = Math.Abs(sampleY - equatorHeight) / maxDistance;//need a figure out this
 
             for (int x = 0; x < width; x++)
             {
@@ -155,16 +143,18 @@ public class GenStepNoise : GenStep
 
     private float[,] GenarateHeatMap(Vector2 origin, int width, int height){
         float[,] worldHeat = new float[width, height];
-        float[,] equatorHeat = GenerateWorldHeat(origin, width ,height);
+        float[,] equatorHeat = GenerateWorldHeat(origin,64, width ,height);
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {   
-                float heat = heatMap[x,y] * equatorHeat[x,y];
-                float heightCurve = Mathf.Sin(elevationMap[x,y]);
-                heat += heightCurve;// * elevationMap[x,y];
-                worldHeat[x,y] = Mathf.Clamp( heat, -1,1);;
+                //need to figure out how to properly apply this
+                float heat =  equatorHeat[x,y]*heatMap[x,y];// + Mathf.Sin(elevationMap[x,y]);//*heatMap[x,y];
+                // GD.Print(heat);
+                // float heightCurve = ;
+                // heat += heightCurve;// * elevationMap[x,y];
+                worldHeat[x,y] = MathF.Abs(heat);
             }
         }
         return worldHeat;

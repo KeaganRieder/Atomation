@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using Atomation.Utility;
 
 /// <summary>
 /// terrain tiles diplay mode
@@ -31,11 +32,6 @@ public partial class Terrain : CompThing
     private Gradient moistureGradient;
     private ColorRect colorRect; //this is temporay and will be changed
 
-    private Terrain northNeighbour; //up
-    private Terrain southNeighbour; //down
-    private Terrain westNeighbour; //left
-    private Terrain eastNeighbour; //right
-
     private bool collidable;
 
     //consturctors
@@ -47,7 +43,7 @@ public partial class Terrain : CompThing
     public Terrain(Vector2 cords)
     {
         string name = $"Tile {cords}";
-        Vector2 position = CordConversionUtility.CellSizeCords(cords);
+        Vector2 position = CordConversion.ToCellSizeGrid(cords);
         terrainObj = new Node2D() //maybe get rid of? and just make either a sprite or color rect
         {
             Name = name,
@@ -57,29 +53,16 @@ public partial class Terrain : CompThing
            Size = new Vector2(WorldMap.CELL_SIZE,WorldMap.CELL_SIZE),
         };
 
-        // parent.AddChild(terrainObj);
         terrainObj.AddChild(colorRect);
 
-        heatGradient = new Gradient();
-      
-        // heatGradient.AddPoint(-1f,Colors.DarkRed); //hotest
-        // heatGradient.AddPoint(-0.8f,Colors.Red); //hotest
-        // heatGradient.AddPoint(-0.5f,Colors.Orange); //hotter
-        // heatGradient.AddPoint(-0.2f,Colors.Yellow); // hot
-        // // heatGradient.AddPoint(0.0f,Colors.Green); //cold
-        // heatGradient.AddPoint(0.2f,Colors.SeaGreen); //cold
-        // heatGradient.AddPoint(0.5f,Colors.Cyan); //colder
-        // heatGradient.AddPoint(0.8f,Colors.Blue); //coldest
-        // heatGradient.AddPoint(1f,Colors.DarkBlue);
-      
+        heatGradient = new Gradient();      
         heatGradient.AddPoint(0f,Colors.DarkRed);
         heatGradient.AddPoint(0.18f,Colors.Orange);
         heatGradient.AddPoint(0.3f,Colors.Yellow); //cold
         heatGradient.AddPoint(0.5f,Colors.Green);
         heatGradient.AddPoint(0.6f,Colors.Cyan);
-        heatGradient.AddPoint(0.8f,Colors.Blue); //coldest
-        heatGradient.AddPoint(1f,Colors.DarkBlue);
-
+        heatGradient.AddPoint(0.7f,Colors.Blue); //coldest
+        heatGradient.AddPoint(.9f,Colors.DarkBlue);     
         heightGradient = new Gradient();
 
         
@@ -96,7 +79,6 @@ public partial class Terrain : CompThing
 
     //getters and setters
     public override Graphic Graphic { get => graphic; set { graphic = value; } }
-    // public TerrainDispalyMode DispalyMode{set{dispalyMode = value;}} //make call display mode function
   
     public float HeightValue { get => heightValue; set { heightValue = value; } }
     public float HeatValue { get => heatValue; set { heatValue = value; } }
@@ -104,10 +86,10 @@ public partial class Terrain : CompThing
 
     public Node2D TerrainObj { get => terrainObj; set { terrainObj = value; } }
 
-    public Terrain NorthNeighbour{get => northNeighbour; set{northNeighbour = value;}}
-    public Terrain SouthNeighbour{get => southNeighbour; set{southNeighbour = value;}}
-    public Terrain WestNeighbour{get => westNeighbour; set{westNeighbour = value;}}
-    public Terrain EastNeighbour{get => eastNeighbour; set{eastNeighbour = value;}}
+    public Terrain NorthTile{get; set;} //up
+    public Terrain SouthTile{get; set;} //down
+    public Terrain WestTile{get; set;} //left
+    public Terrain EastTile{get; set;} //right
 
     //functions
     public void Display(TerrainDispalyMode dispalyMode){
@@ -159,8 +141,14 @@ public partial class Terrain : CompThing
     }
 
     private Color HeatColor(float value){
-
-        return heatGradient.Sample(value);
+        if(value < .9){
+            return heatGradient.Sample(value);
+        }
+        else 
+        {
+            return new Color(Colors.DarkBlue);
+        }
+        
     }
     private Color HeightColor(float value){
         //todos

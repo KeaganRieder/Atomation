@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Godot;
+using Atomation.Map.NoiseMaps;
+using Atomation.Utility;
 
 /// <summary>
 /// class which is used to pass a collection of data that relates to the 
@@ -53,12 +55,12 @@ public class WorldGenerator
         // generationData = 
     }
 
-    public Chunk GenerateChunk(Vector2 origin, Node2D parent){
+    public Chunk GenerateChunk(Vector2 chunkPos, Chunk chunk){
         //making chunk position be based on chunk cords rather then global
         //chunk cords go in intervals of CHUNK_SIZE rather thne by 1 like global ones
-        Vector2 chunkPos = origin * Chunk.CHUNK_SIZE;
+        // // Vector2 chunkPos = chunkPos * Chunk.CHUNK_SIZE;
 
-        Chunk chunk = new Chunk(chunkPos, parent);
+        // Chunk chunk = new Chunk(chunkPos, parent);
 
         Dictionary<Vector2, Terrain> generatedTerrain = genStepNoise.RunStep(chunkPos, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 
@@ -68,9 +70,9 @@ public class WorldGenerator
             {
                 Vector2 cords = new Vector2(x,y);
                 Terrain terrain = generatedTerrain[cords];
-                // GD.Print(terrain.TerrainObj.Name);
+
                 terrain.Display(TerrainDispalyMode.Heat);
-                // parent.AddChild(terrain.TerrainObj);
+                
                 chunk.ChunkTerrain(cords,terrain);
             }
         }

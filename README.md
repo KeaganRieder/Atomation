@@ -15,6 +15,7 @@ the ability to define things like terrain, stats, biuldings ect through a json f
 upon game start/load
 
 ### World Generation
+NOTE: this is still a heavy work in progress and i'm updating this whenevr i finish a part 
 The game world is generated using multiple steps
 
 The first step is to generate 4 noise maps and how to do so is defined in GenStepNoise.cs

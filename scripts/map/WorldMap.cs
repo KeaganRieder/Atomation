@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Godot;
+using Atomation.Map.NoiseMaps;
 
 /// <summary>
 /// define sthe games World map, storing and allowing of manuiplaution/accses to vth evarious
@@ -30,26 +31,26 @@ public partial class WorldMap : Node2D
 			elevationMapConfigs = new NoiseMapConfig(){
 				seed = 0,
 				octaves = 4,
-				zoom = 100,
-				frequency = 1,
-				lacunarity = 3,
+				zoom = 1f, 
+				frequency = 0.01f,
+				lacunarity = 2,
 				persistence = 0.5f,
 			},
 			moistureMapConfigs = new NoiseMapConfig(){
 				seed = 0,
-				octaves = 6,
-				zoom = 75,
-				frequency = 2,
+				octaves = 4,
+				zoom = 1f, 
+				frequency = 0.01f,
 				lacunarity = 2,
-				persistence = 0.6f,
+				persistence = 0.5f,
 			},
 			heatMapConfigs = new NoiseMapConfig(){
 				seed = 0,
-				octaves = 6,
-				zoom = 75,
-				frequency = 2,
+				octaves = 4,
+				zoom = 1f, 
+				frequency = 0.01f,
 				lacunarity = 2,
-				persistence = 0.6f,
+				persistence = 0.5f,
 			}
 		};
 		
@@ -64,14 +65,15 @@ public partial class WorldMap : Node2D
 	public override void _Ready(){
 		base._Ready();
 		GD.Print("test gen");
-		chunkHandler.UpdateRenderedChunks(PlayerNode.Position,mapGenerator);
+		chunkHandler.WorldGenerator = mapGenerator;
+		chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
 		// mapGenerator.GenerateMap(this);
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-		chunkHandler.UpdateRenderedChunks(PlayerNode.Position,mapGenerator);
+		chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
 		
 	}
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Atomation.Utility;
 
 /// <summary>
 /// A chunk is a 32 x 32 section of the map that contans
@@ -12,7 +13,6 @@ public class Chunk
     public const int CHUNK_SIZE = 32;
 
     private Node2D chunkNode;
-    private Vector2 position;
 
     private Dictionary<Vector2, Terrain> chunkTerrain; // maybe make new class for this?
 
@@ -23,13 +23,14 @@ public class Chunk
     }
 
     public Chunk(Vector2 chunkCords, Node2D parentNode) : this()
-    {
-        position = chunkCords * WorldMap.CELL_SIZE;
-        // position.X += 16;
+    {   
+        //making it so names based on intervals of CHUNK_SIZE not CHUNK_SIZE * cellsize
+        //making also alligned to cell size grid
+        Vector2 Cords = CordConversion.ToCellSizeGrid(chunkCords);
         chunkNode = new Node2D()
         {
             Name = $"Chunk {chunkCords}",
-            Position = position,
+            Position = Cords,
         };
 
         parentNode.AddChild(chunkNode);
@@ -37,6 +38,11 @@ public class Chunk
 
     //getters and setters 
     public Node2D ChunkNode { get => chunkNode; }
+
+    public Chunk NorthChunk { get; set; } //up
+    public Chunk SouthChunk { get; set; } //down
+    public Chunk WestChunk { get; set; } //left
+    public Chunk EastChunk { get; set; } //right
 
     public Terrain ChunkTerrain(Vector2 key)
     {
@@ -46,18 +52,17 @@ public class Chunk
         }
         return default;
     }
-
     public void ChunkTerrain(Vector2 key, Terrain terrain)
     {
         chunkTerrain[key] = terrain;
         chunkNode.AddChild(chunkTerrain[key].TerrainObj);
-        chunkTerrain[key].Display(TerrainDispalyMode.Default);
+        chunkTerrain[key].Display(TerrainDispalyMode.Heat);
     }
 
     //rendering stuff
     public void UpdateChunk(Vector2 veiwerCords)
     {
-        float distToVeiwer = (position / CHUNK_SIZE).DistanceTo(veiwerCords);
+        float distToVeiwer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(veiwerCords);
         bool visible = distToVeiwer <= ChunkHandler.MAX_LOAD_DIST;
         SetRenderState(visible);
     }
@@ -69,4 +74,6 @@ public class Chunk
     {
         ChunkNode.Visible = state;
     }
+
+    //todo make show grid 
 }

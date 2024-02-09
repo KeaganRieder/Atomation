@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Atomation.Map.NoiseMaps;
 
 /// <summary>
 /// defiens the generation step for generating noise maps, 
@@ -18,9 +19,9 @@ public class GenStepNoise : GenStep
     private int maxFromEquator; 
 
     //noise map info
-    private NoiseMap elevationMap;
-    private NoiseMap moistureMap;
-    private NoiseMap heatMap;
+    private SimplexNoiseMap elevationMap;
+    private SimplexNoiseMap moistureMap;
+    private SimplexNoiseMap heatMap;
 
     private Dictionary<Vector2, Terrain> terrainTiles;
 
@@ -28,74 +29,62 @@ public class GenStepNoise : GenStep
        
         worldMaxWidth = genConfig.worldBounds.X;
         worldMaxHeight = genConfig.worldBounds.Y;
+
         equatorHeight = 0;
         maxFromEquator = worldMaxHeight;
+        
         seaLevel = genConfig.seaLevel;
         mountainSize = genConfig.mounatinSize;
-        elevationMap = new NoiseMap(genConfig.elevationMapConfigs);
-        moistureMap = new NoiseMap(genConfig.moistureMapConfigs);
-        heatMap = new NoiseMap(genConfig.heatMapConfigs); 
+
+        elevationMap = new SimplexNoiseMap(genConfig.elevationMapConfigs);
+        moistureMap = new SimplexNoiseMap(genConfig.moistureMapConfigs);
+        heatMap = new SimplexNoiseMap(genConfig.heatMapConfigs); 
     }
 
     /// <summary>
     /// used to get the elevation noise map inorder to change
     /// indvidual conifg Data
     /// </summary>
-    public NoiseMap GetElevationMap(){
+    public SimplexNoiseMap GetElevationMap(){
         return elevationMap;
     }
     /// <summary>
     /// used to get the moisture noise map inorder to change
     /// indvidual conifg Data
     /// </summary>
-    public NoiseMap GetMoistureMap(){
+    public SimplexNoiseMap GetMoistureMap(){
         return moistureMap;
     }
     /// <summary>
     /// used to get the heat noise map inorder to change
     /// indvidual conifg Data
     /// </summary>
-    public NoiseMap GetHeatMap(){
+    public SimplexNoiseMap GetHeatMap(){
         return heatMap;
     }
 
-    //GenerationData
+
     public Dictionary<Vector2, Terrain> RunStep(Vector2 origin, int width, int height){
-        // origin *= WorldMap.CELL_SIZE;
-        elevationMap.Offset = origin;
-        heatMap.Offset = origin;
-        moistureMap.Offset = origin;
 
         terrainTiles = new Dictionary<Vector2, Terrain>();
 
-        float[,] elevation = GenerateElevationMap(origin, width, height);
-        float[,] worldHeat = GenarateHeatMap(origin, width, height);
+        float[,] equatorHeat = GenerateEquaitorHeat(origin, width ,height);
 
-        //applying generated maps to tiles
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                // GD.Print(elevation[x,y]);
                 Vector2 cords = new Vector2(x,y);
-                if (terrainTiles.ContainsKey(cords))
-                {
-                    //do nothing sense this is already created
-                    // terrainTiles[cords].HeatValue = worldHeat[x,y];
-                    // terrainTiles[cords].HeightValue = elevation[x,y];
-                    // terrainTiles[cords].MoistureValue = 0;
-                }
-                else
-                {
-                    Terrain terrain = new Terrain(cords)
-                    {
-                        HeatValue = worldHeat[x,y],
-                        HeightValue = elevation[x,y],
-                        
-                        MoistureValue = 0
-                    };
-                    terrainTiles.Add(new Vector2(x,y), terrain);
-                }                
+            
+                Terrain terrain = new Terrain(cords);
+
+                float sampleX = x + origin.X;
+                float sampleY = y + origin.Y;
+
+                terrain.HeightValue = GetElevationValue(sampleX,sampleY);
+                terrain.HeatValue = GetHeatValue(origin,x,y,equatorHeat);
+
+                terrainTiles.Add(new Vector2(x,y), terrain);
             }
         }
        
@@ -105,22 +94,12 @@ public class GenStepNoise : GenStep
     /// <summary>
     /// generateing elevation map which outlines the primary parts of the terrain
     /// </summary>
-    private float[,] GenerateElevationMap(Vector2 origin, int width, int height){
-        float[,] elevation = new float[width, height];
-        
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {         
-                elevation[x,y] = Mathf.Clamp(Mathf.Abs(elevationMap[x,y]),0,1);  
-            }
-        }
-
-        return elevation;
+    private float GetElevationValue(float x, float y){
+    
+        return Mathf.Clamp(Mathf.Abs(elevationMap[x,y]),0,1);
     }
 
-    //this works
-    private float[,] GenerateWorldHeat(Vector2 origin, float maxDistance,int width, int height){
+    private float[,] GenerateEquaitorHeat(Vector2 origin,int width, int height){
         float[,] noiseMap = new float[width, height];
 
         // dicide the tempeture based on distnace from central point/equator
@@ -130,7 +109,7 @@ public class GenStepNoise : GenStep
 
             //calaculate noise value based on it's distnace
             // well also ensuring that it's within the bounds
-            float noise = Math.Abs(sampleY - equatorHeight) / maxDistance;//need a figure out this
+            float noise = Math.Abs(sampleY - equatorHeight) / maxFromEquator;//need a figure out this
 
             for (int x = 0; x < width; x++)
             {
@@ -141,35 +120,21 @@ public class GenStepNoise : GenStep
         return noiseMap;
     } 
 
-    private float[,] GenarateHeatMap(Vector2 origin, int width, int height){
-        float[,] worldHeat = new float[width, height];
-        float[,] equatorHeat = GenerateWorldHeat(origin,64, width ,height);
+    private float GetHeatValue(Vector2 origin, int x, int y, float[,] equatorHeat){
+        
+        float sampleX = x + origin.X;
+        float sampleY = y + origin.Y;
 
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {   
-                //need to figure out how to properly apply this
-                float heat =  equatorHeat[x,y]*heatMap[x,y];// + Mathf.Sin(elevationMap[x,y]);//*heatMap[x,y];
-                // GD.Print(heat);
-                // float heightCurve = ;
-                // heat += heightCurve;// * elevationMap[x,y];
-                worldHeat[x,y] = MathF.Abs(heat);
-            }
-        }
-        return worldHeat;
-    }
+        float height = MathF.Abs(elevationMap[sampleX,sampleY]);
 
-    private void EvaluateOnCurve(float time, float value){
+        float heat = equatorHeat[x,y] * Mathf.Abs(heatMap[sampleX,sampleY]*10); 
+        heat += Mathf.Sin(height) * height;
+        // GD.Print(heat);
+        return Mathf.Clamp(MathF.Abs(heat),0,1f);
+    } 
+
+    //moisture map time baby
+    private void GetMoistureValue(Vector2 origin, int x, int y){
 
     }
 }
-//  function (float time, float startValue, float change, float duration) {
-//      time /= duration / 2;
-//      if (time < 1)  {
-//           return change / 2 * time * time + startValue;
-//      }
-
-//      time--;
-//      return -change / 2 * (time * (time - 2) - 1) + startValue;
-//  };

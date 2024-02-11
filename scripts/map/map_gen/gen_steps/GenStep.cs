@@ -1,9 +1,11 @@
 using Godot;
-
-/// <summary>
-/// bsae cabstarct class for all gensteps
-/// </summary>
-public abstract class GenStep
+namespace Atomation.Map
 {
-    public virtual void RunStep(){}
+    /// <summary>
+    /// bsae cabstarct class for all gensteps
+    /// </summary>
+    public abstract class GenStep
+    {
+        public virtual void RunStep() { }
+    }
 }

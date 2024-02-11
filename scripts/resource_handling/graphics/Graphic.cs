@@ -1,7 +1,7 @@
 using Godot;
 using Newtonsoft.Json;
 using System;
-
+using Atomation.Map;
 public enum EdgeType{
     Default,
     Rough, 

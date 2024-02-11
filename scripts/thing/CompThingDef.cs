@@ -1,34 +1,37 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Godot;
-
-/// <summary>
-/// base config file used for all complex things in game
-/// </summary>
-public abstract class CompThingDef : ThingDef
+namespace Atomation.Thing
 {
-    public GraphicData graphicData{get; set;}
-    public StatDef[] statDefs{get; set;}
+    /// <summary>
+    /// base config file used for all complex things in game
+    /// </summary>
+    public abstract class CompThingDef : ThingDef
+    {
+        public GraphicData graphicData { get; set; }
+        public StatDef[] statDefs { get; set; }
 
-    //todo make function which formats things from being config 
-    //data to actual
-    public Dictionary<string, StatBase> CreateStats(){
-        Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>();
-
-        //need to work on stat modifers at some point
-        foreach (StatDef def in statDefs)
+        //todo make function which formats things from being config 
+        //data to actual
+        public Dictionary<string, StatBase> CreateStats()
         {
-            if (stats.ContainsKey(def.Name))
-            {
-                GD.PrintErr($"ERROR: attempted to add {def.Name} which is already presnt");
-            }
-            else
-            {
-                stats.Add(def.Name, new Stat(def));
-            }
-        } 
+            Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>();
 
-        return stats;
-    }   
-    
+            //need to work on stat modifers at some point
+            foreach (StatDef def in statDefs)
+            {
+                if (stats.ContainsKey(def.Name))
+                {
+                    GD.PrintErr($"ERROR: attempted to add {def.Name} which is already presnt");
+                }
+                else
+                {
+                    stats.Add(def.Name, new Stat(def));
+                }
+            }
+
+            return stats;
+        }
+
+    }
 }

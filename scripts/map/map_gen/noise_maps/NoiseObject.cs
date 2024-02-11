@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Atomation.Map.NoiseMaps{
+namespace Atomation.Map{
 /// <summary>
 /// config data used for setting how noise maps are generated
 /// </summary>

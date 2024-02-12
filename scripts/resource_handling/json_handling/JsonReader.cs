@@ -2,7 +2,7 @@ using Godot;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace Atomation.ResHandling
+namespace Atomation.Resources
 {
     /*
         defines a class which handles the reading of 

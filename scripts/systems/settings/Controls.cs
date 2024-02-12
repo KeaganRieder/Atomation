@@ -43,7 +43,7 @@ public partial class Controls : Node
 	/// or default_key_bindings.json
 	/// </summary>
 	public void LoadBindings(){
-		Controls loadedControls = Atomation.ResHandling.JsonReader.ReadJson<Controls>(BINDING_FILE);
+		Controls loadedControls = Atomation.Resources.JsonReader.ReadJson<Controls>(BINDING_FILE);
 		keyBindings = loadedControls.keyBindings;
 		mouseBindings = loadedControls.mouseBindings;
 		foreach (var binding in keyBindings)

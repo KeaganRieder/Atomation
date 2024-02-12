@@ -26,9 +26,8 @@ namespace Atomation.Map
 
 		public Chunk(Vector2 chunkCords, Node2D parentNode) : this()
 		{
-			//making it so names based on intervals of CHUNK_SIZE not CHUNK_SIZE * cellsize
-			//making also alligned to cell size grid
 			Vector2 Cords = CordConversion.ToCellSizeGrid(chunkCords);
+			
 			chunkNode = new Node2D()
 			{
 				Name = $"Chunk {chunkCords}",
@@ -46,7 +45,7 @@ namespace Atomation.Map
 		public Chunk WestChunk { get; set; } //left
 		public Chunk EastChunk { get; set; } //right
 
-		public Terrain ChunkTerrain(Vector2 key)
+		public Terrain Terrain(Vector2 key)
 		{
 			if (chunkTerrain.ContainsKey(key))
 			{
@@ -54,18 +53,18 @@ namespace Atomation.Map
 			}
 			return default;
 		}
-		public void ChunkTerrain(Vector2 key, Terrain terrain)
+		public void Terrain(Vector2 key, Terrain terrain)
 		{
 			chunkTerrain[key] = terrain;
 			chunkNode.AddChild(chunkTerrain[key].TerrainObj);
-			chunkTerrain[key].Display(TerrainDispalyMode.Moisture);
+			chunkTerrain[key].Display(TerrainDisplayMode.Default);
 		}
 
 		//rendering stuff
-		public void UpdateChunk(Vector2 veiwerCords)
+		public void UpdateChunk(Vector2 viewerCords)
 		{
-			float distToVeiwer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(veiwerCords);
-			bool visible = distToVeiwer <= ChunkHandler.MAX_LOAD_DIST;
+			float distToViewer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(viewerCords);
+			bool visible = distToViewer <= ChunkHandler.MAX_LOAD_DIST;
 			SetRenderState(visible);
 		}
 		public bool Rendered()

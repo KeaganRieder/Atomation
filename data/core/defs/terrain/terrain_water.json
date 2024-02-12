@@ -2,163 +2,148 @@
   "defs": [
     {
       "name": "Marsh",
-      "label": "Marsh",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.5,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/grass",
+        "Color": {
+          "R": 0.0,
+          "G": 0.0,
+          "B": 0.0,
+          "A": 0.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/marsh",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
+      "statBases": [
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed",
+          "BaseValue": 0.5,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Beauty",
+          "description": "Objects Beauty",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        }
+      ]
     },
     {
       "name": "ShallowOcean",
-      "label": "ShallowOcean",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.5,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/soil",
+        "Color": {
+          "R": 0.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/shallow_ocean",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
+      "statBases": [
+        {
+          "BaseValue": 0.5,
+          "MinValue": 0.0,
+          "MaxValue": 0.0,
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed "
+        },
+        {
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0,
+          "name": "Beauty",
+          "description": "Objects Beauty"
+        }
+      ]
     },
     {
       "name": "ShallowWater",
-      "label": "ShallowWater",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.5,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/shallow_water",
+        "Color": {
+          "R": 0.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/shallow_water",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
-    },
-    {
-      "name": "ChestDeepOcean",
-      "label": "ChestDeepOcean",
-      "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
+      "statBases": [
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed",
+          "BaseValue": 0.5,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
         },
-        "WalkSpeed": {
-          "baseValue": 0.4,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
+        {
           "name": "Beauty",
-          "description": "object Beauty"
+          "description": "Objects Beauty",
+          "BaseValue": -1.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
         }
-      },
-      "graphic": {
-        "texturePath": "terrain/natural/deep_ocean",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
+      ]
     },
     {
       "name": "DeepOcean",
-      "label": "ChestDeepOcean",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/chest_deep_ocean",
+        "Color": {
+          "R": 0.0,
+          "G": 0.545098,
+          "B": 0.545098,
+          "A": 0.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/deep_ocean",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
-    }        
+      "statBases": [
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed ",
+          "BaseValue": 0.4,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Beauty",
+          "description": "Objects Beauty",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        }
+      ]
+    },
+    {
+      "name": "DeepOcean",
+      "description": "",
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/deep_ocean",
+        "Color": {
+          "R": 0.0,
+          "G": 0.0,
+          "B": 0.0,
+          "A": 0.0
+        }
+      },
+      "statBases": [
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed ",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Beauty",
+          "description": "Objects Beauty",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        }
+      ]
+    }
   ]
 }

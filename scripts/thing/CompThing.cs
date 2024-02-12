@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 using Newtonsoft.Json;
+using Atomation;
 namespace Atomation.Thing
 {
     /// <summary>
@@ -11,13 +12,13 @@ namespace Atomation.Thing
     {
         // protected Node2D objNode;
         [JsonProperty("graphic data")]
-        protected Graphic graphic;
+        protected Resources.Graphic graphic;
         [JsonProperty("stats")]
         protected Dictionary<string, StatBase> stats;
 
         // public virtual Node2D ObjNode{get => objNode; set{objNode = value;}} maybe?
         [JsonIgnore]
-        public virtual Graphic Graphic { get => graphic; set { graphic = value; } }
+        public virtual Resources.Graphic Graphic { get => graphic; set { graphic = value; } }
         public virtual StatBase Stat(string statId)
         {
             if (stats.TryGetValue(statId, out var stat))

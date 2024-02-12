@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Atomation.Thing;
 
-namespace Atomation.ResHandling
+namespace Atomation.Resources
 {
 	/// <summary>
 	/// collection of defs meant to be really used for formating files, which 
@@ -37,6 +37,7 @@ namespace Atomation.ResHandling
 
 		public FileManger()
 		{
+			// FormatFiles();
 		}
 
 		public override void _Ready()
@@ -48,97 +49,109 @@ namespace Atomation.ResHandling
 		// JsonReader
 		public void LoadFiles()
 		{
-			GD.Print("Loading Respurces");
+			GD.Print("Loading Resources");
 			DefResources.LoadResources();//todo make this threaded
 		}
 
 		/// <summary>
-		/// used for debuging/inital file cretaion only
+		/// used for debugging/initial file creation only
 		/// </summary>
 		public void FormatFiles()
 		{
-			// Terrain[] natural = new Terrain[]{
-			//     new Terrain("Grass","", new Dictionary<string, StatBase>{
-			//         {"Fertility", new Stat("Fertility", "Objects fertility",1.0f,0,0)},
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.8f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/grass", new Color())
-			//     ),
-			//     new Terrain("Soil","", new Dictionary<string, StatBase>{
-			//         {"Fertility", new Stat("Fertility", "Objects fertility",1.0f,0,0)},
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.8f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/soil", new Color())
-			//     ),
-			//     new Terrain("Gravel","", new Dictionary<string, StatBase>{
-			//         {"Fertility", new Stat("Fertility", "Objects fertility",0.5f,0,0)},
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.6f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",-1.0f,0,0)}
-			//     }, new Graphic("terrain/natural/gravel", new Color())
-			//     ),
-			//     new Terrain("Sand","", new Dictionary<string, StatBase>{
-			//         {"Fertility", new Stat("Fertility", "Objects fertility",0.0f,0,0)},
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.7f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/sand", new Color())
-			//     )
-			// };
-			// Terrain[] water = new Terrain[]{
-			//     new Terrain("Marsh","", new Dictionary<string, StatBase>{
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.5f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/grass", new Color())
-			//     ),
-			//     new Terrain("ShallowOcean","", new Dictionary<string, StatBase>{
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.5f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/soil", new Color())
-			//     ),
-			//     new Terrain("ShallowWater","", new Dictionary<string, StatBase>{
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.5f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",-1.0f,0,0)}
-			//     }, new Graphic("terrain/natural/shallow_water", new Color())
-			//     ),
-			//     new Terrain("ChestDeepOcean","", new Dictionary<string, StatBase>{
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.4f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/chest_deep_ocean", new Color())
-			//     ),
-			//     new Terrain("DeepOcean","", new Dictionary<string, StatBase>{
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.0f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/deep_ocean", new Color())
-			//     )
-			// };
-			// Terrain[] stone = new Terrain[]{
-			//     new Terrain("Slate","", new Dictionary<string, StatBase>{
-			//         {"Fertility", new Stat("Fertility", "Objects fertility",0.0f,0,0)},
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.7f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/slate", new Color())
-			//     ),
-			//     new Terrain("marble","", new Dictionary<string, StatBase>{
-			//         {"Fertility", new Stat("Fertility", "Objects fertility",0.0f,0,0)},
-			//         {"Walkspeed", new Stat("Walkspeed", "Objects Walkspeed ",0.7f,0,0)},
-			//         {"Beauty", new Stat("Beauty", "Objects Beauty",0.0f,0,0)}
-			//     }, new Graphic("terrain/natural/marble", new Color())
-			//     ),
-			// };
-			Biome[] temperateBiomes = new Biome[]{
-			new Biome("Planes",.5f,.5f,.5f),
-			new Biome("tempForest",.5f,.5f,.5f),
-		};
+			/* TerrainDef[] natural = new TerrainDef[]{
+				new TerrainDef("Grass","", new StatDef[]{
+					new StatDef("Fertility", "Objects fertility",1.0f,0,0),
+					new StatDef("Walkspeed", "Objects Walkspeed ",0.8f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0),
+				}, new GraphicConfig("terrain/natural/grass", new Color())),
 
-			// DefFile<Terrain> naturalDefs = new DefFile<Terrain>(natural);
-			// DefFile<Terrain> waterDefs = new DefFile<Terrain>(water);
-			// DefFile<Terrain> stoneDefs = new DefFile<Terrain>(stone);
+				new TerrainDef("Soil","", new StatDef[]{
+					new StatDef("Fertility", "Objects fertility",1.0f,0,0),
+					new StatDef("Walkspeed", "Objects Walkspeed ",0.8f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/soil", new Color())),
+
+				new TerrainDef("Soil","", new StatDef[]{
+					new StatDef("Fertility", "Objects fertility",1.0f,0,0),
+					new StatDef("Walkspeed", "Objects Walkspeed ",0.8f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/soil", new Color())),
+
+				new TerrainDef("Soil","", new StatDef[]{
+					new StatDef("Fertility", "Objects fertility",1.0f,0,0),
+					new StatDef("Walkspeed", "Objects Walkspeed ",0.8f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/soil", new Color())),
+
+				new TerrainDef("Gravel","", new StatDef[]{
+					new StatDef("Fertility", "Objects fertility",0.5f,0,0),
+					 new StatDef("Walkspeed", "Objects Walkspeed ",0.6f,0,0),
+					new StatDef("Beauty", "Objects Beauty",-1.0f,0,0)
+				}, new GraphicConfig("terrain/natural/gravel", new Color())),
+
+				new TerrainDef("Sand","", new StatDef[]{
+					new StatDef("Fertility", "Objects fertility",0.0f,0,0),
+					new StatDef("Walkspeed", "Objects Walkspeed ",0.7f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/sand", new Color())),
+			};
+			TerrainDef[] water = new TerrainDef[]{
+				new TerrainDef("Marsh","", new StatDef[]{
+					new StatDef("Walkspeed", "Objects Walkspeed ",0.5f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/grass", new Color())),
+
+				new TerrainDef("ShallowOcean","", new StatDef[]{
+					 new StatDef("Walkspeed", "Objects Walkspeed ",0.5f,0,0),
+					 new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/soil", new Color())),
+
+				new TerrainDef("ShallowWater","", new StatDef[]{
+					 new StatDef("Walkspeed", "Objects Walkspeed ",0.5f,0,0),
+					 new StatDef("Beauty", "Objects Beauty",-1.0f,0,0)
+				}, new GraphicConfig("terrain/natural/shallow_water", new Color())),
+
+				new TerrainDef("ChestDeepOcean","", new StatDef[]{
+					 new StatDef("Walkspeed", "Objects Walkspeed ",0.4f,0,0),
+					 new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/chest_deep_ocean", new Color())),
+
+				new TerrainDef("DeepOcean","", new StatDef[]{
+					 new StatDef("Walkspeed", "Objects Walkspeed ",0.0f,0,0),
+					 new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/deep_ocean", new Color())),
+			};
+
+			TerrainDef[] stone = new TerrainDef[]{
+				new TerrainDef("Slate","",new StatDef[] {
+					 new StatDef("Fertility", "Objects fertility",0.0f,0,0),
+					 new StatDef("Walkspeed", "Objects Walkspeed ",0.7f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/slate", new Color())
+				),
+				new TerrainDef("marble","",new StatDef[] {
+					new StatDef("Fertility", "Objects fertility",0.0f,0,0),
+					new StatDef("Walkspeed", "Objects Walkspeed ",0.7f,0,0),
+					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
+				}, new GraphicConfig("terrain/natural/marble", new Color())
+				),
+			}; */
+
+			// 	Biome[] temperateBiomes = new Biome[]{
+			// 	new Biome("Planes",.5f,.5f,.5f),
+			// 	new Biome("tempForest",.5f,.5f,.5f),
+			// };
+
+			// DefFile<TerrainDef> naturalDefs = new DefFile<TerrainDef>(natural);
+			// DefFile<TerrainDef> waterDefs = new DefFile<TerrainDef>(water);
+			// DefFile<TerrainDef> stoneDefs = new DefFile<TerrainDef>(stone);
 
 			// DefFile<Biome> temperateBiomeDefs = new DefFile<Biome>(temperateBiomes);
 
-			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH,"terrain_natural", naturalDefs);
-			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH,"terrain_water", waterDefs);
-			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH,"terrain_stone", stoneDefs);
-			// JsonWriter.WriteFile(DefResources.BIOME_DEFS_PATH,"biomes_temperate", temperateBiomeDefs);
+			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH, "terrain_natural", naturalDefs);
+			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH, "terrain_water", waterDefs);
+			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH, "terrain_stone", stoneDefs);
+			// JsonWriter.WriteFile(DefResources.BIOME_DEFS_PATH, "biomes_temperate", temperateBiomeDefs);
 		}
 
 	}

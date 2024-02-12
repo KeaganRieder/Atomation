@@ -12,12 +12,13 @@ public class NoiseMapConfig
     public float frequency;
     public float persistence;
     public float lacunarity;
+    
     /// <summary>
     /// the distance a point is from the center position
     /// </summary>
     public Vector2 offset;
     /// <summary>
-    /// the max distance a vertice/point can be form the center point
+    /// the max distance a vertices/point can be form the center point
     /// NOTE: this is mainly used in the generation of the heat map
     /// </summary>
     public Vector2 maxDistance;
@@ -30,7 +31,7 @@ public class NoiseMapConfig
 }
 
 /// <summary>
-/// base abstarct class for nosie maps
+/// base abstract class for noise maps
 /// </summary>
 public abstract class NoiseObject
 {
@@ -40,7 +41,7 @@ public abstract class NoiseObject
     
     public virtual int Seed{get => seed; set{seed = value;}}
     /// <summary>
-    /// used by ceratin nosie function to decide zoomed in the noise is
+    /// used by certain noise function to decide zoomed in the noise is
     /// </summary>
     public virtual float ZoomLevel{get=>zoomLevel; set{zoomLevel = Mathf.Clamp(value,0.1f,10);}}
     public virtual Vector2 Offset{get => mapOffset; set{mapOffset = value;}}

@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Atomation.ResHandling
+namespace Atomation.Resources
 {
     /// <summary>
     /// defines a class which handles the writing of 
@@ -40,7 +40,7 @@ namespace Atomation.ResHandling
             };
 
             string directory = ProjectSettings.GlobalizePath(FolderPath);
-            string path = directory + fileName;
+            string path = directory + fileName+".json";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);

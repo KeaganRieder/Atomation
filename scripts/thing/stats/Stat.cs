@@ -38,10 +38,10 @@ namespace Atomation.Thing
             modifers = new Dictionary<string, StatModifer>();
             name = config.Name;
             description = config.Description;
-            baseValue = config.baseValue;
+            baseValue = config.BaseValue;
             currentVal = baseValue;
-            minValue = config.minValue;
-            maxValue = config.maxValue;
+            minValue = config.MinValue;
+            maxValue = config.MaxValue;
         }
 
         public override float Value

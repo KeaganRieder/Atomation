@@ -4,7 +4,7 @@ namespace Atomation.Thing
     /// <summary>
     /// base config file used for all things in game
     /// </summary>
-    public abstract class ThingDef : IThingDef
+    public abstract class ThingDef : IThing
     {
         //maybe make inherit from resource/make this a custom resources?
         [JsonProperty("name")]
@@ -14,8 +14,5 @@ namespace Atomation.Thing
 
     }
 
-    public interface IThingDef
-    {
-        public string Name { get; set; }
-    }
+   
 }

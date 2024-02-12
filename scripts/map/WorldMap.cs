@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
+using Atomation.Resources;
 using Godot;
 
 namespace Atomation.Map
 {
 	/// <summary>
-	/// define sthe games World map, storing and allowing of manuiplaution/accses to vth evarious
-	/// varibles that realet to the map and it's various aspects
+	/// defines the games World map, storing and allowing of manipulation/access to the 
+	/// variables that relates to the map and it's various aspects
 	/// </summary>
 	public partial class WorldMap : Node2D
 	{
@@ -16,7 +17,7 @@ namespace Atomation.Map
 		public int Height { get; set; }
 		public Vector2 MapSize { get => new Vector2(Width, Height); }
 
-		//map componets
+		//map components
 		private WorldGenerator mapGenerator;
 		private ChunkHandler chunkHandler;
 		private Node2D PlayerNode;
@@ -26,7 +27,7 @@ namespace Atomation.Map
 			Width = 256;
 			Height = 256;
 			//note zoom level may need a be something like 1000
-			GenConfigs genConfig = new GenConfigs()
+			GenConfigs genConfig = new GenConfigs() //TODO make this a file
 			{
 				worldBounds = new Vector2I(Width, Height),
 				seaLevel = -0.1f,
@@ -34,7 +35,7 @@ namespace Atomation.Map
 				elevationMapConfigs = new NoiseMapConfig()
 				{
 					seed = 0,
-					octaves = 4,
+					octaves = 5,
 					zoom = 1f,
 					frequency = 0.01f,
 					lacunarity = 2,
@@ -66,6 +67,7 @@ namespace Atomation.Map
 			PlayerNode = new Node2D() { Name = "player" };
 			PlayerNode.AddChild(new ColorRect() { Color = new Color(100, 100, 100), Size = new Vector2(16, 16) });
 			AddChild(PlayerNode);
+			// FileManger fileManger = new FileManger(); 
 		}
 
 		public override void _Ready()

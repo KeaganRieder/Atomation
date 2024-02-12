@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using Atomation.Utility;
 using Atomation.Map;
+using Atomation.Resources;
 
 /// <summary>
 /// terrain tiles diplay mode
@@ -10,188 +11,203 @@ using Atomation.Map;
 /// Heat = heat map
 /// Moisture = moisture map
 /// </summary>
-public enum TerrainDispalyMode
+public enum TerrainDisplayMode
 {
-    Default = 0,
-    Height = 1,
-    Heat = 2,
-    Moisture = 3,
+	Default = 0,
+	Height = 1,
+	Heat = 2,
+	Moisture = 3,
 }
 
 namespace Atomation.Thing
 {
-    /// <summary>
-    /// defines what a terrain object is in the game world 
-    /// </summary>
-    public partial class Terrain : CompThing
-    {
-        private float heightValue;
-        private float heatValue;
-        private float moistureValue;
-        private Node2D terrainObj;
+	/// <summary>
+	/// defines what a terrain object is in the game world 
+	/// </summary>
+	public partial class Terrain : CompThing
+	{
+		private float heightValue;
+		private float heatValue;
+		private float moistureValue;
+		private Node2D terrainObj;
 
-        private Gradient heatGradient;
-        private Gradient heightGradient;
-        private Gradient moistureGradient;
-        private ColorRect colorRect; //this is temporay and will be changed
+		private Gradient heatGradient;
+		private ColorRect colorRect; //this is temporary and will be changed
 
-        private bool water;
-        private bool collidable;
+		private bool water;
+		private bool collidable;
 
-        //consturctors
-        public Terrain()
-        {
-            name = "Default";
-            description = "";
-        }
-        public Terrain(Vector2 cords)
-        {
-            string name = $"Tile {cords}";
-            Vector2 position = CordConversion.ToCellSizeGrid(cords);
-            terrainObj = new Node2D() //maybe get rid of? and just make either a sprite or color rect
-            {
-                Name = name,
-                Position = position,
-            };
-            colorRect = new ColorRect()
-            {
-                Size = new Vector2(WorldMap.CELL_SIZE, WorldMap.CELL_SIZE),
-            };
+		//constructors
+		public Terrain()
+		{
+			name = "Default";
+			description = "";
+		}
+		public Terrain(Vector2 cords)
+		{
+			string name = $"Tile {cords}";
+			Vector2 position = CordConversion.ToCellSizeGrid(cords);
+			terrainObj = new Node2D() //maybe get rid of? and just make either a sprite or color rect
+			{
+				Name = name,
+				Position = position,
+			};
+			colorRect = new ColorRect()
+			{
+				Size = new Vector2(WorldMap.CELL_SIZE, WorldMap.CELL_SIZE),
+			};
 
-            terrainObj.AddChild(colorRect);
+			terrainObj.AddChild(colorRect);
+		}
+		public Terrain(TerrainDef config)
+		{
+			ReadConfigs(config);
+		}
 
-            heatGradient = new Gradient();
-            heatGradient.AddPoint(0f, Colors.DarkRed);
-            heatGradient.AddPoint(0.18f, Colors.Orange);
-            heatGradient.AddPoint(0.3f, Colors.Yellow); //cold
-            heatGradient.AddPoint(0.5f, Colors.Green);
-            heatGradient.AddPoint(0.6f, Colors.Cyan);
-            heatGradient.AddPoint(0.7f, Colors.Blue); //coldest
-            heatGradient.AddPoint(.9f, Colors.DarkBlue);
-            heightGradient = new Gradient();
+		/// <summary>
+		/// reading the configuration data for the given tile
+		/// and setting it for anything in which is needing
+		/// configuration at current call
+		/// </summary>
+		public void ReadConfigs(TerrainDef config){
+			name = config.Name;
+			description = config.Description;
+			stats = config.CreateStats();
+			Graphic = new GroundGraphics(config.GraphicData);
+		}
 
-            moistureGradient = new Gradient();
-        }
-        public Terrain(TerrainDef config)
-        {
-            name = config.Name;
-            description = config.Description;
-            stats = config.CreateStats();
-            Graphic = new Graphic(config.graphicData, terrainObj);
-        }
+		//getters and setters
+		public override Resources.Graphic Graphic { get => graphic; set { graphic = value; } }
 
-        //getters and setters
-        public override Graphic Graphic { get => graphic; set { graphic = value; } }
+		public float HeightValue { get => heightValue; set { heightValue = value; } }
+		public float HeatValue { get => heatValue; set { heatValue = value; } }
+		public float MoistureValue { get => moistureValue; set { moistureValue = value; } }
 
-        public float HeightValue { get => heightValue; set { heightValue = value; } }
-        public float HeatValue { get => heatValue; set { heatValue = value; } }
-        public float MoistureValue { get => moistureValue; set { moistureValue = value; } }
+		public Node2D TerrainObj { get => terrainObj; set { terrainObj = value; } }
 
-        public Node2D TerrainObj { get => terrainObj; set { terrainObj = value; } }
+		public Terrain NorthTile { get; set; } //up
+		public Terrain SouthTile { get; set; } //down
+		public Terrain WestTile { get; set; } //left
+		public Terrain EastTile { get; set; } //right
 
-        public Terrain NorthTile { get; set; } //up
-        public Terrain SouthTile { get; set; } //down
-        public Terrain WestTile { get; set; } //left
-        public Terrain EastTile { get; set; } //right
+		// public Color terrain
 
-        //
-        // functions
-        //
-        public void Display(TerrainDispalyMode dispalyMode)
-        {
-            //todo move functioion to graphic class
-            Color color;
-            if (dispalyMode == TerrainDispalyMode.Default)
-            {
-                color = DefaultColor(heightValue); //todo make graphic rather then color
-            }
-            else if (dispalyMode == TerrainDispalyMode.Height)
-            {
-                color = HeightColor(heightValue);
-            }
-            else if (dispalyMode == TerrainDispalyMode.Heat)
-            {
-                color = HeatColor(heatValue);
-            }
-            else
-            {
-                color = MoistureColor(moistureValue);
-            }
-            colorRect.Color = color;
-        }
-        private Color DefaultColor(float value)
-        {
-            if (value < 0.1)
-            {
-                return new Color(Colors.DarkBlue);
-            }
-            if (value < 0.2)
-            {
-                return new Color(Colors.Blue);
-            }
-            if (value < 0.3)
-            {
-                return new Color(Colors.Yellow);
-            }
-            else if (value < 0.5)
-            {
-                return new Color(Colors.Green);
-            }
-            else if (value < .6)
-            {
-                return new Color(Colors.DarkGreen);
-            }
-            else
-            {
-                return new Color(Colors.Gray);
-            }
-        }
-        private Color HeatColor(float value)
-        {
-            if (value < .9)
-            {
-                return heatGradient.Sample(value);
-            }
-            else
-            {
-                return new Color(Colors.DarkBlue);
-            }
+		//
+		// functions
+		//
+		public void Display(TerrainDisplayMode displayMode)
+		{
+			//todo move function to graphic class
+			Color color;
+			if (displayMode == TerrainDisplayMode.Default)
+			{
+				color = DefaultColor(heightValue); //todo make graphic rather then color
+			}
+			else if (displayMode == TerrainDisplayMode.Height)
+			{
+				color = HeightColor(heightValue);
+			}
+			else if (displayMode == TerrainDisplayMode.Heat)
+			{
+				color = HeatColor(heatValue);
+			}
+			else
+			{
+				color = MoistureColor(moistureValue);
+			}
+			colorRect.Color = color;
+		}
+		private Color DefaultColor(float value)
+		{
+			// value is in range of -.6 and .5
+			if (value < -.5 )
+			{
+				//deep water
+				return new Color(Colors.DarkBlue);
+			}
+			else if (value < -.3)
+			{
+			   //shallow water
+				return new Color(Colors.Blue);
+			}
+			else if (value < -.2)
+			{
+			   //sand
+			   return new Color(Colors.Yellow);
+			}
+			else if (value < .1)
+			{
+				//grass
+				return new Color(Colors.Green);
+			}
+			else if (value < .2)
+			{
+				// forest
+				return new Color(Colors.DarkGreen);
+			}
+			else if (value< .3)
+			{
+				//rockey terrain
+				return new Color(Colors.Gray);
+			}
+			else if (value< .6)
+			{
+				//rockey terrain
+				return new Color(Colors.DarkGray);
+			}
 
-        }
-        private Color HeightColor(float value)
-        {
-            //todos
-            return new Color(value, value, value);
+			//mountain
+			return new Color(Colors.Black);
+			
+		}
+		private Color HeatColor(float value)
+		{
+			heatGradient = new Gradient();
+			heatGradient.AddPoint(0f, Colors.DarkRed);
+			heatGradient.AddPoint(0.18f, Colors.Orange);
+			heatGradient.AddPoint(0.3f, Colors.Yellow); //cold
+			heatGradient.AddPoint(0.5f, Colors.Green);
+			heatGradient.AddPoint(0.6f, Colors.Cyan);
+			heatGradient.AddPoint(0.7f, Colors.Blue); //coldest
+			heatGradient.AddPoint(.9f, Colors.DarkBlue);
+			
+			if (value < .9)
+			{
+				return heatGradient.Sample(value);
+			}
+			else
+			{
+				return new Color(Colors.DarkBlue);
+			}
 
-
-
-        }
-        private Color MoistureColor(float value)
-        {
-            //todo
-            if (value < 0.27)
-            {
-                return new Color(Colors.Orange);
-            }
-            if (value < 0.4)
-            {
-                return new Color(Colors.Yellow);
-            }
-            if (value < 0.6)
-            {
-                return new Color(Colors.Green);
-            }
-            else if (value < 0.8)
-            {
-                return new Color(Colors.Blue);
-            }
-            else
-            {
-                return new Color(Colors.DarkBlue);
-            }
-        }
-
-
-
-    }
+		}
+		private Color HeightColor(float value)
+		{
+			return new Color(value, value, value);
+		}
+		private Color MoistureColor(float value)
+		{
+			//todo
+			if (value < 0.27)
+			{
+				return new Color(Colors.Orange);
+			}
+			if (value < 0.4)
+			{
+				return new Color(Colors.Yellow);
+			}
+			if (value < 0.6)
+			{
+				return new Color(Colors.Green);
+			}
+			else if (value < 0.8)
+			{
+				return new Color(Colors.Blue);
+			}
+			else
+			{
+				return new Color(Colors.DarkBlue);
+			}
+		}
+	}
 }

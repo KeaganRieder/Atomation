@@ -5,9 +5,17 @@ namespace Atomation.Thing
     /// </summary>
     public class StatDef : ThingDef
     {
-        public float baseValue;
-        public float minValue;
-        public float maxValue;
+        public float BaseValue;
+        public float MinValue;
+        public float MaxValue;
         //add more things here 
+
+        public StatDef(string name, string description, float baseVal, float min, float max){
+            Name = name;
+            Description = description;
+            BaseValue = baseVal;
+            MinValue = min;
+            MaxValue = max;
+        }
     }
 }

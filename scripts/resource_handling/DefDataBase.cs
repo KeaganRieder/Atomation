@@ -5,16 +5,15 @@ using Godot;
 using Atomation.Thing;
 using Atomation.Utility;
 
-namespace Atomation.ResHandling
+namespace Atomation.Resources
 {
     public class DefDatabase<defType> where defType : IThing
-    { // IThingDef{
-
-        public Dictionary<string, string> Contents;
+    { 
+        public Dictionary<string, defType> Contents;
 
         public DefDatabase(string folderPath)
         {
-            Contents = new Dictionary<string, string>();
+            Contents = new Dictionary<string, defType>();
             if (Directory.Exists(folderPath))
             {
                 string[] files = Directory.GetFiles(folderPath);
@@ -37,7 +36,7 @@ namespace Atomation.ResHandling
         {
             try
             {
-                // Contents.Add(name, JsonConvert.SerializeObject(obj));
+                Contents.Add(name, obj);
             }
             catch (Exception Error)
             {
@@ -51,8 +50,7 @@ namespace Atomation.ResHandling
             {
                 if (Contents.ContainsKey(key))
                 {
-                    return default;
-                    // return JsonConvert.DeserializeObject<defType>(Contents[key]);
+                    return Contents[key];
                 }
                 else
                 {

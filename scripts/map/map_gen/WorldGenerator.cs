@@ -42,6 +42,7 @@ namespace Atomation.Map
         private GenConfigs genConfig;
         // genSteps
         private GenStepNoise genStepNoise;
+        private GenStepTerrain genStepTerrain;
 
         public WorldGenerator(GenConfigs genConfig)
         {
@@ -53,28 +54,10 @@ namespace Atomation.Map
         public GenConfigs GenConfig { get { return genConfig; } set { genConfig = value; } }
         public GenStepNoise GenStepNoise { get { return GenStepNoise; } set { GenStepNoise = value; } }
 
-        public void ExecuteGenSteps(Vector2 origin, Node2D parent)
-        {
-
-            // generationData = 
-        }
-
         public Chunk GenerateChunk(Vector2 chunkPos, Chunk chunk)
-        {
-            // Dictionary<Vector2, Terrain> generatedTerrain = genStepNoise.RunStep(chunkPos, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
+        {           
             genStepNoise.RunStep(chunkPos, chunk);
-            // for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
-            // {
-            //     for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
-            //     {
-            //         Vector2 cords = new Vector2(x, y);
-            //         Terrain terrain = generatedTerrain[cords];
-
-            //         // terrain.Display(TerrainDispalyMode.Heat);
-
-            //         chunk.ChunkTerrain(cords, terrain);
-            //     }
-            // }
+            // GenStep(Chunk chunk)
 
             return chunk;
         }

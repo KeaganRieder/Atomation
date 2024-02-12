@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using Godot;
+using Newtonsoft.Json;
+using Atomation.Resources;
+
 namespace Atomation.Thing
 {
     /// <summary>
@@ -8,8 +10,10 @@ namespace Atomation.Thing
     /// </summary>
     public abstract class CompThingDef : ThingDef
     {
-        public GraphicData graphicData { get; set; }
-        public StatDef[] statDefs { get; set; }
+        [JsonProperty("GraphicConfig")]
+        public GraphicConfig GraphicData { get; set; }
+        [JsonProperty("statBases")]
+        public StatDef[] StatDefs { get; set; }
 
         //todo make function which formats things from being config 
         //data to actual
@@ -18,7 +22,7 @@ namespace Atomation.Thing
             Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>();
 
             //need to work on stat modifers at some point
-            foreach (StatDef def in statDefs)
+            foreach (StatDef def in StatDefs)
             {
                 if (stats.ContainsKey(def.Name))
                 {

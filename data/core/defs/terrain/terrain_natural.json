@@ -2,131 +2,148 @@
   "defs": [
     {
       "name": "Grass",
-      "label": "Grass",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 1.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.8,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/grass",
+        "Color": {
+          "R": 0.133333,
+          "G": 0.545098,
+          "B": 0.133333,
+          "A": 1.0,
+          "Luminance": 0.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/grass",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
+      "statBases": [
+        {
+          "name": "Fertility",
+          "description": "Objects fertility",
+          "BaseValue": 1.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed ",
+          "BaseValue": 0.8,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Beauty",
+          "description": "Objects Beauty",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        }
+      ]
     },
     {
       "name": "Soil",
-      "label": "Soil",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 1.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.8,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/soil",
+        "Color": {
+          "R": 0.545098,
+          "G": 0.270588,
+          "B": 0.0745098,
+          "A": 1.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/soil",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
+      "statBases": [
+        {
+          "name": "Fertility",
+          "description": "Objects fertility",
+          "BaseValue": 1.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed ",
+          "BaseValue": 0.8,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Beauty",
+          "description": "Objects Beauty",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        }
+      ]
     },
     {
       "name": "Gravel",
-      "label": "Gravel",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 0.5,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.7,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": -1.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/gravel",
+        "Color": {
+          "R": 0.745098,
+          "G": 0.745098,
+          "B": 0.745098,
+          "A": 1.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/gravel",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
+      "statBases": [
+        {
+          "name": "Fertility",
+          "description": "Objects fertility",
+          "BaseValue": 0.5,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed ",
+          "BaseValue": 0.6,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Beauty",
+          "description": "Objects Beauty",
+          "BaseValue": -1.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        }
+      ]
     },
     {
       "name": "Sand",
-      "label": "Sand",
       "description": "",
-      "stats": {
-        "Fertility": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects Fetrility"
-        },
-        "WalkSpeed": {
-          "baseValue": 0.7,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "WalkSpeed",
-          "description": "effect on WalkSpeed"
-        },
-        "Beauty": {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "object Beauty"
+      "GraphicConfig": {
+        "TexturePath": "terrain/natural/sand",
+        "Color": {
+          "R": 0.678431,
+          "G": 1.0,
+          "B": 0.184314,
+          "A": 1.0
         }
       },
-      "graphic": {
-        "texturePath": "terrain/natural/sand",
-        "color": {"R": 0.0,"G": 0.0,"B": 0.0,"A": 0.0}
-      }      
+      "statBases": [
+        {
+          "name": "Fertility",
+          "description": "Objects fertility",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed ",
+          "BaseValue": 0.7,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        },
+        {
+          "name": "Beauty",
+          "description": "Objects Beauty",
+          "BaseValue": 0.0,
+          "MinValue": 0.0,
+          "MaxValue": 0.0
+        }
+      ]
     }
   ]
 }

@@ -26,6 +26,7 @@ namespace Atomation.Map
 
 		public Chunk(Vector2 chunkCords, Node2D parentNode) : this()
 		{
+			//make object aligned to cell size grid also
 			Vector2 Cords = CordConversion.ToCellSizeGrid(chunkCords);
 			
 			chunkNode = new Node2D()
@@ -40,27 +41,33 @@ namespace Atomation.Map
 		//getters and setters 
 		public Node2D ChunkNode { get => chunkNode; }
 
-		public Chunk NorthChunk { get; set; } //up
-		public Chunk SouthChunk { get; set; } //down
-		public Chunk WestChunk { get; set; } //left
-		public Chunk EastChunk { get; set; } //right
-
-		public Terrain Terrain(Vector2 key)
+		/// <summary>
+		/// sets the terrain at the provided cords
+		/// </summary>
+		public void Set(Vector2 cords, Terrain terrain)
 		{
-			if (chunkTerrain.ContainsKey(key))
+			chunkTerrain[cords] = terrain;
+			chunkNode.AddChild(chunkTerrain[cords].TerrainObj);
+			terrain.Display(TerrainDisplayMode.Default);
+
+		}
+
+		/// <summary>
+		/// gets the terrain at the provided cords
+		/// </summary>
+		public Terrain GetTerrain(Vector2 cords)
+		{
+			if (chunkTerrain.ContainsKey(cords))
 			{
-				return chunkTerrain[key];
+				return chunkTerrain[cords];
 			}
-			return default;
-		}
-		public void Terrain(Vector2 key, Terrain terrain)
-		{
-			chunkTerrain[key] = terrain;
-			chunkNode.AddChild(chunkTerrain[key].TerrainObj);
-			chunkTerrain[key].Display(TerrainDisplayMode.Default);
+			return null;
 		}
 
+		//
 		//rendering stuff
+		//
+
 		public void UpdateChunk(Vector2 viewerCords)
 		{
 			float distToViewer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(viewerCords);

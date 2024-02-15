@@ -32,11 +32,11 @@ namespace Atomation.Map
     }
 
     /// <summary>
-    /// the games world generators, which manange and oversees
-    /// the running/executaion of genesteps to genertate the game
+    /// the games world generators, which manage and oversees
+    /// the running/execution of gensteps to generate the game
     /// world or chunks with in it
     /// </summary>
-    public class WorldGenerator
+    public class WorldGenerator //maybe make this static?
     {
         //configs
         private GenConfigs genConfig;
@@ -54,12 +54,15 @@ namespace Atomation.Map
         public GenConfigs GenConfig { get { return genConfig; } set { genConfig = value; } }
         public GenStepNoise GenStepNoise { get { return GenStepNoise; } set { GenStepNoise = value; } }
 
-        public Chunk GenerateChunk(Vector2 chunkPos, Chunk chunk)
+        /// <summary>
+        /// Used to Generate new Chunks
+        /// </summary>
+        public void GenerateChunk(Vector2 ChunkCord, Chunk chunk)
         {           
-            genStepNoise.RunStep(chunkPos, chunk);
+            genStepNoise.RunStep(ChunkCord, chunk);
             // GenStep(Chunk chunk)
 
-            return chunk;
+            // return null;
         }
     }
 }

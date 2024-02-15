@@ -82,7 +82,7 @@ namespace Atomation.Map
 		public override void _Process(double delta)
 		{
 			base._Process(delta);
-			chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
+			// chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
 
 		}
 

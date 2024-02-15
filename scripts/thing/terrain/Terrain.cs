@@ -35,7 +35,7 @@ namespace Atomation.Thing
 		private ColorRect colorRect; //this is temporary and will be changed
 
 		private bool water;
-		private bool collidable;
+		// private bool collidable;
 
 		//constructors
 		public Terrain()
@@ -89,8 +89,6 @@ namespace Atomation.Thing
 		public Terrain SouthTile { get; set; } //down
 		public Terrain WestTile { get; set; } //left
 		public Terrain EastTile { get; set; } //right
-
-		// public Color terrain
 
 		//
 		// functions

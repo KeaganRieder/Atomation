@@ -80,26 +80,26 @@ namespace Atomation.Map
             // terrainTiles = new Dictionary<Vector2, Terrain>();
 
             float[,] equatorHeat = GenerateEquatorHeat(origin, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
-
+            
             for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
             {
                 for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
                 {
+                    float sampleX = x+origin.X;
+                    float sampleY = y+origin.Y;
                     Vector2 cords = new Vector2(x, y);
+                    
                     Terrain terrain = new Terrain(cords);
-
-                    float sampleX = x + origin.X;
-                    float sampleY = y + origin.Y;
 
                     terrain.HeightValue = GetElevationValue(sampleX, sampleY);
                     terrain.HeatValue = GetHeatValue(origin, x, y, equatorHeat);
                     terrain.MoistureValue = GetMoistureValue(sampleX, sampleY);
 
-                    chunk.Terrain(cords, terrain);
+                    chunk.Set(cords,terrain);
+
+                    // chunk.Terrain(cords, terrain);
                 }
             }
-
-            // GD.Print($"MIN:{min} MAX:{max}");
         }
 
         //

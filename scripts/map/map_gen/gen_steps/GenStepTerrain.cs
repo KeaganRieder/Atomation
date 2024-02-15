@@ -35,8 +35,8 @@ namespace Atomation.Map
 				{	
 					Vector2 cords = new Vector2(x,y);
 
-					Terrain terrain = chunk.Terrain(cords);
-					SetTerrainType(terrain);
+					// Terrain terrain = chunk.Terrain(cords);
+					// SetTerrainType(terrain);
 				}
 			}
 

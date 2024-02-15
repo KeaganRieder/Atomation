@@ -1,9 +1,9 @@
 # Atomation
 
 ## Table of contents 
-[1. About](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#about)
+[1. About](#about)
 
-[2. Feature Overview](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#game-world)
+[2. Feature Overview](#game-world)
 
 ## About
 Atomation is planned to be a mixture between colony manger (ex Rimworld) and factory builder games (ex Factorio). It’s being developed in c# using the Godot game engine and currently has no planned release date, sense it’s currently being used as a nice way I can learn more about the Godot game engine as well as practice techniques I learned in school utilizing a different language.

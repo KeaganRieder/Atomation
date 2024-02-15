@@ -1,9 +1,8 @@
 # Atomation
 
 ## Table of contents 
-[1. About](#about)
-
-[2. Feature Overview](#game-world)
+- [1. About](#about)
+- [2. Feature Overview](#game-world)
 
 ## About
 Atomation is planned to be a mixture between colony manger (ex Rimworld) and factory builder games (ex Factorio). It’s being developed in c# using the Godot game engine and currently has no planned release date, sense it’s currently being used as a nice way I can learn more about the Godot game engine as well as practice techniques I learned in school utilizing a different language.
@@ -11,14 +10,14 @@ Atomation is planned to be a mixture between colony manger (ex Rimworld) and fac
 ## feature overview 
 This section describes the many features which are present in the game, which are:
 
-[World](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#game-world)
-[Entities from  Files](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#game-objects-from-configs-files)
+- [World](#game-world)
+- [Entities from Files](#Entities from  Files)
 
 ### Game World 
  Game works  or the map is the space in which the game exists, this section defines the many aspect which make of the map.
 
 #### Map structure 
-Map structure describes how the world is divided into standard units: [Tiles](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#tile) and [Chunks](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#chunk)
+Map structure describes how the world is divided into standard units: [Tiles](#tile) and [Chunks](#chunk)
 
 #### Tile
 A tile is a square which is the smallest possible piece of the game world being roughly 32 x 32 pixels in size and are used to determine the size of entities. With entities being measure in units of tile x tile.
@@ -37,6 +36,8 @@ The map and chunk are generated in steps:
 
 #### GenStepNoise
 Step one in the process of generating the map. This step handles the creation of noise map, which are a grid of float number depending on the noise map range from 0 - 1 or -1 – 1. The methods to which the maps are generated from either Simplex noise, uniform noise generation or a combination of the two maps.
+
+TODO: ADD images of noise maps
 
 ##### Height Map
 The height map uses simplex noise generated using functions defined in Godot’s FastNoiseLite class. The map generated from this contains float values which range from -1 (lowest value representing water) to 1 (highest value representing mountains). This map is used to:
@@ -63,7 +64,7 @@ The moisture uses primarily simplex noise to determine moisture values. As such 
 #### GenStepTerrain
 Work in Progress 
 
-### Game Objects from Configs Files
+### Entities from Files
 Todo 
 
 ### Planned features 

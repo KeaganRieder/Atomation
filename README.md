@@ -1,8 +1,8 @@
 # Atomation
 
 ## Table of contents 
-[About]()
-[Feature Overview]()
+[1. About](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#about)
+[2. Feature Overview](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#game-world)
 
 ## About
 Atomation is planned to be a mixture between colony manger (ex Rimworld) and factory builder games (ex Factorio). It’s being developed in c# using the Godot game engine and currently has no planned release date, sense it’s currently being used as a nice way I can learn more about the Godot game engine as well as practice techniques I learned in school utilizing a different language.
@@ -10,19 +10,19 @@ Atomation is planned to be a mixture between colony manger (ex Rimworld) and fac
 ## feature overview 
 This section describes the many features which are present in the game, which are:
 
-[World]()
-[Entites from  Files]()
+[World](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#game-world)
+[Entities from  Files](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#game-objects-from-configs-files)
 
 ### Game World 
  Game works  or the map is the space in which the game exists, this section defines the many aspect which make of the map.
 
 #### Map structure 
-Map structure describes how the world is divided into standard units: [Tiles] and [Chunks]
+Map structure describes how the world is divided into standard units: [Tiles](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#tile) and [Chunks](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#chunk)
 
-#### tile
+#### Tile
 A tile is a square which is the smallest possible piece of the game world being roughly 32 x 32 pixels in size and are used to determine the size of entities. With entities being measure in units of tile x tile.
 
-### chunk
+#### Chunk
 A chunk is unit of the map which contains a collection of 32 x 32 tiles (1024 tiles in total)
 Chunks are used for:
 * Map generation when a player moves (more methods of loading chunks planned for later) the map generates a new chunk 

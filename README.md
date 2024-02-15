@@ -2,6 +2,7 @@
 
 ## Table of contents 
 [1. About](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#about)
+
 [2. Feature Overview](https://github.com/KeaganRieder/Atomation?tab=readme-ov-file#game-world)
 
 ## About

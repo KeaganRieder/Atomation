@@ -117,7 +117,7 @@
       ]
     },
     {
-      "name": "DeepOcean",
+      "name": "DeepWater",
       "description": "",
       "GraphicConfig": {
         "TexturePath": "terrain/natural/deep_ocean",

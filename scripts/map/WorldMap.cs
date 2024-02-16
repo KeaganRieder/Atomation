@@ -12,10 +12,9 @@ namespace Atomation.Map
 	public partial class WorldMap : Node2D
 	{
 		public const float CELL_SIZE = 16;
-		public int Test { get; set; } = 100;
-		public int Width { get; set; }
-		public int Height { get; set; }
-		public Vector2 MapSize { get => new Vector2(Width, Height); }
+		public int MaxWorldWidth { get; set; }
+		public int MaxWorldHeight { get; set; }
+		
 
 		//map components
 		private WorldGenerator mapGenerator;
@@ -24,14 +23,13 @@ namespace Atomation.Map
 
 		public WorldMap()
 		{
-			Width = 256;
-			Height = 256;
-			//note zoom level may need a be something like 1000
-			GenConfigs genConfig = new GenConfigs() //TODO make this a file
+			MaxWorldWidth = 256;
+			MaxWorldHeight = 256;
+			GenConfigs genConfig = new GenConfigs() 
 			{
-				worldBounds = new Vector2I(Width, Height),
+				worldBounds = new Vector2I(MaxWorldWidth, MaxWorldHeight),
 				seaLevel = -0.1f,
-				mounatinSize = 0.2f,
+				mountainSize = 0.2f,
 				elevationMapConfigs = new NoiseMapConfig()
 				{
 					seed = 0,
@@ -62,23 +60,30 @@ namespace Atomation.Map
 			};
 
 			mapGenerator = new WorldGenerator(genConfig);
-
 			chunkHandler = new ChunkHandler(this);
+
 			PlayerNode = new Node2D() { Name = "player" };
 			PlayerNode.AddChild(new ColorRect() { Color = new Color(100, 100, 100), Size = new Vector2(16, 16) });
 			AddChild(PlayerNode);
-			// FileManger fileManger = new FileManger(); 
 		}
 
+		/// <summary>
+		/// runs upon node creation
+		/// </summary>
 		public override void _Ready()
 		{
 			base._Ready();
-			GD.Print("test gen");
+			GD.Print("Generating Map");
 			chunkHandler.WorldGenerator = mapGenerator;
 			chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
 			// mapGenerator.GenerateMap(this);
+
+			GD.Print("Generation Complete");
 		}
 
+		/// <summary>
+		/// runs every frame
+		/// </summary>
 		public override void _Process(double delta)
 		{
 			base._Process(delta);
@@ -86,6 +91,6 @@ namespace Atomation.Map
 
 		}
 
-
+		// public void finalizedWorld
 	}
 }

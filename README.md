@@ -11,13 +11,13 @@ Atomation is planned to be a mixture between colony manger (ex Rimworld) and fac
 This section describes the many features which are present in the game, which are:
 
 - [World](#game-world)
-- [Entities from Files](#Entities from  Files)
+- [Entities from Files](#Entities-from-Files)
 
 ### Game World 
  Game works  or the map is the space in which the game exists, this section defines the many aspect which make of the map.
 
 #### Map structure 
-Map structure describes how the world is divided into standard units: [Tiles](#tile) and [Chunks](#chunk)
+Map structure describes how the world is divided into standard units: [Tiles](#Tile) and [Chunks](#Chunk)
 
 #### Tile
 A tile is a square which is the smallest possible piece of the game world being roughly 32 x 32 pixels in size and are used to determine the size of entities. With entities being measure in units of tile x tile.

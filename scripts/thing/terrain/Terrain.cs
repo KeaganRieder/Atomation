@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Godot;
-using Atomation.Utility;
 using Atomation.Map;
 using Atomation.Resources;
 
@@ -35,19 +34,14 @@ namespace Atomation.Thing
 		private ColorRect colorRect; //this is temporary and will be changed
 
 		private bool water;
-		// private bool collidable;
 
 		//constructors
-		public Terrain()
-		{
-			name = "Default";
-			description = "";
-		}
 		public Terrain(Vector2 cords)
 		{
 			string name = $"Tile {cords}";
-			Vector2 position = CordConversion.ToCellSizeGrid(cords);
-			terrainObj = new Node2D() //maybe get rid of? and just make either a sprite or color rect
+			Vector2 position = cords * WorldMap.CELL_SIZE;
+
+			terrainObj = new Node2D() 
 			{
 				Name = name,
 				Position = position,
@@ -58,10 +52,7 @@ namespace Atomation.Thing
 			};
 
 			terrainObj.AddChild(colorRect);
-		}
-		public Terrain(TerrainDef config)
-		{
-			ReadConfigs(config);
+			// Graphic = new();
 		}
 
 		/// <summary>
@@ -73,7 +64,7 @@ namespace Atomation.Thing
 			name = config.Name;
 			description = config.Description;
 			stats = config.CreateStats();
-			Graphic = new GroundGraphics(config.GraphicData);
+			Graphic = new FloorGraphics(config.GraphicData);
 		}
 
 		//getters and setters
@@ -89,6 +80,7 @@ namespace Atomation.Thing
 		public Terrain SouthTile { get; set; } //down
 		public Terrain WestTile { get; set; } //left
 		public Terrain EastTile { get; set; } //right
+
 
 		//
 		// functions
@@ -117,46 +109,52 @@ namespace Atomation.Thing
 		}
 		private Color DefaultColor(float value)
 		{
-			// value is in range of -.6 and .5
-			if (value < -.5 )
-			{
-				//deep water
-				return new Color(Colors.DarkBlue);
-			}
-			else if (value < -.3)
-			{
-			   //shallow water
-				return new Color(Colors.Blue);
-			}
-			else if (value < -.2)
-			{
-			   //sand
-			   return new Color(Colors.Yellow);
-			}
-			else if (value < .1)
-			{
-				//grass
-				return new Color(Colors.Green);
-			}
-			else if (value < .2)
-			{
-				// forest
-				return new Color(Colors.DarkGreen);
-			}
-			else if (value< .3)
-			{
-				//rockey terrain
-				return new Color(Colors.Gray);
-			}
-			else if (value< .6)
-			{
-				//rockey terrain
-				return new Color(Colors.DarkGray);
-			}
-
+			// // value is in range of -.6 and .5
+			// if (value < -.5 )
+			// {
+			// 	//deep water
+			// 	return new Color(Colors.DarkBlue);
+			// }
+			// else if (value < -.3)
+			// {
+			//    //shallow water
+			// 	return new Color(Colors.Blue);
+			// }
+			// else if (value < -.2)
+			// {
+			//    //sand
+			//    return new Color(Colors.Yellow);
+			// }
+			// else if (value < .1)
+			// {
+			// 	//grass
+			// 	return new Color(Colors.Green);
+			// }
+			// else if (value < .2)
+			// {
+			// 	// forest
+			// 	return new Color(Colors.DarkGreen);
+			// }
+			// else if (value< .3)
+			// {
+			// 	//rockey terrain
+			// 	return new Color(Colors.Gray);
+			// }
+			// else if (value< .6)
+			// {
+			// 	//rockey terrain
+			// 	return new Color(Colors.DarkGray);
+			// }
 			//mountain
-			return new Color(Colors.Black);
 			
+			// if (graphic != null)
+			// {
+				return graphic.Color;	
+			// }else
+			// {
+			// 	return new Color(Colors.Black);
+			// }
+					
 		}
 		private Color HeatColor(float value)
 		{

@@ -10,38 +10,37 @@ namespace Atomation.Map
 	/// this include deciding lakes, ocean and where rivers are, mountains,
 	/// biomes and general landmasses are
 	/// </summary>
-	public class GenStepTerrain
+	public class GenStepTerrain : GenStep
 	{
 		private float seaLevel; //no sea = 
 		private float mountainSize; // no mountains = 1
 
-		//terrain height indexes
-		
+		//terrain height indexes		
 
 		public GenStepTerrain(GenConfigs genConfig){
 			seaLevel = genConfig.seaLevel;
 			mountainSize = genConfig.seaLevel;
-
 		}
 
 		/// <summary>
 		/// main function that is called in order to execute step and it's parts
 		/// </summary>
-		public void GenStep(Chunk chunk){
-
+		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler){
 			for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
-				{	
-					Vector2 cords = new Vector2(x,y);
-
-					// Terrain terrain = chunk.Terrain(cords);
-					// SetTerrainType(terrain);
+				{
+					SampleChunkPos(origin, x, y, out float sampleX, out float sampleY);
+					Terrain terrain = chunkHandler.GetTerrain(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY));
+					SetTerrainType(terrain);
+					terrain.Display(TerrainDisplayMode.Default); //this is temporary
 				}
 			}
-
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		private void SetTerrainType(Terrain terrain){
 			float height = terrain.HeightValue;
 			string terrainId;
@@ -81,7 +80,7 @@ namespace Atomation.Map
 				//mountain
 				terrainId = "Slate";
 			}
-
+			// GD.Print("read");
 			terrain.ReadConfigs(DefResources.ReadTerrainConfig(terrainId));
 			
 		}

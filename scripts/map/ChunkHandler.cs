@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Godot;
-// using Atomation.Utility;
 using Atomation.Thing;
 
 namespace Atomation.Map
@@ -54,7 +53,7 @@ namespace Atomation.Map
 		/// uses global tile position to set the terrain into correct Chunk
 		/// </summary>
 		public void Set(int globalX, int globalY, Terrain terrain){
-
+			//need to fix negative cases
 			Vector2 ChunkCords = GetChunkCords(globalX, globalY);
 
 			//finding relative position of the tile
@@ -63,23 +62,50 @@ namespace Atomation.Map
 
 			Vector2 cords = new(tileX, tileY);
 
-			// Chunk chunk = GetChunk(ChunkCords);
-			// GD.Print("ADDED");
-			terrain.Display(TerrainDisplayMode.Default);
-			// chunk.Set(cords,terrain);
+			Chunk chunk = GetChunk(ChunkCords);
+
+			//making sure chunk actually exists
+			if(chunk != null){
+				
+				
+				chunk.Set(cords,terrain);
+			}
+			else
+			{
+				GD.PrintErr($"ERROR: ATTEMPTED TO access NULL chunk {ChunkCords}");
+			}
 		}
 
 		/// <summary>
 		/// uses global tile position to get terrain data from the correct Chunk
 		/// </summary>
 		public Terrain GetTerrain(int globalX, int globalY){
-			return null;
+			Vector2 ChunkCords = GetChunkCords(globalX, globalY);
+			
+			int tileX = globalX - (int)ChunkCords.X * Chunk.CHUNK_SIZE;
+			int tileY = globalY - (int)ChunkCords.Y * Chunk.CHUNK_SIZE;
+
+			Vector2 cords = new(tileX, tileY);
+
+			Chunk chunk = GetChunk(ChunkCords);
+
+			if(chunk != null){
+				
+				
+				return chunk.GetTerrain(cords);
+			}
+			else
+			{
+				GD.PrintErr($"ERROR: ATTEMPTED TO access NULL chunk {ChunkCords}");
+				return null;
+			}			
 		}
 
 		/// <summary>
 		/// takes in global cords (as x and y), and converts them to be based on chunk grid 
 		/// </summary>
 		public Vector2 GetChunkCords(int globalX, int globalY){
+			//this may be flawed
 			int chunkX = Mathf.FloorToInt(globalX / Chunk.CHUNK_SIZE);
 			int chunkY = Mathf.FloorToInt(globalY / Chunk.CHUNK_SIZE);
 			
@@ -89,7 +115,6 @@ namespace Atomation.Map
 		/// takes in global cords as a vector, and converts them to be based on chunk grid 
 		/// </summary>
 		public Vector2 GetChunkCords(Vector2 GlobalCords){
-			
 			return GetChunkCords(Mathf.RoundToInt(GlobalCords.X), Mathf.RoundToInt(GlobalCords.Y));
 		}
 
@@ -125,7 +150,7 @@ namespace Atomation.Map
 		private void UpdateChunk(Vector2 chunkCords)
 		{
 			Chunk chunk = GetChunk(chunkCords);
-			GD.Print($"\nUPDATE for chunk at:{chunkCords * Chunk.CHUNK_SIZE}\n");
+			// GD.Print($"\nUPDATE for chunk at:{chunkCords * Chunk.CHUNK_SIZE}\n");
 			if (chunk != null)
 			{
 				chunk.UpdateChunk(chunkCords);
@@ -139,14 +164,12 @@ namespace Atomation.Map
 				//make based on global ie aligned to intervals of 32 for positioning
 				Vector2 globalCords =  chunkCords * Chunk.CHUNK_SIZE;
 
-				//creating new chunk 
-				chunk = new(globalCords, map);			
-				chunks.Add(chunkCords, chunk);
+				//creating new chunk 	
+				chunks.Add(chunkCords, new(globalCords, map));
 
 				//call generator to actually generate chunk
-				WorldGenerator.GenerateChunk(globalCords, chunk);
+				WorldGenerator.GenerateChunk(globalCords, this);
 			}
 		}
-
 	}
 }

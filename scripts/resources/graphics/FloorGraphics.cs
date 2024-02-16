@@ -29,15 +29,16 @@ namespace Atomation.Resources
     /// <summary>
     /// abstract class which defines the base of all graphics in Atomation
     /// </summary>
-    public class GroundGraphics : Graphic
+    public class FloorGraphics : Graphic
     {
-        public GroundGraphics(GraphicConfig graphicConfig){
+        public FloorGraphics(GraphicConfig graphicConfig){
+            color = new Color();
             texturePath = graphicConfig.TexturePath;
             color = graphicConfig.Color;
             color.A = 1;
         }
 
-        public Color Color{get => color;}
+        // public Color Color{get => color;}
         
     }   
 }

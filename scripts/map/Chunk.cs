@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Godot;
-using Atomation.Utility;
 using Atomation.Thing;
 namespace Atomation.Map
 {
 	/// <summary>
-	/// A chunk is a 32 x 32 section of the map that contans
-	/// various values, it is eitehr loaded or unloaded depedning on where 
+	/// A chunk is a 32 x 32 section of the map that contains
+	/// various values, it is either loaded or unloaded depending on where 
 	/// the player is, as well as other aspects
 	/// </summary>
 	public class Chunk
@@ -27,7 +26,7 @@ namespace Atomation.Map
 		public Chunk(Vector2 chunkCords, Node2D parentNode) : this()
 		{
 			//make object aligned to cell size grid also
-			Vector2 Cords = CordConversion.ToCellSizeGrid(chunkCords);
+			Vector2 Cords = chunkCords * WorldMap.CELL_SIZE;
 			
 			chunkNode = new Node2D()
 			{
@@ -48,8 +47,6 @@ namespace Atomation.Map
 		{
 			chunkTerrain[cords] = terrain;
 			chunkNode.AddChild(chunkTerrain[cords].TerrainObj);
-			terrain.Display(TerrainDisplayMode.Default);
-
 		}
 
 		/// <summary>
@@ -67,7 +64,7 @@ namespace Atomation.Map
 		//
 		//rendering stuff
 		//
-
+		
 		public void UpdateChunk(Vector2 viewerCords)
 		{
 			float distToViewer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(viewerCords);

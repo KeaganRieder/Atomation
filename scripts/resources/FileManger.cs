@@ -19,19 +19,12 @@ namespace Atomation.Resources
 		}
 	}
 
-	/*
-		the manger of all resources for the game. this serves
-		the role of manging the handling of resources and being 
-		the base class for all things that relate to reosurces
-		for the game
-		this is one of th emany class which will run during 
-		the games start up
-	*/
-	public partial class FileManger : Node
-	{
-		//user:// for later
+	/// <summary>
+	/// handles loading/managing file and general resource access.
+	/// </summary>
+	public partial class FileManger
+	{		
 		public const string DEF_FOLDER = "data/core/defs/";
-		public const string SAVE_FOLDER = "saves/";
 		public const string TEXTURE_FOLDER = "resources/textures";
 		public const string AUDIO_FOLDER = "resources/audio";
 
@@ -40,17 +33,15 @@ namespace Atomation.Resources
 			// FormatFiles();
 		}
 
-		public override void _Ready()
-		{
-			LoadFiles();
-		}
-
-
-		// JsonReader
+		/// <summary>
+		/// loads files, this function is generally called
+		/// during start up
+		/// </summary>
 		public void LoadFiles()
 		{
 			GD.Print("Loading Resources");
-			DefResources.LoadResources();//todo make this threaded
+			DefResources.LoadResources();
+			GD.Print("Loading Complete");
 		}
 
 		/// <summary>

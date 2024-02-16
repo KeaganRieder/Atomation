@@ -4,7 +4,7 @@ namespace Atomation.Map
 {
     /// <summary>
     /// noise map generates a noise map of various types 
-    /// based on the a type choosen when it's constructed
+    /// based on the a type chosen when it's constructed
     /// </summary>
     public class SimplexNoiseMap : NoiseObject
     {
@@ -37,10 +37,7 @@ namespace Atomation.Map
             Octaves = config.octaves;
             Frequency = config.frequency;
             Persistence = config.persistence;
-            Lacunarity = config.lacunarity;
-
-            // noiseLite.FractalGain
-            // noiseLite.peri      
+            Lacunarity = config.lacunarity;   
         }
 
         public void UpdateConfigs(NoiseMapConfig config)
@@ -132,7 +129,6 @@ namespace Atomation.Map
         {
             get
             {
-                //ensure range of noise is between values -1 and 1
                 return noiseLite.GetNoise2D(x/zoomLevel, y/zoomLevel);
             }
         }
@@ -140,7 +136,6 @@ namespace Atomation.Map
         {
             get
             {
-                //ensure range of noise is between values -1 and 1
                 return noiseLite.GetNoise2Dv(cords);
             }
         }

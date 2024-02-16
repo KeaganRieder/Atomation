@@ -1,35 +1,8 @@
 using System.Collections.Generic;
 using Godot;
-using Atomation.Utility;
-using Atomation.Thing;
 
 namespace Atomation.Map
 {
-    /// <summary>
-    /// class which is used to pass a collection of data that relates to the 
-    /// configuration of world world generation.
-    /// this data is passed between the many world generation classes
-    /// </summary>
-    public class GenConfigs
-    {
-        //general configs
-        /// <summary>
-        /// bounderys/max size of the world
-        /// x = width
-        /// y = height
-        /// </summary>
-        public Vector2I worldBounds;
-
-        //generation configs    
-        public NoiseMapConfig elevationMapConfigs;
-        public NoiseMapConfig moistureMapConfigs;
-        public NoiseMapConfig heatMapConfigs;
-
-        //terrain configs
-        public float seaLevel = .2f;
-        public float mounatinSize = .8f; //no mountains is anything above 1
-
-    }
 
     /// <summary>
     /// the games world generators, which manage and oversees
@@ -48,6 +21,15 @@ namespace Atomation.Map
         {
             this.genConfig = genConfig;
             genStepNoise = new GenStepNoise(genConfig);
+            genStepTerrain = new GenStepTerrain(genConfig);
+        }
+
+        /// <summary>
+        /// used during game load, inOrder to know the preset settings/
+        /// finalized configuration for world gen
+        /// </summary>
+        public void ReadConfigs(){
+            //todo
         }
 
         //getters and setters
@@ -57,12 +39,11 @@ namespace Atomation.Map
         /// <summary>
         /// Used to Generate new Chunks
         /// </summary>
-        public void GenerateChunk(Vector2 ChunkCord, Chunk chunk)
+        public void GenerateChunk(Vector2 ChunkCord, ChunkHandler chunkHandler)
         {           
-            genStepNoise.RunStep(ChunkCord, chunk);
-            // GenStep(Chunk chunk)
-
-            // return null;
+            genStepNoise.RunStep(ChunkCord, chunkHandler);
+            //assigning tiles neighbors
+            genStepTerrain.RunStep(ChunkCord, chunkHandler);
         }
     }
 }

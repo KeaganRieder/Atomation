@@ -12,16 +12,13 @@ namespace Atomation.Map
     /// which are pass to generation steps following, and help determine
     /// aspects in the game world
     /// </summary>
-    public class GenStepNoise 
+    public class GenStepNoise : GenStep
     {
 
         //general info
         private int worldMaxWidth; //maybe?
-        private int worldMaxHeight;  //maybe?
-        // private float seaLevel; //no sea = 
-        // private float mountainSize; // no mountains = 1
+        private int worldMaxHeight;
         private int equatorHeight;
-        private int maxFromEquator;
 
         //noise map info
         private SimplexNoiseMap elevationMap;
@@ -36,11 +33,6 @@ namespace Atomation.Map
             worldMaxHeight = genConfig.worldBounds.Y;
 
             equatorHeight = 0;
-            maxFromEquator = worldMaxHeight;
-
-            // seaLevel = genConfig.seaLevel;
-            // mountainSize = genConfig.mountainSize;
-
             elevationMap = new SimplexNoiseMap(genConfig.elevationMapConfigs);
             moistureMap = new SimplexNoiseMap(genConfig.moistureMapConfigs);
             heatMap = new SimplexNoiseMap(genConfig.heatMapConfigs);
@@ -75,29 +67,27 @@ namespace Atomation.Map
         /// handling running the step, using width and height that's based on
         /// chunk info
         /// </summary>
-        public void RunStep(Vector2 origin, Chunk chunk)
+        public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
         {
-            // terrainTiles = new Dictionary<Vector2, Terrain>();
-
             float[,] equatorHeat = GenerateEquatorHeat(origin, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
-            
+
             for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
             {
                 for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
                 {
-                    float sampleX = x+origin.X;
-                    float sampleY = y+origin.Y;
-                    Vector2 cords = new Vector2(x, y);
-                    
-                    Terrain terrain = new Terrain(cords);
+                    SampleCords(origin, x, y, out float sampleX, out float sampleY);
 
-                    terrain.HeightValue = GetElevationValue(sampleX, sampleY);
-                    terrain.HeatValue = GetHeatValue(origin, x, y, equatorHeat);
-                    terrain.MoistureValue = GetMoistureValue(sampleX, sampleY);
+                    Vector2 cords = new(x, y);
+                    Terrain terrain = new(cords)
+                    {
+                        HeightValue = GetElevationValue(sampleX, sampleY),
+                        HeatValue = GetHeatValue(origin, x, y, equatorHeat),
+                        MoistureValue = GetMoistureValue(sampleX, sampleY),
+                    };
 
-                    chunk.Set(cords,terrain);
+                    SampleChunkPos(origin, x, y, out sampleX, out sampleY);
 
-                    // chunk.Terrain(cords, terrain);
+                    chunkHandler.Set(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY), terrain);
                 }
             }
         }
@@ -113,14 +103,6 @@ namespace Atomation.Map
         private float GetElevationValue(float x, float y)
         {
             float elevation = elevationMap[x, y];
-            // if (elevation < min)
-            // {
-            //     min = elevation;
-            // }
-            // if (elevation > max)
-            // {
-            //     max = elevation;
-            // }
 
             return Mathf.Clamp(elevation, -1, 1);
         }
@@ -145,7 +127,7 @@ namespace Atomation.Map
 
                 //calculate noise value based on it's distance
                 // well also ensuring that it's within the bounds
-                float noise = Math.Abs(sampleY - equatorHeight) / maxFromEquator;//need a figure out this
+                float noise = Math.Abs(sampleY - equatorHeight) / worldMaxHeight;//need a figure out this
 
                 for (int x = 0; x < width; x++)
                 {
@@ -169,7 +151,7 @@ namespace Atomation.Map
 
             float heat = equatorHeat[x, y] * Mathf.Abs(heatMap[sampleX, sampleY] * 10);
             heat += Mathf.Sin(height) * height;
-            
+
             return Mathf.Clamp(MathF.Abs(heat), 0, 1f);
         }
 
@@ -178,10 +160,11 @@ namespace Atomation.Map
         /// </summary>
         private float GetMoistureValue(float x, float y)
         {
+            //this is still a work in progress
             float height = MathF.Abs(elevationMap[x, y]);
             float moisture = Mathf.Abs(moistureMap[x, y]);
-            moisture += Mathf.Sin(height);// * height;
-            
+            moisture += Mathf.Sin(height);
+
             return Mathf.Clamp(moisture, 0, 1);
         }
     }

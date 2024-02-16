@@ -18,10 +18,10 @@ namespace Atomation.Resources
 
         public static void LoadResources()
         {
-            GD.Print("loading Terrain Files");
+            GD.Print("Loading Terrain Files");
             TerrainDefs = new DefDatabase<TerrainDef>(TERRAIN_DEFS_PATH);
-            GD.Print("loading Biome Files");
-            BiomeDefs = new DefDatabase<Biome>(BIOME_DEFS_PATH);
+            // GD.Print("Loading Biome Files");
+            // BiomeDefs = new DefDatabase<Biome>(BIOME_DEFS_PATH);
         }
 
         public static TerrainDef ReadTerrainConfig(string terrainID)

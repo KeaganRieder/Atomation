@@ -19,7 +19,7 @@ namespace Atomation.Resources
     }
 
     /// <summary>
-    /// abstarct class which defines the base of all graphics in Atomation
+    /// abstract class which defines the base of all graphics in Atomation
     /// </summary>
     public abstract class Graphic
     {
@@ -29,5 +29,6 @@ namespace Atomation.Resources
 
         protected Color color;
 
+        public virtual Color Color{get => color;}
     }
 }

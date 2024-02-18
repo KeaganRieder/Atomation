@@ -37,7 +37,7 @@ The map and chunk are generated in steps:
 #### GenStepNoise
 Step one in the process of generating the map. This step handles the creation of noise map, which are a grid of float number depending on the noise map range from 0 - 1 or -1 – 1. The methods to which the maps are generated from either Simplex noise, uniform noise generation or a combination of the two maps.
 
-![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/images/EquatiorHeatMap.png)
+![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/MapExample.png)
 
 The Map representations above are:
 * Elevation Map (Top Left)
@@ -54,7 +54,7 @@ The height map uses simplex noise generated using functions defined in Godot’s
 ##### Heat Map
 The Heat map uses a combination of simplex noise (generated during elevation map) and uniform noise. The uniform noise map is used in creating the equator heat map, which represents the points gear based on distance from a central point. This is meant to simulate how planets generally get colder the further you get from the centre and is represented using floats that range from 0 (warmest) to 1 (coldest).
 
-![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/images/EquatiorHeatMap.png "Eg. Equator Map")
+![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/EquatiorHeatMap.png "Eg. Equator Map")
 
 The equator map is then layer onto the elevation map by:
 

@@ -1,8 +1,8 @@
 # Atomation
 
 ## Table of contents 
-- [1. About](#about)
-- [2. Feature Overview](#game-world)
+1. [ About](#about)
+2. [ Feature Overview](#game-world)
 
 ## About
 Atomation is planned to be a mixture between colony manger (ex Rimworld) and factory builder games (ex Factorio). It’s being developed in c# using the Godot game engine and currently has no planned release date, sense it’s currently being used as a nice way I can learn more about the Godot game engine as well as practice techniques I learned in school utilizing a different language.
@@ -54,7 +54,7 @@ The height map uses simplex noise generated using functions defined in Godot’s
 ##### Heat Map
 The Heat map uses a combination of simplex noise (generated during elevation map) and uniform noise. The uniform noise map is used in creating the equator heat map, which represents the points gear based on distance from a central point. This is meant to simulate how planets generally get colder the further you get from the centre and is represented using floats that range from 0 (warmest) to 1 (coldest).
 
-[Eg. Equator Map](docs/images/EquatiorHeatMap.png)
+![Example](docs/images/EquatiorHeatMap.png ("Eg. Equator Map"))
 
 The equator map is then layer onto the elevation map by:
 

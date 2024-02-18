@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rwp0bq34u873"
-path="res://.godot/imported/EquatiorHeatMap.png-a9ead07636af835da5dfa4f75db11eb8.ctex"
+uid="uid://cw8l8c3m6iapp"
+path="res://.godot/imported/EquatiorHeatMap.png-239cbd67ec0aff6a848187364db63570.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/Images/EquatiorHeatMap.png"
-dest_files=["res://.godot/imported/EquatiorHeatMap.png-a9ead07636af835da5dfa4f75db11eb8.ctex"]
+source_file="res://docs/images/EquatiorHeatMap.png"
+dest_files=["res://.godot/imported/EquatiorHeatMap.png-239cbd67ec0aff6a848187364db63570.ctex"]
 
 [params]
 

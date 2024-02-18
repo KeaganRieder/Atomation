@@ -28,7 +28,7 @@ namespace Atomation.Thing
 		private float heightValue;
 		private float heatValue;
 		private float moistureValue;
-		private Node2D terrainObj;
+
 
 		private Gradient heatGradient;
 		private ColorRect colorRect; //this is temporary and will be changed
@@ -41,7 +41,7 @@ namespace Atomation.Thing
 			string name = $"Tile {cords}";
 			Vector2 position = cords * WorldMap.CELL_SIZE;
 
-			terrainObj = new Node2D() 
+			node = new Node2D()
 			{
 				Name = name,
 				Position = position,
@@ -51,8 +51,7 @@ namespace Atomation.Thing
 				Size = new Vector2(WorldMap.CELL_SIZE, WorldMap.CELL_SIZE),
 			};
 
-			terrainObj.AddChild(colorRect);
-			// Graphic = new();
+			node.AddChild(colorRect);
 		}
 
 		/// <summary>
@@ -60,7 +59,8 @@ namespace Atomation.Thing
 		/// and setting it for anything in which is needing
 		/// configuration at current call
 		/// </summary>
-		public void ReadConfigs(TerrainDef config){
+		public void ReadConfigs(TerrainDef config)
+		{
 			name = config.Name;
 			description = config.Description;
 			stats = config.CreateStats();
@@ -74,18 +74,80 @@ namespace Atomation.Thing
 		public float HeatValue { get => heatValue; set { heatValue = value; } }
 		public float MoistureValue { get => moistureValue; set { moistureValue = value; } }
 
-		public Node2D TerrainObj { get => terrainObj; set { terrainObj = value; } }
+		/// <summary>
+		/// the neighbor Below
+		/// </summary>
+		public Terrain NorthNeighbor { get; private set; }
+		/// <summary>
+		/// the neighbor above
+		/// </summary>
+		public Terrain SouthNeighbor { get; private set; }
+		/// <summary>
+		/// the neighbor to the right
+		/// </summary>
+		public Terrain WestNeighbor { get; private set; }
+		/// <summary>
+		/// the neighbor to the left
+		/// </summary>
+		public Terrain EastNeighbor { get; private set; }
 
-		public Terrain NorthTile { get; set; } //up
-		public Terrain SouthTile { get; set; } //down
-		public Terrain WestTile { get; set; } //left
-		public Terrain EastTile { get; set; } //right
+		
+        //
+        // functions
+        //
 
+		public void UpdateNorthNeighbor(ChunkHandler chunkHandler)
+		{
+			GlobalPosition(out int x, out int y);
+			Terrain terrain = chunkHandler.GetTerrain(x, y - 1);
 
-		//
-		// functions
-		//
-		public void Display(TerrainDisplayMode displayMode)
+			if (terrain == null)
+			{
+				return;
+			}
+			terrain.SouthNeighbor ??= this;
+
+			NorthNeighbor = terrain;
+
+		}
+		public void UpdateSouthNeighbor(ChunkHandler chunkHandler)
+        {
+            GlobalPosition(out int x, out int y);
+            Terrain terrain = chunkHandler.GetTerrain(x, y + 1);
+            if (terrain == null)
+            {
+                return;
+            }
+            terrain.NorthNeighbor ??= this;
+
+            SouthNeighbor = terrain;
+        }
+        public void UpdateEastNeighbor(ChunkHandler chunkHandler)
+        {
+            GlobalPosition(out int x, out int y);
+            Terrain terrain = chunkHandler.GetTerrain(x - 1, y);
+            if (terrain == null)
+            {
+                return;
+            }
+            terrain.WestNeighbor ??= this;
+
+            EastNeighbor = terrain;
+        }
+        public void UpdateWestNeighbor(ChunkHandler chunkHandler)
+        {
+            GlobalPosition(out int x, out int y);
+            Terrain terrain = chunkHandler.GetTerrain(x + 1, y);
+            if (terrain == null)
+            {
+                return;
+            }
+            terrain.EastNeighbor ??= this;
+
+            WestNeighbor = terrain;
+        }
+
+        public void Display(TerrainDisplayMode displayMode)
 		{
 			//todo move function to graphic class
 			Color color;
@@ -146,15 +208,11 @@ namespace Atomation.Thing
 			// 	return new Color(Colors.DarkGray);
 			// }
 			//mountain
-			
-			// if (graphic != null)
-			// {
-				return graphic.Color;	
-			// }else
-			// {
-			// 	return new Color(Colors.Black);
-			// }
-					
+			// return new Color(Colors.Black);
+
+			return graphic.Color;
+
+
 		}
 		private Color HeatColor(float value)
 		{
@@ -166,7 +224,7 @@ namespace Atomation.Thing
 			heatGradient.AddPoint(0.6f, Colors.Cyan);
 			heatGradient.AddPoint(0.7f, Colors.Blue); //coldest
 			heatGradient.AddPoint(.9f, Colors.DarkBlue);
-			
+
 			if (value < .9)
 			{
 				return heatGradient.Sample(value);

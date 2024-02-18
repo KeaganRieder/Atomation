@@ -23,6 +23,7 @@ namespace Atomation.Map
 
 		public WorldMap()
 		{
+			Name = "World Map";
 			MaxWorldWidth = 256;
 			MaxWorldHeight = 256;
 			GenConfigs genConfig = new GenConfigs() 

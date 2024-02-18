@@ -29,7 +29,7 @@ Chunks are used for:
 * chunks are “switch off” or “unloaded” in order to save cpu cycles from needing to render object which have nothing important happening in or by them.
 
 ## Map generation
- Describes the procedure in which the map is generated. There exists a number of settings in which can be changed to modify how the world gets generated, which in some cases can lead to unique landscapes that offer unique experiences. 
+Describes the procedure in which the map is generated. There exists a number of settings in which can be changed to modify how the world gets generated, which in some cases can lead to unique landscapes that offer unique experiences. 
 
 ### Generation Steps 
 The map and chunk are generated in steps:
@@ -37,9 +37,15 @@ The map and chunk are generated in steps:
 #### GenStepNoise
 Step one in the process of generating the map. This step handles the creation of noise map, which are a grid of float number depending on the noise map range from 0 - 1 or -1 – 1. The methods to which the maps are generated from either Simplex noise, uniform noise generation or a combination of the two maps.
 
-TODO: ADD images of noise maps
+![Example](docs/images/MapExample.png)
 
-##### Height Map
+The Map representations above are:
+* Elevation Map (Top Left)
+* Heat Map (Top Right)
+* Moisture Map (Bottom Left)
+* Biome Map (Bottom Right)
+
+##### Elevation Map
 The height map uses simplex noise generated using functions defined in Godot’s FastNoiseLite class. The map generated from this contains float values which range from -1 (lowest value representing water) to 1 (highest value representing mountains). This map is used to:
 * Generate terrain in later steps
 * Help to determine the heat map, by making lower terrain or water generally warmer the higher terrain like mountains.
@@ -48,7 +54,24 @@ The height map uses simplex noise generated using functions defined in Godot’s
 ##### Heat Map
 The Heat map uses a combination of simplex noise (generated during elevation map) and uniform noise. The uniform noise map is used in creating the equator heat map, which represents the points gear based on distance from a central point. This is meant to simulate how planets generally get colder the further you get from the centre and is represented using floats that range from 0 (warmest) to 1 (coldest).
 
-The equation map is then layer onto the elevation map by:
+[Eg. Equator Map](docs/images/EquatiorHeatMap.png)
+
+The equator map is then layer onto the elevation map by:
+
+```C#
+private float GetHeatValue(Vector2 origin, int x, int y, float[,] equatorHeat)
+{
+    float sampleX = x + origin.X;
+    float sampleY = y + origin.Y;
+
+    float height = MathF.Abs(elevationMap[sampleX, sampleY]);
+
+    float heat = equatorHeat[x, y] * Mathf.Abs(heatMap[sampleX, sampleY] * 10);
+    heat += Mathf.Sin(height) * height;
+
+    return Mathf.Clamp(MathF.Abs(heat), 0, 1f);
+}
+```
 
 This results in the heat map being now not only based on distance from centre but also height in terrain. Which is also why temperature is represented by 0 being the coldest and 1 being the warmest, sense this allows for higher elevations (closer to 1) to be colder compared to lower elevations (closer to 0)
 

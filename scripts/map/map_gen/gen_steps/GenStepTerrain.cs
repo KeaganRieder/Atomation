@@ -33,7 +33,8 @@ namespace Atomation.Map
 					SampleChunkPos(origin, x, y, out float sampleX, out float sampleY);
 					Terrain terrain = chunkHandler.GetTerrain(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY));
 					SetTerrainType(terrain);
-					terrain.Display(TerrainDisplayMode.Default); //this is temporary
+
+					terrain.Display(TerrainDisplayMode.Heat); //this is temporary
 				}
 			}
 		}

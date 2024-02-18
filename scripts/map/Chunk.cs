@@ -46,7 +46,7 @@ namespace Atomation.Map
 		public void Set(Vector2 cords, Terrain terrain)
 		{
 			chunkTerrain[cords] = terrain;
-			chunkNode.AddChild(chunkTerrain[cords].TerrainObj);
+			chunkNode.AddChild(chunkTerrain[cords].Node);
 		}
 
 		/// <summary>

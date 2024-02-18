@@ -115,9 +115,9 @@
       "GraphicConfig": {
         "TexturePath": "terrain/natural/sand",
         "Color": {
-          "R": 0.678431,
+          "R": 1,
           "G": 1.0,
-          "B": 0.184314,
+          "B": 0,
           "A": 1.0
         }
       },

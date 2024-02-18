@@ -78,15 +78,15 @@ namespace Atomation.Map
                     SampleCords(origin, x, y, out float sampleX, out float sampleY);
 
                     Vector2 cords = new(x, y);
+
                     Terrain terrain = new(cords)
                     {
                         HeightValue = GetElevationValue(sampleX, sampleY),
                         HeatValue = GetHeatValue(origin, x, y, equatorHeat),
                         MoistureValue = GetMoistureValue(sampleX, sampleY),
                     };
-
+                    
                     SampleChunkPos(origin, x, y, out sampleX, out sampleY);
-
                     chunkHandler.Set(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY), terrain);
                 }
             }

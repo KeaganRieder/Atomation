@@ -6,7 +6,7 @@ namespace Atomation.Map
 {
 	/// <summary>
 	/// ChunkHandler, stores and handles chunks, allow for 
-	/// interaction with differnt elemnt in a chunk
+	/// interaction with different element in a chunk
 	/// </summary>
 	public class ChunkHandler
 	{
@@ -38,10 +38,10 @@ namespace Atomation.Map
 				return chunk;
 			}
 			else{
-				// GD.Print($"Null CHUNK AT{chunkCords}");
 				return null;
 			}
 		}
+
 		/// <summary>
 		/// gets the chunk based on chunk cords, 
 		/// </summary>
@@ -49,32 +49,36 @@ namespace Atomation.Map
 			return GetChunk(Mathf.RoundToInt(chunkCords.X),Mathf.RoundToInt(chunkCords.Y));			
 		}
 
+		//
+		// setting/getting
+		//
+
 		/// <summary>
 		/// uses global tile position to set the terrain into correct Chunk
 		/// </summary>
 		public void Set(int globalX, int globalY, Terrain terrain){
-			//need to fix negative cases
 			Vector2 ChunkCords = GetChunkCords(globalX, globalY);
+
+			Chunk chunk = GetChunk(ChunkCords);
+
+            //making sure chunk actually exists
+            if (chunk == null)
+            {
+                GD.PrintErr($"ERROR: tried to access NULL chunk {ChunkCords}");
+				return;
+            }
 
 			//finding relative position of the tile
 			int tileX = globalX - (int)ChunkCords.X * Chunk.CHUNK_SIZE;
 			int tileY = globalY - (int)ChunkCords.Y * Chunk.CHUNK_SIZE;
 
-			Vector2 cords = new(tileX, tileY);
+            chunk.Set(new(tileX, tileY), terrain);
 
-			Chunk chunk = GetChunk(ChunkCords);
-
-			//making sure chunk actually exists
-			if(chunk != null){
-				
-				
-				chunk.Set(cords,terrain);
-			}
-			else
-			{
-				GD.PrintErr($"ERROR: ATTEMPTED TO access NULL chunk {ChunkCords}");
-			}
-		}
+			terrain.UpdateNorthNeighbor(this);
+			terrain.UpdateSouthNeighbor(this);
+			terrain.UpdateEastNeighbor(this);
+            terrain.UpdateWestNeighbor(this);
+        }
 
 		/// <summary>
 		/// uses global tile position to get terrain data from the correct Chunk
@@ -82,30 +86,22 @@ namespace Atomation.Map
 		public Terrain GetTerrain(int globalX, int globalY){
 			Vector2 ChunkCords = GetChunkCords(globalX, globalY);
 			
+			Chunk chunk = GetChunk(ChunkCords);
+
+			if(chunk == null){
+				return null;	
+			}
+
 			int tileX = globalX - (int)ChunkCords.X * Chunk.CHUNK_SIZE;
 			int tileY = globalY - (int)ChunkCords.Y * Chunk.CHUNK_SIZE;
 
-			Vector2 cords = new(tileX, tileY);
-
-			Chunk chunk = GetChunk(ChunkCords);
-
-			if(chunk != null){
-				
-				
-				return chunk.GetTerrain(cords);
-			}
-			else
-			{
-				GD.PrintErr($"ERROR: ATTEMPTED TO access NULL chunk {ChunkCords}");
-				return null;
-			}			
+			return chunk.GetTerrain(new(tileX, tileY));			
 		}
 
 		/// <summary>
 		/// takes in global cords (as x and y), and converts them to be based on chunk grid 
 		/// </summary>
 		public Vector2 GetChunkCords(int globalX, int globalY){
-			//this may be flawed
 			int chunkX = Mathf.FloorToInt(globalX / Chunk.CHUNK_SIZE);
 			int chunkY = Mathf.FloorToInt(globalY / Chunk.CHUNK_SIZE);
 			
@@ -150,7 +146,7 @@ namespace Atomation.Map
 		private void UpdateChunk(Vector2 chunkCords)
 		{
 			Chunk chunk = GetChunk(chunkCords);
-			// GD.Print($"\nUPDATE for chunk at:{chunkCords * Chunk.CHUNK_SIZE}\n");
+			
 			if (chunk != null)
 			{
 				chunk.UpdateChunk(chunkCords);
@@ -159,15 +155,11 @@ namespace Atomation.Map
 					lastUpdatedChunks.Add(chunk);
 				}
 			}
-			//creating chunk sense it's never been loaded before
 			else{
-				//make based on global ie aligned to intervals of 32 for positioning
 				Vector2 globalCords =  chunkCords * Chunk.CHUNK_SIZE;
-
-				//creating new chunk 	
+ 	
 				chunks.Add(chunkCords, new(globalCords, map));
 
-				//call generator to actually generate chunk
 				WorldGenerator.GenerateChunk(globalCords, this);
 			}
 		}

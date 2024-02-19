@@ -29,7 +29,7 @@ namespace Atomation.Map
 			GenConfigs genConfig = new GenConfigs() 
 			{
 				worldBounds = new Vector2I(MaxWorldWidth, MaxWorldHeight),
-				seaLevel = -0.1f,
+				seaLevel = -0.3f,
 				mountainSize = 0.2f,
 				elevationMapConfigs = new NoiseMapConfig()
 				{
@@ -43,7 +43,7 @@ namespace Atomation.Map
 				moistureMapConfigs = new NoiseMapConfig()
 				{
 					seed = 0,
-					octaves = 4,
+					octaves = 5,
 					zoom = 1f,
 					frequency = 0.01f,
 					lacunarity = 2,
@@ -77,7 +77,6 @@ namespace Atomation.Map
 			GD.Print("Generating Map");
 			chunkHandler.WorldGenerator = mapGenerator;
 			chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
-			// mapGenerator.GenerateMap(this);
 
 			GD.Print("Generation Complete");
 		}

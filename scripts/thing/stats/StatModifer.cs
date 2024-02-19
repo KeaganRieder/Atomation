@@ -4,13 +4,13 @@ namespace Atomation.Thing
     /// defines  a stat modifer which allows for a stat to have persitant 
     /// value change/modifcation
     /// </summary>
-    public partial class StatModifer : StatBase
+    public  class StatModifier : StatBase
     {
         //todo
         private StatModType modType;
 
-        public StatModifer() { }
-        public StatModifer(string name, string description, float baseVal)
+        public StatModifier() { }
+        public StatModifier(string name, string description, float baseVal)
         {
             this.name = name;
             this.description = description;

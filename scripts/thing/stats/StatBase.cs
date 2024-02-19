@@ -5,7 +5,7 @@ namespace Atomation.Thing
     /// <summary>
     /// base definition for all stats
     /// </summary>
-    public abstract partial class StatBase : Thing
+    public abstract class StatBase : Thing
     {
         [JsonProperty]
         protected float baseValue;

@@ -10,9 +10,9 @@ namespace Atomation.Thing
     /// </summary>
     public abstract class CompThingDef : ThingDef
     {
-        [JsonProperty("GraphicConfig")]
+        [JsonProperty("GraphicConfig",Order = 3)]
         public GraphicConfig GraphicData { get; set; }
-        [JsonProperty("statBases")]
+        [JsonProperty("statBases",Order = 4)]
         public StatDef[] StatDefs { get; set; }
 
         //todo make function which formats things from being config 

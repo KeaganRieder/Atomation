@@ -1,4 +1,5 @@
 using Atomation.Resources;
+using Newtonsoft.Json;
 
 namespace Atomation.Thing
 {
@@ -9,6 +10,7 @@ namespace Atomation.Thing
     {
         //maybe something here more specif for terrain later?
         //for now it's just used as a way of orgizing def files
+    
         public TerrainDef(string name, string description, StatDef[] statDefs, GraphicConfig graphicData){
             Name = name;
             Description = description;

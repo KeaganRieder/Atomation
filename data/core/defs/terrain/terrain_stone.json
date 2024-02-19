@@ -1,6 +1,6 @@
 {
-  "defs": [
-    {
+  "Defs": {
+    "Slate": {
       "name": "Slate",
       "description": "",
       "GraphicConfig": {
@@ -9,36 +9,42 @@
           "R": 0.662745,
           "G": 0.662745,
           "B": 0.662745,
-          "A": 1.0
+          "A": 1.0,
+          "R8": 169,
+          "G8": 169,
+          "B8": 169,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.0,
+          "V": 0.662745,
+          "Luminance": 0.662745
         }
       },
       "statBases": [
         {
-          "name": "Fertility",
-          "description": "Objects fertility",
           "BaseValue": 0.0,
           "MinValue": 0.0,
-          "MaxValue": 0.0          
+          "MaxValue": 0.0,
+          "name": "Fertility",
+          "description": "Objects fertility"
         },
         {
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed ",
           "BaseValue": 0.7,
           "MinValue": 0.0,
-          "MaxValue": 0.0
-          
+          "MaxValue": 0.0,
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed "
         },
         {
-          "name": "Beauty",
-          "description": "Objects Beauty",
           "BaseValue": 0.0,
           "MinValue": 0.0,
-          "MaxValue": 0.0          
+          "MaxValue": 0.0,
+          "name": "Beauty",
+          "description": "Objects Beauty"
         }
       ]
-     
     },
-    {
+    "Marble": {
       "name": "marble",
       "description": "",
       "GraphicConfig": {
@@ -47,34 +53,40 @@
           "R": 0.0,
           "G": 0.0,
           "B": 0.0,
-          "A": 1.0
+          "A": 1.0,
+          "R8": 0,
+          "G8": 0,
+          "B8": 0,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.0,
+          "V": 0.0,
+          "Luminance": 0.0
         }
       },
       "statBases": [
         {
-          "name": "Fertility",
-          "description": "Objects fertility",
           "BaseValue": 0.0,
           "MinValue": 0.0,
-          "MaxValue": 0.0
-         
+          "MaxValue": 0.0,
+          "name": "Fertility",
+          "description": "Objects fertility"
         },
         {
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed ",
           "BaseValue": 0.7,
           "MinValue": 0.0,
-          "MaxValue": 0.0          
+          "MaxValue": 0.0,
+          "name": "Walkspeed",
+          "description": "Objects Walkspeed "
         },
         {
-          "name": "Beauty",
-          "description": "Objects Beauty",
           "BaseValue": 0.0,
           "MinValue": 0.0,
-          "MaxValue": 0.0
-          
+          "MaxValue": 0.0,
+          "name": "Beauty",
+          "description": "Objects Beauty"
         }
-      ]      
+      ]
     }
-  ]
+  }
 }

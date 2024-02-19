@@ -8,7 +8,7 @@ namespace Atomation.Thing
     /// <summary>
     /// todo
     /// </summary>
-    public partial class Stat : StatBase
+    public class Stat : StatBase
     {
         [JsonProperty]
         protected float currentVal;
@@ -16,16 +16,16 @@ namespace Atomation.Thing
         protected float minValue;
         [JsonProperty]
         protected float maxValue;
-        protected Dictionary<string, StatModifer> modifers;
+        protected Dictionary<string, StatModifier> modifers;
         private bool updateValues = false;
 
         public Stat()
         {
-            modifers = new Dictionary<string, StatModifer>();
+            modifers = new Dictionary<string, StatModifier>();
         }
         public Stat(string name, string description, float baseVal, float min, float max)
         {
-            modifers = new Dictionary<string, StatModifer>();
+            modifers = new Dictionary<string, StatModifier>();
             this.name = name;
             this.description = description;
             baseValue = baseVal;
@@ -35,7 +35,7 @@ namespace Atomation.Thing
         }
         public Stat(StatDef config)
         {
-            modifers = new Dictionary<string, StatModifer>();
+            modifers = new Dictionary<string, StatModifier>();
             name = config.Name;
             description = config.Description;
             baseValue = config.BaseValue;
@@ -78,7 +78,7 @@ namespace Atomation.Thing
             return obj.Value;
         }
 
-        public void AddModifer(StatModifer modifer)
+        public void AddModifer(StatModifier modifer)
         {
             if (modifers.ContainsKey(modifer.Name))
             {
@@ -89,7 +89,7 @@ namespace Atomation.Thing
                 modifers.Add(modifer.Name, modifer);
             }
         }
-        public void RemoveModifer(StatModifer modifer)
+        public void RemoveModifer(StatModifier modifer)
         {
             if (modifers.ContainsKey(modifer.Name))
             {
@@ -105,7 +105,7 @@ namespace Atomation.Thing
         private void ApplyModifers()
         {
             currentVal = baseValue;
-            foreach (StatModifer modifer in modifers.Values)
+            foreach (StatModifier modifer in modifers.Values)
             {
                 if (currentVal == minValue || currentVal == maxValue)
                 {

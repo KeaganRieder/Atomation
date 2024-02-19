@@ -15,10 +15,13 @@ namespace Atomation.Map
     public class GenStepNoise : GenStep
     {
 
+
         //general info
         private int worldMaxWidth; //maybe?
         private int worldMaxHeight;
         private int equatorHeight;
+
+        private float waterLevel;
 
         //noise map info
         private SimplexNoiseMap elevationMap;
@@ -31,6 +34,7 @@ namespace Atomation.Map
         {
             worldMaxWidth = genConfig.worldBounds.X;
             worldMaxHeight = genConfig.worldBounds.Y;
+            waterLevel = genConfig.seaLevel;
 
             equatorHeight = 0;
             elevationMap = new SimplexNoiseMap(genConfig.elevationMapConfigs);
@@ -79,12 +83,10 @@ namespace Atomation.Map
 
                     Vector2 cords = new(x, y);
 
-                    Terrain terrain = new(cords)
-                    {
-                        HeightValue = GetElevationValue(sampleX, sampleY),
-                        HeatValue = GetHeatValue(origin, x, y, equatorHeat),
-                        MoistureValue = GetMoistureValue(sampleX, sampleY),
-                    };
+                    Terrain terrain = new(cords);
+                    terrain.HeightValue = GetElevationValue(sampleX, sampleY);
+                    terrain.HeatValue = GetHeatValue(origin, x, y, equatorHeat);
+                    terrain.MoistureValue = GetMoistureValue(sampleX, sampleY, GetElevationValue(sampleX, sampleY));
                     
                     SampleChunkPos(origin, x, y, out sampleX, out sampleY);
                     chunkHandler.Set(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY), terrain);
@@ -147,25 +149,38 @@ namespace Atomation.Map
             float sampleX = x + origin.X;
             float sampleY = y + origin.Y;
 
-            float height = MathF.Abs(elevationMap[sampleX, sampleY]);
+            float height = elevationMap[sampleX, sampleY];
 
-            float heat = equatorHeat[x, y] * Mathf.Abs(heatMap[sampleX, sampleY] * 10);
-            heat += Mathf.Sin(height) * height;
-
-            return Mathf.Clamp(MathF.Abs(heat), 0, 1f);
+            float heat = equatorHeat[x, y] * heatMap[sampleX, sampleY] * 10;
+        
+            heat += Mathf.Sin(Mathf.Abs(height)) * height;
+            
+            return Mathf.Clamp(heat, -1, 1f);
         }
 
         /// <summary>
         /// get moisture value at given cords
         /// </summary>
-        private float GetMoistureValue(float x, float y)
+        private float GetMoistureValue(float x, float y, float elevationVal)
         {
             //this is still a work in progress
-            float height = MathF.Abs(elevationMap[x, y]);
-            float moisture = Mathf.Abs(moistureMap[x, y]);
-            moisture += Mathf.Sin(height);
+            // float height = MathF.Abs(elevationMap[x, y]);
+            // float moisture = Mathf.Abs(moistureMap[x, y]);
+            // moisture += Mathf.Sin(height);
 
-            return Mathf.Clamp(moisture, 0, 1);
+            float height = Mathf.Abs(elevationMap[x,y]);
+            float moisture = Mathf.Abs(moistureMap[x,y]);
+
+            moisture += Mathf.Sin(Mathf.Abs(height)); //* height; 
+
+            moisture = Mathf.Clamp(moisture, 0, 1);
+            //any place with water is 100% moist
+            if (elevationVal < waterLevel)
+            {
+                return 1;
+            }
+
+            return moisture;
         }
     }
 }

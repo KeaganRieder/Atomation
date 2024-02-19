@@ -9,12 +9,12 @@ namespace Atomation.Thing
     /// compThing defines the foundations of all complex object that 
     /// appear in the game world. 
     /// </summary>
-    public abstract partial class CompThing : Thing
+    public abstract class CompThing : Thing
     {
         // protected Node2D objNode;
-        [JsonProperty("graphic data")]
+        [JsonProperty("graphic data",Order = 3)]
         protected Resources.Graphic graphic;
-        [JsonProperty("stats")]
+        [JsonProperty("stats",Order = 4)]
         protected Dictionary<string, StatBase> stats;
 
         protected Node2D node;

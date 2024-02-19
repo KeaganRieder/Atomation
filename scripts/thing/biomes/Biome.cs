@@ -1,55 +1,81 @@
 using System.Collections.Generic;
 using Godot;
 using Newtonsoft.Json;
+
 namespace Atomation.Thing
 {
     /// <summary>
     /// biomes are used to determine the types of terrain based on
-    /// the provide elevation, mositure and tempeture
+    /// the provide elevation, moisture and temperature
     /// </summary>
-    public class Biome : IThing
+    public class Biome : Thing
     {
-        [JsonProperty("name")]
-        private string name = "";
-        [JsonProperty("height")]
-        private float heightValue;
-        [JsonProperty("heat")]
-        private float heatValue;
-        [JsonProperty("moisture")]
-        private float moistureValue;
-        [JsonProperty("terrain types")]
-        private Dictionary<float, string> terrain; //todo
+        private float minMoisture;
+        private float maxMoisture;
+        private float minTemperature;
+        private float maxTemperature;
 
-        public Biome(string name, float heightValue, float heatValue, float moistureValue)
+        private Dictionary<float, string> biomeTerrain;
+
+        private Color color;
+
+        public Biome(float minMoisture, float maxMoisture, float minTemperature, float maxTemperature,
+                Dictionary<float, string> biomeTerrain, Color color)
         {
-            this.name = name;
-            this.heightValue = heightValue;
-            this.heatValue = heatValue;
-            this.moistureValue = moistureValue;
-        }
-        public Biome(BiomeDef configs)
-        {
-            name = configs.Name;
-            heightValue = configs.heightValue;
-            heatValue = configs.heatValue;
-            moistureValue = configs.moistureValue;
+            this.minMoisture = minMoisture;
+            this.maxMoisture = maxMoisture;
+            this.minTemperature = minTemperature;
+            this.maxTemperature = maxTemperature;
+            this.biomeTerrain = biomeTerrain;
+            this.color= color;
         }
 
-        public string Name { get => name; set { name = value; } }
-        public float HeightReq { get => heightValue; set { heightValue = value; } }
-        public float HeatReq { get => heatValue; set { heatValue = value; } }
-        public float MoistureReq { get => moistureValue; set { moistureValue = value; } }
+        public Biome(BiomeDef configs){
+            name =configs.Name;
+            minMoisture = configs.minMoisture;
+            maxMoisture = configs.maxMoisture;
+            minTemperature = configs.minTemperature;
+            maxTemperature = configs.maxTemperature;
+            biomeTerrain = configs.biomeTerrain;
+            color= configs.color;
+        }
 
-        public string Terrain(float heightVal)
+        public Color Color{get => color;}
+
+        /// <summary>
+        /// given temperature and moisture checks to see if they are
+        /// within the min and max range for the biomes requirements
+        /// </summary>
+        public bool Suitable(float temperature, float moisture)
         {
-            if (terrain.TryGetValue(heightVal, out string terrainId))
+            bool suitableMoisture = moisture >= minMoisture && moisture <= maxMoisture;
+            bool suitableTemperature = temperature >= minTemperature && temperature <= maxTemperature;
+            if (suitableMoisture && suitableTemperature)
             {
-                return terrainId;
+                return true;
             }
             else
             {
-                throw new KeyNotFoundException($"terrain with id:{heightVal} isn't presnt in {this.name}");
+                return false;
             }
         }
+
+        /// <summary>
+        /// returns the key for the terrain which is present in the biome
+        /// and corresponds to the
+        /// </summary>
+        public string GetTerrain(float elevation)
+        {
+            foreach (float terrainHeight in biomeTerrain.Keys)
+            {
+                if (elevation < terrainHeight)
+                {
+                    return biomeTerrain[terrainHeight];
+                }
+            }
+            return null;
+        }
+
+
     }
 }

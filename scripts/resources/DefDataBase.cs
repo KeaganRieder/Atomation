@@ -1,61 +1,58 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using Godot;
 using Atomation.Thing;
+using System.Collections.Generic;
 
 namespace Atomation.Resources
 {
-    public class DefDatabase<defType> where defType : IThing
-    { 
-        public Dictionary<string, defType> Contents;
+    /// <summary>
+    /// class which is used by the FileManger to load def files 
+    /// and cached them to be reference through games runtime
+    /// </summary>
+    public static class DefDatabase
+    {
+        public const string TERRAIN_DEFS_PATH = "data/core/defs/terrain/";
+        public const string BIOME_DEFS_PATH = "data/core/defs/biomes/";
 
-        public DefDatabase(string folderPath)
+        public static DefFile<TerrainDef> TerrainDefs;
+        public static DefFile<BiomeDef> BiomeDefs;  
+
+        /// <summary>
+        /// Loads resources and def files form files
+        /// </summary>
+        public static void LoadResources()
         {
-            Contents = new Dictionary<string, defType>();
-            if (Directory.Exists(folderPath))
-            {
-                string[] files = Directory.GetFiles(folderPath);
-                foreach (string filePath in files)
-                {
-                    DefFile<defType> defFile = JsonReader.ReadJson<DefFile<defType>>(filePath);
-                    foreach (defType def in defFile.defs)
-                    {
-                        CacheFileData(def.Name, def);
-                    }
-                }
-            }
-            else
-            {
-                throw new FileNotFoundException($"file read failed: {folderPath} missing");
-            }
+            GD.Print("Loading Terrain Def Files");
+            TerrainDefs = new DefFile<TerrainDef>(TERRAIN_DEFS_PATH);
+
+            GD.Print("Loading Biome Def Files");
+            BiomeDefs = new DefFile<BiomeDef>(BIOME_DEFS_PATH);
         }
 
-        public void CacheFileData(string name, defType obj)
+        /// <summary>
+        /// access cached terrain config data, and returns the terrain
+        /// based on the ID
+        /// </summary>
+        public static TerrainDef ReadTerrainConfig(string terrainID)
         {
-            try
-            {
-                Contents.Add(name, obj);
-            }
-            catch (Exception Error)
-            {
-                GD.PrintErr($"Error failed to add key: {Error.Message}");
-            }
+            return TerrainDefs[terrainID];
         }
-
-        public defType this[string key]
+        /// <summary>
+        /// access cached terrain config data, and returns the terrain
+        /// based on the moistureVal and temperateVal
+        /// </summary>
+        public static Biome ReadBiome(float moistureVal, float temperateVal)
         {
-            get
+            foreach (BiomeDef biomeDef in BiomeDefs.Defs.Values)
             {
-                if (Contents.ContainsKey(key))
+                if (biomeDef.Suitable(temperateVal, moistureVal))
                 {
-                    return Contents[key];
-                }
-                else
-                {
-                    throw new KeyNotFoundException($"Key '{key}' not found in the dictionary.");
+                    return new Biome(biomeDef);
                 }
             }
+
+            // GD.Print("No Biome Found");
+            return null;
         }
     }
 }

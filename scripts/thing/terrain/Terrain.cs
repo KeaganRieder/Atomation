@@ -16,6 +16,7 @@ public enum TerrainDisplayMode
 	Height = 1,
 	Heat = 2,
 	Moisture = 3,
+	Biome = 4,
 }
 
 namespace Atomation.Thing
@@ -23,12 +24,11 @@ namespace Atomation.Thing
 	/// <summary>
 	/// defines what a terrain object is in the game world 
 	/// </summary>
-	public partial class Terrain : CompThing
+	public class Terrain : CompThing
 	{
 		private float heightValue;
 		private float heatValue;
 		private float moistureValue;
-
 
 		private Gradient heatGradient;
 		private ColorRect colorRect; //this is temporary and will be changed
@@ -216,24 +216,55 @@ namespace Atomation.Thing
 		}
 		private Color HeatColor(float value)
 		{
-			heatGradient = new Gradient();
-			heatGradient.AddPoint(0f, Colors.DarkRed);
-			heatGradient.AddPoint(0.18f, Colors.Orange);
-			heatGradient.AddPoint(0.3f, Colors.Yellow); //cold
-			heatGradient.AddPoint(0.5f, Colors.Green);
-			heatGradient.AddPoint(0.6f, Colors.Cyan);
-			heatGradient.AddPoint(0.7f, Colors.Blue); //coldest
-			heatGradient.AddPoint(.9f, Colors.DarkBlue);
-
-			if (value < .9)
+			if (value < -.9f)
 			{
-				return heatGradient.Sample(value);
+				return Colors.DarkRed;
+			}
+			else if (value < -.7f)
+			{
+				return Colors.Orange;
+			}
+			else if (value < -.5f)
+			{
+				return Colors.Yellow;
+			}
+			else if (value < -.25f)
+			{
+				return Colors.Green;
+			}
+			else if (value < .1f)
+			{
+				return Colors.DarkGreen;
+			}
+			else if (value < .25f)
+			{
+				//temperate
+				return Colors.Green;
+			}
+			else if (value < .5f)
+			{
+				//cold
+				return Colors.Cyan;
+			}
+			else if (value < .7f)
+			{
+				//colder
+				return Colors.Blue;
+			}
+			else if (value < .9f)
+			{
+				//coldest
+				return Colors.DarkBlue;
+			}
+			else if (value <= 1f)
+			{
+				//coldest
+				return Colors.Purple;
 			}
 			else
 			{
-				return new Color(Colors.DarkBlue);
+				return Colors.Black;
 			}
-
 		}
 		private Color HeightColor(float value)
 		{
@@ -242,15 +273,19 @@ namespace Atomation.Thing
 		private Color MoistureColor(float value)
 		{
 			//todo
-			if (value < 0.27)
+			if (value < 0.1)
+			{
+				return new Color(Colors.Red);
+			}
+			else if (value < 0.27)
 			{
 				return new Color(Colors.Orange);
 			}
-			if (value < 0.4)
+			else if (value < 0.4)
 			{
 				return new Color(Colors.Yellow);
 			}
-			if (value < 0.6)
+			else if (value < 0.6)
 			{
 				return new Color(Colors.Green);
 			}

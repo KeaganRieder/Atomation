@@ -37,6 +37,11 @@ namespace Atomation.Resources
             color = graphicConfig.Color;
             color.A = 1;
         }
+        public FloorGraphics(Color color){
+           
+            this.color = color;
+            this.color.A = 1;
+        }
 
         // public Color Color{get => color;}
         

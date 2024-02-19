@@ -2,7 +2,9 @@ using Godot;
 using Newtonsoft.Json;
 
 namespace Atomation.Resources
-{    
+{   
+    // public cla
+
     /// <summary>
     /// graphic configuration file
     /// </summary>
@@ -13,8 +15,7 @@ namespace Atomation.Resources
 
         public GraphicConfig(string texturePath,Color color){
             TexturePath = texturePath;
-            Color = color;
-            
+            Color = color;            
         }
     }
 

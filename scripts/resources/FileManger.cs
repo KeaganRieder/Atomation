@@ -6,30 +6,17 @@ using Atomation.Thing;
 namespace Atomation.Resources
 {
 	/// <summary>
-	/// collection of defs meant to be really used for formating files, which 
-	/// define 'things'
-	/// </summary>
-	public struct DefFile<datatype>
-	{
-		public datatype[] defs;
-
-		public DefFile(datatype[] defs)
-		{
-			this.defs = defs;
-		}
-	}
-
-	/// <summary>
 	/// handles loading/managing file and general resource access.
 	/// </summary>
 	public partial class FileManger
-	{		
+	{
 		public const string DEF_FOLDER = "data/core/defs/";
 		public const string TEXTURE_FOLDER = "resources/textures";
 		public const string AUDIO_FOLDER = "resources/audio";
 
 		public FileManger()
 		{
+			// FormatFiles();
 			// FormatFiles();
 		}
 
@@ -40,16 +27,28 @@ namespace Atomation.Resources
 		public void LoadFiles()
 		{
 			GD.Print("Loading Resources");
-			DefResources.LoadResources();
+			DefDatabase.LoadResources();
 			GD.Print("Loading Complete");
 		}
 
-		/// <summary>
-		/// used for debugging/initial file creation only
-		/// </summary>
-		public void FormatFiles()
-		{
-			/* TerrainDef[] natural = new TerrainDef[]{
+		// /// <summary>
+		// /// used for debugging/initial file creation only
+		// /// </summary>
+		// public void FormatFiles()
+		// {
+
+		// 	DefFileOld<BiomeDef> temperateBiomeDefs = new DefFileOld<BiomeDef>(new BiomeDef[]{
+		// 		new BiomeDef("Temperate Plains",0,.2f,0,.2f, new Dictionary<float, string>(){
+		// 			{-.5f, "grass"}
+		// 		}, new Color())
+		// 	});
+
+		// 	JsonWriter.WriteFile(DefDataBase.BIOME_DEFS_PATH, "biomes_temperate", temperateBiomeDefs);
+		// }
+	}
+}
+/*
+TerrainDef[] natural = new TerrainDef[]{
 				new TerrainDef("Grass","", new StatDef[]{
 					new StatDef("Fertility", "Objects fertility",1.0f,0,0),
 					new StatDef("Walkspeed", "Objects Walkspeed ",0.8f,0,0),
@@ -126,7 +125,7 @@ namespace Atomation.Resources
 					new StatDef("Beauty", "Objects Beauty",0.0f,0,0)
 				}, new GraphicConfig("terrain/natural/marble", new Color())
 				),
-			}; */
+			}; 
 
 			// 	Biome[] temperateBiomes = new Biome[]{
 			// 	new Biome("Planes",.5f,.5f,.5f),
@@ -137,13 +136,9 @@ namespace Atomation.Resources
 			// DefFile<TerrainDef> waterDefs = new DefFile<TerrainDef>(water);
 			// DefFile<TerrainDef> stoneDefs = new DefFile<TerrainDef>(stone);
 
-			// DefFile<Biome> temperateBiomeDefs = new DefFile<Biome>(temperateBiomes);
+			// 
 
 			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH, "terrain_natural", naturalDefs);
 			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH, "terrain_water", waterDefs);
 			// JsonWriter.WriteFile(DefResources.TERRAIN_DEFS_PATH, "terrain_stone", stoneDefs);
-			// JsonWriter.WriteFile(DefResources.BIOME_DEFS_PATH, "biomes_temperate", temperateBiomeDefs);
-		}
-
-	}
-}
+*/

@@ -12,14 +12,10 @@ namespace Atomation.Map
 	/// </summary>
 	public class GenStepTerrain : GenStep
 	{
-		private float seaLevel; //no sea = 
-		private float mountainSize; // no mountains = 1
-
-		//terrain height indexes		
+		private int riverCount;		
 
 		public GenStepTerrain(GenConfigs genConfig){
-			seaLevel = genConfig.seaLevel;
-			mountainSize = genConfig.seaLevel;
+			
 		}
 
 		/// <summary>
@@ -32,15 +28,52 @@ namespace Atomation.Map
 				{
 					SampleChunkPos(origin, x, y, out float sampleX, out float sampleY);
 					Terrain terrain = chunkHandler.GetTerrain(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY));
-					SetTerrainType(terrain);
+					GenerateBiomeMap(terrain);
 
-					terrain.Display(TerrainDisplayMode.Heat); //this is temporary
+					terrain.Display(TerrainDisplayMode.Default); //this is temporary
 				}
 			}
 		}
 
+		public void GenerateBiomeMap(Terrain terrain){
+			float moisture = terrain.MoistureValue;
+			float temperate = terrain.HeatValue;
+			float height = terrain.HeightValue;
+			Biome biome = DefDatabase.ReadBiome(moisture,temperate);
+			FloorGraphics graphic;
+
+			if (height < -.5)
+			{
+				//deep water
+				terrain.ReadConfigs(DefDatabase.ReadTerrainConfig("DeepOcean"));
+			}
+			else if (height < -.3)
+			{
+				//shallow water
+				terrain.ReadConfigs(DefDatabase.ReadTerrainConfig("ShallowOcean"));
+			}
+			// else if(height < .5)
+			// {
+			// 	//mountain
+			// 	terrain.ReadConfigs(DefDatabase.ReadTerrainConfig("Slate"));
+			// }
+			else if(biome != null){
+				graphic = new FloorGraphics(biome.Color);
+				terrain.Graphic = graphic;
+			}
+			else
+			{
+				// GD.Print($"Moisture:{moisture},temperate:{temperate}");
+				graphic = new FloorGraphics(Colors.Gray);
+				terrain.Graphic = graphic;
+			}
+			
+			
+			
+		}
+
 		/// <summary>
-		/// 
+		/// Work in progress
 		/// </summary>
 		private void SetTerrainType(Terrain terrain){
 			float height = terrain.HeightValue;
@@ -81,8 +114,7 @@ namespace Atomation.Map
 				//mountain
 				terrainId = "Slate";
 			}
-			// GD.Print("read");
-			terrain.ReadConfigs(DefResources.ReadTerrainConfig(terrainId));
+			terrain.ReadConfigs(DefDatabase.ReadTerrainConfig(terrainId));
 			
 		}
 	}

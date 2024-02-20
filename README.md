@@ -71,6 +71,7 @@ steps which build on each other and handle certain task that relate to creating 
 [Noise Maps](# "A Noise Map is a 2d array of floating number which are in the range of 0 - 1") which are used and modified by later steps.
 
 ![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/MapExample.png)
+
 The Map representations above are:
 * Elevation Map (Top Left)
 * Heat Map (Top Right)
@@ -158,11 +159,11 @@ this is mainly the base in which the next GenStep uses to also make a tiles mois
 water tiles  have a 100% moisture 
 
 ##### GenStepTerrain
-[GenStepNoise](scripts/map/map_gen/gen_steps/GenStepTerrain.cs) is the second step in generating the world and currently is still a work in progress. 
+[GenStepTerrain](scripts/map/map_gen/gen_steps/GenStepTerrain.cs) is the second step in generating the world and currently is still a work in progress. 
 as such currently doesn't have an documenting or much to really put here
 
 ### Entities from Files
-[things, entities or objects](scripts/thing) have values which can be configured inside of file which are call def files and can be 
+[Things, entities or objects](scripts/thing) have values which can be configured inside of file which are call def files and can be 
 found [here](data/core/defs). These files contain values which are given to an object upon it's creation, and allow for an easy
 way of defining new things in the game, weather it be terrain, mobs or a biome.
 

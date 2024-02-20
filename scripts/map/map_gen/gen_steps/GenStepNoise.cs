@@ -85,7 +85,7 @@ namespace Atomation.Map
 
                     Terrain terrain = new(cords);
                     terrain.HeightValue = GetElevationValue(sampleX, sampleY);
-                    terrain.HeatValue = GetHeatValue(origin, x, y, equatorHeat);
+                    terrain.HeatValue = GetHeatValue(x, y, equatorHeat);
                     terrain.MoistureValue = GetMoistureValue(sampleX, sampleY, GetElevationValue(sampleX, sampleY));
                     
                     SampleChunkPos(origin, x, y, out sampleX, out sampleY);
@@ -144,14 +144,10 @@ namespace Atomation.Map
         /// gets the heat value for given cords. heat is based on distance form Equator,
         /// heat map value, and the height
         /// </summary>
-        private float GetHeatValue(Vector2 origin, int x, int y, float[,] equatorHeat)
+        private float GetHeatValue(int x, int y, float[,] equatorHeat)
         {
-            float sampleX = x + origin.X;
-            float sampleY = y + origin.Y;
-
-            float height = elevationMap[sampleX, sampleY];
-
-            float heat = equatorHeat[x, y] * heatMap[sampleX, sampleY] * 10;
+            float height = elevationMap[x, y];
+            float heat = equatorHeat[x, y] * heatMap[x, y] * 10;
         
             heat += Mathf.Sin(Mathf.Abs(height)) * height;
             
@@ -163,11 +159,6 @@ namespace Atomation.Map
         /// </summary>
         private float GetMoistureValue(float x, float y, float elevationVal)
         {
-            //this is still a work in progress
-            // float height = MathF.Abs(elevationMap[x, y]);
-            // float moisture = Mathf.Abs(moistureMap[x, y]);
-            // moisture += Mathf.Sin(height);
-
             float height = Mathf.Abs(elevationMap[x,y]);
             float moisture = Mathf.Abs(moistureMap[x,y]);
 

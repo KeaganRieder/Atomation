@@ -12,10 +12,27 @@ namespace Atomation.Map
 	/// </summary>
 	public class GenStepTerrain : GenStep
 	{
-		private int riverCount;		
+		// terrain class heights
+		private float deepWater = -0.7f;
+		private float shallowWater = -0.6f;
+		private float shore = -0.5f;
+
+		/// <summary>
+		/// determines mountains
+		/// this value changes based on configs, 
+		/// </summary>
+		private float mountain = 0.6f;
+		private float rockyGround = 0.5f;
+
 
 		public GenStepTerrain(GenConfigs genConfig){
-			
+
+			deepWater += genConfig.seaLevel;
+			shallowWater += genConfig.seaLevel;
+			shore += genConfig.seaLevel;
+
+			mountain -= genConfig.mountainSize;
+			rockyGround -= genConfig.mountainSize;
 		}
 
 		/// <summary>
@@ -28,11 +45,36 @@ namespace Atomation.Map
 				{
 					SampleChunkPos(origin, x, y, out float sampleX, out float sampleY);
 					Terrain terrain = chunkHandler.GetTerrain(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY));
-					GenerateBiomeMap(terrain);
+					// GenerateBiomeMap(terrain);
+					GenerateElevation(terrain);
 
-					terrain.Display(TerrainDisplayMode.Default); //this is temporary
+					terrain.Display(TerrainDisplayMode.Height); //this is temporary
 				}
 			}
+		}
+
+		/// <summary>
+		/// Updates some values in noise maps to be correct given there
+		/// elevation
+		/// </summary>
+		private void GenerateElevation(Terrain terrain){
+			if (terrain.HeightValue < deepWater)
+			{
+				// terrain.MoistureValue +=Mathf.Abs(8 *terrain.HeightValue);
+			}
+			else if (terrain.HeightValue < shallowWater)
+			{
+				// terrain.HeightValue =0;
+				terrain.MoistureValue +=Mathf.Abs(3 *terrain.HeightValue);
+			}
+			else if (terrain.HeightValue < shore)
+			{
+				// terrain.HeightValue = .5f;
+				// terrain.MoistureValue +=Mathf.Abs(1 *terrain.HeightValue);
+			}
+			// else{
+			// 	terrain.HeightValue = 1;
+			// }
 		}
 
 		public void GenerateBiomeMap(Terrain terrain){

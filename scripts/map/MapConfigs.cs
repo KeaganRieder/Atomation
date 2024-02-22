@@ -1,4 +1,7 @@
 using Godot;
+using Newtonsoft.Json;
+using Atomation.Resources;
+using Newtonsoft.Json.Converters;
 
 namespace Atomation.Map
 {
@@ -7,27 +10,37 @@ namespace Atomation.Map
     /// </summary>
     public class NoiseMapConfig
     {
+        [JsonProperty(Order = 1)]
         public int seed;
+        [JsonProperty(Order = 2)]
         public int octaves;
+        
+        [JsonProperty(Order = 3)]
         public float zoom;
+        [JsonProperty(Order = 4)]
         public float frequency;
+        [JsonProperty(Order = 5)]
         public float persistence;
+        [JsonProperty(Order = 5)]
         public float lacunarity;
 
         /// <summary>
         /// the distance a point is from the center position
         /// </summary>
+        [JsonIgnore]
         public Vector2 offset;
+
         /// <summary>
-        /// the max distance a vertices/point can be form the center point
-        /// NOTE: this is mainly used in the generation of the heat map
+        /// decides how octaves get combined in the generation of the noise map
         /// </summary>
-        public Vector2 maxDistance;
+        [JsonProperty(Order = 9)]
+        public FastNoiseLite.FractalTypeEnum fractalType;
+
         /// <summary>
-        /// the center points cords
-        /// NOTE: this is mainly used in the generation of the heat map
+        /// decides noise type
         /// </summary>
-        public Vector2 centerPoint;
+        [JsonProperty(Order = 10)]
+        public FastNoiseLite.NoiseTypeEnum noiseType;
 
     }
 
@@ -44,15 +57,29 @@ namespace Atomation.Map
         /// x = width
         /// y = height
         /// </summary>
+        [JsonProperty(Order = 1)]
         public Vector2I worldBounds;
 
-        //generation configs    
-        public NoiseMapConfig elevationMapConfigs;
-        public NoiseMapConfig moistureMapConfigs;
-        public NoiseMapConfig heatMapConfigs;
+        //
+        // generation configs   
+        //
 
         //terrain configs
+        [JsonProperty(Order = 2)]
         public float seaLevel = .2f;
+        [JsonProperty(Order = 3)]
         public float mountainSize = .8f; 
+
+        // noise maps
+        [JsonProperty(Order = 4)]
+        public NoiseMapConfig elevationMapConfigs;
+        [JsonProperty(Order = 5)]
+        public NoiseMapConfig moistureMapConfigs;
+        [JsonProperty(Order = 6)]
+        public NoiseMapConfig heatMapConfigs;
+
+        public void FormatConfig(string path, string fileName){
+            Resources.JsonWriter.WriteFile(path, fileName, this);
+        }
     }
 }

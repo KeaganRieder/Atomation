@@ -11,6 +11,7 @@ namespace Atomation.Resources
         public Dictionary<string, defType> Defs;
     
         public DefFile(){}
+        
         /// <summary>
         /// constructor which is used primarily for formatting new def file
         /// </summary>

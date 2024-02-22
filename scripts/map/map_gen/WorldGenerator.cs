@@ -42,7 +42,6 @@ namespace Atomation.Map
         public void GenerateChunk(Vector2 ChunkCord, ChunkHandler chunkHandler)
         {           
             genStepNoise.RunStep(ChunkCord, chunkHandler);
-            //assigning tiles neighbors
             genStepTerrain.RunStep(ChunkCord, chunkHandler);
         }
     }

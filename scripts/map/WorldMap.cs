@@ -14,52 +14,23 @@ namespace Atomation.Map
 		public const float CELL_SIZE = 16;
 		public int MaxWorldWidth { get; set; }
 		public int MaxWorldHeight { get; set; }
-		
+
+		GenConfigs genConfig;
 
 		//map components
 		private WorldGenerator mapGenerator;
 		private ChunkHandler chunkHandler;
 		private Node2D PlayerNode;
-
+		
+		//may not need the zoom Value sense it may be base on frequency?
 		public WorldMap()
 		{
 			Name = "World Map";
-			MaxWorldWidth = 256;
-			MaxWorldHeight = 256;
-			GenConfigs genConfig = new GenConfigs() 
-			{
-				worldBounds = new Vector2I(MaxWorldWidth, MaxWorldHeight),
-				seaLevel = -0.3f,
-				mountainSize = 0.2f,
-				elevationMapConfigs = new NoiseMapConfig()
-				{
-					seed = 0,
-					octaves = 5,
-					zoom = 1f,
-					frequency = 0.01f,
-					lacunarity = 2,
-					persistence = 0.5f,
-				},
-				moistureMapConfigs = new NoiseMapConfig()
-				{
-					seed = 0,
-					octaves = 5,
-					zoom = 1f,
-					frequency = 0.01f,
-					lacunarity = 2,
-					persistence = 0.5f,
-				},
-				heatMapConfigs = new NoiseMapConfig()
-				{
-					seed = 0,
-					octaves = 4,
-					zoom = 1f,
-					frequency = 0.01f,
-					lacunarity = 2,
-					persistence = 0.5f,
-				}
-			};
-
+			// MaxWorldWidth = 256;
+			// MaxWorldHeight = 256;
+		
+			genConfig = JsonReader.ReadJson<GenConfigs>(FileManger.CONFIGS +"map_configs.json");
+			
 			mapGenerator = new WorldGenerator(genConfig);
 			chunkHandler = new ChunkHandler(this);
 

@@ -109,10 +109,9 @@ private float[,] GenerateEquatorHeat(Vector2 origin, int width, int height)
     return noiseMap;
 }
 ```
-
 The equator heat map is a form of uniform noise, which is a form of noise that result in an map of values with a predictable outcome, or uniform 
 change. As such the map created by this is meant to simulate a planets equator where the further you get from the center the colder it gets. 
-the following is an example of the resulting map
+The following is an example of the resulting map
 
 ![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/EquatiorHeatMap.png "Eg. Equator Map")
 
@@ -132,10 +131,10 @@ Allowing for the heat to be based on distance form center and height of the terr
 and closer to -1 the warmer you get
 
 ###### Moisture Map
-The moisture map is initially generated during this step but however is also updated later during [GenStepTerrain](#GenStepTerrain).This map differs 
+The moisture map is initially generated during this step but however is also updated later during [GenStepTerrain](#GenStepTerrain). This map differs 
 from the others with the result array of floats only being in a range of 0 - 1. Which allow for a point moistness to be defined as more dry closer to 0 and more moist the closer to 1 it is.
 
-the method to which this map is generated is by applying th Elevation map on top of another simplex noise map: 
+The method to which this map is generated is by applying th Elevation map on top of another simplex noise map: 
 ```c#
  private float GetMoistureValue(float x, float y, float elevationVal)
 {
@@ -155,7 +154,7 @@ the method to which this map is generated is by applying th Elevation map on top
 }
 ```
 
-this is mainly the base in which the next GenStep uses to also make a tiles moisture based on it's distance form water, as well as making
+This is mainly the base in which the next GenStep uses to also make a tiles moisture based on it's distance form water, as well as making
 water tiles  have a 100% moisture 
 
 ##### GenStepTerrain

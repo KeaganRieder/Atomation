@@ -1,0 +1,35 @@
+{
+  "worldBounds": {
+    "X": 256,
+    "Y": 256
+  },
+  "seaLevel": 0.3,
+  "mountainSize": 0.2,
+  "elevationMapConfigs": {
+    "seed": 0,
+    "octaves": 5,
+    "frequency": 0.01,
+    "persistence": 0.5,
+    "lacunarity": 2.0,
+    "fractalType": 1,
+    "noiseType": 0
+  },
+  "moistureMapConfigs": {
+    "seed": 0,
+    "octaves": 5,
+    "frequency": 0.01,
+    "persistence": 0.5,
+    "lacunarity": 2.0,
+    "fractalType": 1,
+    "noiseType": 0
+  },
+  "heatMapConfigs": {
+    "seed": 0,
+    "octaves": 5,
+    "frequency": 0.01,
+    "persistence": 0.5,
+    "lacunarity": 2.0,
+    "fractalType": 1,
+    "noiseType": 0
+  }
+}

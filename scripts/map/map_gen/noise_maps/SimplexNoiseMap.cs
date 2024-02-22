@@ -21,16 +21,16 @@ namespace Atomation.Map
         private float lacunarity;
         private FastNoiseLite noiseLite;
 
+
         /// <summary>
         /// creates a NoiseMap object which is set to generate simplex noise
         /// </summary>
         public SimplexNoiseMap(NoiseMapConfig config)
-        {
-
+        {            
             noiseLite = new FastNoiseLite()
             {
-                NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth,
-                FractalType = FastNoiseLite.FractalTypeEnum.Fbm,
+                NoiseType = config.noiseType,
+                FractalType = config.fractalType,
             };
             Seed = config.seed;
             ZoomLevel = config.zoom;
@@ -128,15 +128,15 @@ namespace Atomation.Map
         public override float this[float x, float y]
         {
             get
-            {
-                return noiseLite.GetNoise2D(x/zoomLevel, y/zoomLevel);
+            {///zoomLevel
+                return noiseLite.GetNoise2D(x, y);//maybe change to be world size 
             }
         }
         public override float this[Vector2 cords]
         {
             get
             {
-                return noiseLite.GetNoise2Dv(cords);
+                return noiseLite.GetNoise2Dv(cords/zoomLevel);
             }
         }
     }

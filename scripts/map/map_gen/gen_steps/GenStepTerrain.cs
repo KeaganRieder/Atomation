@@ -13,7 +13,7 @@ namespace Atomation.Map
 	public class GenStepTerrain : GenStep
 	{
 		// terrain class heights
-		private float deepWater = -0.7f;
+		private float deepWater = 0.1f;
 		private float shallowWater = -0.6f;
 		private float shore = -0.5f;
 
@@ -21,18 +21,18 @@ namespace Atomation.Map
 		/// determines mountains
 		/// this value changes based on configs, 
 		/// </summary>
-		private float mountain = 0.6f;
+		private float mountain = 0.4f;
 		private float rockyGround = 0.5f;
 
 
 		public GenStepTerrain(GenConfigs genConfig){
 
-			deepWater += genConfig.seaLevel;
-			shallowWater += genConfig.seaLevel;
-			shore += genConfig.seaLevel;
+			// seaLevel = genConfig.seaLevel;
+			// shallowWater += genConfig.seaLevel;
+			// shore += genConfig.seaLevel;
 
-			mountain -= genConfig.mountainSize;
-			rockyGround -= genConfig.mountainSize;
+			// mountain -= genConfig.mountainSize;
+			// rockyGround -= genConfig.mountainSize;
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace Atomation.Map
 					// GenerateBiomeMap(terrain);
 					GenerateElevation(terrain);
 
-					terrain.Display(TerrainDisplayMode.Height); //this is temporary
+					terrain.Display(TerrainDisplayMode.Heat); //this is temporary
 				}
 			}
 		}
@@ -58,23 +58,41 @@ namespace Atomation.Map
 		/// elevation
 		/// </summary>
 		private void GenerateElevation(Terrain terrain){
-			if (terrain.HeightValue < deepWater)
+			FloorGraphics graphic;
+			if (terrain.HeightValue<deepWater)
 			{
-				// terrain.MoistureValue +=Mathf.Abs(8 *terrain.HeightValue);
+				graphic = new FloorGraphics(new Color(0,0,0));
+				terrain.Graphic = graphic;
 			}
-			else if (terrain.HeightValue < shallowWater)
+			else if (terrain.HeightValue>mountain)
 			{
-				// terrain.HeightValue =0;
-				terrain.MoistureValue +=Mathf.Abs(3 *terrain.HeightValue);
+				graphic = new FloorGraphics(new Color(1,1,1));
+				terrain.Graphic = graphic;
 			}
-			else if (terrain.HeightValue < shore)
+			else
 			{
-				// terrain.HeightValue = .5f;
-				// terrain.MoistureValue +=Mathf.Abs(1 *terrain.HeightValue);
+				graphic = new FloorGraphics(new Color(terrain.HeightValue,terrain.HeightValue,terrain.HeightValue));
+				terrain.Graphic = graphic;
 			}
-			// else{
-			// 	terrain.HeightValue = 1;
+			
+			
+			// if (terrain.HeightValue < deepWater)
+			// {
+			// 	// terrain.MoistureValue +=Mathf.Abs(8 *terrain.HeightValue);
 			// }
+			// else if (terrain.HeightValue < shallowWater)
+			// {
+			// 	// terrain.HeightValue =0;
+			// 	terrain.MoistureValue +=Mathf.Abs(3 *terrain.HeightValue);
+			// }
+			// else if (terrain.HeightValue < shore)
+			// {
+			// 	// terrain.HeightValue = .5f;
+			// 	// terrain.MoistureValue +=Mathf.Abs(1 *terrain.HeightValue);
+			// }
+			// // else{
+			// // 	terrain.HeightValue = 1;
+			// // }
 		}
 
 		public void GenerateBiomeMap(Terrain terrain){

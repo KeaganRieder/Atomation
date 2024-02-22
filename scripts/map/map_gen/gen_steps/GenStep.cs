@@ -8,7 +8,6 @@ namespace Atomation.Map
     /// </summary>
     public abstract class GenStep
     {
-
         protected int worldMaxWidth;
         protected int worldMaxHeight;
 

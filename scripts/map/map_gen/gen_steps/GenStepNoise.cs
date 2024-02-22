@@ -79,7 +79,7 @@ namespace Atomation.Map
                 {                    
                     SampleCords(origin, x, y, out float sampleX, out float sampleY);
 
-                    float height = GetElevationValue(sampleX, sampleY)*10;
+                    float height = GetElevationValue(sampleX, sampleY);
 
                     Vector2 cords = new(x, y);
 
@@ -149,15 +149,8 @@ namespace Atomation.Map
         {
             float heatVal = equatorHeat[x, y] * heat;
         
-            // heatVal += Mathf.Sin(Mathf.Abs(height)) * height;
-            // if (heatVal > max)
-            // {
-            //     max = heatVal;
-            // }
-            // if (heatVal < min)
-            // {
-            //     min = heatVal;
-            // }
+            heatVal += Mathf.Sin(Mathf.Abs(height)) * height;
+            
             return Mathf.Clamp(heatVal, -1, 1f);
         }
 

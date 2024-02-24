@@ -52,6 +52,35 @@ namespace Atomation.Map
 			GD.Print("Generation Complete");
 		}
 
+		public override void _Input(InputEvent inputEvent){
+			if (inputEvent.IsActionPressed("GenerateNewMap"))
+			{
+				//todo
+				GD.Print("GenerateNewMap");
+			}
+			if (inputEvent.IsActionPressed("Default"))
+			{
+				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Default);
+				GD.Print("Default");
+			}
+			if (inputEvent.IsActionPressed("VisualizeMoisture"))
+			{
+				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Moisture);
+				GD.Print("Moisture");
+			}
+			if (inputEvent.IsActionPressed("VisualizeHeat"))
+			{
+				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Heat);
+				GD.Print("Heat");
+			}
+			if (inputEvent.IsActionPressed("VisualizeHeight"))
+			{
+				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Height);
+				GD.Print("Height");
+			}
+			
+		}
+
 		/// <summary>
 		/// runs every frame
 		/// </summary>

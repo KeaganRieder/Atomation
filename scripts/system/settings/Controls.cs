@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 /// <summary>
 /// class whcih handles defining keybidnings/defineing
-/// actions
+/// actions this is also outdated
 /// </summary>
 public partial class Controls : Node
 {

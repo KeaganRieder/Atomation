@@ -1,0 +1,9 @@
+{
+  "keyBindings": {
+    "GenerateNewMap": 82,
+    "Default": 68,
+    "VisualizeMoisture": 77,
+    "VisualizeHeat": 84,
+    "VisualizeHeight": 69
+  }
+}

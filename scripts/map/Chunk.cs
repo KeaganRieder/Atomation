@@ -44,7 +44,12 @@ namespace Atomation.Map
 		/// sets the terrain at the provided cords
 		/// </summary>
 		public void Set(Vector2 cords, Terrain terrain)
-		{
+		{			
+			if (chunkTerrain.ContainsKey(cords))
+			{
+				//deleting child todo just switch
+				chunkTerrain[cords].Node.QueueFree();
+			}
 			chunkTerrain[cords] = terrain;
 			chunkNode.AddChild(chunkTerrain[cords].Node);
 		}
@@ -64,13 +69,27 @@ namespace Atomation.Map
 		//
 		//rendering stuff
 		//
-		
+
+		/// <summary>
+		/// updates the visualization mode of all tiles
+		/// </summary>
+		public void UpdateTerrainVisualization(TerrainDisplayMode displayMode){
+			foreach (var terrain in chunkTerrain)
+			{
+				terrain.Value.Display(displayMode);
+			}
+		}
+
+		/// <summary>
+		/// used to updated status of chunk to being either rendered or not rendered
+		/// </summary>
 		public void UpdateChunk(Vector2 viewerCords)
 		{
 			float distToViewer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(viewerCords);
 			bool visible = distToViewer <= ChunkHandler.MAX_LOAD_DIST;
 			SetRenderState(visible);
 		}
+		
 		public bool Rendered()
 		{
 			return ChunkNode.Visible;

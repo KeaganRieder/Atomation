@@ -114,6 +114,14 @@ namespace Atomation.Map
 			return GetChunkCords(Mathf.RoundToInt(GlobalCords.X), Mathf.RoundToInt(GlobalCords.Y));
 		}
 
+		public void UpdateVisualizationMode(TerrainDisplayMode displayMode){
+			for (int i = 0; i < lastUpdatedChunks.Count; i++)
+			{	
+				
+				lastUpdatedChunks[i].UpdateTerrainVisualization(displayMode);
+			}
+		}
+
 		/// <summary>
 		/// handles updating and creating new chunks if they haven't been loaded yet
 		/// </summary>
@@ -157,11 +165,12 @@ namespace Atomation.Map
 			}
 			else{
 				Vector2 globalCords =  chunkCords * Chunk.CHUNK_SIZE;
- 	
-				chunks.Add(chunkCords, new(globalCords, map));
+				chunk = new(globalCords, map);
+				chunks.Add(chunkCords, chunk);
 
 				WorldGenerator.GenerateChunk(globalCords, this);
 			}
+			lastUpdatedChunks.Add(chunk);
 		}
 	}
 }

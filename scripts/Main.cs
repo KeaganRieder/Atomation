@@ -1,5 +1,6 @@
 using Atomation.Map;
 using Atomation.Resources;
+using Atomation.System;
 using Godot;
 
 /// <summary>
@@ -8,11 +9,13 @@ using Godot;
 public partial class Main : Node
 {
 	private WorldMap map;
-	private FileManger fileManger;
+	private FileManger resourceManger;
+	private KeyBindings keyBindings;
 
 	public Main()
 	{
-		fileManger = new FileManger();
+		resourceManger = new FileManger();
+		keyBindings = new KeyBindings();
 	}
 
 
@@ -20,7 +23,8 @@ public partial class Main : Node
 	/// runs upon node creation
 	/// </summary>
 	public override void _Ready()
-	{	
+	{			
+		// keyBindings.FormatFile("default_bindings");
 		GameStartUp();
 		map = new WorldMap();
 		AddChild(map);
@@ -34,7 +38,8 @@ public partial class Main : Node
 	/// </summary>
 	public void GameStartUp()
 	{
-		fileManger.LoadFiles();
+		resourceManger.LoadFiles();
+		keyBindings.LoadBindings("default_bindings");
 	}
 
 	//TODO add more function and management things

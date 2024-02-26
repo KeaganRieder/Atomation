@@ -27,8 +27,8 @@ namespace Atomation.Resources
         protected string texturePath;
 
         protected Vector2 graphicSize;
-
         protected Color color;
+        
 
         public virtual Color Color{get => color;}
     }

@@ -11,11 +11,10 @@ namespace Atomation.Map
 	/// </summary>
 	public partial class WorldMap : Node2D
 	{
-		public const float CELL_SIZE = 16;
 		public int MaxWorldWidth { get; set; }
 		public int MaxWorldHeight { get; set; }
 
-		GenConfigs genConfig;
+		private GenConfigs genConfig;
 
 		//map components
 		private WorldGenerator mapGenerator;
@@ -26,8 +25,6 @@ namespace Atomation.Map
 		public WorldMap()
 		{
 			Name = "World Map";
-			// MaxWorldWidth = 256;
-			// MaxWorldHeight = 256;
 		
 			genConfig = JsonReader.ReadJson<GenConfigs>(FileManger.CONFIGS +"map_configs.json");
 			
@@ -60,37 +57,25 @@ namespace Atomation.Map
 			}
 			if (inputEvent.IsActionPressed("Default"))
 			{
-				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Default);
+				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Default);
 				GD.Print("Default");
 			}
 			if (inputEvent.IsActionPressed("VisualizeMoisture"))
 			{
-				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Moisture);
+				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Moisture);
 				GD.Print("Moisture");
 			}
 			if (inputEvent.IsActionPressed("VisualizeHeat"))
 			{
-				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Heat);
+				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Heat);
 				GD.Print("Heat");
 			}
 			if (inputEvent.IsActionPressed("VisualizeHeight"))
 			{
-				chunkHandler.UpdateVisualizationMode(TerrainDisplayMode.Height);
+				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Height);
 				GD.Print("Height");
-			}
-			
+			}			
 		}
 
-		/// <summary>
-		/// runs every frame
-		/// </summary>
-		public override void _Process(double delta)
-		{
-			base._Process(delta);
-			// chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
-
-		}
-
-		// public void finalizedWorld
 	}
 }

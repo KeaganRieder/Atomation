@@ -11,6 +11,9 @@ namespace Atomation.Map
         protected Vector2 mapOffset = new Vector2(0, 0);
         protected float zoomLevel = 1;
 
+        /// <summary>
+        /// the seed of a noise map
+        /// </summary>
         public virtual int Seed { get => seed; set { seed = value; } }
         /// <summary>
         /// used by certain noise function to decide zoomed in the noise is

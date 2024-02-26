@@ -14,14 +14,14 @@ namespace Atomation.Map
         public virtual void RunStep(Vector2 origin, ChunkHandler chunkHandler) { }
 
         /// <summary>
-        /// sample cords using given offset to ensure noise maps are generating
-        /// based on provided chunk position (the offset)
+        /// gets cord values from smaller interavles
         /// </summary>
-        protected virtual void SampleCords(Vector2 offset, int x, int y, out float sampleX, out float sampleY)
+        protected virtual void SampleCords(int x, int y, out float sampleX, out float sampleY)
         {
-            sampleX = x - worldMaxWidth / 2 + offset.X;
-            sampleY = y - worldMaxHeight / 2 + offset.Y;
+            sampleX = x - worldMaxWidth / 2;// + offset.X;
+            sampleY = y - worldMaxHeight / 2;// + offset.Y;
         }
+
         /// <summary>
         /// offset provided cords are based in correct chunk
         /// </summary>

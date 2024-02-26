@@ -36,21 +36,21 @@ namespace Atomation.Thing
         /// <summary>
         /// returns value of the objects Node2D
         /// </summary>
-        public virtual Node2D Node { get => node; set { node = value; } }
+        public virtual Node2D ThingNode { get => node; set { node = value; } }
 
         /// <summary>
         /// gets the Things global cords, base on it's chunks cords
         /// and not having cell size offset returns as a vector
         /// </summary>
         public virtual Vector2 GlobalPosition(){
-            return Node.GlobalPosition/WorldMap.CELL_SIZE;
+            return ThingNode.GlobalPosition/MapData.CELL_SIZE;
         }
         /// <summary>
         /// gets the Things global cords, base on it's chunks cords
         /// and not having cell size offset returns x and y cords
         /// </summary>
         public virtual void GlobalPosition(out int x,out int y){
-            Vector2 position = Node.GlobalPosition/WorldMap.CELL_SIZE;
+            Vector2 position = ThingNode.GlobalPosition/MapData.CELL_SIZE;
             x = Mathf.RoundToInt(position.X);
             y = Mathf.RoundToInt(position.Y);
         }

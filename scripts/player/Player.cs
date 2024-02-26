@@ -13,7 +13,7 @@ namespace Atomation.Thing
 		private Dictionary<string, StatBase> stats;
 
 		[JsonProperty]
-		private Graphic graphic;
+		// private Graphic graphic;
 
 		private CharacterBody2D body;
 		private Controls controls;
@@ -25,7 +25,7 @@ namespace Atomation.Thing
 			{"MoveSpeed", new Stat("MoveSpeed","players MoveSpeed",1,0.1f,2)}
 		};
 
-			graphic = new Graphic("", new Color(255, 255, 100), this);
+			// graphic = new Graphic("", new Color(255, 255, 100), this);
 			body = new CharacterBody2D() { Name = "body" };
 			camera = new Camera();
 

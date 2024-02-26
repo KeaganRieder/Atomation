@@ -2,25 +2,26 @@ using System.Collections.Generic;
 using Godot;
 using Atomation.Map;
 using Atomation.Resources;
-
-/// <summary>
-/// terrain tiles diplay mode
-/// Default = graphic
-/// Height = height map
-/// Heat = heat map
-/// Moisture = moisture map
-/// </summary>
-public enum TerrainDisplayMode
-{
-	Default = 0,
-	Height = 1,
-	Heat = 2,
-	Moisture = 3,
-	Biome = 4,
-}
+using System;
 
 namespace Atomation.Thing
 {
+	/// <summary>
+	/// terrain tiles display mode
+	/// Default = graphic
+	/// Height = height map
+	/// Heat = heat map
+	/// Moisture = moisture map
+	/// </summary>
+	public enum VisualizationMode
+	{
+		Default = 0,
+		Height = 1,
+		Heat = 2,
+		Moisture = 3,
+		Biome = 4,
+	}
+
 	/// <summary>
 	/// defines what a terrain object is in the game world 
 	/// </summary>
@@ -29,29 +30,21 @@ namespace Atomation.Thing
 		private float heightValue;
 		private float heatValue;
 		private float moistureValue;
+		private FloorGraphics floorGraphic;
 
-		private Gradient heatGradient;
-		private ColorRect colorRect; //this is temporary and will be changed
-
-		private bool water;
 
 		//constructors
 		public Terrain(Vector2 cords)
 		{
 			string name = $"Tile {cords}";
-			Vector2 position = cords * WorldMap.CELL_SIZE;
+			Vector2 position = cords * MapData.CELL_SIZE;
 
 			node = new Node2D()
 			{
 				Name = name,
 				Position = position,
 			};
-			colorRect = new ColorRect()
-			{
-				Size = new Vector2(WorldMap.CELL_SIZE, WorldMap.CELL_SIZE),
-			};
-
-			node.AddChild(colorRect);
+			floorGraphic = new FloorGraphics(ThingNode);
 		}
 
 		/// <summary>
@@ -64,7 +57,7 @@ namespace Atomation.Thing
 			name = config.Name;
 			description = config.Description;
 			stats = config.CreateStats();
-			Graphic = new FloorGraphics(config.GraphicData);
+			floorGraphic = new FloorGraphics(config.GraphicData, ThingNode);
 		}
 
 		//getters and setters
@@ -91,11 +84,6 @@ namespace Atomation.Thing
 		/// </summary>
 		public Terrain EastNeighbor { get; private set; }
 
-		
-        //
-        // functions
-        //
-
 		public void UpdateNorthNeighbor(ChunkHandler chunkHandler)
 		{
 			GlobalPosition(out int x, out int y);
@@ -111,192 +99,61 @@ namespace Atomation.Thing
 
 		}
 		public void UpdateSouthNeighbor(ChunkHandler chunkHandler)
-        {
-            GlobalPosition(out int x, out int y);
-            Terrain terrain = chunkHandler.GetTerrain(x, y + 1);
-            if (terrain == null)
-            {
-                return;
-            }
-            terrain.NorthNeighbor ??= this;
-
-            SouthNeighbor = terrain;
-        }
-        public void UpdateEastNeighbor(ChunkHandler chunkHandler)
-        {
-            GlobalPosition(out int x, out int y);
-            Terrain terrain = chunkHandler.GetTerrain(x - 1, y);
-            if (terrain == null)
-            {
-                return;
-            }
-            terrain.WestNeighbor ??= this;
-
-            EastNeighbor = terrain;
-        }
-        public void UpdateWestNeighbor(ChunkHandler chunkHandler)
-        {
-            GlobalPosition(out int x, out int y);
-            Terrain terrain = chunkHandler.GetTerrain(x + 1, y);
-            if (terrain == null)
-            {
-                return;
-            }
-            terrain.EastNeighbor ??= this;
-
-            WestNeighbor = terrain;
-        }
-
-        public void Display(TerrainDisplayMode displayMode)
 		{
-			//todo move function to graphic class
-			Color color;
-			if (displayMode == TerrainDisplayMode.Default)
+			GlobalPosition(out int x, out int y);
+			Terrain terrain = chunkHandler.GetTerrain(x, y + 1);
+			if (terrain == null)
 			{
-				color = DefaultColor(heightValue); //todo make graphic rather then color
+				return;
 			}
-			else if (displayMode == TerrainDisplayMode.Height)
+			terrain.NorthNeighbor ??= this;
+
+			SouthNeighbor = terrain;
+		}
+		public void UpdateEastNeighbor(ChunkHandler chunkHandler)
+		{
+			GlobalPosition(out int x, out int y);
+			Terrain terrain = chunkHandler.GetTerrain(x - 1, y);
+			if (terrain == null)
 			{
-				color = HeightColor(heightValue);
+				return;
 			}
-			else if (displayMode == TerrainDisplayMode.Heat)
+			terrain.WestNeighbor ??= this;
+
+			EastNeighbor = terrain;
+		}
+		public void UpdateWestNeighbor(ChunkHandler chunkHandler)
+		{
+			GlobalPosition(out int x, out int y);
+			Terrain terrain = chunkHandler.GetTerrain(x + 1, y);
+			if (terrain == null)
 			{
-				color = HeatColor(heatValue);
+				return;
+			}
+			terrain.EastNeighbor ??= this;
+
+			WestNeighbor = terrain;
+		}
+
+		public void UpdateGraphic(VisualizationMode displayMode)
+		{		
+			if (displayMode == VisualizationMode.Default)
+			{
+				floorGraphic.DefaultGraphic();
+			}
+			else if (displayMode == VisualizationMode.Height)
+			{
+				floorGraphic.HeightGraphic(heightValue);
+			}
+			else if (displayMode == VisualizationMode.Heat)
+			{
+				floorGraphic.HeatGraphic(heatValue);
 			}
 			else
 			{
-				color = MoistureColor(moistureValue);
-			}
-			colorRect.Color = color;
-		}
-		private Color DefaultColor(float value)
-		{
-			// // value is in range of -.6 and .5
-			// if (value < -.5 )
-			// {
-			// 	//deep water
-			// 	return new Color(Colors.DarkBlue);
-			// }
-			// else if (value < -.3)
-			// {
-			//    //shallow water
-			// 	return new Color(Colors.Blue);
-			// }
-			// else if (value < -.2)
-			// {
-			//    //sand
-			//    return new Color(Colors.Yellow);
-			// }
-			// else if (value < .1)
-			// {
-			// 	//grass
-			// 	return new Color(Colors.Green);
-			// }
-			// else if (value < .2)
-			// {
-			// 	// forest
-			// 	return new Color(Colors.DarkGreen);
-			// }
-			// else if (value< .3)
-			// {
-			// 	//rockey terrain
-			// 	return new Color(Colors.Gray);
-			// }
-			// else if (value< .6)
-			// {
-			// 	//rockey terrain
-			// 	return new Color(Colors.DarkGray);
-			// }
-			//mountain
-			// return new Color(Colors.Black);
-
-			return graphic.Color;
-
-
-		}
-		private Color HeatColor(float value)
-		{
-			if (value < -.9f)
-			{
-				return Colors.DarkRed;
-			}
-			else if (value < -.7f)
-			{
-				return Colors.Orange;
-			}
-			else if (value < -.5f)
-			{
-				return Colors.Yellow;
-			}
-			else if (value < -.25f)
-			{
-				return Colors.Green;
-			}
-			else if (value < .1f)
-			{
-				return Colors.DarkGreen;
-			}
-			else if (value < .25f)
-			{
-				//temperate
-				return Colors.Green;
-			}
-			else if (value < .5f)
-			{
-				//cold
-				return Colors.Cyan;
-			}
-			else if (value < .7f)
-			{
-				//colder
-				return Colors.Blue;
-			}
-			else if (value < .9f)
-			{
-				//coldest
-				return Colors.DarkBlue;
-			}
-			else if (value <= 1f)
-			{
-				//coldest
-				return Colors.Purple;
-			}
-			else
-			{
-				return Colors.Black;
+				floorGraphic.MoistureGraphic(moistureValue);
 			}
 		}
-		private Color HeightColor(float value)
-		{
-			return new Color(value, value, value);
-		}
-		private Color MoistureColor(float value)
-		{
-			//todo
-			if (value < 0.1)
-			{
-				return new Color(Colors.Red);
-			}
-			else if (value < 0.27)
-			{
-				return new Color(Colors.Orange);
-			}
-			else if (value < 0.4)
-			{
-				return new Color(Colors.Yellow);
-			}
-			else if (value < 0.6)
-			{
-				return new Color(Colors.Green);
-			}
-			else if (value < 0.8)
-			{
-				return new Color(Colors.Blue);
-			}
-			else
-			{
-				return new Color(Colors.DarkBlue);
-			}
-		}
+	
 	}
 }

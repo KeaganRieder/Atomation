@@ -10,17 +10,18 @@ namespace Atomation.Map
 	/// </summary>
 	public class ChunkHandler
 	{
-		public const float MAX_LOAD_DIST = 64;
-
 		private readonly int visibleChunks;
+		private Node2D map;
 		private List<Chunk> lastUpdatedChunks;
 		private Dictionary<Vector2, Chunk> chunks;
 
-		private Node2D map;
+		private VisualizationMode currTileVisuals;
+
 
 		public ChunkHandler(Node2D map)
 		{
-			visibleChunks = Mathf.RoundToInt(MAX_LOAD_DIST / Chunk.CHUNK_SIZE);
+			currTileVisuals = VisualizationMode.Default;
+			visibleChunks = Mathf.RoundToInt(MapData.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);
 			lastUpdatedChunks = new List<Chunk>();
 			chunks = new Dictionary<Vector2, Chunk>();
 			this.map = map;
@@ -31,13 +32,15 @@ namespace Atomation.Map
 		/// <summary>
 		/// gets the chunk based on chunk cords, 
 		/// </summary>
-		public Chunk GetChunk(int chunkX, int chunkY){
+		public Chunk GetChunk(int chunkX, int chunkY)
+		{
 			Vector2 chunkCords = new Vector2(chunkX, chunkY);
 			if (chunks.TryGetValue(chunkCords, out var chunk))
 			{
 				return chunk;
 			}
-			else{
+			else
+			{
 				return null;
 			}
 		}
@@ -45,8 +48,9 @@ namespace Atomation.Map
 		/// <summary>
 		/// gets the chunk based on chunk cords, 
 		/// </summary>
-		public Chunk GetChunk(Vector2 chunkCords){
-			return GetChunk(Mathf.RoundToInt(chunkCords.X),Mathf.RoundToInt(chunkCords.Y));			
+		public Chunk GetChunk(Vector2 chunkCords)
+		{
+			return GetChunk(Mathf.RoundToInt(chunkCords.X), Mathf.RoundToInt(chunkCords.Y));
 		}
 
 		//
@@ -56,69 +60,85 @@ namespace Atomation.Map
 		/// <summary>
 		/// uses global tile position to set the terrain into correct Chunk
 		/// </summary>
-		public void Set(int globalX, int globalY, Terrain terrain){
+		public void Set(int globalX, int globalY, Terrain terrain)
+		{
 			Vector2 ChunkCords = GetChunkCords(globalX, globalY);
 
 			Chunk chunk = GetChunk(ChunkCords);
 
-            //making sure chunk actually exists
-            if (chunk == null)
-            {
-                GD.PrintErr($"ERROR: tried to access NULL chunk {ChunkCords}");
+			//making sure chunk actually exists
+			if (chunk == null)
+			{
+				GD.PrintErr($"ERROR: tried to access NULL chunk {ChunkCords}");
 				return;
-            }
+			}
 
 			//finding relative position of the tile
 			int tileX = globalX - (int)ChunkCords.X * Chunk.CHUNK_SIZE;
 			int tileY = globalY - (int)ChunkCords.Y * Chunk.CHUNK_SIZE;
 
-            chunk.Set(new(tileX, tileY), terrain);
+			chunk.Set(new(tileX, tileY), terrain);
 
 			terrain.UpdateNorthNeighbor(this);
 			terrain.UpdateSouthNeighbor(this);
 			terrain.UpdateEastNeighbor(this);
-            terrain.UpdateWestNeighbor(this);
-        }
+			terrain.UpdateWestNeighbor(this);
+		}
 
 		/// <summary>
 		/// uses global tile position to get terrain data from the correct Chunk
 		/// </summary>
-		public Terrain GetTerrain(int globalX, int globalY){
+		public Terrain GetTerrain(int globalX, int globalY)
+		{
 			Vector2 ChunkCords = GetChunkCords(globalX, globalY);
-			
+
 			Chunk chunk = GetChunk(ChunkCords);
 
-			if(chunk == null){
-				return null;	
+			if (chunk == null)
+			{
+				return null;
 			}
 
 			int tileX = globalX - (int)ChunkCords.X * Chunk.CHUNK_SIZE;
 			int tileY = globalY - (int)ChunkCords.Y * Chunk.CHUNK_SIZE;
 
-			return chunk.GetTerrain(new(tileX, tileY));			
+			return chunk.GetTerrain(new(tileX, tileY));
 		}
 
 		/// <summary>
 		/// takes in global cords (as x and y), and converts them to be based on chunk grid 
 		/// </summary>
-		public Vector2 GetChunkCords(int globalX, int globalY){
+		public Vector2 GetChunkCords(int globalX, int globalY)
+		{
 			int chunkX = Mathf.FloorToInt(globalX / Chunk.CHUNK_SIZE);
 			int chunkY = Mathf.FloorToInt(globalY / Chunk.CHUNK_SIZE);
-			
-			return new Vector2(chunkX,chunkY);
+
+			return new Vector2(chunkX, chunkY);
 		}
 		/// <summary>
 		/// takes in global cords as a vector, and converts them to be based on chunk grid 
 		/// </summary>
-		public Vector2 GetChunkCords(Vector2 GlobalCords){
+		public Vector2 GetChunkCords(Vector2 GlobalCords)
+		{
 			return GetChunkCords(Mathf.RoundToInt(GlobalCords.X), Mathf.RoundToInt(GlobalCords.Y));
 		}
 
-		public void UpdateVisualizationMode(TerrainDisplayMode displayMode){
-			for (int i = 0; i < lastUpdatedChunks.Count; i++)
-			{	
-				
-				lastUpdatedChunks[i].UpdateTerrainVisualization(displayMode);
+		//
+		// chunk rendering
+		//
+
+		/// <summary>
+		/// updates the visualization mode for terrain
+		/// </summary>
+		public void UpdateVisualizationMode(VisualizationMode displayMode)
+		{
+			if (currTileVisuals != displayMode)
+			{
+				currTileVisuals = displayMode;
+				for (int i = 0; i < lastUpdatedChunks.Count; i++)
+				{
+					lastUpdatedChunks[i].UpdateTerrainVisualization(displayMode);
+				}
 			}
 		}
 
@@ -127,7 +147,7 @@ namespace Atomation.Map
 		/// </summary>
 		public void UpdateRenderedChunks(Vector2 viewerPosition)
 		{
-			Vector2 chunkCords =  GetChunkCords(viewerPosition);
+			Vector2 chunkCords = GetChunkCords(viewerPosition);
 
 			for (int i = 0; i < lastUpdatedChunks.Count; i++)
 			{
@@ -154,7 +174,7 @@ namespace Atomation.Map
 		private void UpdateChunk(Vector2 chunkCords)
 		{
 			Chunk chunk = GetChunk(chunkCords);
-			
+
 			if (chunk != null)
 			{
 				chunk.UpdateChunk(chunkCords);
@@ -163,8 +183,9 @@ namespace Atomation.Map
 					lastUpdatedChunks.Add(chunk);
 				}
 			}
-			else{
-				Vector2 globalCords =  chunkCords * Chunk.CHUNK_SIZE;
+			else
+			{
+				Vector2 globalCords = chunkCords * Chunk.CHUNK_SIZE;
 				chunk = new(globalCords, map);
 				chunks.Add(chunkCords, chunk);
 

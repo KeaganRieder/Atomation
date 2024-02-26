@@ -3,23 +3,23 @@
     "X": 256,
     "Y": 256
   },
-  "seaLevel": -0.1,
+  "seaLevel": -0.2,
   "mountainSize": 0.5,
   "elevationMapConfigs": {
     "seed": 0,
     "octaves": 6,
     "frequency": 0.005,
-    "persistence": 0.4,
+    "persistence": 0.500,
     "lacunarity": 4.0,
     "fractalType": 1,
     "noiseType": 0
   },
   "moistureMapConfigs": {
     "seed": 0,
-    "octaves": 6,
+    "octaves": 5,
     "frequency": 0.005,
-    "persistence": 0.4,
-    "lacunarity": 4.0,
+    "persistence": 0.5,
+    "lacunarity": 6.0,
     "fractalType": 1,
     "noiseType": 0
   },

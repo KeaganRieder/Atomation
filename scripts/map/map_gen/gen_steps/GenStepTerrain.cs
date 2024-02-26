@@ -50,7 +50,7 @@ namespace Atomation.Map
 					// GenerateBiomeMap(terrain);
 					GenerateElevation(terrain);
 
-					terrain.Display(TerrainDisplayMode.Moisture); //this is temporary
+					terrain.UpdateGraphic(VisualizationMode.Height); //this is temporary
 				}
 			}
 		}
@@ -79,7 +79,7 @@ namespace Atomation.Map
 				graphic = new FloorGraphics(new Color(0.4f, 0.4f, 0.4f));
 				terrain.Graphic = graphic;
 			}
-			else if (terrain.HeightValue >rockyGround &&terrain.HeightValue < mountain)
+			else if (terrain.HeightValue > rockyGround && terrain.HeightValue < mountain)
 			{
 				graphic = new FloorGraphics(new Color(.8f, .8f, .8f));
 				terrain.Graphic = graphic;
@@ -89,7 +89,6 @@ namespace Atomation.Map
 				graphic = new FloorGraphics(new Color(1, 1, 1));
 				terrain.Graphic = graphic;
 			}
-			
 			else
 			{
 				graphic = new FloorGraphics(new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue));

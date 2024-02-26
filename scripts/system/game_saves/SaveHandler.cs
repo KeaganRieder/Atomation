@@ -1,5 +1,4 @@
-
-
+using Godot;
 
 namespace Atomation.Resources{
     /// <summary>

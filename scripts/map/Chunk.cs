@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Atomation.Thing;
+using Atomation.Resources;
+
 namespace Atomation.Map
 {
 	/// <summary>
@@ -26,7 +28,7 @@ namespace Atomation.Map
 		public Chunk(Vector2 chunkCords, Node2D parentNode) : this()
 		{
 			//make object aligned to cell size grid also
-			Vector2 Cords = chunkCords * WorldMap.CELL_SIZE;
+			Vector2 Cords = chunkCords * MapData.CELL_SIZE;
 			
 			chunkNode = new Node2D()
 			{
@@ -48,10 +50,10 @@ namespace Atomation.Map
 			if (chunkTerrain.ContainsKey(cords))
 			{
 				//deleting child todo just switch
-				chunkTerrain[cords].Node.QueueFree();
+				chunkTerrain[cords].ThingNode.QueueFree();
 			}
 			chunkTerrain[cords] = terrain;
-			chunkNode.AddChild(chunkTerrain[cords].Node);
+			chunkNode.AddChild(chunkTerrain[cords].ThingNode);
 		}
 
 		/// <summary>
@@ -73,10 +75,10 @@ namespace Atomation.Map
 		/// <summary>
 		/// updates the visualization mode of all tiles
 		/// </summary>
-		public void UpdateTerrainVisualization(TerrainDisplayMode displayMode){
+		public void UpdateTerrainVisualization(VisualizationMode displayMode){
 			foreach (var terrain in chunkTerrain)
 			{
-				terrain.Value.Display(displayMode);
+				terrain.Value.UpdateGraphic(displayMode);
 			}
 		}
 
@@ -86,7 +88,7 @@ namespace Atomation.Map
 		public void UpdateChunk(Vector2 viewerCords)
 		{
 			float distToViewer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(viewerCords);
-			bool visible = distToViewer <= ChunkHandler.MAX_LOAD_DIST;
+			bool visible = distToViewer <= MapData.MAX_LOAD_DIST;
 			SetRenderState(visible);
 		}
 		

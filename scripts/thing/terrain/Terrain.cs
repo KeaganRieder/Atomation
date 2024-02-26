@@ -44,7 +44,6 @@ namespace Atomation.Thing
 				Name = name,
 				Position = position,
 			};
-			floorGraphic = new FloorGraphics(ThingNode);
 		}
 
 		/// <summary>
@@ -61,7 +60,7 @@ namespace Atomation.Thing
 		}
 
 		//getters and setters
-		public override Resources.Graphic Graphic { get => graphic; set { graphic = value; } }
+		public Resources.FloorGraphics FloorGraphic { get => floorGraphic; set { floorGraphic = value; } }
 
 		public float HeightValue { get => heightValue; set { heightValue = value; } }
 		public float HeatValue { get => heatValue; set { heatValue = value; } }

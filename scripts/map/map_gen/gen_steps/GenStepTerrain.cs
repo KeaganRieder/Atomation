@@ -50,7 +50,7 @@ namespace Atomation.Map
 					// GenerateBiomeMap(terrain);
 					GenerateElevation(terrain);
 
-					terrain.UpdateGraphic(VisualizationMode.Height); //this is temporary
+					terrain.UpdateGraphic(VisualizationMode.Default); //this is temporary
 				}
 			}
 		}
@@ -62,38 +62,37 @@ namespace Atomation.Map
 		private void GenerateElevation(Terrain terrain)
 		{
 			FloorGraphics graphic;
+			Color color;
 			if (terrain.HeightValue < deepWater)
 			{
 				terrain.MoistureValue = 1;
-				graphic = new FloorGraphics(new Color(0, 0, 0));
-				terrain.Graphic = graphic;
+				color = new Color(0, 0, 0);
 			}
 			else if (terrain.HeightValue < shallowWater)
 			{
 				terrain.MoistureValue = 1;
-				graphic = new FloorGraphics(new Color(0.2f, 0.2f, 0.2f));
-				terrain.Graphic = graphic;
+				color = new Color(0.2f, 0.2f, 0.2f);
 			}
 			else if (terrain.HeightValue < shore )
 			{
-				graphic = new FloorGraphics(new Color(0.4f, 0.4f, 0.4f));
-				terrain.Graphic = graphic;
+				color = new Color(0.4f, 0.4f, 0.4f);
 			}
 			else if (terrain.HeightValue > rockyGround && terrain.HeightValue < mountain)
 			{
-				graphic = new FloorGraphics(new Color(.8f, .8f, .8f));
-				terrain.Graphic = graphic;
+				color = new Color(.8f, .8f, .8f);
 			}
 			else if (terrain.HeightValue > mountain)
 			{
-				graphic = new FloorGraphics(new Color(1, 1, 1));
-				terrain.Graphic = graphic;
+				color = new Color(1, 1, 1);
 			}
 			else
 			{
-				graphic = new FloorGraphics(new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue));
-				terrain.Graphic = graphic;
+				color = new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue);
 			}
+
+			graphic = new FloorGraphics(color);
+			terrain.FloorGraphic = graphic;
+			terrain.ThingNode.AddChild(graphic.GetGraphicObj());
 		}
 
 		public void GenerateBiomeMap(Terrain terrain)

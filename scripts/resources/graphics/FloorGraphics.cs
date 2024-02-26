@@ -34,22 +34,12 @@ namespace Atomation.Resources
             color = graphicConfig.Color;
             color.A = 1;
         }
-        public FloorGraphics(Node2D terrainNode)
-        {
-
-            floorGraphic = new ColorRect();
-            floorGraphic.Size = new Vector2(MapData.CELL_SIZE, MapData.CELL_SIZE);
-            // floorGraphic.Position = terrainNode.Position;
-
-            terrainNode.AddChild(floorGraphic);
-
-            // texturePath = graphicConfig.TexturePath;
-            color = new Color(0);
-            color.A = 1;
-        }
+     
         public FloorGraphics(Color color)
         {
             this.color = color;
+            floorGraphic = new ColorRect();
+            floorGraphic.Size = new Vector2(MapData.CELL_SIZE, MapData.CELL_SIZE);
             this.color.A = 1;
         }
 

@@ -77,21 +77,17 @@ namespace Atomation.Map
 		/// </summary>
 		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
 		{
-            elevationMap.Offset = origin;//new Vector2(0,0);
+            elevationMap.Offset = Vector2.Zero;
             moistureMap.Offset = origin;
             heatMap.Offset = origin;
 
 			float[,] equatorHeat = GenerateEquatorHeat(origin, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 
-            // GenValueMap heightVal = new GenValueMap(elevationMap,origin,Chunk.CHUNK_SIZE,Chunk.CHUNK_SIZE,worldMaxWidth,worldMaxHeight);
-            // GenValueMap moisture = new GenValueMap(moistureMap,origin,Chunk.CHUNK_SIZE,Chunk.CHUNK_SIZE,worldMaxWidth,worldMaxHeight);
-            // // GenValueMap heat = new GenValueMap(heatMap,Chunk.CHUNK_SIZE,Chunk.CHUNK_SIZE,worldMaxWidth,worldMaxHeight);
-
 			for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
 				{                    
-					SampleCords(x, y, out float sampleX, out float sampleY);
+					SampleCords(x, y,origin, out float sampleX, out float sampleY);
 
 					float height = GetElevationValue(sampleX, sampleY);
 

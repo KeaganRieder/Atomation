@@ -14,7 +14,7 @@ namespace Atomation.Map
 		public int MaxWorldWidth { get; set; }
 		public int MaxWorldHeight { get; set; }
 
-		private GenConfigs genConfig;
+		private MapSettings mapSettings;
 
 		//map components
 		private WorldGenerator mapGenerator;
@@ -25,10 +25,10 @@ namespace Atomation.Map
 		public WorldMap()
 		{
 			Name = "World Map";
-		
-			genConfig = JsonReader.ReadJson<GenConfigs>(FileManger.CONFIGS +"map_configs.json");
 			
-			mapGenerator = new WorldGenerator(genConfig);
+			mapSettings = FileManger.ReadJsonFile<MapSettings>(FileManger.CONFIGS, "map_settings");
+			
+			mapGenerator = new WorldGenerator(mapSettings.genSettings);
 			chunkHandler = new ChunkHandler(this);
 
 			PlayerNode = new Node2D() { Name = "player" };
@@ -42,10 +42,10 @@ namespace Atomation.Map
 		public override void _Ready()
 		{
 			base._Ready();
+			
 			GD.Print("Generating Map");
 			chunkHandler.WorldGenerator = mapGenerator;
 			chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
-
 			GD.Print("Generation Complete");
 		}
 

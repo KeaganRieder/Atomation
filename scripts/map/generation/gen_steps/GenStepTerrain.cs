@@ -25,7 +25,7 @@ namespace Atomation.Map
 		private float rockyGround;
 
 
-		public GenStepTerrain(GenConfigs genConfig)
+		public GenStepTerrain( MapGenSettings genConfig)
 		{
 
 			deepWater = genConfig.seaLevel;

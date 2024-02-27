@@ -28,7 +28,7 @@ namespace Atomation.Map
 		public Chunk(Vector2 chunkCords, Node2D parentNode) : this()
 		{
 			//make object aligned to cell size grid also
-			Vector2 Cords = chunkCords * MapData.CELL_SIZE;
+			Vector2 Cords = chunkCords * MapSettings.CELL_SIZE;
 			
 			chunkNode = new Node2D()
 			{
@@ -88,7 +88,7 @@ namespace Atomation.Map
 		public void UpdateChunk(Vector2 viewerCords)
 		{
 			float distToViewer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(viewerCords);
-			bool visible = distToViewer <= MapData.MAX_LOAD_DIST;
+			bool visible = distToViewer <= MapSettings.MAX_LOAD_DIST;
 			SetRenderState(visible);
 		}
 		

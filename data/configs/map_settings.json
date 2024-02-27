@@ -1,0 +1,37 @@
+{
+  "render distance": 64.0,
+  "generation settings": {
+    "world size": {
+      "X": 64,
+      "Y": 64 
+    },
+    "world seed": 0,
+    "map zoom": 2,
+    "seaLevel": -0.1,
+    "mountainSize": 0.6,
+    "elevation settings": {
+      "octaves": 3,
+      "frequency": 0.018,
+      "persistence": 0.49,
+      "lacunarity": 2.6,
+      "fractalType": 1,
+      "noiseType": 0
+    },
+    "temperature settings": {
+      "octaves": 3,
+      "frequency": 0.029,
+      "persistence": 0.8,
+      "lacunarity": 2.0,
+      "fractalType": 1,
+      "noiseType": 0
+    },
+    "moisture settings": {
+      "octaves": 2,
+      "frequency": 0.016,
+      "persistence": 0.8,
+      "lacunarity": 2.8,
+      "fractalType": 1,
+      "noiseType": 0
+    }
+  }
+}

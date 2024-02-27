@@ -37,7 +37,7 @@ namespace Atomation.Thing
 		public Terrain(Vector2 cords)
 		{
 			string name = $"Tile {cords}";
-			Vector2 position = cords * MapData.CELL_SIZE;
+			Vector2 position = cords * MapSettings.CELL_SIZE;
 
 			node = new Node2D()
 			{

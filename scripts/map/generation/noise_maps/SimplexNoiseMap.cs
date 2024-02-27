@@ -18,25 +18,23 @@ namespace Atomation.Map
         /// <summary>
         /// creates a NoiseMap object which is set to generate simplex noise
         /// </summary>
-        public SimplexNoiseMap(NoiseMapConfig config)
+        public SimplexNoiseMap(NoiseMapSettings config, int seed)
         {            
             noiseLite = new FastNoiseLite()
             {
                 NoiseType = config.noiseType,
                 FractalType = config.fractalType,
             };
-            Seed = config.seed;
-            ZoomLevel = config.zoom;
+            Seed = seed;
             Octaves = config.octaves;
             Frequency = config.frequency;
             Persistence = config.persistence;
             Lacunarity = config.lacunarity;   
         }
 
-        public void UpdateConfigs(NoiseMapConfig config)
+        public void UpdateConfigs(NoiseMapSettings config, int seed)
         {
-            Seed = config.seed;
-            ZoomLevel = config.zoom;
+            Seed = seed;
             Octaves = config.octaves;
             Frequency = config.frequency;
             Persistence = config.persistence;

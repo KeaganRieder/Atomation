@@ -17,7 +17,7 @@ namespace Atomation.Resources
         /// </summary>
         public DefFile(Dictionary<string, defType> contents, string path, string fileName ){
             Defs = contents;
-            JsonWriter.WriteFile(path, fileName, this);
+            FileManger.WriteJsonFile(path, fileName, this);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Atomation.Resources
                 string[] files = Directory.GetFiles(folderPath);
                 foreach (string filePath in files)
                 {
-                    DefFile<defType> defFile = JsonReader.ReadJson<DefFile<defType>>(filePath);
+                    DefFile<defType> defFile = FileManger.ReadJsonFile<DefFile<defType>>(filePath);
                     foreach (var def in defFile.Defs)
                     {
                         CacheFileData(def.Key, def.Value);
@@ -46,7 +46,7 @@ namespace Atomation.Resources
         }
 
         public void FormatFile(string path, string fileName){
-            JsonWriter.WriteFile(path, fileName, this);
+            FileManger.WriteJsonFile(path, fileName, this);
         }
 
         public void CacheFileData(string name, defType obj)
@@ -57,7 +57,7 @@ namespace Atomation.Resources
             }
             catch (Exception Error)
             {
-                GD.PrintErr($"Error failed to add key: {Error.Message}");
+                GD.PushError($"Error failed to add key: {Error.Message}");
             }
         }
 

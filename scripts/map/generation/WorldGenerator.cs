@@ -3,7 +3,6 @@ using Godot;
 
 namespace Atomation.Map
 {
-
     /// <summary>
     /// the games world generators, which manage and oversees
     /// the running/execution of gensteps to generate the game
@@ -12,28 +11,20 @@ namespace Atomation.Map
     public class WorldGenerator //maybe make this static?
     {
         //configs
-        private GenConfigs genConfig;
+        private MapGenSettings genConfig;
         // genSteps
         private GenStepNoise genStepNoise;
         private GenStepTerrain genStepTerrain;
 
-        public WorldGenerator(GenConfigs genConfig)
+        public WorldGenerator(MapGenSettings genConfig)
         {
             this.genConfig = genConfig;
             genStepNoise = new GenStepNoise(genConfig);
             genStepTerrain = new GenStepTerrain(genConfig);
         }
 
-        /// <summary>
-        /// used during game load, inOrder to know the preset settings/
-        /// finalized configuration for world gen
-        /// </summary>
-        public void ReadConfigs(){
-            //todo
-        }
-
         //getters and setters
-        public GenConfigs GenConfig { get { return genConfig; } set { genConfig = value; } }
+        public MapGenSettings GenConfig { get { return genConfig; } set { genConfig = value; } }
         public GenStepNoise GenStepNoise { get { return GenStepNoise; } set { GenStepNoise = value; } }
 
         /// <summary>

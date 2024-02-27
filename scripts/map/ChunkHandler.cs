@@ -21,7 +21,7 @@ namespace Atomation.Map
 		public ChunkHandler(Node2D map)
 		{
 			currTileVisuals = VisualizationMode.Default;
-			visibleChunks = Mathf.RoundToInt(MapData.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);
+			visibleChunks = Mathf.RoundToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);
 			lastUpdatedChunks = new List<Chunk>();
 			chunks = new Dictionary<Vector2, Chunk>();
 			this.map = map;

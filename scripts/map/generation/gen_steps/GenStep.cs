@@ -16,10 +16,10 @@ namespace Atomation.Map
         /// <summary>
         /// gets cord values from smaller interavles
         /// </summary>
-        protected virtual void SampleCords(int x, int y, Vector2 offset, out float sampleX, out float sampleY)
+        protected virtual void SampleCords(int x, int y, Vector2 offset,float scale, out float sampleX, out float sampleY)
         {
-            sampleX = (x + offset.X)/2;
-            sampleY = (y + offset.Y)/2;
+            sampleX = (x + offset.X)/scale;
+            sampleY = (y + offset.Y)/scale;
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Atomation.System
         }
 
         /// <summary>
-        /// used for formatting bindings files
+        /// formats a key binding file using default setting/configuration
         /// </summary>
         public void FormatFile(string fileName)
         {
@@ -34,7 +34,7 @@ namespace Atomation.System
                 {"VisualizeHeight", Key.E},
             };
 
-            Resources.JsonWriter.WriteFile(FileManger.BINDINGS_FOlDER, fileName, this);
+            FileManger.WriteJsonFile(FileManger.BINDINGS_FOlDER, fileName, this);
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace Atomation.System
         /// </summary>
         public void LoadBindings(string bindingFile)
         {
-            string filePath = FileManger.BINDINGS_FOlDER + bindingFile + ".json";
+            // string filePath = FileManger.BINDINGS_FOlDER + bindingFile + ".json";
 
-            KeyBindings loadedBinding = Resources.JsonReader.ReadJson<KeyBindings>(filePath);
+            KeyBindings loadedBinding = FileManger.ReadJsonFile<KeyBindings>(FileManger.BINDINGS_FOlDER, bindingFile);
 
             //assigning 
             foreach (var binding in loadedBinding.keyBindings)

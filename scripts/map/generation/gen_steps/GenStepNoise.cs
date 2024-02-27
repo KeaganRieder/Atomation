@@ -14,17 +14,9 @@ namespace Atomation.Map
 	/// </summary>
 	public class GenStepNoise : GenStep
 	{ 
-        private float minHeat = 1000;
-		private float maxHeat = -1000;
-        private float minHeight  = 1000;
-		private float maxHeight = -1000;
-        private float minMoisture = 1000;
-		private float maxMoisture= -1000;
-
 		//general info
 		private int equatorHeight;
 		private float scale;
-		private float waterLevel;
 
 		//noise map info
 		private SimplexNoiseMap elevationMap;
@@ -33,17 +25,17 @@ namespace Atomation.Map
 
 		// private Dictionary<Vector2, Terrain> terrainTiles;
 
-		public GenStepNoise(GenConfigs genConfig)
+		public GenStepNoise(MapGenSettings genConfig)
 		{
-			worldMaxWidth = genConfig.worldBounds.X;
-			worldMaxHeight = genConfig.worldBounds.Y;
-			equatorHeight = genConfig.worldBounds.Y/2;
+			worldMaxWidth = genConfig.worldSize.X;
+			worldMaxHeight = genConfig.worldSize.Y;
+			equatorHeight =  0;//genConfig.worldSize.Y/2;
 
-			scale = 1; 
+			scale = genConfig.scale; 
 
-			elevationMap = new SimplexNoiseMap(genConfig.elevationMapConfigs);
-			moistureMap = new SimplexNoiseMap(genConfig.moistureMapConfigs);
-			heatMap = new SimplexNoiseMap(genConfig.heatMapConfigs);
+			elevationMap = new SimplexNoiseMap(genConfig.elevationSettings, genConfig.seed);
+			moistureMap = new SimplexNoiseMap(genConfig.moistureSettings, genConfig.seed);
+			heatMap = new SimplexNoiseMap(genConfig.temperatureSettings, genConfig.seed);
 		}
 
 		/// <summary>
@@ -78,8 +70,8 @@ namespace Atomation.Map
 		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
 		{
             elevationMap.Offset = Vector2.Zero;
-            moistureMap.Offset = origin;
-            heatMap.Offset = origin;
+            moistureMap.Offset = Vector2.Zero;
+            heatMap.Offset = Vector2.Zero;
 
 			float[,] equatorHeat = GenerateEquatorHeat(origin, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 
@@ -87,7 +79,7 @@ namespace Atomation.Map
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
 				{                    
-					SampleCords(x, y,origin, out float sampleX, out float sampleY);
+					SampleCords(x, y,origin,scale, out float sampleX, out float sampleY);
 
 					float height = GetElevationValue(sampleX, sampleY);
 

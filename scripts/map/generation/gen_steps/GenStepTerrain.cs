@@ -16,24 +16,18 @@ namespace Atomation.Map
 		private float deepWater;
 		private float shallowWater;
 		private float shore;
-
-		/// <summary>
-		/// determines mountains
-		/// this value changes based on configs, 
-		/// </summary>
 		private float mountain;
 		private float rockyGround;
 
-
-		public GenStepTerrain( MapGenSettings genConfig)
+		public GenStepTerrain(MapGenSettings genConfig)
 		{
 
 			deepWater = genConfig.seaLevel;
-			shallowWater = genConfig.seaLevel + .1f;
-			shore = genConfig.seaLevel+0.2f;
+			shallowWater = genConfig.seaLevel + 0.1f;
+			shore = genConfig.seaLevel + 0.2f;
 
 			mountain = genConfig.mountainSize;
-			rockyGround = genConfig.mountainSize -0.1f;
+			rockyGround = genConfig.mountainSize - 0.1f;
 		}
 
 		/// <summary>
@@ -47,138 +41,97 @@ namespace Atomation.Map
 				{
 					SampleChunkPos(origin, x, y, out float sampleX, out float sampleY);
 					Terrain terrain = chunkHandler.GetTerrain(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY));
-					// GenerateBiomeMap(terrain);
-					GenerateElevation(terrain);
 
-					terrain.UpdateGraphic(VisualizationMode.Default); //this is temporary
+					CreateLandScape(terrain);
+
+					terrain.UpdateGraphic(VisualizationMode.Default);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Updates some values in noise maps to be correct given there
-		/// elevation
+		/// updates a terrain object's moisture,temperature. To now be 
+		/// based on what that terrain type is, which is based on it's height
 		/// </summary>
-		private void GenerateElevation(Terrain terrain)
+		private void CreateLandScape(Terrain terrain)
+		{
+
+			if (IsWater(terrain))
+			{
+				return;
+			}
+			if (IsMountain(terrain))
+			{
+				return;
+			}
+			//it's land so set it to be 
+			IsLand(terrain);
+		}
+		private bool IsWater(Terrain terrain)
 		{
 			FloorGraphics graphic;
-			Color color;
 			if (terrain.HeightValue < deepWater)
-			{
-				terrain.MoistureValue = 1;
-				color = new Color(0, 0, 0);
+			{				
+				graphic = new FloorGraphics(new Color(0, 0, 0));
+				terrain.FloorGraphic = graphic;
+				terrain.ThingNode.AddChild(graphic.GetGraphicObj());
+
+				terrain.MoistureValue =1;
+
+				return true;
 			}
 			else if (terrain.HeightValue < shallowWater)
-			{
-				terrain.MoistureValue = 1;
-				color = new Color(0.2f, 0.2f, 0.2f);
+			{				
+				graphic = new FloorGraphics(new Color(0.2f, 0.2f, 0.2f));
+				terrain.FloorGraphic = graphic;
+				terrain.ThingNode.AddChild(graphic.GetGraphicObj());
+			
+				terrain.MoistureValue =1;
+
+				return true;
 			}
-			else if (terrain.HeightValue < shore )
+			
+			return false;
+		}
+		private void IsLand(Terrain terrain)
+		{
+			Color color;
+			if (terrain.HeightValue < shore)
 			{
 				color = new Color(0.4f, 0.4f, 0.4f);
-			}
-			else if (terrain.HeightValue > rockyGround && terrain.HeightValue < mountain)
-			{
-				color = new Color(.8f, .8f, .8f);
-			}
-			else if (terrain.HeightValue > mountain)
-			{
-				color = new Color(1, 1, 1);
 			}
 			else
 			{
 				color = new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue);
-			}
 
-			graphic = new FloorGraphics(color);
+			}
+			
+			FloorGraphics graphic = new FloorGraphics(color);
 			terrain.FloorGraphic = graphic;
 			terrain.ThingNode.AddChild(graphic.GetGraphicObj());
+	
 		}
-
-		public void GenerateBiomeMap(Terrain terrain)
+		private bool IsMountain(Terrain terrain)
 		{
-			float moisture = terrain.MoistureValue;
-			float temperate = terrain.HeatValue;
-			float height = terrain.HeightValue;
-			Biome biome = DefDatabase.ReadBiome(moisture, temperate);
 			FloorGraphics graphic;
-
-			if (height < -.5)
+			if (terrain.HeightValue > rockyGround && terrain.HeightValue < mountain)
 			{
-				//deep water
-				terrain.ReadConfigs(DefDatabase.ReadTerrainConfig("DeepOcean"));
-			}
-			else if (height < -.3)
-			{
-				//shallow water
-				terrain.ReadConfigs(DefDatabase.ReadTerrainConfig("ShallowOcean"));
-			}
-			// else if(height < .5)
-			// {
-			// 	//mountain
-			// 	terrain.ReadConfigs(DefDatabase.ReadTerrainConfig("Slate"));
-			// }
-			else if (biome != null)
-			{
-				graphic = new FloorGraphics(biome.Color);
-				terrain.Graphic = graphic;
-			}
-			else
-			{
-				// GD.Print($"Moisture:{moisture},temperate:{temperate}");
-				graphic = new FloorGraphics(Colors.Gray);
-				terrain.Graphic = graphic;
-			}
+				graphic = new FloorGraphics(new Color(.8f, .8f, .8f));
+				terrain.FloorGraphic = graphic;
+				terrain.ThingNode.AddChild(graphic.GetGraphicObj());
 
+				return true;
+			}
+			else if (terrain.HeightValue > mountain)
+			{
+				graphic = new FloorGraphics(new Color(1, 1, 1));
+				terrain.FloorGraphic = graphic;
+				terrain.ThingNode.AddChild(graphic.GetGraphicObj());
 
-
+				return true;
+			}
+			return false;
 		}
 
-		/// <summary>
-		/// Work in progress
-		/// </summary>
-		private void SetTerrainType(Terrain terrain)
-		{
-			float height = terrain.HeightValue;
-			string terrainId;
-
-			if (height < -.5)
-			{
-				//deep water
-				terrainId = "DeepOcean";
-			}
-			else if (height < -.3)
-			{
-				//shallow water
-				terrainId = "ShallowOcean";
-			}
-			else if (height < -.2)
-			{
-				//sand
-				terrainId = "Sand";
-			}
-			else if (height < .2)
-			{
-				//grass
-				terrainId = "Grass";
-			}
-			else if (height < .3)
-			{
-				//soil
-				terrainId = "Soil";
-			}
-			else if (height < .4)
-			{
-				//gravel
-				terrainId = "Gravel";
-			}
-			else
-			{
-				//mountain
-				terrainId = "Slate";
-			}
-			terrain.ReadConfigs(DefDatabase.ReadTerrainConfig(terrainId));
-
-		}
 	}
 }

@@ -10,32 +10,17 @@ namespace Atomation.Thing
     /// </summary>
     public class Biome : Thing
     {
-        private float minMoisture;
-        private float maxMoisture;
-        private float minTemperature;
-        private float maxTemperature;
+        private float moisture;
+        private float temperature;
 
         private Dictionary<float, string> biomeTerrain;
 
         private Color color;
 
-        public Biome(float minMoisture, float maxMoisture, float minTemperature, float maxTemperature,
-                Dictionary<float, string> biomeTerrain, Color color)
-        {
-            this.minMoisture = minMoisture;
-            this.maxMoisture = maxMoisture;
-            this.minTemperature = minTemperature;
-            this.maxTemperature = maxTemperature;
-            this.biomeTerrain = biomeTerrain;
-            this.color= color;
-        }
-
         public Biome(BiomeDef configs){
-            name =configs.Name;
-            minMoisture = configs.minMoisture;
-            maxMoisture = configs.maxMoisture;
-            minTemperature = configs.minTemperature;
-            maxTemperature = configs.maxTemperature;
+            name = configs.Name;
+            moisture = configs.minMoisture;
+            temperature = configs.minTemperature;
             biomeTerrain = configs.biomeTerrain;
             color= configs.color;
         }
@@ -46,19 +31,19 @@ namespace Atomation.Thing
         /// given temperature and moisture checks to see if they are
         /// within the min and max range for the biomes requirements
         /// </summary>
-        public bool Suitable(float temperature, float moisture)
-        {
-            bool suitableMoisture = moisture >= minMoisture && moisture <= maxMoisture;
-            bool suitableTemperature = temperature >= minTemperature && temperature <= maxTemperature;
-            if (suitableMoisture && suitableTemperature)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        // public bool Suitable(float temperature, float moisture)
+        // {
+        //     // bool suitableMoisture = moisture >= minMoisture && moisture <= maxMoisture;
+        //     // bool suitableTemperature = temperature >= minTemperature && temperature <= maxTemperature;
+        //     // if (suitableMoisture && suitableTemperature)
+        //     // {
+        //     //     return true;
+        //     // }
+        //     // else
+        //     // {
+        //     //     return false;
+        //     // }
+        // }
 
         /// <summary>
         /// returns the key for the terrain which is present in the biome

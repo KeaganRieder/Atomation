@@ -34,6 +34,7 @@ namespace Atomation.Map
         {           
             genStepNoise.RunStep(ChunkCord, chunkHandler);
             genStepTerrain.RunStep(ChunkCord, chunkHandler);
+            chunkHandler.UpdateVisualizationMode(default);
         }
     }
 }

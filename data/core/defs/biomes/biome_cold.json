@@ -2,122 +2,67 @@
   "Defs": {
     "Boreal Forest": {
       "name": "Boreal Forest",
-      "min moisture": 0.3,
-      "max moisture": 0.6,
-      "min temperature": -0.6,
-      "max temperature": -0.25,
+      "avg moisture": 0.3,
+      "avg temperature": -0.6,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 0.333333,
         "G": 0.419608,
-        "B": 0.184314,
-        "A": 0.0,
-        "R8": 85,
-        "G8": 107,
-        "B8": 47,
-        "A8": 0,
-        "H": 0.22777815,
-        "S": 0.56074715,
-        "V": 0.419608,
-        "Luminance": 0.3842777
+        "B": 0.184314
       }
     },
     "cold Shrub Land": {
       "name": "cold Shrub Land",
-      "min moisture": 0.2,
-      "max moisture": 0.3,
-      "min temperature": -0.6,
-      "max temperature": -0.25,
+      "avg moisture": 0.2,
+      "avg temperature": -0.6,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 0.0,
         "G": 0.392157,
-        "B": 0.0,
-        "A": 0.0,
-        "R8": 0,
-        "G8": 100,
-        "B8": 0,
-        "A8": 0,
-        "H": 0.33333334,
-        "S": 1.0,
-        "V": 0.392157,
-        "Luminance": 0.28047067
+        "B": 0.0
       }
     },
     "Cold Plains": {
       "name": "Cold Plains",
-      "min moisture": 0.0,
-      "max moisture": 0.2,
-      "min temperature": -0.6,
-      "max temperature": -0.25,
+      "avg moisture": 0.0,
+      "avg temperature": -0.6,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 0.0,
         "G": 0.392157,
-        "B": 0.0,
-        "A": 0.0,
-        "R8": 0,
-        "G8": 100,
-        "B8": 0,
-        "A8": 0,
-        "H": 0.33333334,
-        "S": 1.0,
-        "V": 0.392157,
-        "Luminance": 0.28047067
+        "B": 0.0
       }
     },
     "Tundra": {
       "name": "Tundra",
-      "min moisture": 0.0,
-      "max moisture": 0.7,
-      "min temperature": -0.8,
-      "max temperature": -0.6,
+      "avg moisture": 0.0,
+      "avg temperature": -0.8,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 0.372549,
         "G": 0.619608,
-        "B": 0.627451,
-        "A": 0.0,
-        "R8": 95,
-        "G8": 158,
-        "B8": 160,
-        "A8": 0,
-        "H": 0.50512815,
-        "S": 0.40625006,
-        "V": 0.627451,
-        "Luminance": 0.56764954
+        "B": 0.627451
       }
     },
     "Snow Desert": {
       "name": "Snow Desert",
-      "min moisture": 0.0,
-      "max moisture": 0.7,
-      "min temperature": -1.0,
-      "max temperature": -0.8,
+      "avg moisture": 0.0,
+      "avg temperature": -1.0,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 1.0,
         "G": 1.0,
-        "B": 1.0,
-        "A": 0.0,
-        "R8": 255,
-        "G8": 255,
-        "B8": 255,
-        "A8": 0,
-        "H": 0.0,
-        "S": 0.0,
-        "V": 1.0,
-        "Luminance": 1.0
+        "B": 1.0
       }
     }   
   }

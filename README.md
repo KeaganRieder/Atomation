@@ -28,6 +28,7 @@ now survive, looking for survives an build a colony that balances industries wit
 
 1. [Game World](#game-world)
 2. [Entities from Files](#Entities-from-Files)
+3. [Save and Load Game](#Save-and-Load-Game)
 
 ### Game World
 This section describes the many aspect that are apart of the [game world](scripts/map "Classes which define the game world") and go into
@@ -60,15 +61,19 @@ from needing to render object which aren't important.
 chunks which haven't been loaded before
 
 #### Map Generation
-Describes the process in which the map is generated at and during playtime. Generation is divided into different
-steps which build on each other and handle certain task that relate to creating the world:
+Describes the process in which the map is generated during runtime. This process is divided into the following steps:
 
 1. [GenStepNoise](#GenStepNoise)
 2. [GenStepTerrain](#GenStepTerrain)
 
+There are also various settings which can be changed to customize the world generation process which can be 
+found [here](#scripts/map/MapSettings.cs). this is done during the world set up period and once confirmed no 
+further settings can be changed. These  settings are written to a json file upon game save, the process of which can be found 
+[here](#Save-and-Load-Gamee)
+
 ##### GenStepNoise
 [GenStepNoise](scripts/map/map_gen/gen_steps/GenStepNoise.cs) is the first step in generating the world and handles the initial creation of 
-[Noise Maps](# "A Noise Map is a 2d array of floating number which are in the range of 0 - 1") which are used and modified by later steps.
+Noise Maps (A Noise Map is a 2d array of floating number which are in the range of 0 - 1) which are used and modified by later steps.
 
 ![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/MapExample.png)
 
@@ -79,13 +84,13 @@ The Map representations above are:
 * Biome Map (Bottom Right)
 
 ###### Elevation Map
-The Elevation map is generated using a form of fractal noise called [Simplex noise](# "Defined by Godot's FastNoiseLite Class").
+The Elevation map is generated using a form of fractal noise called Simplex noise (Defined by Godot's FastNoiseLite Class).
 The map generated using Simplex noise, contains a range of float values between -1 and 1. which are used to determine
 how high or low a given point is, with -1 one being the lowest well 1 is the highest.
 
 ###### Heat Map
 The Heat map is generated form combing the [Elevation Map](#Elevation-Map) and the equator heat map. The Map generated during 
-this step has float values which range between -1 and 1. And is used to determine how [hot](# "Closer to -1") or [cold](# "closer to 1") a given point is. 
+this step has float values which range between -1 and 1. And is used to determine how hot(Closer to -1) or cold (closer to 1) a given point is. 
 
 ```C#
 private float[,] GenerateEquatorHeat(Vector2 origin, int width, int height)
@@ -165,6 +170,10 @@ as such currently doesn't have an documenting or much to really put here
 [Things, entities or objects](scripts/thing) have values which can be configured inside of file which are call def files and can be 
 found [here](data/core/defs). These files contain values which are given to an object upon it's creation, and allow for an easy
 way of defining new things in the game, weather it be terrain, mobs or a biome.
+
+### Save and Load Game
+this section will eventual describe the process of how saving and loading works however it's still a work 
+in progress and as such theres nothing here to report on.
 
 ### Planned Features 
 Here are planned features in which haven’t been currently implemented and are bound to change:

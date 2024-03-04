@@ -15,6 +15,7 @@ namespace Atomation.Thing
 	/// </summary>
 	public enum VisualizationMode
 	{
+		Undefined = -1,
 		Default = 0,
 		Height = 1,
 		Heat = 2,

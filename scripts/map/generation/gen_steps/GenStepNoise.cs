@@ -82,13 +82,13 @@ namespace Atomation.Map
 					SampleCords(x, y,origin,scale, out float sampleX, out float sampleY);
 
 					float height = GetElevationValue(sampleX, sampleY);
-
+					// GD.Print(height);
 					Vector2 cords = new(x, y);
 
 					Terrain terrain = new(cords);
 					terrain.HeightValue = height;
 					terrain.HeatValue = GetHeatValue(x, y, equatorHeat,heatMap[sampleX, sampleY], height);
-					terrain.MoistureValue = GetMoistureValue(sampleX,sampleY);
+					terrain.MoistureValue = GetMoistureValue(sampleX,sampleY,height);
 					
 					SampleChunkPos(origin, x, y, out sampleX, out sampleY);
 					chunkHandler.Set(Mathf.RoundToInt(sampleX), Mathf.RoundToInt(sampleY), terrain);
@@ -141,7 +141,8 @@ namespace Atomation.Map
 		/// </summary>
 		private float GetHeatValue(int x, int y, float[,] equatorHeat, float heat, float height)
 		{
-			float heatVal = equatorHeat[x, y] * heat;
+			float globalAvgTemp = 2;
+			float heatVal = equatorHeat[x, y] * (heat*globalAvgTemp);
 		
 			heatVal += Mathf.Sin(Mathf.Abs(height)) * height;
 			
@@ -151,15 +152,18 @@ namespace Atomation.Map
 		/// <summary>
 		/// get moisture value at given cords
 		/// </summary>
-		private float GetMoistureValue(float x, float y)
-		{   			
-			float moistureVal = Mathf.Abs(moistureMap[x,y] );//* 2 -1);
+		private float GetMoistureValue(float x, float y, float height)
+		{   		
+			//maybe make global avg for all, make between 0.1 and 1 
+			float globalMoisture = 1f;
+			float moistureVal = Mathf.Abs(moistureMap[x,y]) * globalMoisture;
+			moistureVal += Mathf.Abs(height) * Mathf.Sin(Mathf.Abs(height)); 
+			// moistureVal = ;
 
-			// moistureVal += Mathf.Sin(Mathf.Abs(height)) * height; 
-			// moistureVal = Mathf.Clamp(moistureVal, 0, 1);
-
-			return moistureVal;
+			return  Mathf.Clamp(moistureVal, 0, 1);
 		}
+
+
 
 	}
 }

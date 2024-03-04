@@ -24,6 +24,13 @@ namespace Atomation.Map
             {
                 NoiseType = config.noiseType,
                 FractalType = config.fractalType,
+                DomainWarpType = FastNoiseLite.DomainWarpTypeEnum.SimplexReduced,
+                DomainWarpEnabled = false,
+                DomainWarpAmplitude = 8,
+                DomainWarpFractalGain = 0.5f,
+                DomainWarpFrequency = 0.005f,
+                DomainWarpFractalLacunarity = 4,
+                DomainWarpFractalOctaves = 3,
             };
             Seed = seed;
             Octaves = config.octaves;
@@ -53,26 +60,18 @@ namespace Atomation.Map
                 }
             }
         }
-
-        /// <summary>
-        /// offsets the starting cords for the noise map
-        /// </summary>
         public override Vector2 Offset
         {
-            get => mapOffset;
+            get => offset;
             set
             {
-                mapOffset = value;
+                offset = value;
                 if (noiseLite != null)
                 {
-                    noiseLite.Offset = new Vector3(mapOffset.X, mapOffset.Y, 0);
+                    noiseLite.Offset = new Vector3(offset.X, offset.Y, 0);
                 }
             }
         }
-
-        /// <summary>
-        /// how many times to layer the noise map
-        /// </summary>
         public int Octaves
         {
             get => octaves;
@@ -85,9 +84,6 @@ namespace Atomation.Map
                 }
             }
         }
-        /// <summary>
-        ///the frequency of noise
-        /// </summary>
         public float Frequency
         {
             get => frequency;
@@ -100,9 +96,6 @@ namespace Atomation.Map
                 }
             }
         }
-        /// <summary>
-        /// Determines the strength of each subsequent layer of noise in fractal noise
-        /// </summary>
         public float Persistence
         {
             get => persistence;
@@ -115,9 +108,6 @@ namespace Atomation.Map
                 }
             }
         }
-        /// <summary>
-        /// Frequency multiplier between subsequent octaves
-        /// </summary>
         public float Lacunarity
         {
             get => lacunarity;
@@ -131,12 +121,20 @@ namespace Atomation.Map
             }
         }
 
+        public override float GetNoise(float x, float y){
+            
+            float noiseVal = noiseLite.GetNoise2D(x, y);
+
+            return noiseVal;
+        }
+
+
         //todo figure out zooming 
         public override float this[float x, float y]
         {
             get
-            {///zoomLevel
-                return noiseLite.GetNoise2D(x, y);
+            {
+                return GetNoise(x, y);
             }
         }
     }

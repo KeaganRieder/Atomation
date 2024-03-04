@@ -2,98 +2,54 @@
   "Defs": {
     "Grass Savanna": {
       "name": "Grass Savanna",
-      "min moisture": 0.0,
-      "max moisture": 0.25,
-      "min temperature": 0.25,
-      "max temperature": 0.7,
+      "avg moisture": 0.0,
+      "avg temperature": 0.25,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 1.0,
         "G": 0.972549,
-        "B": 0.862745,
-        "A": 0.0,
-        "R8": 255,
-        "G8": 248,
-        "B8": 220,
-        "A8": 0,
-        "H": 0.13333337,
-        "S": 0.13725501,
-        "V": 1.0,
-        "Luminance": 0.97045726
+        "B": 0.862745
       }
     },
     "Desert": {
       "name": "Desert",
-      "min moisture": 0.0,
-      "max moisture": 0.2,
-      "min temperature": 0.7,
-      "max temperature": 1.0,
+      "avg moisture": 0.0,
+      "avg temperature": 0.7,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 0.956863,
         "G": 0.643137,
-        "B": 0.376471,
-        "A": 0.0,
-        "R8": 244,
-        "G8": 164,
-        "B8": 96,
-        "A8": 0,
-        "H": 0.0765764,
-        "S": 0.6065571,
-        "V": 0.956863,
-        "Luminance": 0.69058186
+        "B": 0.376471
       }
     },
     "Arid Desert": {
       "name": "Arid Desert",
-      "min moisture": 0.25,
-      "max moisture": 0.6,
-      "min temperature": 0.7,
-      "max temperature": 1.0,
+      "avg moisture": 0.25,
+      "avg temperature": 0.7,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 0.545098,
         "G": 0.270588,
-        "B": 0.0745098,
-        "A": 0.0,
-        "R8": 139,
-        "G8": 69,
-        "B8": 19,
-        "A8": 0,
-        "H": 0.069444366,
-        "S": 0.8633093,
-        "V": 0.545098,
-        "Luminance": 0.314792
+        "B": 0.0745098
       }
     },
     "Rain Forest": {
       "name": "Rain Forest",
-      "min moisture": 0.7,
-      "max moisture": 1.0,
-      "min temperature": 0.5,
-      "max temperature": 1.0,
+      "avg moisture": 0.7,
+      "avg temperature": 0.5,
       "biome terrain": {
         "-0.5": "grass"
       },
       "biome color": {
         "R": 0.0,
         "G": 0.392157,
-        "B": 0.0,
-        "A": 0.0,
-        "R8": 0,
-        "G8": 100,
-        "B8": 0,
-        "A8": 0,
-        "H": 0.33333334,
-        "S": 1.0,
-        "V": 0.392157,
-        "Luminance": 0.28047067
+        "B": 0.0
       }
     }
   }

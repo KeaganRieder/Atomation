@@ -9,19 +9,15 @@ namespace Atomation.Thing
     /// </summary>
     public class BiomeDef : ThingDef
     {
-        [JsonProperty("min moisture", Order = 3)]
+        [JsonProperty("avg moisture", Order = 3)]
         public float minMoisture;
-        [JsonProperty("max moisture", Order = 4)]
-        public float maxMoisture;
-        [JsonProperty("min temperature", Order = 5)]
+        [JsonProperty("avg temperature", Order = 4)]
         public float minTemperature;
-        [JsonProperty("max temperature", Order = 6)]
-        public float maxTemperature;
 
-        [JsonProperty("biome terrain", Order = 7)]
+        [JsonProperty("biome terrain", Order = 5)]
         public Dictionary<float, string> biomeTerrain;
 
-        [JsonProperty("biome color", Order = 8)]
+        [JsonProperty("biome color", Order = 6)]
         public Color color;
 
         public BiomeDef(string name,float minMoisture, float maxMoisture, float minTemperature, float maxTemperature,
@@ -29,9 +25,7 @@ namespace Atomation.Thing
         {
             this.Name = name;
             this.minMoisture = minMoisture;
-            this.maxMoisture = maxMoisture;
             this.minTemperature = minTemperature;
-            this.maxTemperature = maxTemperature;
             this.biomeTerrain = biomeTerrain;
             this.color= color;
         }
@@ -42,16 +36,16 @@ namespace Atomation.Thing
         /// </summary>
         public bool Suitable(float temperature, float moisture)
         {
-            bool suitableMoisture = moisture >= minMoisture && moisture <= maxMoisture;
-            bool suitableTemperature = temperature >= minTemperature && temperature <= maxTemperature;
-            if (suitableMoisture && suitableTemperature)
-            {
-                return true;
-            }
-            else
-            {
+            // bool suitableMoisture = moisture >= minMoisture && moisture <= maxMoisture;
+            // bool suitableTemperature = temperature >= minTemperature && temperature <= maxTemperature;
+            // if (suitableMoisture && suitableTemperature)
+            // {
+            //     return true;
+            // }
+            // else
+            // {
                 return false;
-            }
+            // }
         }
 
     }

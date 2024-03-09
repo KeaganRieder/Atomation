@@ -14,42 +14,12 @@ namespace Atomation.Map
         public virtual void RunStep(Vector2 origin, ChunkHandler chunkHandler) { }
 
         /// <summary>
-        /// gets cord values from smaller interavles
+        /// gets cord values from smaller intervals
         /// </summary>
         protected virtual void SampleCords(int x, int y, Vector2 offset,float scale, out float sampleX, out float sampleY)
         {
             sampleX = (x + offset.X)/scale;
             sampleY = (y + offset.Y)/scale;
-        }
-
-        /// <summary>
-        /// offset provided cords are based in correct chunk
-        /// </summary>
-        protected virtual void SampleChunkPos(Vector2 offset, int x, int y, out float sampleX, out float sampleY)
-        {
-            // check if x offset cords are negative if so perform 
-            // correct operation
-            if (offset.X < 0)
-            {
-                sampleX = x - offset.X;
-                sampleX *= -1;
-            }
-            else
-            {
-                sampleX = x + offset.X;
-            }
-
-            // check if y offset cords are negative if so perform 
-            // correct operation
-            if (offset.Y < 0)
-            {
-                sampleY = y - offset.Y;
-                sampleY *= -1;
-            }
-            else
-            {
-                sampleY = y + offset.Y;
-            }
         }
 
     }

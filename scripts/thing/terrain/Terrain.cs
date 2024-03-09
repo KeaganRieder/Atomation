@@ -33,7 +33,6 @@ namespace Atomation.Thing
 		private float moistureValue;
 		private FloorGraphics floorGraphic;
 
-
 		//constructors
 		public Terrain(Vector2 cords)
 		{
@@ -45,6 +44,8 @@ namespace Atomation.Thing
 				Name = name,
 				Position = position,
 			};
+
+			floorGraphic = new FloorGraphics(node);
 		}
 
 		/// <summary>
@@ -57,11 +58,11 @@ namespace Atomation.Thing
 			name = config.Name;
 			description = config.Description;
 			stats = config.CreateStats();
-			floorGraphic = new FloorGraphics(config.GraphicData, ThingNode);
+			floorGraphic.ConfigureGraphic(config.GraphicData);
 		}
 
 		//getters and setters
-		public Resources.FloorGraphics FloorGraphic { get => floorGraphic; set { floorGraphic = value; } }
+		public FloorGraphics FloorGraphic { get => floorGraphic; set { floorGraphic = value; } }
 
 		public float HeightValue { get => heightValue; set { heightValue = value; } }
 		public float HeatValue { get => heatValue; set { heatValue = value; } }

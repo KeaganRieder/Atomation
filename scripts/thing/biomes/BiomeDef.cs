@@ -10,9 +10,9 @@ namespace Atomation.Thing
     public class BiomeDef : ThingDef
     {
         [JsonProperty("avg moisture", Order = 3)]
-        public float minMoisture;
+        public float moisture;
         [JsonProperty("avg temperature", Order = 4)]
-        public float minTemperature;
+        public float temperature;
 
         [JsonProperty("biome terrain", Order = 5)]
         public Dictionary<float, string> biomeTerrain;
@@ -20,32 +20,23 @@ namespace Atomation.Thing
         [JsonProperty("biome color", Order = 6)]
         public Color color;
 
-        public BiomeDef(string name,float minMoisture, float maxMoisture, float minTemperature, float maxTemperature,
+        public BiomeDef(string name, float moisture, float maxMoisture, float temperature, float maxTemperature,
                 Dictionary<float, string> biomeTerrain, Color color)
         {
             this.Name = name;
-            this.minMoisture = minMoisture;
-            this.minTemperature = minTemperature;
+            this.moisture = moisture;
+            this.temperature = temperature;
             this.biomeTerrain = biomeTerrain;
-            this.color= color;
+            this.color = color;
         }
 
-        /// <summary>
-        /// given temperature and moisture checks to see if they are
-        /// within the min and max range for the biomes requirements
-        /// </summary>
-        public bool Suitable(float temperature, float moisture)
+        [JsonIgnore]
+        public override string Label
         {
-            // bool suitableMoisture = moisture >= minMoisture && moisture <= maxMoisture;
-            // bool suitableTemperature = temperature >= minTemperature && temperature <= maxTemperature;
-            // if (suitableMoisture && suitableTemperature)
-            // {
-            //     return true;
-            // }
-            // else
-            // {
-                return false;
-            // }
+            get
+            {
+                return JsonConvert.SerializeObject(new Vector2(temperature,moisture));
+            }
         }
 
     }

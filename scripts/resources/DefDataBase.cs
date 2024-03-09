@@ -2,6 +2,7 @@ using System;
 using Godot;
 using Atomation.Thing;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Atomation.Resources
 {
@@ -11,29 +12,26 @@ namespace Atomation.Resources
     /// </summary>
     public static class DefDatabase
     {
-        public const string TERRAIN_DEFS_PATH = "data/core/defs/terrain/";
-        public const string BIOME_DEFS_PATH = "data/core/defs/biomes/";
-
-        public static DefFile<TerrainDef> TerrainDefs;
-        public static DefFile<BiomeDef> BiomeDefs;  
+        private static DefFile<TerrainDef> TerrainDefs;
+        private static DefFile<BiomeDef> BiomeDefs;
 
         /// <summary>
         /// Loads resources and def files form files
         /// </summary>
         public static void LoadResources()
         {
+             
             GD.Print("Loading Terrain Def Files");
-            TerrainDefs = new DefFile<TerrainDef>(TERRAIN_DEFS_PATH);
-
+            TerrainDefs = new DefFile<TerrainDef>(FilePath.TERRAIN_FOLDER);
             GD.Print("Loading Biome Def Files");
-            BiomeDefs = new DefFile<BiomeDef>(BIOME_DEFS_PATH);
+            BiomeDefs = new DefFile<BiomeDef>(FilePath.BIOME_FOLDER);           
         }
 
         /// <summary>
         /// access cached terrain config data, and returns the terrain
         /// based on the ID
         /// </summary>
-        public static TerrainDef ReadTerrainConfig(string terrainID)
+        public static TerrainDef GetTerrainConfig(string terrainID)
         {
             return TerrainDefs[terrainID];
         }
@@ -41,17 +39,22 @@ namespace Atomation.Resources
         /// access cached terrain config data, and returns the terrain
         /// based on the moistureVal and temperateVal
         /// </summary>
-        public static Biome ReadBiome(float moistureVal, float temperateVal)
+        public static Biome GetBiome(float moisture, float temperate)
         {
-            foreach (BiomeDef biomeDef in BiomeDefs.Defs.Values)
+            foreach (var biome in BiomeDefs.FileContents)
             {
-                if (biomeDef.Suitable(temperateVal, moistureVal))
+                //converting the key to a vector that stores
+                // a biomes temperature (x) and it's moisture (y) requirements
+                Vector2 biomeRequirements = JsonConvert.DeserializeObject<Vector2>(biome.Key);
+                if (temperate < biomeRequirements.X)
                 {
-                    return new Biome(biomeDef);
+                    //todo make moisture requirements
+
+                    return new Biome(biome.Value);
                 }
             }
 
-            // GD.Print("No Biome Found");
+            //FileContents
             return null;
         }
     }

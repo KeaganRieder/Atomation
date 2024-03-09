@@ -34,7 +34,7 @@ namespace Atomation.System
                 {"VisualizeHeight", Key.E},
             };
 
-            FileManger.WriteJsonFile(FileManger.BINDINGS_FOlDER, fileName, this);
+            FileManger.WriteJsonFile(FilePath.KEYBINDINGS_FOLDER, fileName, this);
         }
 
         /// <summary>
@@ -42,9 +42,7 @@ namespace Atomation.System
         /// </summary>
         public void LoadBindings(string bindingFile)
         {
-            // string filePath = FileManger.BINDINGS_FOlDER + bindingFile + ".json";
-
-            KeyBindings loadedBinding = FileManger.ReadJsonFile<KeyBindings>(FileManger.BINDINGS_FOlDER, bindingFile);
+            KeyBindings loadedBinding = FileManger.ReadJsonFile<KeyBindings>(FilePath.KEYBINDINGS_FOLDER, bindingFile);
 
             //assigning 
             foreach (var binding in loadedBinding.keyBindings)

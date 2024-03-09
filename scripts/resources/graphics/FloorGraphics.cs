@@ -19,21 +19,7 @@ namespace Atomation.Resources
 	/// </summary>
 	public class FloorGraphics : Graphic
 	{
-		private ColorRect floorGraphic;
-
-		public FloorGraphics(GraphicConfig graphicConfig, Node2D terrainNode)
-		{
-
-			floorGraphic = new ColorRect();
-			floorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
-			floorGraphic.Position = terrainNode.Position;
-
-			terrainNode.AddChild(floorGraphic);
-
-			texturePath = graphicConfig.TexturePath;
-			color = graphicConfig.Color;
-			color.A = 1;
-		}
+		private ColorRect floorGraphic;		
 	 
 		public FloorGraphics(Color color)
 		{
@@ -41,6 +27,24 @@ namespace Atomation.Resources
 			floorGraphic = new ColorRect();
 			floorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 			this.color.A = 1;
+		}
+
+		public FloorGraphics(Node2D terrainNode){
+			
+			floorGraphic = new ColorRect();
+			floorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
+			color = new Color(Colors.Black);
+			floorGraphic.Color = color;
+
+			terrainNode.AddChild(floorGraphic);
+		}
+
+		public override void ConfigureGraphic(GraphicConfig graphicConfig){
+			texturePath = graphicConfig.TexturePath;
+			color = graphicConfig.Color;
+			color.A = 1;
+
+			DefaultGraphic();
 		}
 
 		/// <summary>
@@ -68,45 +72,49 @@ namespace Atomation.Resources
 		{
 			Color heatColor;
 
-			if (heatVal < -.9f)
+			if (heatVal < -1.3)
 			{
-				heatColor = Colors.DarkRed;
+				heatColor = Colors.White;
 			}
-			else if (heatVal < -.7f)
+			else if (heatVal < -1.0)
 			{
-				heatColor = Colors.Orange;
+				heatColor = Colors.Pink;
 			}
-			else if (heatVal < -.5f)
+			else if (heatVal < -0.8)
 			{
-				heatColor = Colors.Yellow;
+				heatColor = Colors.Purple;
 			}
-			else if (heatVal < -.25f)
-			{
-				heatColor = Colors.Green;
-			}
-			else if (heatVal < .1f)
-			{
-				heatColor = Colors.DarkGreen;
-			}
-			else if (heatVal < .25f)
-			{
-				heatColor = Colors.Green;
-			}
-			else if (heatVal < .5f)
-			{
-				heatColor = Colors.Cyan;
-			}
-			else if (heatVal < .7f)
-			{
-				heatColor = Colors.Blue;
-			}
-			else if (heatVal < .9f)
+			else if (heatVal < -0.5)
 			{
 				heatColor = Colors.DarkBlue;
 			}
-			else
+			else if (heatVal < -0.25)
 			{
-				heatColor = Colors.Purple;
+				heatColor = Colors.Cyan;
+			}
+			else if (heatVal < 0.25)
+			{
+				heatColor = Colors.Green;
+			}
+			else if (heatVal < 0.7)
+			{
+				heatColor = Colors.DarkGreen;
+			}
+			else if (heatVal < 1)
+			{
+				heatColor = Colors.Yellow;
+			}
+			else if (heatVal < 1.25)
+			{
+				heatColor = Colors.Orange;
+			}
+			else if (heatVal < 1.7)
+			{
+				heatColor = Colors.Red;
+			}
+			else 
+			{
+				heatColor = Colors.DarkRed;
 			}
 
 			floorGraphic.Color = heatColor;

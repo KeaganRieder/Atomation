@@ -26,7 +26,7 @@ namespace Atomation.Map
 		{
 			Name = "World Map";
 			
-			mapSettings = FileManger.ReadJsonFile<MapSettings>(FileManger.CONFIGS, "map_settings");
+			mapSettings = FileManger.ReadJsonFile<MapSettings>(FilePath.CONFIG_FOLDER, "map_settings");
 			
 			mapGenerator = new WorldGenerator(mapSettings.genSettings);
 			chunkHandler = new ChunkHandler(this);

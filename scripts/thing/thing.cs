@@ -18,6 +18,9 @@ namespace Atomation.Thing
 		[JsonIgnore]
 		public virtual string Name { get => name; set { name = value; } }
 		[JsonIgnore]
+		public virtual string Label {get => name;}
+		
+		[JsonIgnore]
 		public virtual string Description { get => description; set { description = value; } }
 
 		//todo make something that formats the description of things
@@ -30,5 +33,6 @@ namespace Atomation.Thing
 	public interface IThing
 	{
 		public string Name { get; set; }
+		public string Label { get;}
 	}
 }

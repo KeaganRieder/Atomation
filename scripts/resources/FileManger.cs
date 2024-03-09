@@ -12,12 +12,6 @@ namespace Atomation.Resources
 	/// </summary>
 	public class FileManger
 	{
-		public const string DEF_FOLDER = "data/core/defs/";
-		public const string TEXTURE_FOLDER = "resources/textures";
-		public const string AUDIO_FOLDER = "resources/audio";
-		public const string CONFIGS = "data/configs/";
-		public const string BINDINGS_FOlDER = "data/key_bindings/";
-
 		public FileManger()
 		{
 		}

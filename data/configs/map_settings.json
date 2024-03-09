@@ -2,36 +2,31 @@
   "render distance": 64.0,
   "generation settings": {
     "world size": {
-      "X": 32,
-      "Y": 32 
+      "X": 64,
+      "Y": 64
     },
-    "world seed": 8,
-    "map zoom": 1,
-    "seaLevel": -0.3,
-    "mountainSize": 0.3,
-    "elevation settings": {
+    "world seed": 0,
+    "map zoom": 0.50,
+    "seaLevel": -0.2,
+    "mountainSize": 0.4,
+    "height map configs": {
       "octaves": 6,
       "frequency": 0.02,
-      "persistence": 0.4,
       "lacunarity": 2.6,
-      "fractalType": 1,
-      "noiseType": 1
+      "gain": 0.4,
+      "noiseType": 1,
+      "fractalType": 1
     },
-    "temperature settings": {
-      "octaves": 6,
-      "frequency": 0.017,
-      "persistence": 0.4,
-      "lacunarity": 2.6,
-      "fractalType": 1,
-      "noiseType": 1
+    "temperature map configs": {
+      "BaseTemperature": 2,
+      "TemperatureMultiplier": 3.05,
+      "TemperatureLoss": 0.147,
+      "TemperatureHeight": 0.11
     },
-    "moisture settings": {
-      "octaves": 8,
-      "frequency": 0.01,
-      "persistence": 0.5,
-      "lacunarity": 2,
-      "fractalType": 1,
-      "noiseType": 1
+    " moisture map configs": {
+      "DewPoint": 3.0,
+      "PrecipitationIntensity": 0.53,
+      "FlatteningVal": 0.444
     }
   }
 }

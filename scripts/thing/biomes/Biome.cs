@@ -19,8 +19,8 @@ namespace Atomation.Thing
 
         public Biome(BiomeDef configs){
             name = configs.Name;
-            moisture = configs.minMoisture;
-            temperature = configs.minTemperature;
+            moisture = configs.moisture;
+            temperature = configs.temperature;
             biomeTerrain = configs.biomeTerrain;
             color= configs.color;
         }

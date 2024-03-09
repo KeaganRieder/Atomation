@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using Godot;
 using Atomation.Thing;
+using Newtonsoft.Json;
 
 namespace Atomation.Resources
 {
-    public class DefFile<defType> where defType : IThing
+    public class DefFile<defType> where defType : IThing 
     { 
-        public Dictionary<string, defType> Defs;
-    
-        public DefFile(){}
+        [JsonProperty("Defs")]
+        protected Dictionary<string, defType> defs;
         
+        public DefFile(){
+            //default constructor used for json reading
+        }
+
         /// <summary>
         /// constructor which is used primarily for formatting new def file
         /// </summary>
         public DefFile(Dictionary<string, defType> contents, string path, string fileName ){
-            Defs = contents;
+            defs = contents;
             FileManger.WriteJsonFile(path, fileName, this);
         }
 
@@ -26,16 +30,22 @@ namespace Atomation.Resources
         /// </summary>
         public DefFile(string folderPath)
         {
-            Defs = new Dictionary<string, defType>();
+            defs = new Dictionary<string, defType>();
+
+            Initialize(folderPath);
+        }
+
+        protected virtual void Initialize(string folderPath){
             if (Directory.Exists(folderPath))
             {
                 string[] files = Directory.GetFiles(folderPath);
                 foreach (string filePath in files)
-                {
+                {   
                     DefFile<defType> defFile = FileManger.ReadJsonFile<DefFile<defType>>(filePath);
-                    foreach (var def in defFile.Defs)
+
+                    foreach (var def in defFile.defs)
                     {
-                        CacheFileData(def.Key, def.Value);
+                        CacheFileData(def.Value.Label, def.Value);
                     }
                 }
             }
@@ -45,15 +55,11 @@ namespace Atomation.Resources
             }
         }
 
-        public void FormatFile(string path, string fileName){
-            FileManger.WriteJsonFile(path, fileName, this);
-        }
-
-        public void CacheFileData(string name, defType obj)
-        {
+        protected virtual void CacheFileData(string key, defType obj)
+        {            
             try
             {
-                Defs.Add(name, obj);
+                defs.Add(key, obj);
             }
             catch (Exception Error)
             {
@@ -61,13 +67,17 @@ namespace Atomation.Resources
             }
         }
 
+        public Dictionary<string, defType> FileContents{
+            get => defs;
+        }
+
         public defType this[string key]
         {
-            get
+            get 
             {
-                if (Defs.ContainsKey(key))
+                if (defs.ContainsKey(key))
                 {
-                    return Defs[key];
+                    return defs[key];
                 }
                 else
                 {

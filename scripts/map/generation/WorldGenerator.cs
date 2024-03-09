@@ -13,27 +13,30 @@ namespace Atomation.Map
         //configs
         private MapGenSettings genConfig;
         // genSteps
-        private GenStepNoise genStepNoise;
-        private GenStepTerrain genStepTerrain;
+        // private GenStepNoise genStepNoise;
+        // private GenStepTerrain genStepTerrain;
+        private GenStepLandScape genStepLandScape;
 
         public WorldGenerator(MapGenSettings genConfig)
         {
             this.genConfig = genConfig;
-            genStepNoise = new GenStepNoise(genConfig);
-            genStepTerrain = new GenStepTerrain(genConfig);
+            // genStepNoise = new GenStepNoise(genConfig);
+            // genStepTerrain = new GenStepTerrain(genConfig);
+            genStepLandScape = new GenStepLandScape(genConfig);
         }
 
         //getters and setters
         public MapGenSettings GenConfig { get { return genConfig; } set { genConfig = value; } }
-        public GenStepNoise GenStepNoise { get { return GenStepNoise; } set { GenStepNoise = value; } }
+        // public GenStepNoise GenStepNoise { get { return GenStepNoise; } set { GenStepNoise = value; } }
 
         /// <summary>
         /// Used to Generate new Chunks
         /// </summary>
         public void GenerateChunk(Vector2 ChunkCord, ChunkHandler chunkHandler)
         {           
-            genStepNoise.RunStep(ChunkCord, chunkHandler);
-            genStepTerrain.RunStep(ChunkCord, chunkHandler);
+            
+            genStepLandScape.RunStep(ChunkCord, chunkHandler);
+            // genStepTerrain.RunStep(ChunkCord, chunkHandler);
             chunkHandler.UpdateVisualizationMode(default);
         }
     }

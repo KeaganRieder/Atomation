@@ -13,7 +13,13 @@ namespace Atomation.Resources
         protected Vector2 graphicSize;
         protected Color color;
         
+        public virtual Color Color{get => color; set{color = value;}}
 
-        public virtual Color Color{get => color;}
+        /// <summary>
+		/// sets the graphics configuration
+		/// </summary>
+        public virtual void ConfigureGraphic(GraphicConfig graphicConfig){
+
+        }
     }
 }

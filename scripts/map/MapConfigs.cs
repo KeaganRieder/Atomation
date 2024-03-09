@@ -1,85 +1,115 @@
-// using Godot;
-// using Newtonsoft.Json;
-// using Atomation.Resources;
-// using Newtonsoft.Json.Converters;
+using Atomation.Resources;
+using Godot;
+using Newtonsoft.Json;
 
-// namespace Atomation.Map
-// {
-//     /// <summary>
-//     /// config data used for setting how noise maps are generated
-//     /// </summary>
-//     public class NoiseMapConfig
-//     {
-//         [JsonProperty(Order = 1)]
-//         public int seed;
-//         [JsonProperty(Order = 2)]
-//         public int octaves;
-        
-//         [JsonProperty(Order = 3)]
-//         public float zoom;
-//         [JsonProperty(Order = 4)]
-//         public float frequency;
-//         [JsonProperty(Order = 5)]
-//         public float persistence;
-//         [JsonProperty(Order = 5)]
-//         public float lacunarity;
+namespace Atomation.Map
+{
+	/// <summary>
+	/// class which stores the settings used to configure the map
+	/// in order to create unique playthroughs and such
+	/// </summary>
+	public class MapSettings
+	{
+		[JsonIgnore]
+		public const float CELL_SIZE = 16;
+		[JsonProperty("render distance", Order = 1)]
+		public static float MAX_LOAD_DIST = 64;
 
-//         /// <summary>
-//         /// the distance a point is from the center position
-//         /// </summary>
-//         [JsonIgnore]
-//         public Vector2 offset;
+		[JsonProperty("generation settings", Order = 2)]
+		public MapGenSettings genSettings;
 
-//         /// <summary>
-//         /// decides how octaves get combined in the generation of the noise map
-//         /// </summary>
-//         [JsonProperty(Order = 9)]
-//         public FastNoiseLite.FractalTypeEnum fractalType;
+		//todo when working on Saving
 
-//         /// <summary>
-//         /// decides noise type
-//         /// </summary>
-//         [JsonProperty(Order = 10)]
-//         public FastNoiseLite.NoiseTypeEnum noiseType;
+		public MapSettings(){
+			genSettings = new MapGenSettings();
+		}
+	}
 
-//     }
+	/// <summary>
+	/// Settings which allow configuring generation of the map
+	/// </summary>
+	public class MapGenSettings
+	{
+		[JsonProperty("world size", Order = 1)]
+		public Vector2I worldSize;
 
-//     /// <summary>
-//     /// class which is used to pass a collection of data that relates to the 
-//     /// configuration of world world generation.
-//     /// this data is passed between the many world generation classes
-//     /// </summary>
-//     public class GenConfigs
-//     {
-//         //general configs
-//         /// <summary>
-//         /// bounds/max size of the world
-//         /// x = width
-//         /// y = height
-//         /// </summary>
-//         [JsonProperty(Order = 1)]
-//         public Vector2I worldBounds;
+		[JsonProperty("world seed", Order = 2)]
+		public int seed;
+		[JsonProperty("map zoom", Order = 3)]
+		public float scale; 
 
-//         //
-//         // generation configs   
-//         //
+		[JsonProperty(Order = 4)]
+		public float seaLevel = .2f;
+		[JsonProperty(Order = 5)]
+		public float mountainSize = .8f; 
 
-//         //terrain configs
-//         [JsonProperty(Order = 2)]
-//         public float seaLevel = .2f;
-//         [JsonProperty(Order = 3)]
-//         public float mountainSize = .8f; 
+		[JsonProperty("height map configs", Order = 6)]
+		public HeightMapConfigs heightMapConfigs;
+		[JsonProperty("temperature map configs", Order = 7)]
+		public TemperatureMapConfigs temperatureMapConfigs;
+		[JsonProperty(" moisture map configs", Order = 8)]
+		public MoistureMapConfigs moistureMapConfigs;
 
-//         // noise maps
-//         [JsonProperty(Order = 4)]
-//         public NoiseMapConfig elevationMapConfigs;
-//         [JsonProperty(Order = 5)]
-//         public NoiseMapConfig moistureMapConfigs;
-//         [JsonProperty(Order = 6)]
-//         public NoiseMapConfig heatMapConfigs;
+		//old values
 
-//         public void FormatConfig(string path, string fileName){
-//             Resources.JsonWriter.WriteFile(path, fileName, this);
-//         }
-//     }
-// }
+		// [JsonProperty("elevation settings", Order = 6)]
+		// public NoiseMapSettings elevationSettings;
+
+		// [JsonProperty("temperature settings", Order = 7)]
+		// public NoiseMapSettings temperatureSettings;
+
+		// [JsonProperty("moisture settings", Order = 8)]
+		// public NoiseMapSettings moistureSettings;
+
+		public MapGenSettings(){
+			heightMapConfigs = new HeightMapConfigs();
+			temperatureMapConfigs = new TemperatureMapConfigs();
+			moistureMapConfigs = new MoistureMapConfigs();
+		}
+	}
+
+	// /// <summary>
+	// /// settings which handle configuring noise Maps used during world generation
+	// /// </summary>
+	// public class NoiseMapSettings
+	// {
+	// 	[JsonProperty(Order = 1)]
+	// 	/// <summary>
+	// 	/// how many noise layers are applied to this map
+	// 	/// </summary>
+	// 	public int octaves;
+	
+	// 	[JsonProperty(Order = 3)]
+	// 	/// <summary>
+	// 	/// the frequency of the noise
+	// 	/// </summary>
+	// 	public float frequency;
+	// 	[JsonProperty(Order = 4)]
+	// 	/// <summary>
+	// 	/// the gain of the noise
+	// 	/// </summary>
+	// 	public float persistence;
+	// 	[JsonProperty(Order = 5)]
+	// 	public float lacunarity;
+
+	// 	/// <summary>
+	// 	/// the distance a point is from the center position
+	// 	/// </summary>
+	// 	[JsonIgnore]
+	// 	public Vector2 offset;
+
+	// 	/// <summary>
+	// 	/// noise type
+	// 	/// </summary>
+	// 	[JsonProperty(Order = 10)]
+	// 	public FastNoiseLite.NoiseTypeEnum noiseType;
+
+	// 	/// <summary>
+	// 	/// decides how octaves get combined in the generation of the noise map
+	// 	/// </summary>
+	// 	[JsonProperty(Order = 9)]
+	// 	public FastNoiseLite.FractalTypeEnum fractalType;
+
+	  
+	// }
+}

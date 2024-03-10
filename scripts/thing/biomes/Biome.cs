@@ -10,8 +10,11 @@ namespace Atomation.Thing
     /// </summary>
     public class Biome : Thing
     {
-        private float moisture;
-        private float temperature;
+        private float minMoisture;
+        private float maxMoisture;
+
+        private float minTemperature;
+        private float maxTemperature;
 
         private Dictionary<float, string> biomeTerrain;
 
@@ -19,31 +22,17 @@ namespace Atomation.Thing
 
         public Biome(BiomeDef configs){
             name = configs.Name;
-            moisture = configs.moisture;
-            temperature = configs.temperature;
+            minMoisture = configs.minMoisture;
+            maxMoisture = configs.maxMoisture;
+            minTemperature = configs.minTemperature;
+            maxTemperature = configs.maxTemperature;
+
             biomeTerrain = configs.biomeTerrain;
             color= configs.color;
+            color.A = 1;
         }
 
         public Color Color{get => color;}
-
-        /// <summary>
-        /// given temperature and moisture checks to see if they are
-        /// within the min and max range for the biomes requirements
-        /// </summary>
-        // public bool Suitable(float temperature, float moisture)
-        // {
-        //     // bool suitableMoisture = moisture >= minMoisture && moisture <= maxMoisture;
-        //     // bool suitableTemperature = temperature >= minTemperature && temperature <= maxTemperature;
-        //     // if (suitableMoisture && suitableTemperature)
-        //     // {
-        //     //     return true;
-        //     // }
-        //     // else
-        //     // {
-        //     //     return false;
-        //     // }
-        // }
 
         /// <summary>
         /// returns the key for the terrain which is present in the biome

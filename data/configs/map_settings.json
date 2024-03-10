@@ -6,9 +6,9 @@
       "Y": 64
     },
     "world seed": 0,
-    "map zoom": 0.50,
+    "map zoom": 1,
     "seaLevel": -0.2,
-    "mountainSize": 0.4,
+    "mountainSize": 0.5,
     "height map configs": {
       "octaves": 6,
       "frequency": 0.02,
@@ -18,15 +18,15 @@
       "fractalType": 1
     },
     "temperature map configs": {
-      "BaseTemperature": 2,
+      "BaseTemperature": 1,
       "TemperatureMultiplier": 3.05,
       "TemperatureLoss": 0.147,
       "TemperatureHeight": 0.11
     },
     " moisture map configs": {
-      "DewPoint": 3.0,
-      "PrecipitationIntensity": 0.53,
-      "FlatteningVal": 0.444
+      "DewPoint": 20,
+      "PrecipitationIntensity": 0.5,
+      "FlatteningVal": 0.44
     }
   }
 }

@@ -19,8 +19,8 @@ namespace Atomation.Resources
 	/// </summary>
 	public class FloorGraphics : Graphic
 	{
-		private ColorRect floorGraphic;		
-	 
+		private ColorRect floorGraphic;
+
 		public FloorGraphics(Color color)
 		{
 			this.color = color;
@@ -29,8 +29,9 @@ namespace Atomation.Resources
 			this.color.A = 1;
 		}
 
-		public FloorGraphics(Node2D terrainNode){
-			
+		public FloorGraphics(Node2D terrainNode)
+		{
+
 			floorGraphic = new ColorRect();
 			floorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 			color = new Color(Colors.Black);
@@ -39,7 +40,8 @@ namespace Atomation.Resources
 			terrainNode.AddChild(floorGraphic);
 		}
 
-		public override void ConfigureGraphic(GraphicConfig graphicConfig){
+		public override void ConfigureGraphic(GraphicConfig graphicConfig)
+		{
 			texturePath = graphicConfig.TexturePath;
 			color = graphicConfig.Color;
 			color.A = 1;
@@ -112,7 +114,7 @@ namespace Atomation.Resources
 			{
 				heatColor = Colors.Red;
 			}
-			else 
+			else
 			{
 				heatColor = Colors.DarkRed;
 			}
@@ -133,31 +135,61 @@ namespace Atomation.Resources
 		/// </summary>
 		public void MoistureGraphic(float moistureVal)
 		{
+			//this needs work
 			Color moistureColor;
-			if (moistureVal < 0.1)
+
+			if (moistureVal < 0.27)
 			{
 				moistureColor = Colors.Red;
-			}
-			else if (moistureVal < 0.27)
-			{
-				moistureColor = Colors.Orange;
+
 			}
 			else if (moistureVal < 0.4)
 			{
-				moistureColor = Colors.Yellow;
+				moistureColor = Colors.Orange;
+
 			}
-			else if (moistureVal < 0.6)
+			else if (moistureVal < 0.5)
+			{
+				moistureColor = Colors.Yellow;
+
+			}
+			else if (moistureVal < 0.7)
 			{
 				moistureColor = Colors.Green;
+
 			}
 			else if (moistureVal < 0.8)
 			{
-				moistureColor = Colors.Blue;
+				moistureColor = Colors.Cyan;
 			}
 			else
 			{
-				moistureColor = Colors.DarkBlue;
+				moistureColor = Colors.Blue;
 			}
+			// if (moistureVal < 0.1)
+			// {
+			// 	moistureColor = Colors.Red;
+			// }
+			// else if (moistureVal < 0.27)
+			// {
+			// 	moistureColor = Colors.Orange;
+			// }
+			// else if (moistureVal < 0.4)
+			// {
+			// 	moistureColor = Colors.Yellow;
+			// }
+			// else if (moistureVal < 0.6)
+			// {
+			// 	moistureColor = Colors.Green;
+			// }
+			// else if (moistureVal < 0.8)
+			// {
+			// 	moistureColor = Colors.Blue;
+			// }
+			// else
+			// {
+			// 	moistureColor = Colors.DarkBlue;
+			// }
 			floorGraphic.Color = moistureColor;
 		}
 

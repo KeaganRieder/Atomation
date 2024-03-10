@@ -75,8 +75,7 @@ namespace Atomation.Map
             //and how close it is to bounds
             float equatorHeat = latitude / TotalMapSize.Y;
 
-            float avgTemperature = (equatorHeat * - temperatureMultiplier)
-             -(terrain.HeightValue / temperatureHeight * temperatureLoss) + baseTemperature;
+            float avgTemperature = (equatorHeat * -1* temperatureMultiplier)-((terrain.HeightValue / temperatureHeight) * temperatureLoss) + baseTemperature;
             
             if (avgTemperature<minValue )
             {

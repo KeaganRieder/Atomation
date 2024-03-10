@@ -7,28 +7,30 @@ namespace Atomation.Map
 {
     public class GenStepLandScape : GenStep
     {
+        float minValue = 1000;
+        float maxValue = -1000;
         private HeightMap heightMap;
         private TemperatureMap temperatureMap;
         private MoistureMap moistureMap;
 
         private float deepWater;
         private float shallowWater;
-        private float shore;
-        private float mountain;
-        private float rockyGround;
+        private float shoreHeight;
+        private float mountainHeight;
+        private float mountainBase;
 
         public GenStepLandScape(MapGenSettings genConfig)
         {
             heightMap = new HeightMap(genConfig, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
-            temperatureMap = new TemperatureMap(genConfig, Chunk.CHUNK_SIZE,Chunk.CHUNK_SIZE);
-            moistureMap = new MoistureMap(genConfig, Chunk.CHUNK_SIZE,Chunk.CHUNK_SIZE);
+            temperatureMap = new TemperatureMap(genConfig, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
+            moistureMap = new MoistureMap(genConfig, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 
             deepWater = genConfig.seaLevel;
             shallowWater = genConfig.seaLevel + 0.1f;
-            shore = genConfig.seaLevel + 0.2f;
+            shoreHeight = genConfig.seaLevel + 0.2f;
 
-            mountain = genConfig.mountainSize;
-            rockyGround = genConfig.mountainSize - 0.1f;
+            mountainHeight = genConfig.mountainSize;
+            mountainBase = genConfig.mountainSize - 0.1f;
 
         }
 
@@ -63,85 +65,89 @@ namespace Atomation.Map
                     }
 
                     heightMap.CalculateHeight(x, y, terrain);
-                    temperatureMap.CalculateHeat(y,terrain);
-                    moistureMap.CalculateMoisture(y, terrain);
+                    temperatureMap.CalculateHeat(y, terrain);
+                    moistureMap.CalculateMoisture(x, y, terrain);
 
-                    GenerateLand(terrain);
+                    determineTerrainType(terrain);
 
                     terrain.UpdateGraphic(VisualizationMode.Default);
                 }
             }
-            GD.Print($"MIN{temperatureMap.minValue} MAX: {temperatureMap.maxValue}");
 
+            // GD.Print($"moisture MIN: {moistureMap.minValue} MAX: {moistureMap.maxValue}");
+            // GD.Print($"temp MIN: {temperatureMap.minValue} MAX: {temperatureMap.maxValue}");
         }
 
-        private void GenerateLand(Terrain terrain)
+        /// <summary>
+        /// using a terrains hight, determines if it's elevated ground, water or 
+        /// just land
+        /// </summary>
+        private void determineTerrainType(Terrain terrain)
         {
-            CreateLandScape(terrain);
-        }
-        private void CreateLandScape(Terrain terrain)
-        {
+            float height = terrain.HeightValue;
 
-            if (IsWater(terrain))
+            if (height <= shoreHeight)
             {
-                return;
+                SetWaterType(terrain, height);
             }
-            if (IsMountain(terrain))
+            else if (height >= mountainBase)
             {
-                return;
-            }
-
-            IsLand(terrain);
-        }
-        private bool IsWater(Terrain terrain)
-        {
-            if (terrain.HeightValue < deepWater)
-            {
-                terrain.FloorGraphic.Color = new Color(0, 0, 0);
-                // terrain.MoistureValue = 1;
-
-                return true;
-            }
-            else if (terrain.HeightValue < shallowWater)
-            {
-                terrain.FloorGraphic.Color = new Color(0.2f, 0.2f, 0.2f);
-                // terrain.MoistureValue = 1;
-
-                return true;
-            }
-
-            return false;
-        }
-        private void IsLand(Terrain terrain)
-        {
-            if (terrain.HeightValue < shore)
-            {
-                terrain.FloorGraphic.Color = new Color(0.4f, 0.4f, 0.4f);
+                SetElevatedTerrain(terrain, height);
             }
             else
             {
-                terrain.FloorGraphic.Color = new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue);
+                SetBiome(terrain);
             }
-
-
         }
-        private bool IsMountain(Terrain terrain)
+
+        /// <summary>
+        /// using given tiles temperature generates a biome, and then assigns
+        /// the proper information to tile 
+        /// </summary>
+        private void SetBiome(Terrain terrain)
         {
-            if (terrain.HeightValue > rockyGround && terrain.HeightValue < mountain)
+            Biome biome = DefDatabase.GetBiome(terrain.MoistureValue,terrain.HeatValue);
+            terrain.FloorGraphic.Color = (biome == null) ? new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue) 
+            : biome.Color;
+            if (biome == null)
             {
-                terrain.FloorGraphic.Color = new Color(.8f, .8f, .8f);
-                return true;
+                GD.Print(terrain.HeatValue);
             }
-            else if (terrain.HeightValue > mountain)
-            {
-                terrain.FloorGraphic.Color = new Color(1, 1, 1);
-
-
-                return true;
-            }
-            return false;
+            
         }
+        /// <summary>
+        /// using provided terrain determines the type of water it is
+        /// </summary>
+        private void SetWaterType(Terrain terrain, float height)
+        {
+            if (height < deepWater)
+            {
+                terrain.FloorGraphic.Color = Colors.DarkBlue;
 
+            }
+            else if (height < shallowWater)
+            {
+                terrain.FloorGraphic.Color = Colors.Blue;
 
+            }
+            else if (height < shoreHeight)
+            {
+                terrain.FloorGraphic.Color = Colors.Yellow;
+            }
+        }
+        /// <summary>
+        /// using provided terrain determines the type of Elevated ground it is
+        /// </summary>
+        private void SetElevatedTerrain(Terrain terrain, float height)
+        {
+            if (height > mountainHeight)
+            {
+                terrain.FloorGraphic.Color = new Color(.05f, .05f, .05f);
+            }
+            else if (height > mountainBase)
+            {
+                terrain.FloorGraphic.Color = new Color(.3f, .3f, .3f);
+            }
+        }
     }
 }

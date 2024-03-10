@@ -45,8 +45,11 @@ namespace Atomation.Resources
             {
                 //converting the key to a vector that stores
                 // a biomes temperature (x) and it's moisture (y) requirements
-                Vector2 biomeRequirements = JsonConvert.DeserializeObject<Vector2>(biome.Key);
-                if (temperate < biomeRequirements.X)
+                BiomeDef.BiomeLabel biomeRequirements = JsonConvert.DeserializeObject<BiomeDef.BiomeLabel>(biome.Key);
+                bool temperatureReqMet = temperate > biomeRequirements.minTemperature && temperate < biomeRequirements.maxTemperature;
+                bool moistureReqMet =true;// moisture > biomeRequirements.minMoisture && moisture < biomeRequirements.maxMoisture;
+
+                if (temperatureReqMet && moistureReqMet)
                 {
                     //todo make moisture requirements
 

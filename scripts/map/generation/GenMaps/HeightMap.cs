@@ -104,10 +104,9 @@ namespace Atomation.Map
             SampleCords(x, y, out float sampleX, out float sampleY);
             float height = noiseGenerator.GetNoise2D(sampleX, sampleY);
 
-            terrain.HeightValue = height;
-            // terrain.MoistureValue = height;// - Mathf.Cos(height)*height;       
-        }
+            terrain.HeightValue = height;    
+            terrain.MoistureValue = height + Mathf.Cos(height)* height;       
 
-        
+        }        
     }
 }

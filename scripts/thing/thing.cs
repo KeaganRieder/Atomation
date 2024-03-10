@@ -32,7 +32,14 @@ namespace Atomation.Thing
 	//interface for things
 	public interface IThing
 	{
+		/// <summary>
+		/// objects name
+		/// </summary>
 		public string Name { get; set; }
+		/// <summary>
+		/// Label used as key for cache dictionary, in order to properly sort
+		/// and retrieve the item from it
+		/// </summary>
 		public string Label { get;}
 	}
 }

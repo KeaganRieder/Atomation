@@ -1,120 +1,88 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Godot;
-using Newtonsoft.Json;
 
 namespace Atomation.Thing
 {
     /// <summary>
-    /// todo
+    /// A stat are statistics, attributes or in short
+    /// information about a thing, which can be modified
     /// </summary>
-    public class Stat : StatBase
+    public class Stat : Thing
     {
-        [JsonProperty]
-        protected float currentVal;
-        [JsonProperty]
-        protected float minValue;
-        [JsonProperty]
-        protected float maxValue;
-        protected Dictionary<string, StatModifier> modifers;
-        private bool updateValues = false;
+        private float baseVal;
+        private float currentValue;
+        private float minValue;
+        private float maxValue;
 
-        public Stat()
-        {
-            modifers = new Dictionary<string, StatModifier>();
+        private Dictionary<string,StatModifier> modifiers;
+        private bool updateValue;
+
+        public Stat(StatDef configs){
+            name = configs.Name;
+            description = configs.Description;
+            currentValue = configs.BaseValue;
+            baseVal = configs.BaseValue;
+            minValue = configs.MinValue;
+            maxValue = configs.MaxValue;
+
+            modifiers = new Dictionary<string, StatModifier>();
+            updateValue = false;
         }
-        public Stat(string name, string description, float baseVal, float min, float max)
-        {
-            modifers = new Dictionary<string, StatModifier>();
+        public Stat(string name, string description, float baseVal, float min, float max){
             this.name = name;
             this.description = description;
-            baseValue = baseVal;
-            currentVal = baseVal;
+            this.baseVal = baseVal;
+            currentValue = baseVal;
             minValue = min;
             maxValue = max;
         }
-        public Stat(StatDef config)
-        {
-            modifers = new Dictionary<string, StatModifier>();
-            name = config.Name;
-            description = config.Description;
-            baseValue = config.BaseValue;
-            currentVal = baseValue;
-            minValue = config.MinValue;
-            maxValue = config.MaxValue;
+
+        public float Value{get{return CalculateFinal();}}
+        
+        public void AddModifier(StatModifier statModifier){
+
+            updateValue = true;
+        }
+        public void RemoveModifier(StatModifier statModifier){
+
+            updateValue = true;
         }
 
-        public override float Value
-        {
-            get
-            {
-                if (updateValues)
-                {
-                    ApplyModifers();
-                    return currentVal;
-                }
-                return currentVal;
-            }
-            set
-            {
-                baseValue = value;
-            }
+        /// <summary>
+        /// increase the stat value by val
+        /// </summary>
+        public void Increase(float val){
+            //StatModifier
         }
-        [JsonIgnore]
-        public float Min { get => minValue; private set { minValue = value; } }
-        [JsonIgnore]
-        public float MaX { get => maxValue; private set { maxValue = value; } }
-
-        public static float operator +(Stat obj, float val)
-        {
-            obj.baseValue = Mathf.Clamp(obj.baseValue + val, obj.minValue, obj.MaX);
-            obj.currentVal = Mathf.Clamp(obj.currentVal + val, obj.minValue, obj.MaX);
-            return obj.Value;
+        /// <summary>
+        /// decrease the stat value by val
+        /// </summary>
+        public void Decrease(float val){
+            
         }
-        public static float operator -(Stat obj, float val)
-        {
-            obj.baseValue = Mathf.Clamp(obj.baseValue - val, obj.minValue, obj.MaX);
-            obj.currentVal = Mathf.Clamp(obj.currentVal - val, obj.minValue, obj.MaX);
-            return obj.Value;
+        /// <summary>
+        /// increase the stat max value  by val
+        /// </summary>
+        public void IncreaseMax(float val){
+            maxValue += val;
         }
-
-        public void AddModifer(StatModifier modifer)
-        {
-            if (modifers.ContainsKey(modifer.Name))
-            {
-                GD.Print($"Warning modifer {modifer.Name} is already present in {this.Name}");
-            }
-            else
-            {
-                modifers.Add(modifer.Name, modifer);
-            }
+        /// <summary>
+        /// decrease the stat max value by val
+        /// </summary>
+        public void DecreaseMax(float val){
+            maxValue -= val;            
         }
-        public void RemoveModifer(StatModifier modifer)
-        {
-            if (modifers.ContainsKey(modifer.Name))
+        /// <summary>
+        /// updates current value of the stat using modifiers
+        /// </summary>
+        private float CalculateFinal(){
+            if (updateValue)
             {
-                modifers.Add(modifer.Name, modifer);
+                //apply modifiers and update value
+                updateValue = false;
 
             }
-            else
-            {
-                throw new KeyNotFoundException($"Modifer {modifer.Name} isn't presnt in {this.name}");
-            }
-        }
-
-        private void ApplyModifers()
-        {
-            currentVal = baseValue;
-            foreach (StatModifier modifer in modifers.Values)
-            {
-                if (currentVal == minValue || currentVal == maxValue)
-                {
-                    break;
-                }
-                currentVal = Mathf.Clamp(currentVal + modifer.Value, Min, MaX);
-            }
-
-            updateValues = false;
+            return currentValue;
         }
     }
 }

@@ -11,96 +11,76 @@ namespace Atomation.Map
 	/// various values, it is either loaded or unloaded depending on where 
 	/// the player is, as well as other aspects
 	/// </summary>
-	public class Chunk
+	public partial class Chunk :Node2D
 	{
 		public const int CHUNK_SIZE = 32;
+		public float CellOffset { get; private set; }
+		public bool Rendered{get;private set;}
 
-		private Node2D chunkNode;
+		public Vector2 Origin { get; private set; }
 
-		private Dictionary<Vector2, Terrain> chunkTerrain; // maybe make new class for this?
+		public Grid<Terrain> Terrain { get; private set; }
 
-		//constructors
-		public Chunk()
+		public Chunk(){}
+
+		public Chunk(Vector2 worldPosition, float cellSize) : this()
 		{
-			chunkTerrain = new Dictionary<Vector2, Terrain>();
-		}
+			Name = $"Chunk {worldPosition}";
+			CellOffset = cellSize ;//* 0.5f;
+			Origin = worldPosition;
+			Position = Origin;				
+			Rendered = true;
+			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
 
-		public Chunk(Vector2 chunkCords, Node2D parentNode) : this()
-		{
-			//make object aligned to cell size grid also
-			Vector2 Cords = chunkCords * MapSettings.CELL_SIZE;
-			
-			chunkNode = new Node2D()
-			{
-				Name = $"Chunk {chunkCords}",
-				Position = Cords,
-			};
-
-			parentNode.AddChild(chunkNode);
-		}
-
-		//getters and setters 
-		public Node2D ChunkNode { get => chunkNode; }
-
-		/// <summary>
-		/// sets the terrain at the provided cords
-		/// </summary>
-		public void Set(Vector2 cords, Terrain terrain)
-		{			
-			if (chunkTerrain.ContainsKey(cords))
-			{
-				//deleting child todo just switch
-				chunkTerrain[cords].ThingNode.QueueFree();
-			}
-			chunkTerrain[cords] = terrain;
-			chunkNode.AddChild(chunkTerrain[cords].ThingNode);
 		}
 
 		/// <summary>
-		/// gets the terrain at the provided cords
+		/// gets distance form chunks top left (if negative y) or bot left (if positive y)
+		/// corner cords to the provided at worldPosition
 		/// </summary>
-		public Terrain GetTerrain(Vector2 cords)
-		{
-			if (chunkTerrain.ContainsKey(cords))
-			{
-				return chunkTerrain[cords];
-			}
-			return null;
-		}
+		private float GetDistance(Vector2 worldPosition){
+			worldPosition= new Vector2(Mathf.FloorToInt(worldPosition.X / CellOffset),Mathf.FloorToInt(worldPosition.Y / CellOffset));
 
-		//
-		//rendering stuff
-		//
+			//align chunk to the pixel gird
+			Vector2 chunkPos = Origin / CellOffset;
+			Vector2 chunkDistance = chunkPos - worldPosition;
+
+			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X),Mathf.Abs(chunkDistance.Y))); 
+
+			return distance;
+		}
 
 		/// <summary>
 		/// updates the visualization mode of all tiles
 		/// </summary>
-		public void UpdateTerrainVisualization(VisualizationMode displayMode){
-			foreach (var terrain in chunkTerrain)
+		public void UpdateTerrainVisualization(VisualizationMode displayMode)
+		{
+			// Terrain
+			for (int x = 0; x < CHUNK_SIZE; x++)
 			{
-				terrain.Value.UpdateGraphic(displayMode);
+				for (int y = 0; y < CHUNK_SIZE; y++)
+				{
+					Terrain.GetObject(x, y).UpdateGraphic(displayMode);
+				}
 			}
 		}
 
 		/// <summary>
-		/// used to updated status of chunk to being either rendered or not rendered
+		/// checks viewer distance from chunk and then decided based on rendered distance
+		/// to decide weather or not to hide/un render chunk.
 		/// </summary>
-		public void UpdateChunk(Vector2 viewerCords)
+		public void UpdateVisibility(Vector2 viewerCords) //still no work
 		{
-			float distToViewer = (chunkNode.Position / CHUNK_SIZE).DistanceTo(viewerCords);
-			bool visible = distToViewer <= MapSettings.MAX_LOAD_DIST;
-			SetRenderState(visible);
-		}
-		
-		public bool Rendered()
-		{
-			return ChunkNode.Visible;
-		}
-		public void SetRenderState(bool state)
-		{
-			ChunkNode.Visible = state;
+			//if within render bounds then keep rendered otherwise un render it
+			bool visible = GetDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
+			SetVisibility(visible);
 		}
 
-		//todo make show grid 
+		public void SetVisibility(bool visible){
+			Rendered = visible;
+			Visible = Rendered;
+		}
+
+
 	}
 }

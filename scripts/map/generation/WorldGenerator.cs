@@ -32,7 +32,7 @@ namespace Atomation.Map
         /// <summary>
         /// Used to Generate new Chunks
         /// </summary>
-        public void GenerateChunk(Vector2 ChunkCord, ChunkHandler chunkHandler)
+        public void GenerateChunk(Vector2 ChunkCord, ChunkHandlerOld chunkHandler)
         {           
             
             genStepLandScape.RunStep(ChunkCord, chunkHandler);

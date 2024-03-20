@@ -1,9 +1,15 @@
 {
   "keyBindings": {
-    "GenerateNewMap": 82,
-    "Default": 68,
+    "GenerateNewMap": 72,
+    "Default": 70,
     "VisualizeMoisture": 77,
     "VisualizeHeat": 84,
-    "VisualizeHeight": 69
+    "VisualizeHeight": 82,
+    "ZoomIn": 81,
+    "ZoomOut": 69,
+    "MoveLeft": 65,
+    "MoveRight": 68,
+    "MoveDown": 83,
+    "MoveUp" :87
   }
 }

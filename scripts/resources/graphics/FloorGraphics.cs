@@ -19,25 +19,26 @@ namespace Atomation.Resources
 	/// </summary>
 	public class FloorGraphics : Graphic
 	{
-		private ColorRect floorGraphic;
+		public ColorRect FloorGraphic{get; private set;}
 
 		public FloorGraphics(Color color)
 		{
 			this.color = color;
-			floorGraphic = new ColorRect();
-			floorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
+			FloorGraphic = new ColorRect();
+			FloorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 			this.color.A = 1;
 		}
 
 		public FloorGraphics(Node2D terrainNode)
 		{
 
-			floorGraphic = new ColorRect();
-			floorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
+			FloorGraphic = new ColorRect();
+			FloorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 			color = new Color(Colors.Black);
-			floorGraphic.Color = color;
+			FloorGraphic.Color = color;
+            FloorGraphic.VisibilityLayer = 1;
 
-			terrainNode.AddChild(floorGraphic);
+			terrainNode.AddChild(FloorGraphic);
 		}
 
 		public override void ConfigureGraphic(GraphicConfig graphicConfig)
@@ -50,22 +51,21 @@ namespace Atomation.Resources
 		}
 
 		/// <summary>
-		/// gets the graphic node which is currently a ColorRect 
+		/// 
 		/// </summary>
-		public ColorRect GetGraphicObj()
-		{
-			return floorGraphic;
+		public void ShowOutline(){
+
 		}
 
-		// updating graphic Display
 		/// <summary>
 		/// makes terrain display as it's default color/graphic assigned
 		/// during gen step terrain
 		/// </summary>
 		public void DefaultGraphic()
 		{
-			floorGraphic.Color = color;
+			FloorGraphic.Color = color;
 		}
+		
 		/// <summary>
 		/// makes terrain display as heat map
 		/// where -.9 is darkRed(hot), and 1 is blue(cold)
@@ -119,15 +119,16 @@ namespace Atomation.Resources
 				heatColor = Colors.DarkRed;
 			}
 
-			floorGraphic.Color = heatColor;
+			FloorGraphic.Color = heatColor;
 		}
+		
 		/// <summary>
 		/// makes terrain display as height map
 		/// where -1 is black (lowest ground), and 1 is while (hightest ground)
 		/// </summary>
 		public void HeightGraphic(float heightVal)
 		{
-			floorGraphic.Color = new Color(heightVal, heightVal, heightVal);
+			FloorGraphic.Color = new Color(heightVal, heightVal, heightVal);
 		}
 		/// <summary>
 		/// makes terrain display as height map
@@ -190,7 +191,7 @@ namespace Atomation.Resources
 			// {
 			// 	moistureColor = Colors.DarkBlue;
 			// }
-			floorGraphic.Color = moistureColor;
+			FloorGraphic.Color = moistureColor;
 		}
 
 	}

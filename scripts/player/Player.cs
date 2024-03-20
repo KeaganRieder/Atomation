@@ -1,72 +1,62 @@
-using System.Collections.Generic;
 using Godot;
-using Newtonsoft.Json;
-namespace Atomation.Thing
+using Atomation;
+using Atomation.Thing;
+using Atomation.Resources;
+using System.Collections.Generic;
+using Atomation.Map;
+
+namespace Atomation.Player
 {
-	/// <summary>
-	/// this handles and allows interaction with the many compnots of a player
-	/// from there body, to interactions
-	/// </summary>
-	public partial class Player : Node2D
-	{
-		[JsonProperty]
-		private Dictionary<string, StatBase> stats;
+    /// <summary>
+    /// defines and hold values/objects that relate to the player
+    /// </summary>
+    public partial class PlayerChar : Node2D
+    {
+        public Dictionary<string, Stat> Stats { get; private set; }
 
-		[JsonProperty]
-		// private Graphic graphic;
+        public ColorRect Graphic;// todo make new graphic type
+        public CharacterBody2D Body { get; private set; }
+        public Camera Camera { get; private set; }
 
-		private CharacterBody2D body;
-		private Controls controls;
-		private Camera camera;
+        public PlayerChar()
+        {
+            Stats = new Dictionary<string, Stat>(){
+                {"MoveSpeed", new Stat("MoveSpeed","",2,0.1f,2)}};
 
-		public Player()
-		{
-			stats = new Dictionary<string, StatBase>(){
-			{"MoveSpeed", new Stat("MoveSpeed","players MoveSpeed",1,0.1f,2)}
-		};
+            Position = Vector2.Zero;
+            Graphic = new ColorRect
+            {
+                Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE*2),
+                Color = new Color(Colors.White)
+            };
+            Graphic.VisibilityLayer = 2;
+            Body = new CharacterBody2D();
+            Camera = new Camera();
 
-			// graphic = new Graphic("", new Color(255, 255, 100), this);
-			body = new CharacterBody2D() { Name = "body" };
-			camera = new Camera();
+            AddChild(Camera);
+            AddChild(Graphic);
+            AddChild(Body);
+        }
 
-			AddChild(body);
-			AddChild(camera);
-			// AddChild(graphic.GetTexture());
+        public PlayerChar(Vector2 cords) : this()
+        {
+            Position = cords;
+        }
 
-			controls = new Controls(); //this is tempory need to be move to a manegr class at some point
-			controls.LoadBindings();
-		}
-
-
-		//run every time theres input
+        //run every time theres input
 		public override void _Input(InputEvent inputEvent)
 		{
-			// InputMap
 			base._Input(inputEvent);
-			if (inputEvent.IsActionPressed("ZoomIn"))
-			{
-				camera.ZoomIn();
-			}
-			if (inputEvent.IsActionPressed("ZoomOut"))
-			{
-				camera.ZoomOut();
-			}
 			Move();
 		}
 
+        public void Move()
+		{//figuring out how to smooth movement
 
-		public void Move()
-		{
-
-			Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveDown", "MoveUp");
-			Position += velocityVector.Normalized() * stats["MoveSpeed"].Value;
+			Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
+			Position += velocityVector.Normalized() * Stats["MoveSpeed"].Value;
 			//todo: animation code here at some point
 		}
+    }
 
-		public void PlayAnimation()
-		{
-
-		}
-
-	}
 }

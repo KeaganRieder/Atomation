@@ -2,8 +2,8 @@
   "render distance": 64.0,
   "generation settings": {
     "world size": {
-      "X": 64,
-      "Y": 64
+      "X": 256,
+      "Y": 256
     },
     "world seed": 0,
     "map zoom": 1,

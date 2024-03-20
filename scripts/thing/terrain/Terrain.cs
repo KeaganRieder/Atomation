@@ -28,45 +28,11 @@ namespace Atomation.Thing
 	/// </summary>
 	public class Terrain : CompThing
 	{
-		private float heightValue;
-		private float heatValue;
-		private float moistureValue;
-		private FloorGraphics floorGraphic;
+		public float HeightValue { get; set; }
+		public float HeatValue { get; set; }
+		public float MoistureValue { get; set; }
+		public FloorGraphics FloorGraphic { get; set; }
 
-		//constructors
-		public Terrain(Vector2 cords)
-		{
-			string name = $"Tile {cords}";
-			Vector2 position = cords * MapSettings.CELL_SIZE;
-
-			node = new Node2D()
-			{
-				Name = name,
-				Position = position,
-			};
-
-			floorGraphic = new FloorGraphics(node);
-		}
-
-		/// <summary>
-		/// reading the configuration data for the given tile
-		/// and setting it for anything in which is needing
-		/// configuration at current call
-		/// </summary>
-		public void ReadConfigs(TerrainDef config)
-		{
-			name = config.Name;
-			description = config.Description;
-			stats = config.CreateStats();
-			floorGraphic.ConfigureGraphic(config.GraphicData);
-		}
-
-		//getters and setters
-		public FloorGraphics FloorGraphic { get => floorGraphic; set { floorGraphic = value; } }
-
-		public float HeightValue { get => heightValue; set { heightValue = value; } }
-		public float HeatValue { get => heatValue; set { heatValue = value; } }
-		public float MoistureValue { get => moistureValue; set { moistureValue = value; } }
 
 		/// <summary>
 		/// the neighbor Below
@@ -85,7 +51,36 @@ namespace Atomation.Thing
 		/// </summary>
 		public Terrain EastNeighbor { get; private set; }
 
-		public void UpdateNorthNeighbor(ChunkHandler chunkHandler)
+		//constructors
+		public Terrain(Vector2 cords)
+		{
+			string name = $"Tile {cords}";
+			Vector2 position = cords * MapSettings.CELL_SIZE;
+
+			ThingNode = new Node2D()
+			{
+				Name = name,
+				Position = position,
+			};
+
+			FloorGraphic = new FloorGraphics(ThingNode);
+		}
+
+		/// <summary>
+		/// reading the configuration data for the given tile
+		/// and setting it for anything in which is needing
+		/// configuration at current call
+		/// </summary>
+		public void ReadConfigs(TerrainDef config)
+		{
+			name = config.Name;
+			description = config.Description;
+			stats = config.FormatStats();
+			modifiers = config.FormatStatModifers();
+			FloorGraphic.ConfigureGraphic(config.GraphicData);
+		}
+
+		public void UpdateNorthNeighbor(ChunkHandlerOld chunkHandler)
 		{
 			GlobalPosition(out int x, out int y);
 			Terrain terrain = chunkHandler.GetTerrain(x, y - 1);
@@ -99,7 +94,7 @@ namespace Atomation.Thing
 			NorthNeighbor = terrain;
 
 		}
-		public void UpdateSouthNeighbor(ChunkHandler chunkHandler)
+		public void UpdateSouthNeighbor(ChunkHandlerOld chunkHandler)
 		{
 			GlobalPosition(out int x, out int y);
 			Terrain terrain = chunkHandler.GetTerrain(x, y + 1);
@@ -111,7 +106,7 @@ namespace Atomation.Thing
 
 			SouthNeighbor = terrain;
 		}
-		public void UpdateEastNeighbor(ChunkHandler chunkHandler)
+		public void UpdateEastNeighbor(ChunkHandlerOld chunkHandler)
 		{
 			GlobalPosition(out int x, out int y);
 			Terrain terrain = chunkHandler.GetTerrain(x - 1, y);
@@ -123,7 +118,7 @@ namespace Atomation.Thing
 
 			EastNeighbor = terrain;
 		}
-		public void UpdateWestNeighbor(ChunkHandler chunkHandler)
+		public void UpdateWestNeighbor(ChunkHandlerOld chunkHandler)
 		{
 			GlobalPosition(out int x, out int y);
 			Terrain terrain = chunkHandler.GetTerrain(x + 1, y);
@@ -137,24 +132,24 @@ namespace Atomation.Thing
 		}
 
 		public void UpdateGraphic(VisualizationMode displayMode)
-		{		
+		{
 			if (displayMode == VisualizationMode.Default)
 			{
-				floorGraphic.DefaultGraphic();
+				FloorGraphic.DefaultGraphic();
 			}
 			else if (displayMode == VisualizationMode.Height)
 			{
-				floorGraphic.HeightGraphic(heightValue);
+				FloorGraphic.HeightGraphic(HeightValue);
 			}
 			else if (displayMode == VisualizationMode.Heat)
 			{
-				floorGraphic.HeatGraphic(heatValue);
+				FloorGraphic.HeatGraphic(HeatValue);
 			}
 			else
 			{
-				floorGraphic.MoistureGraphic(moistureValue);
+				FloorGraphic.MoistureGraphic(MoistureValue);
 			}
 		}
-	
+
 	}
 }

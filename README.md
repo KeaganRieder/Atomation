@@ -24,25 +24,27 @@ supply shortages, wars and a collapse of the plants civilization. The player eve
 onto a planet which unknowingly once a human colony, but is now a radiative industrial wasteland. the player must 
 now survive, looking for survives an build a colony that balances industries with restoration efforts...
 
-## Feature Overview
+## Features
 
 1. [Game World](#game-world)
 2. [Entities from Files](#Entities-from-Files)
 3. [Save and Load Game](#Save-and-Load-Game)
 
-### Game World
-This section describes the many aspect that are apart of the [game world](scripts/map "Classes which define the game world") and go into
-generating it.
+## Game World
+The game world is the space in which the player play in. The following sections describes the game's:
 
-#### Map Structure
-This section outlines how the world is structured and dived into Standard units:
+[Map Structure](#Map-Structure)
+[Map Generation](#Map-Generation)
+
+### Map Structure
+Map structure describes how the games structure with it being divided into standard units:
 [Tiles](#Tile) and [Chunks](#Chunk)
 
-##### Tile
+#### Tile
 A tile is the smallest possible unit in the game being around 16 X 16 pixels in size. these are used to determine
-the size of entities, which are measure in units of X by X tiles.
+the size of entities, which are measure in units of tile x tile.
 
-##### Chunks
+#### Chunks
 Chunks are units of the map which contain a collection of 32 X 32 tiles (1024 tiles in total).
 Chunks allow for the map to be divided into more manageable sections and are used for:
 * chunks are "switched off" or unloaded if they are a certain distance from the player. that distance
@@ -56,126 +58,35 @@ being determined in the [ChunkHandler class](scripts/map/ChunkHandler.cs) by:
 ```
 This allows for chunks which don't aren't near the player to not be unloaded saving cpu cycles
 from needing to render object which aren't important.
-
 * [Map generation](#Map-Generation) utilizes chunks in order to generate new parts of the map when a player moves into 
 chunks which haven't been loaded before
 
-#### Map Generation
-Describes the process in which the map is generated during runtime. This process is divided into the following steps:
+### Map Generation
+Map Generation is the procedure by which the games landscape is generated. In short: a number of settings  which are editable at the start of a new world allows the player to define what the world.
 
-1. [GenStepNoise](#GenStepNoise)
-2. [GenStepTerrain](#GenStepTerrain)
+1. [Generation Steps](#Generation_Steps)
+2. [Generation Settings](#Generation_Settings)
 
-There are also various settings which can be changed to customize the world generation process which can be 
-found [here](#scripts/map/MapSettings.cs). this is done during the world set up period and once confirmed no 
-further settings can be changed. These  settings are written to a json file upon game save, the process of which can be found 
-[here](#Save-and-Load-Gamee)
 
-##### GenStepNoise
-[GenStepNoise](scripts/map/map_gen/gen_steps/GenStepNoise.cs) is the first step in generating the world and handles the initial creation of 
-Noise Maps (A Noise Map is a 2d array of floating number which are in the range of 0 - 1) which are used and modified by later steps.
+#### Generation Steps
+The generation of the games landscape is divided into 
 
-![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/MapExample.png)
+todo
+#### Generation Settings
+todo
 
-The Map representations above are:
-* Elevation Map (Top Left)
-* Heat Map (Top Right)
-* Moisture Map (Bottom Left)
-* Biome Map (Bottom Right)
 
-###### Elevation Map
-The Elevation map is generated using a form of fractal noise called Simplex noise (Defined by Godot's FastNoiseLite Class).
-The map generated using Simplex noise, contains a range of float values between -1 and 1. which are used to determine
-how high or low a given point is, with -1 one being the lowest well 1 is the highest.
 
-###### Heat Map
-The Heat map is generated form combing the [Elevation Map](#Elevation-Map) and the equator heat map. The Map generated during 
-this step has float values which range between -1 and 1. And is used to determine how hot(Closer to -1) or cold (closer to 1) a given point is. 
-
-```C#
-private float[,] GenerateEquatorHeat(Vector2 origin, int width, int height)
-{
-    float[,] noiseMap = new float[width, height];
-
-    // decide the temperature based on distance from central point/equator
-    for (int y = 0; y < height; y++)
-    {
-        float sampleY = y + origin.Y;
-        //calculate noise value based on it's distance
-        // well also ensuring that it's within the bounds
-        float noise = Math.Abs(sampleY - equatorHeight) / worldMaxHeight;//need a figure out this
-
-        for (int x = 0; x < width; x++)
-        {
-            //apply the noise value for all points at this Row
-            noiseMap[x, y] = Mathf.Clamp(noise, 0, 1);
-        }
-    }
-    return noiseMap;
-}
-```
-The equator heat map is a form of uniform noise, which is a form of noise that result in an map of values with a predictable outcome, or uniform 
-change. As such the map created by this is meant to simulate a planets equator where the further you get from the center the colder it gets. 
-The following is an example of the resulting map
-
-![Example](https://github.com/KeaganRieder/Atomation/blob/main/docs/EquatiorHeatMap.png "Eg. Equator Map")
-
-This map is then layer onto the Elevation map in the function:
-```C#
-private float GetHeatValue(int x, int y, float[,] equatorHeat)
-{    
-    float height = elevationMap[x, y];
-    float heat = equatorHeat[x, y] * heatMap[x, y] * 10;
-        
-    heat += Mathf.Sin(Mathf.Abs(height)) * height;
-            
-    return Mathf.Clamp(heat, -1, 1f);
-}
-```
-Allowing for the heat to be based on distance form center and height of the terrain. And is why the closer to 1 (higher up) you get the colder you get,
-and closer to -1 the warmer you get
-
-###### Moisture Map
-The moisture map is initially generated during this step but however is also updated later during [GenStepTerrain](#GenStepTerrain). This map differs 
-from the others with the result array of floats only being in a range of 0 - 1. Which allow for a point moistness to be defined as more dry closer to 0 and more moist the closer to 1 it is.
-
-The method to which this map is generated is by applying th Elevation map on top of another simplex noise map: 
-```c#
- private float GetMoistureValue(float x, float y, float elevationVal)
-{
-    float height = Mathf.Abs(elevationMap[x,y]);
-    float moisture = Mathf.Abs(moistureMap[x,y]);
-
-    moisture += Mathf.Sin(Mathf.Abs(height)); //* height; 
-
-    moisture = Mathf.Clamp(moisture, 0, 1);
-    //any place with water is 100% moist
-    if (elevationVal < waterLevel)
-    {
-        return 1;
-    }
-
-    return moisture;
-}
-```
-
-This is mainly the base in which the next GenStep uses to also make a tiles moisture based on it's distance form water, as well as making
-water tiles  have a 100% moisture 
-
-##### GenStepTerrain
-[GenStepTerrain](scripts/map/map_gen/gen_steps/GenStepTerrain.cs) is the second step in generating the world and currently is still a work in progress. 
-as such currently doesn't have an documenting or much to really put here
-
-### Entities from Files
+## Entities from Files
 [Things, entities or objects](scripts/thing) have values which can be configured inside of file which are call def files and can be 
 found [here](data/core/defs). These files contain values which are given to an object upon it's creation, and allow for an easy
 way of defining new things in the game, weather it be terrain, mobs or a biome.
 
-### Save and Load Game
+## Save and Load Game
 this section will eventual describe the process of how saving and loading works however it's still a work 
 in progress and as such theres nothing here to report on.
 
-### Planned Features 
+## Planned Features 
 Here are planned features in which haven’t been currently implemented and are bound to change:
 
 * save/load system

@@ -3,6 +3,7 @@
         "Atomation",
         "lacunarity",
         "Mathf",
-        "Newtonsoft"
+        "Newtonsoft",
+        "statmodifers"
     ]
 }

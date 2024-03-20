@@ -11,7 +11,7 @@ namespace Atomation.Map
         protected int worldMaxWidth;
         protected int worldMaxHeight;
 
-        public virtual void RunStep(Vector2 origin, ChunkHandler chunkHandler) { }
+        public virtual void RunStep(Vector2 origin, ChunkHandlerOld chunkHandler) { }
 
         /// <summary>
         /// gets cord values from smaller intervals

@@ -1,21 +1,46 @@
+using Godot;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace Atomation.Thing
 {
+    public enum StatType{
+        Undefined = 0,
+        Stat = 1,
+        StatModifier = 2,
+    }
+
     /// <summary>
-    /// config file used ofr all terrain in the game
+    /// statDef are configuration files used to configure
+    /// StatModifiers and Stats
     /// </summary>
     public class StatDef : ThingDef
     {
-        public float BaseValue;
-        public float MinValue;
-        public float MaxValue;
-        //add more things here 
+        /// <summary>
+        /// used to determine if this is a config for a stat
+        /// or modifier
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter)), JsonProperty("stat Type",Order = 3)]
+        public StatType statType;
 
-        public StatDef(string name, string description, float baseVal, float min, float max){
-            Name = name;
-            Description = description;
-            BaseValue = baseVal;
-            MinValue = min;
-            MaxValue = max;
-        }
+        /// <summary>
+        /// value of stat or modifier
+        /// </summary>
+        [JsonProperty("base Value",Order = 3)]
+        public float BaseValue;
+        
+        /// <summary>
+        /// the minium value a stat can be
+        /// </summary>
+        [JsonProperty("min value",Order = 3)]
+        public float MinValue;
+
+        /// <summary>
+        /// the maximum value a stat can be
+        /// </summary>
+        [JsonProperty("max value",Order = 3)]
+        public float MaxValue;
+
+
     }
 }

@@ -10,31 +10,56 @@ namespace Atomation.Thing
     /// </summary>
     public abstract class CompThingDef : ThingDef
     {
-        [JsonProperty("GraphicConfig",Order = 3)]
+        [JsonProperty("GraphicConfig", Order = 3)]
         public GraphicConfig GraphicData { get; set; }
-        [JsonProperty("statBases",Order = 4)]
+        [JsonProperty("statBases", Order = 4)]
         public StatDef[] StatDefs { get; set; }
-
-        //todo make function which formats things from being config 
-        //data to actual
-        public Dictionary<string, StatBase> CreateStats()
-        {
-            Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>();
-
-            //need to work on stat modifers at some point
-            foreach (StatDef def in StatDefs)
+    
+        /// <summary>
+        /// creates stat from provided configs and then attempts to add 
+        /// them to the correct collection
+        /// </summary>
+        public Dictionary<string,Stat> FormatStats(){
+            Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
+            foreach (StatDef config in StatDefs)
             {
-                if (stats.ContainsKey(def.Name))
+                if (config.statType == StatType.Stat)
                 {
-                    GD.PrintErr($"ERROR: attempted to add {def.Name} which is already presnt");
-                }
-                else
-                {
-                    stats.Add(def.Name, new Stat(def));
-                }
+                    if (!stats.ContainsKey(config.Name))
+                    {
+                        stats.Add(config.Name,new Stat(config));
+                    }
+                    else
+                    {
+                        GD.PushError($"{config.Name} is already a modifier on object");
+                    }
+                }                
             }
-
             return stats;
+        }
+
+        /// <summary>
+        /// creates stat modifier from provided configs and then attempts to add 
+        /// them to the correct collection
+        /// </summary>
+        public Dictionary<string,StatModifier> FormatStatModifers(){
+            Dictionary<string,StatModifier> modifiers = new Dictionary<string, StatModifier>();
+            foreach (StatDef config in StatDefs)
+            {
+                if (config.statType == StatType.StatModifier)
+                {
+                    if (!modifiers.ContainsKey(config.Name))
+                    {
+                        modifiers.Add(config.Name,new StatModifier(config));
+                    }
+                    else
+                    {
+                        GD.PushError($"{config.Name} is already a modifier on object");
+                    }
+                }                
+            }
+            
+            return modifiers;
         }
 
     }

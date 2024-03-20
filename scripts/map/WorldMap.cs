@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using Atomation.Resources;
+using Atomation.Player;
+
 using Godot;
 
 namespace Atomation.Map
@@ -14,26 +16,23 @@ namespace Atomation.Map
 		public int MaxWorldWidth { get; set; }
 		public int MaxWorldHeight { get; set; }
 
-		private MapSettings mapSettings;
+		public PlayerChar Player{get; private set;}
 
-		//map components
+		public ChunkHandler ChunkHandler {get; private set;}
+		private MapSettings mapSettings;
 		private WorldGenerator mapGenerator;
-		private ChunkHandler chunkHandler;
-		private Node2D PlayerNode;
+	
 		
 		//may not need the zoom Value sense it may be base on frequency?
-		public WorldMap()
+		public WorldMap(PlayerChar player)
 		{
 			Name = "World Map";
-			
-			mapSettings = FileManger.ReadJsonFile<MapSettings>(FilePath.CONFIG_FOLDER, "map_settings");
-			
-			mapGenerator = new WorldGenerator(mapSettings.genSettings);
-			chunkHandler = new ChunkHandler(this);
+			Player = player;
 
-			PlayerNode = new Node2D() { Name = "player" };
-			PlayerNode.AddChild(new ColorRect() { Color = new Color(100, 100, 100), Size = new Vector2(16, 16) });
-			AddChild(PlayerNode);
+			mapSettings = FileManger.ReadJsonFile<MapSettings>(FilePath.CONFIG_FOLDER, "map_settings");
+		
+			mapGenerator = new WorldGenerator(mapSettings.genSettings);
+			ChunkHandler = new ChunkHandler(this);
 		}
 
 		/// <summary>
@@ -44,37 +43,39 @@ namespace Atomation.Map
 			base._Ready();
 			
 			GD.Print("Generating Map");
-			chunkHandler.WorldGenerator = mapGenerator;
-			chunkHandler.UpdateRenderedChunks(PlayerNode.Position);
+			// ChunkHandler.WorldGenerator = mapGenerator;
+			ChunkHandler.CheckChunkStatus(Player.Position);
 			GD.Print("Generation Complete");
 		}
 
 		public override void _Input(InputEvent inputEvent){
-			if (inputEvent.IsActionPressed("GenerateNewMap"))
-			{
-				//todo
-				GD.Print("GenerateNewMap");
-			}
-			if (inputEvent.IsActionPressed("Default"))
-			{
-				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Default);
-				GD.Print("Default");
-			}
-			if (inputEvent.IsActionPressed("VisualizeMoisture"))
-			{
-				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Moisture);
-				GD.Print("Moisture");
-			}
-			if (inputEvent.IsActionPressed("VisualizeHeat"))
-			{
-				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Heat);
-				GD.Print("Heat");
-			}
-			if (inputEvent.IsActionPressed("VisualizeHeight"))
-			{
-				chunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Height);
-				GD.Print("Height");
-			}			
+			ChunkHandler.CheckChunkStatus(Player.Position);
+
+			// if (inputEvent.IsActionPressed("GenerateNewMap"))
+			// {
+			// 	//todo
+			// 	GD.Print("GenerateNewMap");
+			// }
+			// if (inputEvent.IsActionPressed("Default"))
+			// {
+			// 	ChunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Default);
+			// 	GD.Print("Default");
+			// }
+			// if (inputEvent.IsActionPressed("VisualizeMoisture"))
+			// {
+			// 	ChunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Moisture);
+			// 	GD.Print("Moisture");
+			// }
+			// if (inputEvent.IsActionPressed("VisualizeHeat"))
+			// {
+			// 	ChunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Heat);
+			// 	GD.Print("Heat");
+			// }
+			// if (inputEvent.IsActionPressed("VisualizeHeight"))
+			// {
+			// 	ChunkHandler.UpdateVisualizationMode(Thing.VisualizationMode.Height);
+			// 	GD.Print("Height");
+			// }			
 		}
 
 	}

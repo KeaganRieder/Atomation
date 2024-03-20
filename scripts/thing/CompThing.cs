@@ -15,13 +15,18 @@ namespace Atomation.Thing
 		[JsonProperty("graphic data",Order = 3)]
 		protected Resources.Graphic graphic;
 		[JsonProperty("stats",Order = 4)]
-		protected Dictionary<string, StatBase> stats;
+		protected Dictionary<string, Stat> stats;
+		[JsonProperty("modifiers",Order = 5)]
+		protected Dictionary<string, StatModifier> modifiers;
 
-		protected Node2D node;
+		/// <summary>
+		/// returns value of the objects Node2D
+		/// </summary>
+		public virtual Node2D ThingNode { get; protected set; }
 
 		[JsonIgnore]
 		public virtual Resources.Graphic Graphic { get => graphic; set { graphic = value; } }
-		public virtual StatBase Stat(string statId)
+		public virtual Stat Stat(string statId)
 		{
 			if (stats.TryGetValue(statId, out var stat))
 			{
@@ -32,11 +37,6 @@ namespace Atomation.Thing
 				throw new KeyNotFoundException($"Error: Stat {statId} isn't present in {this.name}");
 			}
 		}
-
-		/// <summary>
-		/// returns value of the objects Node2D
-		/// </summary>
-		public virtual Node2D ThingNode { get => node; set { node = value; } }
 
 		/// <summary>
 		/// gets the Things global cords, base on it's chunks cords

@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 namespace Atomation.Thing
 {
 	/// <summary>
-	/// Thing defines the foundations fo all object that appear in the game world
-	/// contain values all of these object have like a name or description
+	/// Thing is the base definition of all entities, or stats of the game
+	/// defining base info shared by all of these
 	/// </summary>
 	public abstract class Thing : IThing
 	{

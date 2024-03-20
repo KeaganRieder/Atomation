@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Atomation.Resources;
 using Newtonsoft.Json.Converters;
 
-namespace Atomation.System
+namespace Atomation
 {
     /// <summary>
     /// the keybindings in the game. defines what they are and 
@@ -28,7 +28,7 @@ namespace Atomation.System
         {
             keyBindings = new Dictionary<string, Key>(){
                 {"GenerateNewMap", Key.R},
-                {"Default", Key.D},
+                {"Default", Key.F},
                 {"VisualizeMoisture", Key.M},
                 {"VisualizeHeat", Key.T},
                 {"VisualizeHeight", Key.E},

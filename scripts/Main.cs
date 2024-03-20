@@ -1,34 +1,41 @@
 using Atomation.Map;
 using Atomation.Resources;
-using Atomation.System;
+using Atomation;
 using Godot;
+using Atomation.Player;
+using Atomation.Thing;
 
 /// <summary>
 /// Main class which handles manning the game through different scene
 /// </summary>
 public partial class Main : Node
 {
-	private WorldMap map;
-	private FileManger resourceManger;
-	private KeyBindings keyBindings;
+	public WorldMap Map { get; private set; }
+	public FileManger ResourceManger { get; private set; }
+	public KeyBindings KeyBindings { get; private set; }
+	public PlayerChar Player { get; private set; }
 
 	public Main()
 	{
-		resourceManger = new FileManger();
-		keyBindings = new KeyBindings();
+		ResourceManger = new FileManger();
+		KeyBindings = new KeyBindings();
 	}
-
 
 	/// <summary>
 	/// runs upon node creation
 	/// </summary>
 	public override void _Ready()
-	{			
+	{
 		// keyBindings.FormatFile("default_bindings");
 		GameStartUp();
-		map = new WorldMap();
-		AddChild(map);
-		base._Ready();	
+
+		PlayerChar Player = new PlayerChar();
+		Map = new WorldMap(Player);
+		AddChild(Map);
+		// grid = new Grid<Terrain>(32,32,MapSettings.CELL_SIZE,Vector2.Zero,this);
+
+		AddChild(Player);
+		base._Ready();
 	}
 
 	/// <summary>
@@ -38,8 +45,8 @@ public partial class Main : Node
 	/// </summary>
 	public void GameStartUp()
 	{
-		resourceManger.LoadFiles();
-		keyBindings.LoadBindings("default_bindings");
+		ResourceManger.LoadFiles();
+		KeyBindings.LoadBindings("default_bindings");
 	}
 
 	//TODO add more function and management things

@@ -80,56 +80,71 @@ namespace Atomation.Thing
 			FloorGraphic.ConfigureGraphic(config.GraphicData);
 		}
 
-		public void UpdateNorthNeighbor(ChunkHandlerOld chunkHandler)
+		public void UpdateNorthNeighbor(Terrain northNeighbor)
 		{
-			GlobalPosition(out int x, out int y);
-			Terrain terrain = chunkHandler.GetTerrain(x, y - 1);
-
-			if (terrain == null)
+			if (northNeighbor != null)
 			{
+				if (northNeighbor.SouthNeighbor != this)
+				{
+					NorthNeighbor = northNeighbor;
+					northNeighbor.SouthNeighbor = this;
+				}
 				return;
 			}
-			terrain.SouthNeighbor ??= this;
-
-			NorthNeighbor = terrain;
-
-		}
-		public void UpdateSouthNeighbor(ChunkHandlerOld chunkHandler)
-		{
-			GlobalPosition(out int x, out int y);
-			Terrain terrain = chunkHandler.GetTerrain(x, y + 1);
-			if (terrain == null)
+			else
 			{
+				// GD.PushError($"Error No Terrain given");
+			}
+		}
+		public void UpdateSouthNeighbor(Terrain southNeighbor)
+		{
+			if (southNeighbor != null)
+			{
+				if (southNeighbor.NorthNeighbor != this)
+				{
+					SouthNeighbor = southNeighbor;
+					southNeighbor.NorthNeighbor = this;
+				}
 				return;
 			}
-			terrain.NorthNeighbor ??= this;
-
-			SouthNeighbor = terrain;
-		}
-		public void UpdateEastNeighbor(ChunkHandlerOld chunkHandler)
-		{
-			GlobalPosition(out int x, out int y);
-			Terrain terrain = chunkHandler.GetTerrain(x - 1, y);
-			if (terrain == null)
+			else
 			{
+				// GD.PushError($"Error No Terrain given");
+			}
+		}
+		public void UpdateEastNeighbor(Terrain EastNeighbor)
+		{
+			if (EastNeighbor != null)
+			{
+				if (EastNeighbor.WestNeighbor != this)
+				{
+					this.EastNeighbor = EastNeighbor;
+					EastNeighbor.WestNeighbor = this;
+				}
 				return;
 			}
-			terrain.WestNeighbor ??= this;
-
-			EastNeighbor = terrain;
-		}
-		public void UpdateWestNeighbor(ChunkHandlerOld chunkHandler)
-		{
-			GlobalPosition(out int x, out int y);
-			Terrain terrain = chunkHandler.GetTerrain(x + 1, y);
-			if (terrain == null)
+			else
 			{
+				// GD.PushError($"Error No Terrain given");
+			}
+		}
+		public void UpdateWestNeighbor(Terrain westNeighbor)
+		{
+			if (westNeighbor != null)
+			{
+				if (westNeighbor.NorthNeighbor != this)
+				{
+					WestNeighbor = westNeighbor;
+					westNeighbor.EastNeighbor = this;
+				}
 				return;
 			}
-			terrain.EastNeighbor ??= this;
-
-			WestNeighbor = terrain;
+			else
+			{
+				// GD.PushError($"Error No Terrain given");
+			}
 		}
+
 
 		public void UpdateGraphic(VisualizationMode displayMode)
 		{

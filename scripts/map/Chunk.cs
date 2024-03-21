@@ -73,14 +73,12 @@ namespace Atomation.Map
 		{
 			//if within render bounds then keep rendered otherwise un render it
 			bool visible = GetDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
-			SetVisibility(visible);
+			SetVisibility(true);
 		}
 
 		public void SetVisibility(bool visible){
 			Rendered = visible;
 			Visible = Rendered;
 		}
-
-
 	}
 }

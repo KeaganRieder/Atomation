@@ -9,7 +9,7 @@ namespace Atomation.Thing
 	/// compThing defines the foundations of all complex object that 
 	/// appear in the game world. 
 	/// </summary>
-	public abstract class CompThing : Thing
+	public abstract class CompThing : Thing , ICompThing
 	{
 		// protected Node2D objNode;
 		[JsonProperty("graphic data",Order = 3)]
@@ -22,7 +22,7 @@ namespace Atomation.Thing
 		/// <summary>
 		/// returns value of the objects Node2D
 		/// </summary>
-		public virtual Node2D ThingNode { get; protected set; }
+		public Node2D ThingNode { get; set; }
 
 		[JsonIgnore]
 		public virtual Resources.Graphic Graphic { get => graphic; set { graphic = value; } }
@@ -54,6 +54,10 @@ namespace Atomation.Thing
 			x = Mathf.RoundToInt(position.X);
 			y = Mathf.RoundToInt(position.Y);
 		}
+	}
 
+	public interface ICompThing
+	{
+		public Node2D ThingNode { get; set; }
 	}
 }

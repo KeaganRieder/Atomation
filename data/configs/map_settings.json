@@ -5,10 +5,10 @@
       "X": 256,
       "Y": 256
     },
-    "world seed": 0,
-    "map zoom": 1,
-    "seaLevel": -0.2,
-    "mountainSize": 0.5,
+    "world seed": 10,
+    "map zoom": 2,
+    "seaLevel": -0.1,
+    "mountainSize": 0.4,
     "height map configs": {
       "octaves": 6,
       "frequency": 0.02,

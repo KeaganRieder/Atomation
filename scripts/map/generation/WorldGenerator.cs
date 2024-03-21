@@ -8,36 +8,23 @@ namespace Atomation.Map
     /// the running/execution of gensteps to generate the game
     /// world or chunks with in it
     /// </summary>
-    public class WorldGenerator //maybe make this static?
+    public static class WorldGenerator
     {
-        //configs
-        private MapGenSettings genConfig;
-        // genSteps
-        // private GenStepNoise genStepNoise;
-        // private GenStepTerrain genStepTerrain;
-        private GenStepLandScape genStepLandScape;
+        private static GenStepLandScape genStepLandScape;
 
-        public WorldGenerator(MapGenSettings genConfig)
-        {
-            this.genConfig = genConfig;
-            // genStepNoise = new GenStepNoise(genConfig);
-            // genStepTerrain = new GenStepTerrain(genConfig);
-            genStepLandScape = new GenStepLandScape(genConfig);
+        public static MapGenSettings GenConfig { get; set; }
+
+        public static void Initialize(MapGenSettings configs){
+            GenConfig = configs;
+            genStepLandScape = new GenStepLandScape(GenConfig);
         }
-
-        //getters and setters
-        public MapGenSettings GenConfig { get { return genConfig; } set { genConfig = value; } }
-        // public GenStepNoise GenStepNoise { get { return GenStepNoise; } set { GenStepNoise = value; } }
 
         /// <summary>
         /// Used to Generate new Chunks
         /// </summary>
-        public void GenerateChunk(Vector2 ChunkCord, ChunkHandlerOld chunkHandler)
-        {           
-            
+        public static void GenerateChunk(Vector2 ChunkCord, ChunkHandler chunkHandler)
+        {
             genStepLandScape.RunStep(ChunkCord, chunkHandler);
-            // genStepTerrain.RunStep(ChunkCord, chunkHandler);
-            chunkHandler.UpdateVisualizationMode(default);
         }
     }
 }

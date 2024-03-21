@@ -12,7 +12,6 @@ namespace Atomation.Map
 		private HeightMap heightMap;
 		private TemperatureMap temperatureMap;
 		private MoistureMap moistureMap;
-
 		private float deepWater;
 		private float shallowWater;
 		private float shoreHeight;
@@ -31,7 +30,6 @@ namespace Atomation.Map
 
 			mountainHeight = genConfig.mountainSize;
 			mountainBase = genConfig.mountainSize - 0.1f;
-
 		}
 
 		public void UpdateConfigs(MapGenSettings genConfig)
@@ -41,27 +39,27 @@ namespace Atomation.Map
 			moistureMap.UpdateConfigs(genConfig);
 		}
 
-		public override void RunStep(Vector2 GlobalCord, ChunkHandlerOld chunkHandler)
+		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
 		{
-			heightMap.Offset = GlobalCord;
-			temperatureMap.Offset = GlobalCord;
-			moistureMap.Offset = GlobalCord;
+			heightMap.Offset = origin / MapSettings.CELL_SIZE;
+			temperatureMap.Offset = origin / MapSettings.CELL_SIZE;
+			moistureMap.Offset = origin / MapSettings.CELL_SIZE;
 
 			for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
 				{
 					//convert to be based on chunk pos
-					CordConversion.SampleChunkPos(GlobalCord, x, y, out float sampleChunkX, out float sampleChunkY);
+					AlignCordsToChunk(x, y, origin, out float sampleChunkX, out float sampleChunkY);
 
-					//pull terrain
-					Terrain terrain = chunkHandler.GetTerrain(Mathf.RoundToInt(sampleChunkX), Mathf.RoundToInt(sampleChunkY));
+					Vector2 terrainCords = new Vector2(sampleChunkX, sampleChunkY);
+					Terrain terrain = chunkHandler.GetTerrain(terrainCords);
 
 					if (terrain == null)
 					{
 						//create new terrain
 						terrain = new(new(x, y));
-						chunkHandler.Set(Mathf.RoundToInt(sampleChunkX), Mathf.RoundToInt(sampleChunkY), terrain);
+						chunkHandler.SetTerrain(terrainCords, terrain);
 					}
 
 					heightMap.CalculateHeight(x, y, terrain);
@@ -70,7 +68,7 @@ namespace Atomation.Map
 
 					determineTerrainType(terrain);
 
-					terrain.UpdateGraphic(VisualizationMode.Default);
+					terrain.UpdateGraphic(WorldMap.MapVisualIzation);
 				}
 			}
 
@@ -106,14 +104,14 @@ namespace Atomation.Map
 		/// </summary>
 		private void SetBiome(Terrain terrain)
 		{
-			Biome biome = DefDatabase.GetBiome(terrain.MoistureValue,terrain.HeatValue);
-			terrain.FloorGraphic.Color = (biome == null) ? new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue) 
+			Biome biome = DefDatabase.GetBiome(terrain.MoistureValue, terrain.HeatValue);
+			terrain.FloorGraphic.Color = (biome == null) ? new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue)
 			: biome.Color;
 			if (biome == null)
 			{
 				// GD.Print(terrain.HeatValue);
 			}
-			
+
 		}
 		/// <summary>
 		/// using provided terrain determines the type of water it is

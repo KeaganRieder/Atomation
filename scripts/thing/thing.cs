@@ -7,7 +7,7 @@ namespace Atomation.Thing
 	/// Thing is the base definition of all entities, or stats of the game
 	/// defining base info shared by all of these
 	/// </summary>
-	public abstract class Thing : IThing
+	public abstract class Thing : IThing 
 	{
 		//maybe make inherit from resource/make this a custom resources?
 		[JsonProperty("name", Order = 1)]

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 using Atomation.Thing;
+using System.Text;
 
 namespace Atomation.Map
 {
@@ -8,131 +9,102 @@ namespace Atomation.Map
 	/// ChunkHandler, stores and handles chunks, allow for 
 	/// interaction with different element in a chunk
 	/// </summary>
-	public class ChunkHandlerOld
+	public class ChunkHandler
 	{
 		private readonly int visibleChunks;
-		private Node2D map;
+
 		private List<Chunk> lastUpdatedChunks;
-		private Dictionary<Vector2, Chunk> chunks;
+		private Dictionary<Vector2, Chunk> chunkArray;
 
-		private VisualizationMode currTileVisuals;
+		private Node2D map;
 
-		public ChunkHandlerOld(Node2D map)
+		public ChunkHandler(Node2D map)
 		{
-			currTileVisuals = VisualizationMode.Default;
-			visibleChunks = Mathf.RoundToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);
-			GD.Print(visibleChunks);
-			lastUpdatedChunks = new List<Chunk>();
-			chunks = new Dictionary<Vector2, Chunk>();
 			this.map = map;
+
+			visibleChunks = Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);//  - 1;
+
+			lastUpdatedChunks = new List<Chunk>();
+
+			chunkArray = new Dictionary<Vector2, Chunk>();
 		}
 
-		public WorldGenerator WorldGenerator { get; set; }
+		/// <summary>
+		/// gets the position of the chunk aligned on the tile grid
+		/// </summary>
+		private Vector2 GetChunkWorldPosition(Vector2 worldPosition)
+		{
+			int x = Mathf.RoundToInt(worldPosition.X * Chunk.CHUNK_SIZE * MapSettings.CELL_SIZE);
+			int y = Mathf.RoundToInt(worldPosition.Y * Chunk.CHUNK_SIZE * MapSettings.CELL_SIZE);
+			Vector2 cords = new Vector2(x, y);
+			return cords;
+		}
 
 		/// <summary>
-		/// gets the chunk based on chunk cords, 
+		/// Get the cords aligned to pixel grid of current chunk 
 		/// </summary>
-		public Chunk GetChunk(int chunkX, int chunkY)
+		public Vector2 GetCurrentChunkCords(Vector2 worldPosition)
 		{
-			Vector2 chunkCords = new Vector2(chunkX, chunkY);
+			float x = Mathf.RoundToInt(worldPosition.X / Chunk.CHUNK_SIZE / MapSettings.CELL_SIZE);
+			float y = Mathf.RoundToInt(worldPosition.Y / Chunk.CHUNK_SIZE / MapSettings.CELL_SIZE);
+			Vector2 cords = new Vector2(x, y);
+			return cords;
+		}
 
-			if (chunks.TryGetValue(chunkCords, out var chunk))
+		/// <summary>
+		/// gets chunks at given chunk cords 
+		/// </summary>
+		public Chunk GetChunk(Vector2 worldPosition)
+		{
+			worldPosition = GetCurrentChunkCords(worldPosition);
+			if (chunkArray.ContainsKey(worldPosition))
 			{
-				return chunk;
+				return chunkArray[worldPosition];
 			}
 			else
 			{
+				GD.PushError($"ERROR: tried to access NULL chunk {worldPosition}");
 				return null;
 			}
 		}
 
-		/// <summary>
-		/// gets the chunk based on chunk cords, 
-		/// </summary>
-		public Chunk GetChunk(Vector2 chunkCords)
+		public void SetTerrain(Vector2 worldPosition, Terrain terrain)
 		{
-			return GetChunk(Mathf.RoundToInt(chunkCords.X), Mathf.RoundToInt(chunkCords.Y));
-		}
+			Chunk chunk = GetChunk(worldPosition);
 
-		//
-		// setting/getting
-		//
-
-		/// <summary>
-		/// uses global tile position to set the terrain into correct Chunk
-		/// </summary>
-		public void Set(int globalX, int globalY, Terrain terrain)
-		{
-			Vector2 ChunkCords = GetChunkCords(globalX, globalY);
-
-			Chunk chunk = GetChunk(ChunkCords);
-
-			//making sure chunk actually exists
 			if (chunk == null)
 			{
-				GD.PrintErr($"ERROR: tried to access NULL chunk {ChunkCords}");
 				return;
 			}
 
-			//finding relative position of the tile
-			int tileX = globalX - (int)ChunkCords.X * Chunk.CHUNK_SIZE;
-			int tileY = globalY - (int)ChunkCords.Y * Chunk.CHUNK_SIZE;
+			chunk.Terrain.SetObject(worldPosition, terrain);
 
-			// chunk.Set(new(tileX, tileY), terrain);
+			//assign/update neighbors 
+			terrain.UpdateNorthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y-1)));
+			terrain.UpdateSouthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y+1)));
+			terrain.UpdateEastNeighbor(GetTerrain(new Vector2(worldPosition.X+1,worldPosition.Y)));
+			terrain.UpdateWestNeighbor(GetTerrain(new Vector2(worldPosition.X-1,worldPosition.Y)));
 
-			terrain.UpdateNorthNeighbor(this);
-			terrain.UpdateSouthNeighbor(this);
-			terrain.UpdateEastNeighbor(this);
-			terrain.UpdateWestNeighbor(this);
 		}
-
-		/// <summary>
-		/// uses global tile position to get terrain data from the correct Chunk
-		/// </summary>
-		public Terrain GetTerrain(int globalX, int globalY)
+		public Terrain GetTerrain(Vector2 worldPosition)
 		{
-			Vector2 chunkCords = GetChunkCords(globalX, globalY);
-
-			Chunk chunk = GetChunk(chunkCords);
-
+			Chunk chunk = GetChunk(worldPosition);
 			if (chunk == null)
 			{
 				return null;
 			}
-
-			int tileX = globalX - (int)chunkCords.X * Chunk.CHUNK_SIZE;
-			int tileY = globalY - (int)chunkCords.Y * Chunk.CHUNK_SIZE;
-
-			return null; //chunk.Terrain.getx(new(tileX, tileY));
+			
+			return chunk.Terrain.GetObject(worldPosition);
 		}
 
 		/// <summary>
-		/// takes in global cords (as x and y), and converts them to be based on chunk grid 
-		/// </summary>
-		public Vector2 GetChunkCords(int globalX, int globalY)
-		{
-			int chunkX = Mathf.FloorToInt(globalX / Chunk.CHUNK_SIZE);
-			int chunkY = Mathf.FloorToInt(globalY / Chunk.CHUNK_SIZE);
-
-			return new Vector2(chunkX, chunkY);
-		}
-
-		/// <summary>
-		/// takes in global cords as a vector, and converts them to be based on chunk grid 
-		/// </summary>
-		public Vector2 GetChunkCords(Vector2 GlobalCords)
-		{
-			return GetChunkCords(Mathf.RoundToInt(GlobalCords.X), Mathf.RoundToInt(GlobalCords.Y));
-		}
-
-		/// <summary>
-		/// updates the visualization mode for terrain
+		/// update tile visualization color mode
 		/// </summary>
 		public void UpdateVisualizationMode(VisualizationMode displayMode)
 		{
-			if (currTileVisuals != displayMode)
+			if (WorldMap.MapVisualIzation != displayMode)
 			{
-				currTileVisuals = displayMode;
+				WorldMap.MapVisualIzation = displayMode;
 				for (int i = 0; i < lastUpdatedChunks.Count; i++)
 				{
 					lastUpdatedChunks[i].UpdateTerrainVisualization(displayMode);
@@ -141,60 +113,50 @@ namespace Atomation.Map
 		}
 
 		/// <summary>
-		/// handles updating and creating new chunks if they haven't been loaded yet
+		/// runs through surrounding chunks and decides wether or not 
+		/// to hide them based on distance form player
 		/// </summary>
-		public void UpdateRenderedChunks(Vector2 viewerPosition)
+		public void CheckChunkStatus(Vector2 playerPosition)
 		{
-			Vector2 chunkCords = GetChunkCords(viewerPosition);
-
-			for (int i = 0; i < lastUpdatedChunks.Count; i++)
+			//un render all last active chunks
+			foreach (var chunk in lastUpdatedChunks)
 			{
-				lastUpdatedChunks[i].Visible = false;
+				chunk.SetVisibility(false);
 			}
 			lastUpdatedChunks.Clear();
 
-			//run to each cord surround player and check to see if current chunk
-			//is active and needs to be rendered/de-rendered
-			for (int xOffset = -visibleChunks; xOffset < visibleChunks; xOffset++)
+			Vector2 currentChunkCords = GetCurrentChunkCords(playerPosition);
+
+			//Run through surrounding chunks at player position 
+			for (int xOffset = -visibleChunks; xOffset < visibleChunks  /*+1 todo when threaded*/; xOffset++)
 			{
-				for (int yOffset = -visibleChunks; yOffset < visibleChunks; yOffset++)
+
+				for (int yOffset = -visibleChunks; yOffset < visibleChunks /*+1 todo when threaded*/; yOffset++)
 				{
-					Vector2 viewedChunkCord = new Vector2(chunkCords.X + xOffset, chunkCords.Y + yOffset);
-					UpdateChunk(viewedChunkCord);
+					Vector2 viewChunkCord = new Vector2(currentChunkCords.X + xOffset, currentChunkCords.Y + yOffset);
+					if (chunkArray.ContainsKey(viewChunkCord))
+					{
+						Chunk chunk = chunkArray[viewChunkCord];
+						chunk.UpdateVisibility(viewChunkCord);
+						if (chunk.Rendered)
+						{
+							lastUpdatedChunks.Add(chunk);
+						}
+					}
+					else
+					{
+						Vector2 chunkCord = GetChunkWorldPosition(viewChunkCord);
+						Chunk newChunk = new(chunkCord, MapSettings.CELL_SIZE);
+						map.AddChild(newChunk);
+
+						chunkArray.Add(viewChunkCord, newChunk);
+
+						WorldGenerator.GenerateChunk(chunkCord, this);
+					}
 				}
+
 			}
 		}
 
-		/// <summary>
-		/// decides wether to keep a chunk currently loaded or unload it. if a new chunk is being 
-		/// loaded also calls function to handle creating it
-		/// </summary>
-		private void UpdateChunk(Vector2 viewedChunkCord)
-		{
-			Chunk chunk = GetChunk(viewedChunkCord);
-
-			if (chunk != null)
-			{
-				// //align viewer cords to be on MapSettings.CELL_SIZE grid
-				// Vector2 viewedCellGrid = viewedChunkCord*MapSettings.CELL_SIZE;
-				// if (chunk.UpdateVisibility(viewedCellGrid))
-				// {
-				// 	//if chunk exists and is currently rendered add to last rendered 
-				// 	lastUpdatedChunks.Add(chunk);
-				// }
-			}
-			else
-			{
-				GD.Print($"Placing {(viewedChunkCord* Chunk.CHUNK_SIZE).X +MapSettings.CELL_SIZE }");
-
-				Vector2 globalCords = viewedChunkCord * Chunk.CHUNK_SIZE;
-
-				// chunk = new(globalCords,MapSettings.CELL_SIZE, map);
-				chunks.Add(viewedChunkCord, chunk);
-
-				// WorldGenerator.GenerateChunk(globalCords, this);
-			}
-			lastUpdatedChunks.Add(chunk);
-		}
 	}
 }

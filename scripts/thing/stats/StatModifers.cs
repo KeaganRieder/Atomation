@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace Atomation.Stats
+namespace Atomation.Thing
 {
     public enum ModifierType
     {
@@ -13,7 +13,7 @@ namespace Atomation.Stats
     /// <summary>
     /// class used for all stat modifiers
     /// </summary>
-    public class StatModifier : Thing.Thing
+    public class StatModifier : Thing
     {
         public float Value { get; private set; }
         public object Source { get; private set; }

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bg1c7q6umfodt"
-path="res://.godot/imported/EquatiorHeatMap.png-eac95a7ab9163221718767aa63647fb2.ctex"
+path="res://.godot/imported/EquatiorHeatMap.png-8f0be264d68e3562c3e522968a16ce39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/EquatiorHeatMap.png"
-dest_files=["res://.godot/imported/EquatiorHeatMap.png-eac95a7ab9163221718767aa63647fb2.ctex"]
+source_file="res://data/core/docs/EquatiorHeatMap.png"
+dest_files=["res://.godot/imported/EquatiorHeatMap.png-8f0be264d68e3562c3e522968a16ce39.ctex"]
 
 [params]
 

@@ -53,35 +53,9 @@ namespace Atomation.Map
         /// </summary>
         private void CreateOutline()
         {
-            // RandomNumberGenerator rng = new RandomNumberGenerator();;
             Line2D line;
-            Color color =Colors.Black;// new Color(rng.Randf(),rng.Randf(),rng.Randf(),1);
+            Color color =Colors.Black;
             int width = 15;
-
-            /* // for (int x = 0; x < Width; x++)
-            // {
-            //     for (int y = 0; y < Height; y++)
-            //     {
-            //         line = new Line2D();
-            //         line.AddPoint(GetWorldPosition(x, y));
-            //         line.AddPoint(GetWorldPosition(x, y + 1));
-            //         line.VisibilityLayer = 1;
-            //         line.Width = 1;
-            //         line.DefaultColor = color;
-            //         parentNode.AddChild(line);
-            //         outLines.Add(line);
-
-            //         line = new Line2D();
-            //         line.AddPoint(GetWorldPosition(x, y));
-            //         line.AddPoint(GetWorldPosition(x + 1, y));
-            //         line.VisibilityLayer = 1;
-            //         line.Width = 1;
-            //         line.DefaultColor = color;
-
-            //         parentNode.AddChild(line);
-            //         outLines.Add(line);
-            //     }
-            // } */
             
             line = new Line2D();
             line.AddPoint(GetWorldPosition(0, 0));
@@ -150,7 +124,7 @@ namespace Atomation.Map
             if (x >= 0 && y >= 0 && x < Width && y < Width)
             {
                 gridArray[x, y] = obj;
-                parentNode.AddChild(obj.ThingNode);
+                parentNode.AddChild(obj.Node);
             }
             else
             {

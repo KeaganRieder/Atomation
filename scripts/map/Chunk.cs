@@ -11,41 +11,44 @@ namespace Atomation.Map
 	/// various values, it is either loaded or unloaded depending on where 
 	/// the player is, as well as other aspects
 	/// </summary>
-	public partial class Chunk :Node2D
+	public partial class Chunk : Node2D
 	{
 		public const int CHUNK_SIZE = 32;
 		public float CellOffset { get; private set; }
-		public bool Rendered{get;private set;}
-
+		public bool Rendered { get; private set; }
 		public Vector2 Origin { get; private set; }
 
 		public Grid<Terrain> Terrain { get; private set; }
+		public Grid<Terrain> Buildings { get; private set; }
 
-		public Chunk(){}
+		public Chunk() { }
 
 		public Chunk(Vector2 worldPosition, float cellSize) : this()
 		{
 			Name = $"Chunk {worldPosition}";
-			CellOffset = cellSize ;//* 0.5f;
-			Origin = worldPosition;
-			Position = Origin;				
-			Rendered = true;
-			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
 
+			CellOffset = cellSize;
+			Origin = worldPosition;
+			Position = Origin;
+			Rendered = true;
+
+			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
+			Buildings = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
 		}
 
 		/// <summary>
 		/// gets distance form chunks top left (if negative y) or bot left (if positive y)
 		/// corner cords to the provided at worldPosition
 		/// </summary>
-		private float GetDistance(Vector2 worldPosition){
-			worldPosition= new Vector2(Mathf.FloorToInt(worldPosition.X / CellOffset),Mathf.FloorToInt(worldPosition.Y / CellOffset));
+		private float GetDistance(Vector2 worldPosition)
+		{
+			worldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X / CellOffset), Mathf.FloorToInt(worldPosition.Y / CellOffset));
 
 			//align chunk to the pixel gird
 			Vector2 chunkPos = Origin / CellOffset;
 			Vector2 chunkDistance = chunkPos - worldPosition;
 
-			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X),Mathf.Abs(chunkDistance.Y))); 
+			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X), Mathf.Abs(chunkDistance.Y)));
 
 			return distance;
 		}
@@ -69,15 +72,18 @@ namespace Atomation.Map
 		/// checks viewer distance from chunk and then decided based on rendered distance
 		/// to decide weather or not to hide/un render chunk.
 		/// </summary>
-		public void UpdateVisibility(Vector2 viewerCords) //still no work
+		public void UpdateVisibility(Vector2 viewerCords)
 		{
 			//if within render bounds then keep rendered otherwise un render it
 			bool visible = GetDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
-			SetVisibility(true);
+			
+			SetVisibility(visible);
 		}
 
-		public void SetVisibility(bool visible){
+		public void SetVisibility(bool visible)
+		{
 			Rendered = visible;
+
 			Visible = Rendered;
 		}
 	}

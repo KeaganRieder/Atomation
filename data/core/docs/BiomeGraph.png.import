@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cl03lbh6a08nm"
-path="res://.godot/imported/Screenshot 2024-02-22 163204.png-f0dd3f21240177789efa4cfb5cabdf9e.ctex"
+uid="uid://dyrh1kimc10cm"
+path="res://.godot/imported/BiomeGraph.png-12670f8e875a72e14b951d0530e334a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/Screenshot 2024-02-22 163204.png"
-dest_files=["res://.godot/imported/Screenshot 2024-02-22 163204.png-f0dd3f21240177789efa4cfb5cabdf9e.ctex"]
+source_file="res://data/core/docs/BiomeGraph.png"
+dest_files=["res://.godot/imported/BiomeGraph.png-12670f8e875a72e14b951d0530e334a5.ctex"]
 
 [params]
 

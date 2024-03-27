@@ -2,14 +2,14 @@
   "Defs": {
     "Boreal Forest": {
       "name": "Boreal Forest",
-      "min moisture": 0.3,
-      "max moisture": 0.5,
-      "min temperature": -1.4,
-      "max temperature": -0.8,
-      "biome terrain": {
+      "minMoisture": 0.3,
+      "maxMoisture": 0.5,
+      "minTemperature": -1.4,
+      "maxTemperature": -0.8,
+      "biomeTerrain": {
         "-0.5": "grass"
       },
-      "biome color": {
+      "biomeColor": {
         "R": 0.333333,
         "G": 0.419608,
         "B": 0.184314
@@ -17,14 +17,14 @@
     },
     "Tundra": {
       "name": "Tundra",
-      "min moisture": 0.0,
-      "max moisture": 0.3,
-      "min temperature":-1.8 ,
-      "max temperature": -0.9,
-      "biome terrain": {
+      "minMoisture": 0.0,
+      "maxMoisture": 0.3,
+      "minTemperature":-1.8 ,
+      "maxTemperature": -0.9,
+      "biomeTerrain": {
         "-0.5": "grass"
       },
-      "biome color": {
+      "biomeColor": {
         "R": 0.372549,
         "G": 0.619608,
         "B": 0.627451
@@ -32,14 +32,14 @@
     },
     "Ice Sheet": {
       "name": "Ice Sheet",
-      "min moisture": -0.0,
-      "max moisture": 1.0,
-      "min temperature": -3.0,
-      "max temperature": -1.5,
-      "biome terrain": {
+      "minMoisture": -0.0,
+      "maxMoisture": 1.0,
+      "minTemperature": -3.0,
+      "maxTemperature": -1.5,
+      "biomeTerrain": {
         "-0.5": "grass"
       },
-      "biome color": {
+      "biomeColor": {
         "R": 0.80,
         "G": 0.80,
         "B": 0.80

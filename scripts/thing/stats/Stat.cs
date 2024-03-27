@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace Atomation.Stats
+namespace Atomation.Thing
 {
     /// <summary>
     /// class used for all stats which can be modified
     /// </summary>
-    public class Stat : Thing.Thing
+    public class Stat : Thing
     {
         private float minValue;
         private float maxValue;
@@ -21,12 +21,28 @@ namespace Atomation.Stats
 
         private bool updateStat;
 
-        public Stat(StatDef configs)
+        public Stat(string name, string description, float minValue, float maxValue, float baseValue)
         {
+            this.name = name;
+            this.description = description;
+
+            this.minValue = minValue;
+            this.maxValue = maxValue;
+            this.baseValue = baseValue;
+            currentValue = baseValue;
+
+            damage = 0;
+            updateStat = false;
+
             flatModifiers = new List<StatModifier>();
             additiveModifiers = new List<StatModifier>();
             multiplicativeModifiers = new List<StatModifier>();
-          
+        }
+        public Stat(StatDef configs)
+        {
+            name = configs.Name;
+            description = configs.Description;
+
             minValue = configs.MinValue;
             maxValue = configs.MaxValue;
             baseValue = configs.BaseValue;
@@ -34,6 +50,10 @@ namespace Atomation.Stats
 
             damage = 0;
             updateStat = false;
+
+            flatModifiers = new List<StatModifier>();
+            additiveModifiers = new List<StatModifier>();
+            multiplicativeModifiers = new List<StatModifier>();
         }
 
         public float Value

@@ -2,14 +2,14 @@
   "Defs": {
     "Grass Savanna": {
       "name": "Grass Savanna",
-      "min moisture": 0.3,
-      "max moisture": 0.5,
-      "min temperature": 1.0,
-      "max temperature": 1.5,
-      "biome terrain": {
+      "minMoisture": 0.3,
+      "maxMoisture": 0.5,
+      "minTemperature": 1.0,
+      "maxTemperature": 1.5,
+      "biomeTerrain": {
         "-0.5": "grass"
       },
-      "biome color": {
+      "biomeColor": {
         "R": 1.0,
         "G": 0.972549,
         "B": 0.862745
@@ -17,14 +17,14 @@
     },
     "Desert": {
       "name": "Desert",
-      "min moisture": 0.0,
-      "max moisture": 0.1,
-      "min temperature": 1.4,
-      "max temperature": 3,
-      "biome terrain": {
+      "minMoisture": 0.0,
+      "maxMoisture": 0.1,
+      "minTemperature": 1.4,
+      "maxTemperature": 3,
+      "biomeTerrain": {
         "-0.5": "grass"
       },
-      "biome color": {
+      "biomeColor": {
         "R": 0.956863,
         "G": 0.643137,
         "B": 0.376471
@@ -32,14 +32,14 @@
     },
     "Arid Desert": {
       "name": "Arid Desert",
-      "min moisture": 0.1,
-      "max moisture": 0.3,
-      "min temperature": 1.6,
-      "max temperature": 3,
-      "biome terrain": {
+      "minMoisture": 0.1,
+      "maxMoisture": 0.3,
+      "minTemperature": 1.6,
+      "maxTemperature": 3,
+      "biomeTerrain": {
         "-0.5": "grass"
       },
-      "biome color": {
+      "biomeColor": {
         "R": 0.545098,
         "G": 0.270588,
         "B": 0.0745098
@@ -47,14 +47,14 @@
     },
     "Rain Forest": {
       "name": "Rain Forest",
-      "min moisture": 0.5,
-      "max moisture": 1.0,
-      "min temperature": 0.9,
-      "max temperature": 1.5,
-      "biome terrain": {
+      "minMoisture": 0.5,
+      "maxMoisture": 1.0,
+      "minTemperature": 0.9,
+      "maxTemperature": 1.5,
+      "biomeTerrain": {
         "-0.5": "grass"
       },
-      "biome color": {
+      "biomeColor": {
         "R": 0.0,
         "G": 0.392157,
         "B": 0.0

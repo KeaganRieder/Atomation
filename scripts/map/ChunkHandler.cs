@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Godot;
 using Atomation.Thing;
-using System.Text;
 
 namespace Atomation.Map
 {
@@ -16,16 +15,15 @@ namespace Atomation.Map
 		private List<Chunk> lastUpdatedChunks;
 		private Dictionary<Vector2, Chunk> chunkArray;
 
-		private Node2D map;
+		private Node2D worldMap;
 
 		public ChunkHandler(Node2D map)
 		{
-			this.map = map;
+			worldMap = map;
 
 			visibleChunks = Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);//  - 1;
 
 			lastUpdatedChunks = new List<Chunk>();
-
 			chunkArray = new Dictionary<Vector2, Chunk>();
 		}
 
@@ -118,24 +116,26 @@ namespace Atomation.Map
 		/// </summary>
 		public void CheckChunkStatus(Vector2 playerPosition)
 		{
+			Vector2 currentChunkCords = GetCurrentChunkCords(playerPosition);
+
 			//un render all last active chunks
 			foreach (var chunk in lastUpdatedChunks)
 			{
 				chunk.SetVisibility(false);
 			}
 			lastUpdatedChunks.Clear();
-
-			Vector2 currentChunkCords = GetCurrentChunkCords(playerPosition);
-
+			
 			//Run through surrounding chunks at player position 
 			for (int xOffset = -visibleChunks; xOffset < visibleChunks  /*+1 todo when threaded*/; xOffset++)
 			{
 				for (int yOffset = -visibleChunks; yOffset < visibleChunks /*+1 todo when threaded*/; yOffset++)
 				{
 					Vector2 viewChunkCord = new Vector2(currentChunkCords.X + xOffset, currentChunkCords.Y + yOffset);
+					
 					if (chunkArray.ContainsKey(viewChunkCord))
 					{
 						Chunk chunk = chunkArray[viewChunkCord];
+
 						chunk.UpdateVisibility(viewChunkCord);
 						if (chunk.Rendered)
 						{
@@ -146,7 +146,7 @@ namespace Atomation.Map
 					{
 						Vector2 chunkCord = GetChunkWorldPosition(viewChunkCord);
 						Chunk newChunk = new(chunkCord, MapSettings.CELL_SIZE);
-						map.AddChild(newChunk);
+						worldMap.AddChild(newChunk);
 
 						chunkArray.Add(viewChunkCord, newChunk);
 

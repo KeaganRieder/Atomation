@@ -11,7 +11,7 @@ namespace Atomation.Thing
         [JsonProperty("name",Order = 1)]
         public string Name { get; set; }
         [JsonIgnore]
-		public virtual string Label {get => Name;}
+		public virtual string Key {get => Name;}
         
         [JsonProperty("description", Order = 2)]
         public string Description { get; set; }

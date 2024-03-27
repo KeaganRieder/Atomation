@@ -45,7 +45,7 @@ namespace Atomation.Resources
 
                     foreach (var def in defFile.defs)
                     {
-                        CacheFileData(def.Value.Label, def.Value);
+                        CacheFileData(def.Value.Key, def.Value);
                     }
                 }
             }

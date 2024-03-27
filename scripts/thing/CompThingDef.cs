@@ -19,15 +19,15 @@ namespace Atomation.Thing
         /// creates stat from provided configs and then attempts to add 
         /// them to the correct collection
         /// </summary>
-        public Dictionary<string,Stat> FormatStats(){
-            Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
+        public Dictionary<string,StatOld> FormatStats(){
+            Dictionary<string, StatOld> stats = new Dictionary<string, StatOld>();
             foreach (StatDef config in StatDefs)
             {
                 if (config.statType == StatType.Stat)
                 {
                     if (!stats.ContainsKey(config.Name))
                     {
-                        stats.Add(config.Name,new Stat(config));
+                        stats.Add(config.Name,new StatOld(config));
                     }
                     else
                     {

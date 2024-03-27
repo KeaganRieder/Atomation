@@ -5,8 +5,8 @@
       "X": 256,
       "Y": 256
     },
-    "world seed": 10,
-    "map zoom": 2,
+    "world seed": 12,
+    "map zoom": 1,
     "seaLevel": -0.1,
     "mountainSize": 0.4,
     "height map configs": {

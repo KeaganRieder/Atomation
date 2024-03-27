@@ -22,9 +22,7 @@ namespace Atomation.Map
 
 		public ChunkHandler ChunkHandler {get; private set;}
 		private MapSettings mapSettings;
-	
 		
-		//may not need the zoom Value sense it may be base on frequency?
 		public WorldMap(PlayerChar player)
 		{			
 			Name = "World Map";
@@ -56,7 +54,6 @@ namespace Atomation.Map
 
 			if (inputEvent.IsActionPressed("GenerateNewMap"))
 			{
-				//todo
 				GD.Print("GenerateNewMap");
 			}
 			if (inputEvent.IsActionPressed("Default"))

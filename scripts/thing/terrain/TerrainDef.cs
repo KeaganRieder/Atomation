@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Atomation.Thing
 {
 	/// <summary>
-	/// config file used for all terrain in the game
+	/// config file used in creation of terrain instances
 	/// </summary>
 	public class TerrainDef : CompThingDef
 	{

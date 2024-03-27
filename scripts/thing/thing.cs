@@ -18,7 +18,7 @@ namespace Atomation.Thing
 		[JsonIgnore]
 		public virtual string Name { get => name; set { name = value; } }
 		[JsonIgnore]
-		public virtual string Label {get => name;}
+		public virtual string Key {get => name;}
 		
 		[JsonIgnore]
 		public virtual string Description { get => description; set { description = value; } }
@@ -37,9 +37,9 @@ namespace Atomation.Thing
 		/// </summary>
 		public string Name { get; set; }
 		/// <summary>
-		/// Label used as key for cache dictionary, in order to properly sort
+		/// key for cache dictionary, in order to properly sort
 		/// and retrieve the item from it
 		/// </summary>
-		public string Label { get;}
+		public string Key { get;}
 	}
 }

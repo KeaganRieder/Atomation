@@ -26,7 +26,7 @@ namespace Atomation.Map
             CellSize = cellSize;
             Origin = origin;
 
-            this.parentNode = node;
+            parentNode = node;
 
             InitializeGrid();
         }

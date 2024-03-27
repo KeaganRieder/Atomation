@@ -40,7 +40,7 @@ namespace Atomation.Thing
         }
 
         [JsonIgnore]
-        public override string Label
+        public override string Key
         {
             get
             {

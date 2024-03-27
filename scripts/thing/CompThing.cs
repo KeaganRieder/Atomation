@@ -11,11 +11,10 @@ namespace Atomation.Thing
 	/// </summary>
 	public abstract class CompThing : Thing , ICompThing
 	{
-		// protected Node2D objNode;
 		[JsonProperty("graphic data",Order = 3)]
 		protected Resources.Graphic graphic;
 		[JsonProperty("stats",Order = 4)]
-		protected Dictionary<string, Stat> stats;
+		protected Dictionary<string, StatOld> stats;
 		[JsonProperty("modifiers",Order = 5)]
 		protected Dictionary<string, StatModifier> modifiers;
 
@@ -26,7 +25,7 @@ namespace Atomation.Thing
 
 		[JsonIgnore]
 		public virtual Resources.Graphic Graphic { get => graphic; set { graphic = value; } }
-		public virtual Stat Stat(string statId)
+		public virtual StatOld Stat(string statId)
 		{
 			if (stats.TryGetValue(statId, out var stat))
 			{

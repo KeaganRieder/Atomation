@@ -32,7 +32,6 @@ public partial class Main : Node
 		PlayerChar Player = new PlayerChar();
 		Map = new WorldMap(Player);
 		AddChild(Map);
-		// grid = new Grid<Terrain>(32,32,MapSettings.CELL_SIZE,Vector2.Zero,this);
 
 		AddChild(Player);
 		base._Ready();

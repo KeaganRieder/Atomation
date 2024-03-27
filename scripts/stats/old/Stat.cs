@@ -7,17 +7,18 @@ namespace Atomation.Thing
     /// A stat are statistics, attributes or in short
     /// information about a thing, which can be modified
     /// </summary>
-    public class Stat : Thing
+    public class StatOld : Thing
     {
         private float baseVal;
         private float currentValue;
         private float minValue;
         private float maxValue;
 
-        private Dictionary<string,StatModifier> modifiers;
+        private Dictionary<string, StatModifier> modifiers;
         private bool updateValue;
 
-        public Stat(StatDef configs){
+        public StatOld(StatDef configs)
+        {
             name = configs.Name;
             description = configs.Description;
             currentValue = configs.BaseValue;
@@ -28,7 +29,8 @@ namespace Atomation.Thing
             modifiers = new Dictionary<string, StatModifier>();
             updateValue = false;
         }
-        public Stat(string name, string description, float baseVal, float min, float max){
+        public StatOld(string name, string description, float baseVal, float min, float max)
+        {
             this.name = name;
             this.description = description;
             this.baseVal = baseVal;
@@ -37,45 +39,60 @@ namespace Atomation.Thing
             maxValue = max;
         }
 
-        public float Value{get{return CalculateFinal();}}
-        
-        public void AddModifier(StatModifier statModifier){
+        public float Value { get { return CalculateFinal(); } }
 
-            updateValue = true;
+        public void AddModifier(StatModifier statModifier)
+        {
+            if (modifiers.ContainsKey(statModifier.Key))
+            {
+                updateValue = true;
+
+            }
+
         }
-        public void RemoveModifier(StatModifier statModifier){
+        public void RemoveModifier(StatModifier statModifier)
+        {
 
-            updateValue = true;
+            if (modifiers.ContainsKey(statModifier.Key))
+            {
+                updateValue = true;
+
+            }
         }
 
         /// <summary>
-        /// increase the stat value by val
+        /// increase the stat value
         /// </summary>
-        public void Increase(float val){
+        public void Increase(float val)
+        {
             //StatModifier
         }
         /// <summary>
-        /// decrease the stat value by val
+        /// decrease the stat value
         /// </summary>
-        public void Decrease(float val){
-            
+        public void Decrease(float val)
+        {
+
         }
         /// <summary>
-        /// increase the stat max value  by val
+        /// increase the stat max value
         /// </summary>
-        public void IncreaseMax(float val){
+        public void IncreaseMax(float val)
+        {
             maxValue += val;
         }
         /// <summary>
-        /// decrease the stat max value by val
+        /// decrease the stat max value
         /// </summary>
-        public void DecreaseMax(float val){
-            maxValue -= val;            
+        public void DecreaseMax(float val)
+        {
+            maxValue -= val;
         }
         /// <summary>
         /// updates current value of the stat using modifiers
         /// </summary>
-        private float CalculateFinal(){
+        private float CalculateFinal()
+        {
             if (updateValue)
             {
                 //apply modifiers and update value

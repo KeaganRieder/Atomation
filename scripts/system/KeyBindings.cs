@@ -27,11 +27,17 @@ namespace Atomation
         public void FormatFile(string fileName)
         {
             keyBindings = new Dictionary<string, Key>(){
-                {"GenerateNewMap", Key.R},
+                {"GenerateNewMap", Key.H},
                 {"Default", Key.F},
                 {"VisualizeMoisture", Key.M},
                 {"VisualizeHeat", Key.T},
-                {"VisualizeHeight", Key.E},
+                {"VisualizeHeight", Key.R},
+                {"ZoomIn", Key.Q},
+                {"ZoomOut", Key.E},
+                {"MoveLeft", Key.A},
+                {"MoveRight", Key.D},
+                {"MoveDown", Key.S},
+                {"MoveUp", Key.W},
             };
 
             FileManger.WriteJsonFile(FilePath.KEYBINDINGS_FOLDER, fileName, this);

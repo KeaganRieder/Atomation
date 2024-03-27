@@ -12,7 +12,6 @@ namespace Atomation.Thing
     {
         private float minMoisture;
         private float maxMoisture;
-
         private float minTemperature;
         private float maxTemperature;
 

@@ -2,7 +2,7 @@ using Godot;
 using Atomation.Map;
 
 namespace Atomation.Resources
-{
+{	
 	/// <summary>
 	/// decides how to blend seams between two different terrain
 	/// and ground types
@@ -41,20 +41,13 @@ namespace Atomation.Resources
 			terrainNode.AddChild(FloorGraphic);
 		}
 
-		public override void ConfigureGraphic(GraphicConfig graphicConfig)
+		public override void ConfigureGraphic(GraphicData graphicConfig)
 		{
 			texturePath = graphicConfig.TexturePath;
 			color = graphicConfig.Color;
 			color.A = 1;
 
 			DefaultGraphic();
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void ShowOutline(){
-
 		}
 
 		/// <summary>
@@ -193,6 +186,5 @@ namespace Atomation.Resources
 			// }
 			FloorGraphic.Color = moistureColor;
 		}
-
 	}
 }

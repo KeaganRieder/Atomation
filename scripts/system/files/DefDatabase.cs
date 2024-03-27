@@ -13,25 +13,25 @@ namespace Atomation.Resources
     public static class DefDatabase
     {
         private static DefFile<TerrainDef> TerrainDefs;
-        private static DefFile<BiomeDef> BiomeDefs;
+        private static DefFile<Biome> BiomeDefs;
 
         /// <summary>
         /// Loads resources and def files form files
         /// </summary>
         public static void LoadResources()
-        {
-             
+        {             
             GD.Print("Loading Terrain Def Files");
             TerrainDefs = new DefFile<TerrainDef>(FilePath.TERRAIN_FOLDER);
+
             GD.Print("Loading Biome Def Files");
-            BiomeDefs = new DefFile<BiomeDef>(FilePath.BIOME_FOLDER);           
+            BiomeDefs = new DefFile<Biome>(FilePath.BIOME_FOLDER);         
         }
 
         /// <summary>
         /// access cached terrain config data, and returns the terrain
         /// based on the ID
         /// </summary>
-        public static TerrainDef GetTerrainConfig(string terrainID)
+        public static CompThingDef GetTerrainConfig(string terrainID)
         {
             return TerrainDefs[terrainID];
         }
@@ -43,20 +43,16 @@ namespace Atomation.Resources
         {
             foreach (var biome in BiomeDefs.FileContents)
             {
-                //converting the key to a vector that stores
-                // a biomes temperature (x) and it's moisture (y) requirements
-                BiomeDef.BiomeLabel biomeRequirements = JsonConvert.DeserializeObject<BiomeDef.BiomeLabel>(biome.Key);
+                BiomeLabel biomeRequirements = JsonConvert.DeserializeObject<BiomeLabel>(biome.Key);
                 bool temperatureReqMet = temperate > biomeRequirements.minTemperature && temperate < biomeRequirements.maxTemperature;
-                bool moistureReqMet =true;// moisture > biomeRequirements.minMoisture && moisture < biomeRequirements.maxMoisture;
-
+                bool moistureReqMet = true;// moisture > biomeRequirements.minMoisture && moisture < biomeRequirements.maxMoisture;
                 if (temperatureReqMet && moistureReqMet)
                 {
-                    //todo make moisture requirements
-
-                    return new Biome(biome.Value);
+                    biome.Value.Color.A = 1;
+                    return biome.Value;
                 }
             }
-
+            
             //FileContents
             return null;
         }

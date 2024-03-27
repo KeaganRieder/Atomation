@@ -1,21 +1,9 @@
-using Atomation.Resources;
-using Newtonsoft.Json;
-
 namespace Atomation.Thing
 {
-	/// <summary>
-	/// config file used in creation of terrain instances
-	/// </summary>
-	public class TerrainDef : CompThingDef
-	{
-		//maybe something here more specif for terrain later?
-		//for now it's just used as a way of organizing def files
-	
-		// public TerrainDef(string name, string description, StatDefOld[] statDefs, GraphicConfig graphicData){
-		//     Name = name;
-		//     Description = description;
-		//     StatDefs = statDefs;
-		//     GraphicData = graphicData;
-		// }
-	}
+    /// <summary>
+    /// definition file used in creating new instances of terrain 
+    /// </summary>
+    public class TerrainDef : CompThingDef
+    {
+    }
 }

@@ -4,34 +4,65 @@ using Newtonsoft.Json;
 
 namespace Atomation.Thing
 {
+        public struct BiomeLabel
+        {
+            public float minMoisture;
+            public float maxMoisture;
+            public float minTemperature;
+            public float maxTemperature;
+            
+        }
+
     /// <summary>
     /// biomes are used to determine the types of terrain based on
     /// the provide elevation, moisture and temperature
     /// </summary>
     public class Biome : Thing
     {
-        private float minMoisture;
-        private float maxMoisture;
-        private float minTemperature;
-        private float maxTemperature;
+        [JsonProperty("minMoisture")]
+        public float MinMoisture;
+        [JsonProperty("maxMoisture")]
+        public float MaxMoisture;
+        [JsonProperty("minTemperature")]
+        public float MinTemperature;
+        [JsonProperty("maxTemperature")]
+        public float MaxTemperature;
 
-        private Dictionary<float, string> biomeTerrain;
+        [JsonProperty("biomeTerrain")]
+        private Dictionary<float, string> terrain;
 
-        private Color color;
+        [JsonProperty("biomeColor")]
+        public Color Color;
 
-        public Biome(BiomeDef configs){
-            name = configs.Name;
-            minMoisture = configs.minMoisture;
-            maxMoisture = configs.maxMoisture;
-            minTemperature = configs.minTemperature;
-            maxTemperature = configs.maxTemperature;
-
-            biomeTerrain = configs.biomeTerrain;
-            color= configs.color;
-            color.A = 1;
+        [JsonIgnore]
+        public override string Key
+        {
+            get
+            {
+                BiomeLabel biomeLabel = new BiomeLabel(){
+                    minMoisture = MinMoisture,
+                    maxMoisture = MaxMoisture,
+                    minTemperature = MinTemperature,
+                    maxTemperature = MaxTemperature,
+                };
+                return JsonConvert.SerializeObject(biomeLabel);
+            }
         }
 
-        public Color Color{get => color;}
+        public Biome()
+        {
+            // name = configs.Name;
+            // MinMoisture = configs.minMoisture;
+            // MaxMoisture = configs.maxMoisture;
+            // MinTemperature = configs.minTemperature;
+            // MaxTemperature = configs.maxTemperature;
+
+            // terrain = configs.biomeTerrain;
+            // Color = configs.color;
+            // Color.A = 1;
+        }
+
+
 
         /// <summary>
         /// returns the key for the terrain which is present in the biome
@@ -39,11 +70,11 @@ namespace Atomation.Thing
         /// </summary>
         public string GetTerrain(float elevation)
         {
-            foreach (float terrainHeight in biomeTerrain.Keys)
+            foreach (float terrainHeight in terrain.Keys)
             {
                 if (elevation < terrainHeight)
                 {
-                    return biomeTerrain[terrainHeight];
+                    return terrain[terrainHeight];
                 }
             }
             return null;

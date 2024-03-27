@@ -19,6 +19,11 @@ namespace Atomation
 
         public KeyBindings()
         {
+            
+        }
+        public KeyBindings(string path)
+        {
+            LoadBindings(path);
         }
 
         /// <summary>

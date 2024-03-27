@@ -1,11 +1,11 @@
 {
   "Defs": {
-     "Marsh": {
+    "Marsh": {
       "name": "Marsh",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/grass",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/grass",
+        "color": {
           "R": 0.0,
           "G": 0.0,
           "B": 0.0,
@@ -22,27 +22,28 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.5,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed"
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers": [
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "base value": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "ShallowOcean": {
       "name": "ShallowOcean",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/soil",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/soil",
+        "color": {
           "R": 0.0,
           "G": 1.0,
           "B": 1.0,
@@ -59,27 +60,28 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.5,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers": [
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "base value": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "ShallowWater": {
       "name": "ShallowWater",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/shallow_water",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/shallow_water",
+        "color": {
           "R": 0.0,
           "G": 1.0,
           "B": 1.0,
@@ -96,27 +98,28 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.5,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed"
-        },
-        {
-          "BaseValue": -1.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": -1.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers": [
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "base value": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "DeepOcean": {
       "name": "DeepOcean",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/chest_deep_ocean",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/chest_deep_ocean",
+        "color": {
           "R": 0.0,
           "G": 0.545098,
           "B": 0.545098,
@@ -133,27 +136,28 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.4,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers": [
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "base value": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "DeepWater": {
       "name": "DeepWater",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/deep_ocean",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/deep_ocean",
+        "color": {
           "R": 0.0,
           "G": 0.0,
           "B": 0.0,
@@ -170,18 +174,19 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers": [
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "base value": 1.0,
+          "type": "Flat"
         }
       ]
     }

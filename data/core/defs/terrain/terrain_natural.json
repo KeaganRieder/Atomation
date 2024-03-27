@@ -3,9 +3,9 @@
     "Grass": {
       "name": "Grass",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/grass",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/grass",
+        "color": {
           "R": 0.133333,
           "G": 0.545098,
           "B": 0.133333,
@@ -22,34 +22,35 @@
       },
       "statBases": [
         {
-          "BaseValue": 1.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 1.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Fertility",
           "description": "Objects fertility"
         },
         {
-          "BaseValue": 0.8,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers" :[
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "baseValue": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "Soil": {
       "name": "Soil",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/soil",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/soil",
+        "color": {
           "R": 0.545098,
           "G": 0.270588,
           "B": 0.0745098,
@@ -66,34 +67,35 @@
       },
       "statBases": [
         {
-          "BaseValue": 1.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 1.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Fertility",
           "description": "Objects fertility"
         },
         {
-          "BaseValue": 0.8,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers" :[
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "baseValue": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "Gravel": {
       "name": "Gravel",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/gravel",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/gravel",
+        "color": {
           "R": 0.745098,
           "G": 0.745098,
           "B": 0.745098,
@@ -110,34 +112,35 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.5,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.5,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Fertility",
           "description": "Objects fertility"
         },
         {
-          "BaseValue": 0.6,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": -1.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": -1.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers" :[
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "baseValue": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "Sand": {
       "name": "Sand",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/sand",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/sand",
+        "color": {
           "R": 1.0,
           "G": 1.0,
           "B": 0.0,
@@ -154,25 +157,26 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Fertility",
           "description": "Objects fertility"
         },
         {
-          "BaseValue": 0.7,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers" :[
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "baseValue": 1.0,
+          "type": "Flat"
         }
       ]
     }

@@ -35,7 +35,7 @@ namespace Atomation.Resources
 			JsonSerializerSettings settings = new JsonSerializerSettings()
             {
                 Formatting = Formatting.Indented,
-                NullValueHandling = NullValueHandling.Ignore,
+                // NullValueHandling = NullValueHandling.Ignore,
             };
 			
 			WriteJsonFile( filePath,  fileName,  obj, settings );

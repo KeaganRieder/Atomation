@@ -3,9 +3,9 @@
     "Slate": {
       "name": "Slate",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/slate",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/slate",
+        "color": {
           "R": 0.662745,
           "G": 0.662745,
           "B": 0.662745,
@@ -22,34 +22,35 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "baseValue": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Fertility",
           "description": "Objects fertility"
         },
         {
-          "BaseValue": 0.7,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "base value": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers" :[
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "base value": 1.0,
+          "type": "Flat"
         }
       ]
     },
     "Marble": {
       "name": "marble",
       "description": "",
-      "GraphicConfig": {
-        "TexturePath": "terrain/natural/marble",
-        "Color": {
+      "graphicData": {
+        "texturePath": "terrain/natural/marble",
+        "color": {
           "R": 0.0,
           "G": 0.0,
           "B": 0.0,
@@ -66,25 +67,26 @@
       },
       "statBases": [
         {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "base value": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Fertility",
           "description": "Objects fertility"
         },
         {
-          "BaseValue": 0.7,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
-          "name": "Walkspeed",
-          "description": "Objects Walkspeed "
-        },
-        {
-          "BaseValue": 0.0,
-          "MinValue": 0.0,
-          "MaxValue": 0.0,
+          "base value": 0.0,
+          "minValue": 0.0,
+          "maxValue": 0.0,
           "name": "Beauty",
           "description": "Objects Beauty"
+        }
+      ],
+      "statModifiers" :[
+        {
+          "name": "Walk Speed",
+          "description": null,
+          "base value": 1.0,
+          "type": "Flat"
         }
       ]
     }

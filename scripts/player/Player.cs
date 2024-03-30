@@ -20,14 +20,14 @@ namespace Atomation.Player
 			Position = Vector2.Zero;
 			Body = new CharacterBody2D();
 			Camera = new Camera();
-            Graphic = new ColorRect
-            {
-                Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE * 2),
-                Color = new Color(Colors.White),
-                VisibilityLayer = 2
-            };
+			Graphic = new ColorRect
+			{
+				Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE * 2),
+				Color = new Color(Colors.White),
+				VisibilityLayer = 2
+			};
 
-            AddChild(Camera);
+			AddChild(Camera);
 			AddChild(Graphic);
 			AddChild(Body);
 		}

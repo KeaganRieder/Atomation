@@ -41,7 +41,7 @@ namespace Atomation.Map
 		/// <summary>
 		/// Get the cords aligned to pixel grid of current chunk 
 		/// </summary>
-		public Vector2 GetCurrentChunkCords(Vector2 worldPosition)
+		public Vector2 GetCurrentChunkCords(Vector2 worldPosition)//possibly the problem 
 		{
 			float x = Mathf.RoundToInt(worldPosition.X / Chunk.CHUNK_SIZE / MapSettings.CELL_SIZE);
 			float y = Mathf.RoundToInt(worldPosition.Y / Chunk.CHUNK_SIZE / MapSettings.CELL_SIZE);
@@ -78,10 +78,10 @@ namespace Atomation.Map
 			chunk.Terrain.SetObject(worldPosition, terrain);
 
 			//assign/update neighbors 
-			terrain.UpdateNorthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y-1)));
-			terrain.UpdateSouthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y+1)));
-			terrain.UpdateEastNeighbor(GetTerrain(new Vector2(worldPosition.X+1,worldPosition.Y)));
-			terrain.UpdateWestNeighbor(GetTerrain(new Vector2(worldPosition.X-1,worldPosition.Y)));
+			// terrain.UpdateNorthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y-1)));
+			// terrain.UpdateSouthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y+1)));
+			// terrain.UpdateEastNeighbor(GetTerrain(new Vector2(worldPosition.X+1,worldPosition.Y)));
+			// terrain.UpdateWestNeighbor(GetTerrain(new Vector2(worldPosition.X-1,worldPosition.Y)));
 
 		}
 		public Terrain GetTerrain(Vector2 worldPosition)
@@ -126,9 +126,9 @@ namespace Atomation.Map
 			lastUpdatedChunks.Clear();
 			
 			//Run through surrounding chunks at player position 
-			for (int xOffset = -visibleChunks; xOffset < visibleChunks  /*+1 todo when threaded*/; xOffset++)
+			for (int xOffset = -visibleChunks+2; xOffset < visibleChunks-1 /*+1 todo when threaded*/; xOffset++)
 			{
-				for (int yOffset = -visibleChunks; yOffset < visibleChunks /*+1 todo when threaded*/; yOffset++)
+				for (int yOffset = -visibleChunks+2; yOffset < visibleChunks-1 /*+1 todo when threaded*/; yOffset++)
 				{
 					Vector2 viewChunkCord = new Vector2(currentChunkCords.X + xOffset, currentChunkCords.Y + yOffset);
 					

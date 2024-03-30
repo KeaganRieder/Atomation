@@ -11,7 +11,7 @@ namespace Atomation.Map
 	public class MapSettings
 	{
 		[JsonIgnore]
-		public const int CELL_SIZE = 8;
+		public const int CELL_SIZE = 16;
 
 		[JsonProperty("render distance", Order = 1)]
 		public static float MAX_LOAD_DIST = 64;

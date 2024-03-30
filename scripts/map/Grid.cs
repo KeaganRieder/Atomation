@@ -8,7 +8,7 @@ namespace Atomation.Map
     /// <summary>
     /// the games grid in which all objects are aligned to
     /// </summary>
-    public class Grid<GridObj> where GridObj : ICompThing 
+    public class Grid<GridObj> where GridObj : ICompThing
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -45,7 +45,7 @@ namespace Atomation.Map
                     gridArray[x, y] = default;
                 }
             }
-            // CreateOutline();
+            CreateOutline();
         }
 
         /// <summary>
@@ -54,24 +54,47 @@ namespace Atomation.Map
         private void CreateOutline()
         {
             Line2D line;
-            Color color =Colors.Black;
-            int width = 15;
-            
+            Color color = Colors.Black;
+            int width = 1;
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    line = new Line2D();
+                    line.AddPoint(GetWorldPosition(x, y));
+                    line.AddPoint(GetWorldPosition(x, y + 1));
+                    line.VisibilityLayer = 3;
+                    line.Width = width;
+                    line.DefaultColor = color;
+                    parentNode.AddChild(line);
+                    outLines.Add(line);
+
+                    line = new Line2D();
+                    line.AddPoint(GetWorldPosition(x, y));
+                    line.AddPoint(GetWorldPosition(x + 1, y));
+                    line.VisibilityLayer = 3;
+                    line.Width = width;
+                    line.DefaultColor = color;
+
+                    parentNode.AddChild(line);
+                    outLines.Add(line);
+                }
+            }
             line = new Line2D();
             line.AddPoint(GetWorldPosition(0, 0));
             line.AddPoint(GetWorldPosition(0, Height));
-            line.VisibilityLayer = 1;
-            line.Width = width;
+            line.VisibilityLayer = 2;
+            line.Width = width+2;
             line.DefaultColor = color;
 
             parentNode.AddChild(line);
             outLines.Add(line);
 
-             line = new Line2D();
+            line = new Line2D();
             line.AddPoint(GetWorldPosition(0, 0));
             line.AddPoint(GetWorldPosition(Width, 0));
-            line.VisibilityLayer = 1;
-            line.Width = width;
+            line.VisibilityLayer = 2;
+            line.Width = width+2;
             line.DefaultColor = color;
 
             parentNode.AddChild(line);
@@ -80,8 +103,8 @@ namespace Atomation.Map
             line = new Line2D();
             line.AddPoint(GetWorldPosition(Width, Height));
             line.AddPoint(GetWorldPosition(0, Height));
-            line.VisibilityLayer = 1;
-            line.Width = width;
+            line.VisibilityLayer = 2;
+            line.Width = width+2;
             line.DefaultColor = color;
 
             parentNode.AddChild(line);
@@ -90,8 +113,8 @@ namespace Atomation.Map
             line = new Line2D();
             line.AddPoint(GetWorldPosition(Width, Height));
             line.AddPoint(GetWorldPosition(Width, 0));
-            line.VisibilityLayer = 1;
-            line.Width = width;
+            line.VisibilityLayer = 2;
+            line.Width = width+2;
             line.DefaultColor = color;
 
             parentNode.AddChild(line);
@@ -103,17 +126,16 @@ namespace Atomation.Map
         /// </summary>
         private Vector2 GetWorldPosition(int x, int y)
         {
-            return new Vector2(x, y) * CellSize;// - Origin;
-            
+            return new Vector2(x, y) * CellSize;// +  Origin;
         }
+
         /// <summary>
         /// converts the given cords to be based on CellSize
         /// </summary>
         private void GetXY(Vector2 worldPosition, out int x, out int y)
         {
-            x = Mathf.Abs(Mathf.FloorToInt((worldPosition - Origin).X ));// CellSize);
-            y = Mathf.Abs(Mathf.FloorToInt((worldPosition - Origin).Y ));// CellSize);
-          
+            x = Mathf.Abs(Mathf.FloorToInt((worldPosition - Origin).X));// /CellSize
+            y = Mathf.Abs(Mathf.FloorToInt((worldPosition - Origin).Y));// /CellSize
         }
 
         /// <summary>
@@ -138,6 +160,7 @@ namespace Atomation.Map
         public void SetObject(Vector2 worldPosition, GridObj obj)
         {
             GetXY(worldPosition, out int x, out int y);
+
             SetObject(x, y, obj);
         }
 
@@ -148,12 +171,11 @@ namespace Atomation.Map
         {
             if (x >= 0 && y >= 0 && x < Width && y < Width)
             {
-                // GD.Print("terrain");
                 return gridArray[x, y];
             }
             else
             {
-                // GD.PrintErr($"{x},{y} are out of bounds for current grid");
+                GD.PrintErr($"{x},{y} are out of bounds for current grid");
                 return default;
             }
         }

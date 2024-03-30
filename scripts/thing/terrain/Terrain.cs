@@ -30,6 +30,7 @@ namespace Atomation.Thing
 			Position = position;
 
 			FloorGraphic = new FloorGraphics(this);
+			FloorGraphic.Color = Colors.Red;
 		}
 
 		/// <summary>
@@ -39,7 +40,7 @@ namespace Atomation.Thing
 		/// </summary>
 		public void ReadConfigs(CompThingDef config)
 		{
-			Name = config.Name;
+			Name = config.Name +$" {Position/MapSettings.CELL_SIZE}";
 			Description = config.Description;
 			stats = config.FormatStats();
 			modifiers = config.FormatStatModifers();

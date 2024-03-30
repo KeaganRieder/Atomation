@@ -30,7 +30,7 @@ public partial class Main : Node
 
 		controller = new Controller();
 		controller.Map = Map;
-		controller.Player = Player;
+		controller.PlayerBody = Player;
 
 		AddChild(Map);
 		AddChild(Player);

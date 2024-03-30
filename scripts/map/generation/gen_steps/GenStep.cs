@@ -24,6 +24,10 @@ namespace Atomation.Map
 
         protected virtual void AlignCordsToChunk(int x, int y, Vector2 offset,out float sampleX, out float sampleY){
 
+                sampleX = x + offset.X;
+                sampleY = y + offset.Y;
+
+
             if (offset.X < 0)
             {
                 sampleX = (x* -1) + offset.X;

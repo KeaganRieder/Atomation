@@ -49,10 +49,9 @@ namespace Atomation.Map
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
 				{
-					//convert to be based on chunk pos
-					AlignCordsToChunk(x, y, origin, out float sampleChunkX, out float sampleChunkY);
-
-					Vector2 terrainCords = new Vector2(sampleChunkX, sampleChunkY);
+					//origin is chunk pos
+					Vector2 terrainCords = new Vector2(x + origin.X, y + origin.Y);
+					
 					Terrain terrain = chunkHandler.GetTerrain(terrainCords);
 
 					if (terrain == null)
@@ -74,6 +73,7 @@ namespace Atomation.Map
 
 			// GD.Print($"moisture MIN: {moistureMap.minValue} MAX: {moistureMap.maxValue}");
 			// GD.Print($"temp MIN: {temperatureMap.minValue} MAX: {temperatureMap.maxValue}");
+	
 		}
 
 		/// <summary>
@@ -105,14 +105,23 @@ namespace Atomation.Map
 		private void SetBiome(Terrain terrain)
 		{
 			Biome biome = DefDatabase.GetBiome(terrain.MoistureValue, terrain.HeatValue);
-			terrain.FloorGraphic.Color = (biome == null) ? new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue)
-			: biome.Color;
+
 			if (biome == null)
 			{
-				// GD.Print(terrain.HeatValue);
+				terrain.FloorGraphic.Color = new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue);
+				return;
 			}
 
-		}
+			TerrainDef def = biome == null ? null : biome.GetTerrain(terrain.HeightValue);
+			if (def == null)
+			{
+				terrain.FloorGraphic.Color = Colors.Red;
+				GD.Print($"{biome.Name} {terrain.HeightValue}");
+
+				return;
+			}
+			terrain.ReadConfigs(def);
+					}
 		/// <summary>
 		/// using provided terrain determines the type of water it is
 		/// </summary>

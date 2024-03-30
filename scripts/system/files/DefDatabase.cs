@@ -31,7 +31,7 @@ namespace Atomation.Resources
         /// access cached terrain config data, and returns the terrain
         /// based on the ID
         /// </summary>
-        public static CompThingDef GetTerrainConfig(string terrainID)
+        public static TerrainDef GetTerrainConfig(string terrainID)
         {
             return TerrainDefs[terrainID];
         }

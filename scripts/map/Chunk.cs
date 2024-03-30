@@ -28,12 +28,12 @@ namespace Atomation.Map
 			Name = $"Chunk {worldPosition}";
 
 			CellOffset = cellSize;
-			Origin = worldPosition;
+			Origin = worldPosition; GD.Print(worldPosition);
 			Position = Origin;
 			Rendered = true;
 
-			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
-			Buildings = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
+			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
+			Buildings = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
 		}
 
 		/// <summary>

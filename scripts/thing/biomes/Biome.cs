@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Atomation.Resources;
 using Godot;
 using Newtonsoft.Json;
 
@@ -51,15 +52,6 @@ namespace Atomation.Thing
 
         public Biome()
         {
-            // name = configs.Name;
-            // MinMoisture = configs.minMoisture;
-            // MaxMoisture = configs.maxMoisture;
-            // MinTemperature = configs.minTemperature;
-            // MaxTemperature = configs.maxTemperature;
-
-            // terrain = configs.biomeTerrain;
-            // Color = configs.color;
-            // Color.A = 1;
         }
 
 
@@ -68,15 +60,18 @@ namespace Atomation.Thing
         /// returns the key for the terrain which is present in the biome
         /// and corresponds to the
         /// </summary>
-        public string GetTerrain(float elevation)
+        public TerrainDef GetTerrain(float elevation)
         {
+            //try and get a terrain
             foreach (float terrainHeight in terrain.Keys)
             {
                 if (elevation < terrainHeight)
                 {
-                    return terrain[terrainHeight];
+                    return DefDatabase.GetTerrainConfig(terrain[terrainHeight]);
                 }
             }
+
+            // if no terrain meeting requirement then pick closest
             return null;
         }
 

@@ -17,6 +17,7 @@ namespace Atomation.Player
 		public PlayerChar()
 		{	
 			Initialize();	
+			Name = "player";
 			Position = Vector2.Zero;
 			Body = new CharacterBody2D();
 			Camera = new Camera();

@@ -1,5 +1,6 @@
 using Atomation.Map;
 using Atomation.Player;
+using Atomation.Resources;
 using Atomation.Thing;
 using Godot;
 
@@ -27,32 +28,71 @@ namespace Atomation
 			Map.ChunkHandler.CheckChunkStatus(PlayerBody.Position);
 			PlayerBody.Move();
 
+			VisualizationEvents(inputEvent);
+
 			if (inputEvent is InputEventMouseButton mouseInputEvent)
 			{
-				Vector2 mousePos = mouseInputEvent.Position - GetViewport().CanvasTransform.Origin;
-				int x = Mathf.Abs(Mathf.FloorToInt(mousePos.X / MapSettings.CELL_SIZE));
-				int y = Mathf.Abs(Mathf.FloorToInt(mousePos.Y / MapSettings.CELL_SIZE));
-				GD.Print($"Converted: {x} {y} ");
+				MouseInputs(mouseInputEvent);
+			}
 
-				GD.Print($"Mouse: {mouseInputEvent.Position},{PlayerBody.GetViewport().GetMousePosition()} ");
+		}
 
-				if (inputEvent.IsActionPressed("Left Click"))
+		/// <summary>
+		/// handles processing input events from the mouse
+		/// </summary>
+		private void MouseInputs(InputEventMouseButton inputEvent)
+		{
+			Vector2 mousePos = inputEvent.Position - GetViewport().CanvasTransform.Origin;
+
+			if (inputEvent.IsActionPressed("Left Click"))
+			{
+				int x = Mathf.FloorToInt(mousePos.X / MapSettings.CELL_SIZE);
+				int y = Mathf.FloorToInt(mousePos.Y / MapSettings.CELL_SIZE);
+				Vector2 terrainCords = new Vector2(x, y);
+
+				Terrain terrain = Map.ChunkHandler.GetTerrain(mousePos);//());
+
+				if (terrain != null)
 				{
-					Terrain terrain = Map.ChunkHandler.GetTerrain(GetGlobalMousePosition());
-
-					if (terrain != null)
+					// GD.Print("hey");
+					if (terrain.Visible)
 					{
 						terrain.Visible = false;
-
+					}
+					else
+					{
+						terrain.Visible = true;
 					}
 				}
-				if (inputEvent.IsActionPressed("Right Click"))
+				else if (terrain == null)
 				{
-					GD.Print("right");
+					//rework how position is set, make only done in grid class
+					terrain = new Terrain(terrainCords);
+					terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Grass"));
 
+					Map.ChunkHandler.SetTerrain(mousePos, terrain);
 				}
+			}
+			if (inputEvent.IsActionPressed("Right Click"))
+			{
+				int x = Mathf.FloorToInt(mousePos.X / MapSettings.CELL_SIZE);
+				int y = Mathf.FloorToInt(mousePos.Y / MapSettings.CELL_SIZE);
+				Vector2 cords = new Vector2(x, y);
+
+				GD.Print($"Mouse: {PlayerBody.GetViewport().GetMousePosition()} Global {GetGlobalMousePosition()}");
+
+				GD.Print($"converted: {cords} ");
 
 			}
+
+		}
+
+		/// <summary>
+		/// handles processing input events to change terrain
+		/// visualization
+		/// </summary>
+		private void VisualizationEvents(InputEvent inputEvent)
+		{
 
 			if (inputEvent.IsActionPressed("Default"))
 			{
@@ -75,7 +115,6 @@ namespace Atomation
 				GD.Print("Height");
 			}
 		}
-
 
 	}
 }

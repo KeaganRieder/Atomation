@@ -24,13 +24,9 @@ namespace Atomation.Thing
 		//constructors
 		public Terrain(Vector2 cords)
 		{
-			Name = $"Tile {cords}";
-			Vector2 position = cords * MapSettings.CELL_SIZE;
+			Cords = cords;
 
-			Position = position;
-
-			FloorGraphic = new FloorGraphics(this);
-			FloorGraphic.Color = Colors.Red;
+			FloorGraphic = new FloorGraphics(this,cords);
 		}
 
 		/// <summary>
@@ -40,7 +36,7 @@ namespace Atomation.Thing
 		/// </summary>
 		public void ReadConfigs(CompThingDef config)
 		{
-			Name = config.Name +$" {Position/MapSettings.CELL_SIZE}";
+			Name = config.Name + $" {Position/MapSettings.CELL_SIZE}";
 			Description = config.Description;
 			stats = config.FormatStats();
 			modifiers = config.FormatStatModifers();

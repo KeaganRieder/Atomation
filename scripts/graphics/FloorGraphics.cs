@@ -15,28 +15,20 @@ namespace Atomation.Resources
 	}
 
 	/// <summary>
-	/// abstract class which defines the base of all graphics in Atomation
+	/// class which defines floor graphics 
 	/// </summary>
 	public class FloorGraphics : Graphic
 	{
 		public ColorRect FloorGraphic{get; private set;}
 
-		public FloorGraphics(Color color)
+		public FloorGraphics(Node2D terrainNode,Vector2 pos)
 		{
-			this.color = color;
-			FloorGraphic = new ColorRect();
-			FloorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
-			this.color.A = 1;
-		}
-
-		public FloorGraphics(Node2D terrainNode)
-		{
-
 			FloorGraphic = new ColorRect();
 			FloorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 			color = new Color(Colors.Black);
 			FloorGraphic.Color = color;
             FloorGraphic.VisibilityLayer = 1;
+			FloorGraphic.Position = pos*MapSettings.CELL_SIZE;
 
 			terrainNode.AddChild(FloorGraphic);
 		}
@@ -46,8 +38,6 @@ namespace Atomation.Resources
 			texturePath = graphicConfig.TexturePath;
 			color = graphicConfig.Color;
 			color.A = 1;
-
-			DefaultGraphic();
 		}
 
 		/// <summary>

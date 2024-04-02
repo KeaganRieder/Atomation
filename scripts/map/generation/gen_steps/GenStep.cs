@@ -11,71 +11,59 @@ namespace Atomation.Map
         protected int worldMaxWidth;
         protected int worldMaxHeight;
 
+        protected Vector2 offset;
+
         public virtual void RunStep(Vector2 origin, ChunkHandler chunkHandler) { }
 
         /// <summary>
         /// gets cord values from smaller intervals
         /// </summary>
-        protected virtual void SampleCords(int x, int y, Vector2 offset,float scale, out float sampleX, out float sampleY)
+        protected virtual void SampleCords(int x, int y, float scale, out float sampleX, out float sampleY)
         {
-            sampleX = (x + offset.X)/scale;
-            sampleY = (y + offset.Y)/scale;
+            sampleX = (x + offset.X) / scale;
+            sampleY = (y + offset.Y) / scale;
         }
 
-        protected virtual void AlignCordsToChunk(int x, int y, Vector2 offset,out float sampleX, out float sampleY){
-
-                sampleX = x + offset.X;
-                sampleY = y + offset.Y;
-
-
-            if (offset.X < 0)
-            {
-                sampleX = (x* -1) + offset.X;
-            }
-            else
-            {
-                sampleX = x + offset.X;
-                
-            }
-            if (offset.Y < 0)
-            {
-                sampleY = (y*-1) + offset.Y;
-            }
-            else
-            {
-                sampleY = y + offset.Y;
-            }
-        }
-/*
- /// <summary>
-        /// offset provided cords are based in correct chunk
+        /// <summary>
+        /// using given cords offsets them based on current offset. used to primarily find current 
+        /// chunk being generated
         /// </summary>
-        public static void SampleChunkPos(Vector2 offset, int x, int y, out float sampleX, out float sampleY)
+        protected Vector2 CurrentChunk(int x, int y)
         {
-            // check if x offset cords are negative if so perform 
-            // correct operation
+            float xCord = x + offset.X;
+            float yCord = y + offset.Y;
+
+            return new Vector2(xCord, yCord);
+        }
+        /// <summary>
+        /// uses the offset to find the correct world position for the given cords
+        /// </summary>
+        protected Vector2 GetWorldPosition(int x, int y)
+        {
+            // x = (offset.X < 0) ? x * -1 : x;
+            // y = (offset.Y < 0) ? y * -1 : y;
+            float sampleX;
+            float sampleY;
             if (offset.X < 0)
             {
-                sampleX = x - offset.X;
-                sampleX *= -1;
+                sampleX = (x * -1);// + offset.X;
             }
             else
             {
-                sampleX = x + offset.X;
-            }
+                sampleX = x;// + offset.X;
 
-            // check if y offset cords are negative if so perform 
-            // correct operation
+            }
             if (offset.Y < 0)
             {
-                sampleY = y - offset.Y;
-                sampleY *= -1;
+                sampleY = (y * -1);// + offset.Y;
             }
             else
             {
-                sampleY = y + offset.Y;
+                sampleY = y;//+ offset.Y;
             }
+
+            return new Vector2(sampleX, sampleY);
         }
-*/
+
     }
 }

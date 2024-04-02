@@ -7,33 +7,34 @@ using Atomation.Resources;
 namespace Atomation.Map
 {
 	/// <summary>
-	/// A chunk is a 32 x 32 section of the map that contains
+	/// A chunk is a 32 x 32 tiles section of the map that contains
 	/// various values, it is either loaded or unloaded depending on where 
 	/// the player is, as well as other aspects
 	/// </summary>
 	public partial class Chunk : Node2D
 	{
+		/// <summary>
+		/// the length and width of a chunk in terms of pixels.
+		/// </summary>
 		public const int CHUNK_SIZE = 32;
+
 		public float CellOffset { get; private set; }
 		public bool Rendered { get; private set; }
 		public Vector2 Origin { get; private set; }
 
 		public Grid<Terrain> Terrain { get; private set; }
-		public Grid<Terrain> Buildings { get; private set; }
 
-		public Chunk() { }
-
-		public Chunk(Vector2 worldPosition, float cellSize) : this()
+		public Chunk(Vector2 worldPosition, float cellSize)
 		{
-			Name = $"Chunk {worldPosition}";
-
+			Name = $"Chunk {worldPosition/cellSize}";
+			
 			CellOffset = cellSize;
-			Origin = worldPosition; GD.Print(worldPosition);
-			Position = Origin;
+			Origin = worldPosition; 
+			Position = Vector2.Zero;
 			Rendered = true;
-
-			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
-			Buildings = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
+			
+			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition,this);
+			// AddChild(Terrain);
 		}
 
 		/// <summary>
@@ -51,6 +52,10 @@ namespace Atomation.Map
 			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X), Mathf.Abs(chunkDistance.Y)));
 
 			return distance;
+		}
+
+		public void CreateOutline(){
+
 		}
 
 		/// <summary>

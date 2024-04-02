@@ -1,14 +1,11 @@
 using Godot;
 using Atomation.Thing;
 using Atomation.Resources;
-using Atomation.Utility;
 
 namespace Atomation.Map
 {
 	public class GenStepLandScape : GenStep
 	{
-		float minValue = 1000;
-		float maxValue = -1000;
 		private HeightMap heightMap;
 		private TemperatureMap temperatureMap;
 		private MoistureMap moistureMap;
@@ -41,39 +38,31 @@ namespace Atomation.Map
 
 		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
 		{
-			heightMap.Offset = origin / MapSettings.CELL_SIZE;
-			temperatureMap.Offset = origin / MapSettings.CELL_SIZE;
-			moistureMap.Offset = origin / MapSettings.CELL_SIZE;
+			offset = origin;
+			GD.Print(origin/ MapSettings.CELL_SIZE);
+			heightMap.Offset = origin / MapSettings.CELL_SIZE;//Chunk.CHUNK_SIZE;
+			temperatureMap.Offset = origin / MapSettings.CELL_SIZE;//Chunk.CHUNK_SIZE;
+			moistureMap.Offset = origin / MapSettings.CELL_SIZE;//Chunk.CHUNK_SIZE;
 
 			for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
 				{
-					//origin is chunk pos
-					Vector2 terrainCords = new Vector2(x + origin.X, y + origin.Y);
-					
-					Terrain terrain = chunkHandler.GetTerrain(terrainCords);
+					Vector2 worldPos = GetWorldPosition(x,y) ;
+					Terrain terrain = new Terrain(worldPos);
 
-					if (terrain == null)
-					{
-						//create new terrain
-						terrain = new(new(x, y));
-						chunkHandler.SetTerrain(terrainCords, terrain);
-					}
-
+					//calculate generation values
 					heightMap.CalculateHeight(x, y, terrain);
 					temperatureMap.CalculateHeat(y, terrain);
 					moistureMap.CalculateMoisture(x, y, terrain);
 
 					determineTerrainType(terrain);
 
+					chunkHandler.SetTerrain(CurrentChunk(x, y), x, y, terrain);
+
 					terrain.UpdateGraphic(WorldMap.MapVisualIzation);
 				}
 			}
-
-			// GD.Print($"moisture MIN: {moistureMap.minValue} MAX: {moistureMap.maxValue}");
-			// GD.Print($"temp MIN: {temperatureMap.minValue} MAX: {temperatureMap.maxValue}");
-	
 		}
 
 		/// <summary>
@@ -121,7 +110,7 @@ namespace Atomation.Map
 				return;
 			}
 			terrain.ReadConfigs(def);
-					}
+		}
 		/// <summary>
 		/// using provided terrain determines the type of water it is
 		/// </summary>
@@ -129,19 +118,18 @@ namespace Atomation.Map
 		{
 			if (height < deepWater)
 			{
-				terrain.FloorGraphic.Color = Colors.DarkBlue;
-
+				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("DeepOcean"));
 			}
 			else if (height < shallowWater)
 			{
-				terrain.FloorGraphic.Color = Colors.Blue;
-
+				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("ShallowOcean"));
 			}
 			else if (height < shoreHeight)
 			{
-				terrain.FloorGraphic.Color = Colors.Yellow;
+				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Sand"));
 			}
 		}
+
 		/// <summary>
 		/// using provided terrain determines the type of Elevated ground it is
 		/// </summary>
@@ -149,11 +137,11 @@ namespace Atomation.Map
 		{
 			if (height > mountainHeight)
 			{
-				terrain.FloorGraphic.Color = new Color(.05f, .05f, .05f);
+				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Gravel"));
 			}
 			else if (height > mountainBase)
 			{
-				terrain.FloorGraphic.Color = new Color(.3f, .3f, .3f);
+				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Slate"));
 			}
 		}
 	}

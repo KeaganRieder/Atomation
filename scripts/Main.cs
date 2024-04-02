@@ -6,7 +6,7 @@ using Godot;
 /// <summary>
 /// Main class which handles manning the game through different scene
 /// </summary>
-public partial class Main : Node
+public partial class Main : Node2D
 {
 	public WorldMap Map { get; private set; }
 	public FileManger ResourceManger { get; private set; }

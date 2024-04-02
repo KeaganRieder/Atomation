@@ -6,6 +6,12 @@ using Atomation.Resources;
 
 namespace Atomation.Thing
 {
+	public interface ICompThing
+	{
+		public Node2D Node { get; }
+		public Vector2 Cords { get; set; }
+	}
+
 	/// <summary>
 	/// definition file used in creating new instances of more complex things 
 	/// </summary>
@@ -59,7 +65,6 @@ namespace Atomation.Thing
 				}
 
 			}
-
 			return modifiers;
 		}
 	}
@@ -67,16 +72,18 @@ namespace Atomation.Thing
 	/// <summary>
 	/// base class for more complex things in the game 
 	/// </summary>
-	public abstract partial class CompThing : Node2D,ICompThing
+	public abstract partial class CompThing : Node2D, ICompThing
 	{
 		public string Description { get; set; }
+		public Node2D Node { get => this; }
+		public Vector2 Cords { get => Position; set {Position = value;} }
+
 		protected Dictionary<string, Stat> stats;
 		protected Dictionary<string, StatModifier> modifiers;
 
-		public Node2D Node{get=> this;}
-
-		public virtual Stat GetStat(string key ){
-			if (stats.TryGetValue(key,out Stat stat))
+		public virtual Stat GetStat(string key)
+		{
+			if (stats.TryGetValue(key, out Stat stat))
 			{
 				return stat;
 			}
@@ -86,8 +93,9 @@ namespace Atomation.Thing
 			}
 		}
 
-		public virtual StatModifier GetModifier(string key ){
-			if (modifiers.TryGetValue(key,out StatModifier modifier))
+		public virtual StatModifier GetModifier(string key)
+		{
+			if (modifiers.TryGetValue(key, out StatModifier modifier))
 			{
 				return modifier;
 			}
@@ -98,9 +106,4 @@ namespace Atomation.Thing
 		}
 
 	}
-
-	public interface ICompThing {
-		public Node2D Node{get;}
-	}
-
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 using Newtonsoft.Json;
-using Atomation.Map;
+using Atomation;
 using Atomation.Resources;
 
 namespace Atomation.Thing
@@ -9,7 +9,7 @@ namespace Atomation.Thing
 	public interface ICompThing
 	{
 		public Node2D Node { get; }
-		public Vector2 Cords { get; set; }
+		public Coordinate coordinate { get; }
 	}
 
 	/// <summary>
@@ -76,10 +76,15 @@ namespace Atomation.Thing
 	{
 		public string Description { get; set; }
 		public Node2D Node { get => this; }
-		public Vector2 Cords { get => Position; set {Position = value;} }
+
+		public Coordinate coordinate{get; set;}
 
 		protected Dictionary<string, Stat> stats;
 		protected Dictionary<string, StatModifier> modifiers;
+
+		// public void UpdateCords(Vector2 cords){
+		// 	// coordinate = new Coordinate()
+		// }
 
 		public virtual Stat GetStat(string key)
 		{

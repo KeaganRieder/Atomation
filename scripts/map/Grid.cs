@@ -80,24 +80,6 @@ namespace Atomation.Map
 			chunk.AddChild(line);
 			outLines.Add(line);
 
-			//inner grid
-			// for (int x = 0; x < Width; x++)
-			// {
-			// 	for (int y = 0; y < Height; y++)
-			// 	{
-			// 		line = new Line2D();
-			// 		line.AddPoint(GetWorldPosition(x, y));
-			// 		line.AddPoint(GetWorldPosition(x, y + 1));
-			// 		line.AddPoint(GetWorldPosition(x, y));
-			// 		line.AddPoint(GetWorldPosition(x + 1, y));
-			// 		line.VisibilityLayer = 3;
-			// 		line.Width = width;
-			// 		line.DefaultColor = color;
-			// 		AddChild(line);
-			// 		outLines.Add(line);
-			// 	}
-			// }
-
 		}
 
 		/// <summary>
@@ -139,7 +121,6 @@ namespace Atomation.Map
 		/// </summary>
 		public void SetObject(Vector2 worldPosition, GridObj obj)
 		{			
-			// GD.Print(x)
 			GetXY(worldPosition, out int x, out int y);
 
 			SetObject(x, y, obj);

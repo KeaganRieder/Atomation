@@ -28,7 +28,7 @@ namespace Atomation.Resources
 			color = new Color(Colors.Black);
 			FloorGraphic.Color = color;
             FloorGraphic.VisibilityLayer = 1;
-			FloorGraphic.Position = pos*MapSettings.CELL_SIZE;
+			// FloorGraphic.Position = pos;
 
 			terrainNode.AddChild(FloorGraphic);
 		}

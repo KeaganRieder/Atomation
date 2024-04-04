@@ -38,32 +38,24 @@ namespace Atomation.Map
         /// <summary>
         /// uses the offset to find the correct world position for the given cords
         /// </summary>
-        protected Vector2 GetWorldPosition(int x, int y)
-        {
-            // x = (offset.X < 0) ? x * -1 : x;
-            // y = (offset.Y < 0) ? y * -1 : y;
-            float sampleX;
-            float sampleY;
-            if (offset.X < 0)
-            {
-                sampleX = (x * -1);// + offset.X;
-            }
-            else
-            {
-                sampleX = x;// + offset.X;
+        // protected Vector2 GetWorldPosition(float x, float y)
+        // {
+        //     // int
+        //     x = (offset.X < 0) ? x * -1 + offset.X : x + offset.X;
+        //     y = (offset.Y < 0) ? y * -1 + offset.Y : y + offset.Y;
 
-            }
-            if (offset.Y < 0)
-            {
-                sampleY = (y * -1);// + offset.Y;
-            }
-            else
-            {
-                sampleY = y;//+ offset.Y;
-            }
+        //     //align back to pixel grid
+        //     x = Mathf.FloorToInt(x);
+        //     y = Mathf.FloorToInt(y);
 
-            return new Vector2(sampleX, sampleY);
-        }
+
+        //     if (offset.X < 0 || offset.Y < 0)
+        //     {
+        //         GD.Print($"Cords for Offset {offset} are {x}, {y}");
+        //     }
+
+        //     return new Vector2(x, y);
+        // }
 
     }
 }

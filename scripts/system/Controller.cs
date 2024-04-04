@@ -54,7 +54,6 @@ namespace Atomation
 
 				if (terrain != null)
 				{
-					// GD.Print("hey");
 					if (terrain.Visible)
 					{
 						terrain.Visible = false;
@@ -67,10 +66,11 @@ namespace Atomation
 				else if (terrain == null)
 				{
 					//rework how position is set, make only done in grid class
-					terrain = new Terrain(terrainCords);
+					Coordinate cords = new Coordinate(terrainCords);
+					terrain = new Terrain(cords);
 					terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Grass"));
 
-					Map.ChunkHandler.SetTerrain(mousePos, terrain);
+					Map.ChunkHandler.SetTerrain(terrain);
 				}
 			}
 			if (inputEvent.IsActionPressed("Right Click"))
@@ -118,3 +118,11 @@ namespace Atomation
 
 	}
 }
+
+// 				var localPos = new Vector2(10,20); // Local to Control/Node2D.
+// var ie = new InputEventMouseButton()
+// {
+//     ButtonIndex = MouseButton.Left,
+//     Position = GetViewport().GetScreenTransform() * GetGlobalTransformWithCanvas() * localPos,
+// };
+// Input.ParseInputEvent(ie);

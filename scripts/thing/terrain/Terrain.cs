@@ -21,13 +21,14 @@ namespace Atomation.Thing
 		public Terrain WestNeighbor { get; private set; }
 		public Terrain EastNeighbor { get; private set; }
 
-		//constructors
-		public Terrain(Vector2 cords)
+		public Terrain(Coordinate coord)
 		{
-			Cords = cords;
+			coordinate = coord;
+			Position = coordinate.WorldPosition*MapSettings.CELL_SIZE;
 
-			FloorGraphic = new FloorGraphics(this,cords);
+			FloorGraphic = new FloorGraphics(this,coord.WorldPosition);
 		}
+
 
 		/// <summary>
 		/// reading the configuration data for the given tile
@@ -36,7 +37,7 @@ namespace Atomation.Thing
 		/// </summary>
 		public void ReadConfigs(CompThingDef config)
 		{
-			Name = config.Name + $" {Position/MapSettings.CELL_SIZE}";
+			Name = config.Name +coordinate.ToString();
 			Description = config.Description;
 			stats = config.FormatStats();
 			modifiers = config.FormatStatModifers();

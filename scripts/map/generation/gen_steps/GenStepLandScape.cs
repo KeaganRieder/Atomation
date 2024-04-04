@@ -39,17 +39,15 @@ namespace Atomation.Map
 		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
 		{
 			offset = origin;
-			GD.Print(origin/ MapSettings.CELL_SIZE);
-			heightMap.Offset = origin / MapSettings.CELL_SIZE;//Chunk.CHUNK_SIZE;
-			temperatureMap.Offset = origin / MapSettings.CELL_SIZE;//Chunk.CHUNK_SIZE;
-			moistureMap.Offset = origin / MapSettings.CELL_SIZE;//Chunk.CHUNK_SIZE;
+			heightMap.Offset = origin;
+			temperatureMap.Offset = origin;
+			moistureMap.Offset = origin;
 
 			for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
 				{
-					Vector2 worldPos = GetWorldPosition(x,y) ;
-					Terrain terrain = new Terrain(worldPos);
+					Terrain terrain = new Terrain(new Coordinate(x,y,origin));
 
 					//calculate generation values
 					heightMap.CalculateHeight(x, y, terrain);
@@ -58,7 +56,7 @@ namespace Atomation.Map
 
 					determineTerrainType(terrain);
 
-					chunkHandler.SetTerrain(CurrentChunk(x, y), x, y, terrain);
+					chunkHandler.SetTerrain(x, y, terrain);
 
 					terrain.UpdateGraphic(WorldMap.MapVisualIzation);
 				}

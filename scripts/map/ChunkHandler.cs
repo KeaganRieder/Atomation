@@ -43,17 +43,6 @@ namespace Atomation.Map
 		}
 
 		/// <summary>
-		/// gets the position of a chunk at the given cords
-		/// </summary>
-		private Vector2 GetChunkWorldPosition(Vector2 chunkPos)
-		{
-			int xCord = Mathf.FloorToInt(chunkPos.X * chunkSize);
-			int yCord = Mathf.FloorToInt(chunkPos.Y * chunkSize);
-
-			return new Vector2(xCord, yCord);
-		}
-
-		/// <summary>
 		/// gets chunks at given world position 
 		/// </summary>
 		private Chunk GetChunk(Vector2 worldPosition)
@@ -65,7 +54,7 @@ namespace Atomation.Map
 			}
 			else
 			{
-				GD.PushError($"ERROR: tried to access NULL chunk at {worldPosition} {chunkPosition}");
+				GD.PushError($"ERROR: tried to access NULL chunk at {chunkPosition} {chunkPosition}");
 				return null;
 			}
 		}
@@ -73,43 +62,37 @@ namespace Atomation.Map
 		/// <summary>
 		/// sets terrain at world position
 		/// </summary>
-		public void SetTerrain(Vector2 worldPosition, Terrain terrain)
+		public void SetTerrain(Terrain terrain)
 		{
-			Chunk chunk = GetChunk(worldPosition);
+			Chunk chunk = GetChunk(terrain.coordinate.ChunkCords);
 
 			if (chunk == null)
 			{
 				return;
 			}
+			// Coordinate cord = new Coordinate(terrain.coordinate.ChunkCords);
 
-			chunk.Terrain.SetObject(worldPosition, terrain);
+			// terrain.coordinate = cord;
+			chunk.Terrain.SetObject(terrain.coordinate.WorldPosition, terrain);
 
-			//assign/update neighbors 
-			// terrain.UpdateNorthNeighbor(GetTerrain(new Vector2(worldPosition.X, worldPosition.Y - 1)));
-			// terrain.UpdateSouthNeighbor(GetTerrain(new Vector2(worldPosition.X, worldPosition.Y + 1)));
-			// terrain.UpdateEastNeighbor(GetTerrain(new Vector2(worldPosition.X + 1, worldPosition.Y)));
-			// terrain.UpdateWestNeighbor(GetTerrain(new Vector2(worldPosition.X - 1, worldPosition.Y)));
+			//assign/update neighbors todo
 		}
 
 		/// <summary>
 		/// sets terrain at world position
 		/// </summary>
-		public void SetTerrain(Vector2 chunkPosition, int x, int y, Terrain terrain)
+		public void SetTerrain(int x, int y, Terrain terrain)
 		{
-			Chunk chunk = GetChunk(chunkPosition);
+			Chunk chunk = GetChunk(terrain.coordinate.ChunkCords);
 
 			if (chunk == null)
 			{
 				return;
 			}
-
+			// terrain.coordinate = new Coordinate(x,y,chunk.coordinate.WorldPosition);
 			chunk.Terrain.SetObject(x, y, terrain);
 
-			//assign/update neighbors 
-			// terrain.UpdateNorthNeighbor(GetTerrain(new Vector2(chunkPosition.X, chunkPosition.Y - 1), x, y));
-			// terrain.UpdateSouthNeighbor(GetTerrain(new Vector2(chunkPosition.X, chunkPosition.Y + 1), x, y));
-			// terrain.UpdateEastNeighbor(GetTerrain(new Vector2(chunkPosition.X + 1, chunkPosition.Y), x, y));
-			// terrain.UpdateWestNeighbor(GetTerrain(new Vector2(chunkPosition.X - 1, chunkPosition.Y), x, y));
+			//assign/update neighbors todo
 		}
 
 		/// <summary>
@@ -128,9 +111,9 @@ namespace Atomation.Map
 		/// <summary>
 		/// sets terrain at world position
 		/// </summary>
-		public Terrain GetTerrain(Vector2 chunkPosition, int x, int y)
+		public Terrain GetTerrain(int x, int y)
 		{
-			Chunk chunk = GetChunk(chunkPosition);
+			Chunk chunk = GetChunk(new Vector2(x,y));
 			if (chunk == null)
 			{
 				return null;
@@ -187,7 +170,7 @@ namespace Atomation.Map
 					}
 					else
 					{
-						Vector2 chunkCord = GetChunkWorldPosition(viewChunkCord);
+						Vector2 chunkCord = viewChunkCord * Chunk.CHUNK_SIZE;
 						Chunk newChunk = new(chunkCord, MapSettings.CELL_SIZE);
 						worldMap.AddChild(newChunk);
 

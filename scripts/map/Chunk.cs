@@ -20,7 +20,7 @@ namespace Atomation.Map
 
 		public float CellOffset { get; private set; }
 		public bool Rendered { get; private set; }
-		public Vector2 Origin { get; private set; }
+		public Coordinate coordinate{ get; private set; }
 
 		public Grid<Terrain> Terrain { get; private set; }
 
@@ -29,12 +29,11 @@ namespace Atomation.Map
 			Name = $"Chunk {worldPosition/cellSize}";
 			
 			CellOffset = cellSize;
-			Origin = worldPosition; 
-			Position = Vector2.Zero;
+			// Origin = worldPosition; 
+			coordinate = new Coordinate(worldPosition);
 			Rendered = true;
 			
 			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition,this);
-			// AddChild(Terrain);
 		}
 
 		/// <summary>
@@ -46,16 +45,12 @@ namespace Atomation.Map
 			worldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X / CellOffset), Mathf.FloorToInt(worldPosition.Y / CellOffset));
 
 			//align chunk to the pixel gird
-			Vector2 chunkPos = Origin / CellOffset;
+			Vector2 chunkPos = coordinate.WorldPosition / CellOffset;
 			Vector2 chunkDistance = chunkPos - worldPosition;
 
 			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X), Mathf.Abs(chunkDistance.Y)));
 
 			return distance;
-		}
-
-		public void CreateOutline(){
-
 		}
 
 		/// <summary>

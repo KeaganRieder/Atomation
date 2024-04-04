@@ -9,7 +9,7 @@ namespace Atomation.Thing
 	public interface ICompThing
 	{
 		public Node2D Node { get; }
-		public Coordinate coordinate { get; }
+		public Coordinate Coordinate { get; }
 	}
 
 	/// <summary>
@@ -77,13 +77,13 @@ namespace Atomation.Thing
 		public string Description { get; set; }
 		public Node2D Node { get => this; }
 
-		public Coordinate coordinate{get; set;}
+		public Coordinate Coordinate{get; set;}
 
 		protected Dictionary<string, Stat> stats;
 		protected Dictionary<string, StatModifier> modifiers;
 
 		// public void UpdateCords(Vector2 cords){
-		// 	// coordinate = new Coordinate()
+		// 	// coordinate = new Coordinate() todo
 		// }
 
 		public virtual Stat GetStat(string key)

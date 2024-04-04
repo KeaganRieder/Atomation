@@ -38,7 +38,7 @@ namespace Atomation.Map
 
 		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
 		{
-			offset = origin;
+			chunkPos = origin*MapSettings.CELL_SIZE;
 			heightMap.Offset = origin;
 			temperatureMap.Offset = origin;
 			moistureMap.Offset = origin;
@@ -56,12 +56,14 @@ namespace Atomation.Map
 
 					determineTerrainType(terrain);
 
-					chunkHandler.SetTerrain(x, y, terrain);
+					chunkHandler.SetTerrain(x, y, chunkPos,terrain);
 
 					terrain.UpdateGraphic(WorldMap.MapVisualIzation);
 				}
 			}
+			
 		}
+		
 
 		/// <summary>
 		/// using a terrains hight, determines if it's elevated ground, water or 

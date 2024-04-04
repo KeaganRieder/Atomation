@@ -10,7 +10,6 @@ namespace Atomation.Map
 	/// </summary>
 	public class Grid<GridObj> where GridObj : ICompThing
 	{
-		private static int gridInstance;
 		public int Width { get; private set; }
 		public int Height { get; private set; }
 		public float CellSize { get; private set; }
@@ -22,17 +21,13 @@ namespace Atomation.Map
 
 		public Grid(int width, int height, float cellSize, Vector2 origin, Node2D chunk)
 		{
-			// Name = $"grid {gridInstance}";
 			Width = width;
 			Height = height;
 			CellSize = cellSize;
-			Origin = origin;
+			Origin = origin *cellSize;
 			this.chunk = chunk;
-			// Position = Vector2.Zero;
 
 			InitializeGrid();
-
-			// gridInstance++;
 		}
 
 		/// <summary>
@@ -49,6 +44,7 @@ namespace Atomation.Map
 					gridArray[x, y] = default;
 				}
 			}
+
 			CreateOutline();
 		}
 
@@ -57,7 +53,6 @@ namespace Atomation.Map
 		/// </summary>
 		private void CreateOutline()
 		{
-			//clean this up at some point 
 
 			Line2D line;
 			Color color = Colors.Black;
@@ -87,7 +82,7 @@ namespace Atomation.Map
 		/// </summary>
 		private Vector2 GetWorldPosition(int x, int y)
 		{
-			return new Vector2(x, y) * CellSize + Origin;
+			return new Vector2(x, y) * CellSize + Origin;//* CellSize;
 		}
 
 		/// <summary>

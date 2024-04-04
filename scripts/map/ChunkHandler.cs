@@ -31,13 +31,16 @@ namespace Atomation.Map
 			chunkArray = new Dictionary<Vector2, Chunk>();
 		}
 
+	
+
 		/// <summary>
 		/// gets the position of a chunk at the given cords
 		/// </summary>
 		private Vector2 GetChunkCords(Vector2 worldPosition)
 		{
-			int xCord = Mathf.FloorToInt(worldPosition.X / chunkSize);
-			int yCord = Mathf.FloorToInt(worldPosition.Y / chunkSize);
+
+			int xCord = Mathf.FloorToInt(worldPosition.X /chunkSize);
+			int yCord = Mathf.FloorToInt(worldPosition.Y /chunkSize);
 
 			return new Vector2(xCord, yCord);
 		}
@@ -48,13 +51,15 @@ namespace Atomation.Map
 		private Chunk GetChunk(Vector2 worldPosition)
 		{
 			Vector2 chunkPosition = GetChunkCords(worldPosition);
+			// GD.Print($"Chunk Pos: {chunkPosition} { worldPosition}/ {chunkSize} = { Mathf.FloorToInt(worldPosition.X/ chunkSize)},{ Mathf.FloorToInt(worldPosition.Y/ chunkSize)}");
+
 			if (chunkArray.ContainsKey(chunkPosition))
 			{
 				return chunkArray[chunkPosition];
 			}
 			else
 			{
-				GD.PushError($"ERROR: tried to access NULL chunk at {chunkPosition} {chunkPosition}");
+				GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{chunkPosition} WorldPos:{worldPosition}");
 				return null;
 			}
 		}
@@ -64,16 +69,13 @@ namespace Atomation.Map
 		/// </summary>
 		public void SetTerrain(Terrain terrain)
 		{
-			Chunk chunk = GetChunk(terrain.coordinate.ChunkCords);
+			Chunk chunk = GetChunk(terrain.Coordinate.WorldPosition);
 
 			if (chunk == null)
 			{
 				return;
 			}
-			// Coordinate cord = new Coordinate(terrain.coordinate.ChunkCords);
-
-			// terrain.coordinate = cord;
-			chunk.Terrain.SetObject(terrain.coordinate.WorldPosition, terrain);
+			chunk.Terrain.SetObject(terrain.Coordinate.WorldPosition, terrain);
 
 			//assign/update neighbors todo
 		}
@@ -81,15 +83,14 @@ namespace Atomation.Map
 		/// <summary>
 		/// sets terrain at world position
 		/// </summary>
-		public void SetTerrain(int x, int y, Terrain terrain)
+		public void SetTerrain(int x, int y,Vector2 pos, Terrain terrain)
 		{
-			Chunk chunk = GetChunk(terrain.coordinate.ChunkCords);
+			Chunk chunk = GetChunk(pos);
 
 			if (chunk == null)
 			{
 				return;
 			}
-			// terrain.coordinate = new Coordinate(x,y,chunk.coordinate.WorldPosition);
 			chunk.Terrain.SetObject(x, y, terrain);
 
 			//assign/update neighbors todo
@@ -162,7 +163,7 @@ namespace Atomation.Map
 					{
 						Chunk chunk = chunkArray[viewChunkCord];
 
-						chunk.UpdateVisibility(viewChunkCord);
+						chunk.UpdateVisibility(playerPosition);
 						if (chunk.Rendered)
 						{
 							lastUpdatedChunks.Add(chunk);
@@ -175,7 +176,6 @@ namespace Atomation.Map
 						worldMap.AddChild(newChunk);
 
 						chunkArray.Add(viewChunkCord, newChunk);
-
 						WorldGenerator.GenerateChunk(chunkCord, this);
 					}
 				}

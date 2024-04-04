@@ -42,6 +42,8 @@ namespace Atomation
 		/// </summary>
 		private void MouseInputs(InputEventMouseButton inputEvent)
 		{
+			// Input.ParseInputEvent(ie);
+			// MakeInputLocal(inputEvent);
 			Vector2 mousePos = inputEvent.Position - GetViewport().CanvasTransform.Origin;
 
 			if (inputEvent.IsActionPressed("Left Click"))
@@ -119,10 +121,3 @@ namespace Atomation
 	}
 }
 
-// 				var localPos = new Vector2(10,20); // Local to Control/Node2D.
-// var ie = new InputEventMouseButton()
-// {
-//     ButtonIndex = MouseButton.Left,
-//     Position = GetViewport().GetScreenTransform() * GetGlobalTransformWithCanvas() * localPos,
-// };
-// Input.ParseInputEvent(ie);

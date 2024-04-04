@@ -18,7 +18,7 @@ namespace Atomation.Map
 		/// </summary>
 		public const int CHUNK_SIZE = 32;
 
-		public float CellOffset { get; private set; }
+		public float cellSize { get; private set; }
 		public bool Rendered { get; private set; }
 		public Coordinate coordinate{ get; private set; }
 
@@ -26,10 +26,9 @@ namespace Atomation.Map
 
 		public Chunk(Vector2 worldPosition, float cellSize)
 		{
-			Name = $"Chunk {worldPosition/cellSize}";
+			Name = $"Chunk {worldPosition/CHUNK_SIZE}";
 			
-			CellOffset = cellSize;
-			// Origin = worldPosition; 
+			this.cellSize = cellSize;
 			coordinate = new Coordinate(worldPosition);
 			Rendered = true;
 			
@@ -42,14 +41,15 @@ namespace Atomation.Map
 		/// </summary>
 		private float GetDistance(Vector2 worldPosition)
 		{
-			worldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X / CellOffset), Mathf.FloorToInt(worldPosition.Y / CellOffset));
+			//this needs fixing
+			worldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X / cellSize), Mathf.FloorToInt(worldPosition.Y / cellSize));
 
 			//align chunk to the pixel gird
-			Vector2 chunkPos = coordinate.WorldPosition / CellOffset;
+			Vector2 chunkPos = coordinate.WorldPosition / cellSize;
 			Vector2 chunkDistance = chunkPos - worldPosition;
 
 			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X), Mathf.Abs(chunkDistance.Y)));
-
+			// GD.Print($"{Name} distance {distance} from {worldPosition}, max is {MapSettings.MAX_LOAD_DIST}");
 			return distance;
 		}
 
@@ -76,6 +76,7 @@ namespace Atomation.Map
 		{
 			//if within render bounds then keep rendered otherwise un render it
 			bool visible = GetDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
+			// GD.Print(visible);
 			
 			SetVisibility(visible);
 		}

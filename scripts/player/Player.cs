@@ -18,7 +18,9 @@ namespace Atomation.Player
 		{	
 			Initialize();	
 			Name = "player";
-			Position = Vector2.Zero;
+
+			Coordinate = new Coordinate(Vector2.Zero);
+
 			Body = new CharacterBody2D();
 			Camera = new Camera();
 			Graphic = new ColorRect
@@ -44,6 +46,7 @@ namespace Atomation.Player
 
 			Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
 			Position += velocityVector.Normalized() * GetStat("MoveSpeed").Value;
+			Coordinate.UpdateWorldPosition(Position);
 			//todo: animation code here at some point
 		}
 

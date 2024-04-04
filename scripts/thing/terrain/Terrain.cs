@@ -23,12 +23,11 @@ namespace Atomation.Thing
 
 		public Terrain(Coordinate coord)
 		{
-			coordinate = coord;
-			Position = coordinate.WorldPosition*MapSettings.CELL_SIZE;
+			Coordinate = coord;
+			Position = Coordinate.WorldPosition*MapSettings.CELL_SIZE;
 
 			FloorGraphic = new FloorGraphics(this,coord.WorldPosition);
 		}
-
 
 		/// <summary>
 		/// reading the configuration data for the given tile
@@ -37,7 +36,7 @@ namespace Atomation.Thing
 		/// </summary>
 		public void ReadConfigs(CompThingDef config)
 		{
-			Name = config.Name +coordinate.ToString();
+			Name = config.Name +Coordinate.ToString();
 			Description = config.Description;
 			stats = config.FormatStats();
 			modifiers = config.FormatStatModifers();

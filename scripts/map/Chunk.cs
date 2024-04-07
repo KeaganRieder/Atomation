@@ -49,7 +49,6 @@ namespace Atomation.Map
 			Vector2 chunkDistance = chunkPos - worldPosition;
 
 			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X), Mathf.Abs(chunkDistance.Y)));
-			// GD.Print($"{Name} distance {distance} from {worldPosition}, max is {MapSettings.MAX_LOAD_DIST}");
 			return distance;
 		}
 
@@ -76,7 +75,6 @@ namespace Atomation.Map
 		{
 			//if within render bounds then keep rendered otherwise un render it
 			bool visible = GetDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
-			// GD.Print(visible);
 			
 			SetVisibility(visible);
 		}

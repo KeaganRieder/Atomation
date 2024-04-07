@@ -1,8 +1,10 @@
 using Atomation;
 using Atomation.Map;
 using Atomation.Resources;
-using Atomation.Player;
+using Atomation.PlayerChar;
 using Godot;
+using System.Collections.Generic;
+using Atomation.Thing;
 /// <summary>
 /// Main class which handles manning the game through different scene
 /// </summary>
@@ -10,7 +12,7 @@ public partial class Main : Node2D
 {
 	public WorldMap Map { get; private set; }
 	public FileManger ResourceManger { get; private set; }
-	public PlayerChar Player { get; private set; }
+	public Player Player { get; private set; }
 	public Controller controller { get; private set; }
 
 	public Main()
@@ -25,7 +27,7 @@ public partial class Main : Node2D
 	{
 		ResourceManger.LoadFiles();
 
-		PlayerChar Player = new PlayerChar();
+		Player Player = new Player();
 		Map = new WorldMap(Player);
 
 		controller = new Controller();
@@ -40,4 +42,5 @@ public partial class Main : Node2D
 	}
 
 
-}
+
+	}	

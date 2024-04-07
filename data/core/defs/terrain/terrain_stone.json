@@ -1,14 +1,14 @@
 {
   "Defs": {
     "Slate": {
-      "name": "Slate",
-      "description": "",
-      "graphicData": {
+      "Name": "Slate",
+      "Description": "It's a nice black rock",
+      "Graphic Data": {
         "texturePath": "terrain/natural/slate",
         "color": {
-          "R": 0.662745,
-          "G": 0.662745,
-          "B": 0.662745,
+          "R": 0.6627451,
+          "G": 0.6627451,
+          "B": 0.6627451,
           "A": 1.0,
           "R8": 169,
           "G8": 169,
@@ -16,77 +16,81 @@
           "A8": 255,
           "H": 0.0,
           "S": 0.0,
-          "V": 0.662745,
-          "Luminance": 0.662745
+          "V": 0.6627451,
+          "Luminance": 0.6627451
         }
       },
-      "statBases": [
+      "Stats": [
         {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects fertility"
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
         },
         {
-          "base value": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "Objects Beauty"
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
         }
       ],
-      "statModifiers" :[
+      "stat Modifiers": [
         {
-          "name": "Walk Speed",
-          "description": null,
-          "base value": 1.0,
-          "type": "Flat"
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.7,
+          "Modifier Type": "MultiplicativePercentage"
         }
       ]
     },
     "Marble": {
-      "name": "marble",
-      "description": "",
-      "graphicData": {
-        "texturePath": "terrain/natural/marble",
+      "Name": "Marble",
+      "Description": "It's white rock",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/Marble",
         "color": {
-          "R": 0.0,
-          "G": 0.0,
-          "B": 0.0,
+          "R": 0.827451,
+          "G": 0.827451,
+          "B": 0.827451,
           "A": 1.0,
-          "R8": 0,
-          "G8": 0,
-          "B8": 0,
+          "R8": 211,
+          "G8": 211,
+          "B8": 211,
           "A8": 255,
           "H": 0.0,
           "S": 0.0,
-          "V": 0.0,
-          "Luminance": 0.0
+          "V": 0.827451,
+          "Luminance": 0.827451
         }
       },
-      "statBases": [
+      "Stats": [
         {
-          "base value": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects fertility"
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
         },
         {
-          "base value": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "Objects Beauty"
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
         }
       ],
-      "statModifiers" :[
+      "stat Modifiers": [
         {
-          "name": "Walk Speed",
-          "description": null,
-          "base value": 1.0,
-          "type": "Flat"
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.7,
+          "Modifier Type": "MultiplicativePercentage"
         }
       ]
     }

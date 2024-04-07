@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Atomation.Resources;
-using Atomation.Player;
+using Atomation.PlayerChar;
 using Atomation.Thing;
 
 using Godot;
@@ -35,12 +35,12 @@ namespace Atomation.Map
 		public int MaxWorldWidth { get; set; }
 		public int MaxWorldHeight { get; set; }
 
-		public PlayerChar Player { get; private set; }
+		public Player Player { get; private set; }
 
 		public ChunkHandler ChunkHandler { get; private set; }
 		private MapSettings mapSettings;
 
-		public WorldMap(PlayerChar Player)
+		public WorldMap(Player Player)
 		{
 			Name = "World Map";
 			this.Player = Player;
@@ -60,7 +60,7 @@ namespace Atomation.Map
 			base._Ready();
 
 			GD.Print("Generating Map");
-			ChunkHandler.CheckChunkStatus(Player.Position);
+			ChunkHandler.CheckChunkStatus((Vector2)Player.Position);
 			GD.Print("Generation Complete");
 		}
 

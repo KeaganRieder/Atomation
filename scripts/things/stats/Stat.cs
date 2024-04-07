@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Newtonsoft.Json;
 
 namespace Atomation.Thing
 {
@@ -9,8 +10,12 @@ namespace Atomation.Thing
     /// </summary>
     public class Stat : Thing
     {
+        [JsonProperty("Min Value", Order = 1)]
         private float minValue;
+
+        [JsonProperty("Max Value", Order = 2)]
         private float maxValue;
+        [JsonProperty("Base Value", Order = 3)]
         private float baseValue;
         private float damage;
         private float currentValue;
@@ -21,10 +26,12 @@ namespace Atomation.Thing
 
         private bool updateStat;
 
+        public Stat(){ }
+
         public Stat(string name, string description, float minValue, float maxValue, float baseValue)
         {
-            this.name = name;
-            this.description = description;
+            Name = name;
+            Description = description;
 
             this.minValue = minValue;
             this.maxValue = maxValue;
@@ -38,15 +45,15 @@ namespace Atomation.Thing
             additiveModifiers = new List<StatModifier>();
             multiplicativeModifiers = new List<StatModifier>();
         }
-        public Stat(StatDef configs)
-        {
-            name = configs.Name;
-            description = configs.Description;
 
-            minValue = configs.MinValue;
-            maxValue = configs.MaxValue;
-            baseValue = configs.BaseValue;
-            currentValue = baseValue;
+        public Stat(Stat stat){
+            Name = stat.Name;
+            Description = stat.Description;
+
+            minValue = stat.minValue;
+            maxValue = stat.maxValue;
+            baseValue = stat.baseValue;
+            currentValue = stat.baseValue;
 
             damage = 0;
             updateStat = false;

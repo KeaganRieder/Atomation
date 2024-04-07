@@ -26,7 +26,6 @@ namespace Atomation
 
             XYPosition = new Vector2I(x, y);
             GetWorldPosition(chunkCords);
-            // UpdateCurrentChunk();
         }
 
         /// <summary>
@@ -74,9 +73,8 @@ namespace Atomation
             float x = XYPosition.X + chunkCords.X;
             float y = XYPosition.Y + chunkCords.Y;
 
-            WorldPosition = new Vector2(x, y);
+            WorldPosition = new Vector2(x, y) * MapSettings.CELL_SIZE;
             // GD.Print($"Cords {WorldPosition}");
-
         }
 
         public override string ToString()

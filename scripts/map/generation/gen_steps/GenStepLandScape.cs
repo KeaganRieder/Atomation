@@ -118,11 +118,11 @@ namespace Atomation.Map
 		{
 			if (height < deepWater)
 			{
-				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("DeepOcean"));
+				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Deep Water"));
 			}
 			else if (height < shallowWater)
 			{
-				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("ShallowOcean"));
+				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Shallow Water"));
 			}
 			else if (height < shoreHeight)
 			{

@@ -6,7 +6,8 @@ using System;
 namespace Atomation.Thing
 {
 	/// <summary>
-	/// defines what a terrain object is in the game world 
+	/// the terrain/floor of the games world. this object is the base visual in
+	/// a game world with other objects being placed on top of it
 	/// </summary>
 	public partial class Terrain : CompThing
 	{
@@ -14,7 +15,7 @@ namespace Atomation.Thing
 		public float HeatValue { get; set; }
 		public float MoistureValue { get; set; }
 
-		public FloorGraphics FloorGraphic { get; set; }
+		public FloorGraphic FloorGraphic { get; set; }
 
 		public Terrain NorthNeighbor { get; private set; }
 		public Terrain SouthNeighbor { get; private set; }
@@ -23,10 +24,10 @@ namespace Atomation.Thing
 
 		public Terrain(Coordinate coord)
 		{
-			Coordinate = coord;
-			Position = Coordinate.WorldPosition*MapSettings.CELL_SIZE;
+			coordinate = coord;
+			Position = coordinate.WorldPosition;
 
-			FloorGraphic = new FloorGraphics(this,coord.WorldPosition);
+			FloorGraphic = new FloorGraphic(this);
 		}
 
 		/// <summary>
@@ -34,15 +35,17 @@ namespace Atomation.Thing
 		/// and setting it for anything in which is needing
 		/// configuration at current call
 		/// </summary>
-		public void ReadConfigs(CompThingDef config)
+		public void ReadConfigs(TerrainDef config)
 		{
-			Name = config.Name +Coordinate.ToString();
+			Name = config.Name + Coordinate.ToString();
 			Description = config.Description;
 			stats = config.FormatStats();
 			modifiers = config.FormatStatModifers();
 			FloorGraphic.ConfigureGraphic(config.GraphicData);
 		}
 
+
+//todo neighbors
 		public void UpdateNorthNeighbor(Terrain northNeighbor)
 		{
 			if (northNeighbor != null)

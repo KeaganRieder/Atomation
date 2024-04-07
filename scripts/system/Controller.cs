@@ -1,5 +1,5 @@
 using Atomation.Map;
-using Atomation.Player;
+using Atomation.PlayerChar;
 using Atomation.Resources;
 using Atomation.Thing;
 using Godot;
@@ -14,7 +14,7 @@ namespace Atomation
 		private KeyBindings keyBindings;
 
 		public WorldMap Map { get; set; }
-		public PlayerChar PlayerBody { get; set; }
+		public Player PlayerBody { get; set; }
 
 		public Controller()
 		{

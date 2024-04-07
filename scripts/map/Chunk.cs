@@ -7,33 +7,32 @@ using Atomation.Resources;
 namespace Atomation.Map
 {
 	/// <summary>
-	/// A chunk is a 32 x 32 section of the map that contains
+	/// A chunk is a 32 x 32 tiles section of the map that contains
 	/// various values, it is either loaded or unloaded depending on where 
 	/// the player is, as well as other aspects
 	/// </summary>
 	public partial class Chunk : Node2D
 	{
+		/// <summary>
+		/// the length and width of a chunk in terms of pixels.
+		/// </summary>
 		public const int CHUNK_SIZE = 32;
-		public float CellOffset { get; private set; }
+
+		public float cellSize { get; private set; }
 		public bool Rendered { get; private set; }
-		public Vector2 Origin { get; private set; }
+		public Coordinate coordinate{ get; private set; }
 
 		public Grid<Terrain> Terrain { get; private set; }
-		public Grid<Terrain> Buildings { get; private set; }
 
-		public Chunk() { }
-
-		public Chunk(Vector2 worldPosition, float cellSize) : this()
+		public Chunk(Vector2 worldPosition, float cellSize)
 		{
-			Name = $"Chunk {worldPosition}";
-
-			CellOffset = cellSize;
-			Origin = worldPosition;
-			Position = Origin;
+			Name = $"Chunk {worldPosition/CHUNK_SIZE}";
+			
+			this.cellSize = cellSize;
+			coordinate = new Coordinate(worldPosition);
 			Rendered = true;
-
-			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
-			Buildings = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, Origin, this);
+			
+			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition,this);
 		}
 
 		/// <summary>
@@ -42,14 +41,14 @@ namespace Atomation.Map
 		/// </summary>
 		private float GetDistance(Vector2 worldPosition)
 		{
-			worldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X / CellOffset), Mathf.FloorToInt(worldPosition.Y / CellOffset));
+			//this needs fixing
+			worldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X / cellSize), Mathf.FloorToInt(worldPosition.Y / cellSize));
 
 			//align chunk to the pixel gird
-			Vector2 chunkPos = Origin / CellOffset;
+			Vector2 chunkPos = coordinate.WorldPosition / cellSize;
 			Vector2 chunkDistance = chunkPos - worldPosition;
 
 			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X), Mathf.Abs(chunkDistance.Y)));
-
 			return distance;
 		}
 

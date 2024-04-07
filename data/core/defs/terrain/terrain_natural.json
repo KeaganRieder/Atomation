@@ -1,144 +1,197 @@
 {
   "Defs": {
     "Grass": {
-      "name": "Grass",
-      "description": "",
-      "graphicData": {
+      "Name": "Grass",
+      "Description": "It's grassy",
+      "Graphic Data": {
         "texturePath": "terrain/natural/grass",
         "color": {
-          "R": 0.133333,
-          "G": 0.545098,
-          "B": 0.133333,
+          "R": 0.18039216,
+          "G": 0.54509807,
+          "B": 0.34117648,
           "A": 1.0,
-          "R8": 34,
+          "R8": 46,
           "G8": 139,
-          "B8": 34,
+          "B8": 87,
           "A8": 255,
-          "H": 0.33333334,
-          "S": 0.7553963,
-          "V": 0.545098,
-          "Luminance": 0.42782736
+          "H": 0.40681005,
+          "S": 0.66906476,
+          "V": 0.54509807,
+          "Luminance": 0.45283842
         }
       },
-      "statBases": [
+      "Stats": [
         {
-          "baseValue": 1.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects fertility"
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 1.0,
+          "Base Value": 2.0
         },
         {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "Objects Beauty"
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
         }
       ],
-      "statModifiers" :[
+      "stat Modifiers": [
         {
-          "name": "Walk Speed",
-          "description": null,
-          "baseValue": 1.0,
-          "type": "Flat"
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.8,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Forest Grass": {
+      "Name": "Forest Grass",
+      "Description": "It's darker grass found in a forest",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/forest_grass",
+        "color": {
+          "R": 0.0,
+          "G": 0.39215687,
+          "B": 0.0,
+          "A": 1.0,
+          "R8": 0,
+          "G8": 100,
+          "B8": 0,
+          "A8": 255,
+          "H": 0.33333334,
+          "S": 1.0,
+          "V": 0.39215687,
+          "Luminance": 0.2804706
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 1.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
+        }
+      ],
+      "stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.8,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Rich Soil": {
+      "Name": "Rich Soil",
+      "Description": "It's soil that crops can grow well one",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/rich_soil",
+        "color": {
+          "R": 0.7372549,
+          "G": 0.56078434,
+          "B": 0.56078434,
+          "A": 1.0,
+          "R8": 188,
+          "G8": 143,
+          "B8": 143,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.23936169,
+          "V": 0.7372549,
+          "Luminance": 0.598302
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 1.5,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
+        }
+      ],
+      "stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
         }
       ]
     },
     "Soil": {
-      "name": "Soil",
-      "description": "",
-      "graphicData": {
+      "Name": "Soil",
+      "Description": "It's soil ",
+      "Graphic Data": {
         "texturePath": "terrain/natural/soil",
         "color": {
-          "R": 0.545098,
-          "G": 0.270588,
-          "B": 0.0745098,
+          "R": 0.64705884,
+          "G": 0.16470589,
+          "B": 0.16470589,
           "A": 1.0,
-          "R8": 139,
-          "G8": 69,
-          "B8": 19,
-          "A8": 255,
-          "H": 0.069444366,
-          "S": 0.8633093,
-          "V": 0.545098,
-          "Luminance": 0.314792
-        }
-      },
-      "statBases": [
-        {
-          "baseValue": 1.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects fertility"
-        },
-        {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "Objects Beauty"
-        }
-      ],
-      "statModifiers" :[
-        {
-          "name": "Walk Speed",
-          "description": null,
-          "baseValue": 1.0,
-          "type": "Flat"
-        }
-      ]
-    },
-    "Gravel": {
-      "name": "Gravel",
-      "description": "",
-      "graphicData": {
-        "texturePath": "terrain/natural/gravel",
-        "color": {
-          "R": 0.745098,
-          "G": 0.745098,
-          "B": 0.745098,
-          "A": 1.0,
-          "R8": 190,
-          "G8": 190,
-          "B8": 190,
+          "R8": 165,
+          "G8": 42,
+          "B8": 42,
           "A8": 255,
           "H": 0.0,
-          "S": 0.0,
-          "V": 0.745098,
-          "Luminance": 0.74509794
+          "S": 0.74545455,
+          "V": 0.64705884,
+          "Luminance": 0.2672541
         }
       },
-      "statBases": [
+      "Stats": [
         {
-          "baseValue": 0.5,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects fertility"
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 1.5,
+          "Base Value": 2.0
         },
         {
-          "baseValue": -1.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "Objects Beauty"
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
         }
       ],
-      "statModifiers" :[
+      "stat Modifiers": [
         {
-          "name": "Walk Speed",
-          "description": null,
-          "baseValue": 1.0,
-          "type": "Flat"
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
         }
       ]
     },
     "Sand": {
-      "name": "Sand",
-      "description": "",
-      "graphicData": {
+      "Name": "Sand",
+      "Description": "it's sand",
+      "Graphic Data": {
         "texturePath": "terrain/natural/sand",
         "color": {
           "R": 1.0,
@@ -155,28 +208,124 @@
           "Luminance": 0.9278
         }
       },
-      "statBases": [
+      "Stats": [
         {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Fertility",
-          "description": "Objects fertility"
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
         },
         {
-          "baseValue": 0.0,
-          "minValue": 0.0,
-          "maxValue": 0.0,
-          "name": "Beauty",
-          "description": "Objects Beauty"
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
         }
       ],
-      "statModifiers" :[
+      "stat Modifiers": [
         {
-          "name": "Walk Speed",
-          "description": null,
-          "baseValue": 1.0,
-          "type": "Flat"
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Gravel": {
+      "Name": "Gravel",
+      "Description": "it's sand",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/gravel",
+        "color": {
+          "R": 0.74509805,
+          "G": 0.74509805,
+          "B": 0.74509805,
+          "A": 1.0,
+          "R8": 190,
+          "G8": 190,
+          "B8": 190,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.0,
+          "V": 0.74509805,
+          "Luminance": 0.745098
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
+        }
+      ],
+      "stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.2,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Ice": {
+      "Name": "Ice",
+      "Description": "it's slippery",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/ice",
+        "color": {
+          "R": 1.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "R8": 255,
+          "G8": 255,
+          "B8": 255,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.0,
+          "V": 1.0,
+          "Luminance": 1.0
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 1.0,
+          "Base Value": 1.0
+        }
+      ],
+      "stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.4,
+          "Modifier Type": "MultiplicativePercentage"
         }
       ]
     }

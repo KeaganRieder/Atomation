@@ -7,7 +7,7 @@
       "minTemperature": 1.0,
       "maxTemperature": 1.5,
       "biomeTerrain": {
-        "-0.5": "grass"
+        "-0.5": "Grass"
       },
       "biomeColor": {
         "R": 1.0,
@@ -22,7 +22,7 @@
       "minTemperature": 1.4,
       "maxTemperature": 3,
       "biomeTerrain": {
-        "-0.5": "grass"
+        "-0.5": "Grass"
       },
       "biomeColor": {
         "R": 0.956863,
@@ -37,7 +37,7 @@
       "minTemperature": 1.6,
       "maxTemperature": 3,
       "biomeTerrain": {
-        "-0.5": "grass"
+        "-0.5": "Grass"
       },
       "biomeColor": {
         "R": 0.545098,
@@ -52,7 +52,7 @@
       "minTemperature": 0.9,
       "maxTemperature": 1.5,
       "biomeTerrain": {
-        "-0.5": "grass"
+        "-0.5": "Grass"
       },
       "biomeColor": {
         "R": 0.0,

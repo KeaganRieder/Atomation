@@ -67,6 +67,7 @@ namespace Atomation.Resources
             }
         }
 
+        [JsonIgnore]
         public Dictionary<string, defType> FileContents{
             get => defs;
         }

@@ -19,19 +19,7 @@ namespace Atomation
 
         public KeyBindings()
         {
-            
-        }
-        public KeyBindings(string path)
-        {
-            LoadBindings(path);
-        }
-
-        /// <summary>
-        /// formats a key binding file using default setting/configuration
-        /// </summary>
-        public void FormatFile(string fileName)
-        {
-            keyBindings = new Dictionary<string, Key>(){
+             keyBindings = new Dictionary<string, Key>(){
                 {"GenerateNewMap", Key.H},
                 {"Default", Key.F},
                 {"VisualizeMoisture", Key.M},
@@ -45,7 +33,11 @@ namespace Atomation
                 {"MoveUp", Key.W},
             };
 
-            FileManger.WriteJsonFile(FilePath.KEYBINDINGS_FOLDER, fileName, this);
+        }
+        public KeyBindings(string path)
+        {
+            LoadBindings(path);
+          
         }
 
         /// <summary>
@@ -53,6 +45,8 @@ namespace Atomation
         /// </summary>
         public void LoadBindings(string bindingFile)
         {
+            LoadMouseBindings();
+
             KeyBindings loadedBinding = FileManger.ReadJsonFile<KeyBindings>(FilePath.KEYBINDINGS_FOLDER, bindingFile);
 
             //assigning 
@@ -66,6 +60,23 @@ namespace Atomation
 
                 InputMap.ActionAddEvent(binding.Key, inputEventKey);
             }
+        }
+        
+        private void LoadMouseBindings(){
+            InputEventMouseButton mouseButton;
+            
+            InputMap.AddAction("Left Click");
+            InputMap.AddAction("Right Click");
+
+            mouseButton = new InputEventMouseButton{
+                ButtonIndex = MouseButton.Left,
+            };
+            InputMap.ActionAddEvent("Left Click",mouseButton);
+            
+            mouseButton = new InputEventMouseButton{
+                ButtonIndex = MouseButton.Right,
+            };
+            InputMap.ActionAddEvent("Right Click",mouseButton);
         }
     }
 }

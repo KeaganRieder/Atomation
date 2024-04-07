@@ -15,30 +15,19 @@ namespace Atomation.Resources
 	}
 
 	/// <summary>
-	/// abstract class which defines the base of all graphics in Atomation
+	/// class which defines floor graphics 
 	/// </summary>
-	public class FloorGraphics : Graphic
+	public class FloorGraphic : Graphic
 	{
-		public ColorRect FloorGraphic{get; private set;}
-
-		public FloorGraphics(Color color)
+		public FloorGraphic(Node2D terrainNode)
 		{
-			this.color = color;
-			FloorGraphic = new ColorRect();
-			FloorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
-			this.color.A = 1;
-		}
-
-		public FloorGraphics(Node2D terrainNode)
-		{
-
-			FloorGraphic = new ColorRect();
-			FloorGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
+			ObjGraphic = new ColorRect();
+			ObjGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 			color = new Color(Colors.Black);
-			FloorGraphic.Color = color;
-            FloorGraphic.VisibilityLayer = 1;
+			ObjGraphic.Color = color;
+            ObjGraphic.VisibilityLayer = 1;
 
-			terrainNode.AddChild(FloorGraphic);
+			terrainNode.AddChild(ObjGraphic);
 		}
 
 		public override void ConfigureGraphic(GraphicData graphicConfig)
@@ -46,8 +35,6 @@ namespace Atomation.Resources
 			texturePath = graphicConfig.TexturePath;
 			color = graphicConfig.Color;
 			color.A = 1;
-
-			DefaultGraphic();
 		}
 
 		/// <summary>
@@ -56,7 +43,7 @@ namespace Atomation.Resources
 		/// </summary>
 		public void DefaultGraphic()
 		{
-			FloorGraphic.Color = color;
+			ObjGraphic.Color = color;
 		}
 		
 		/// <summary>
@@ -112,7 +99,7 @@ namespace Atomation.Resources
 				heatColor = Colors.DarkRed;
 			}
 
-			FloorGraphic.Color = heatColor;
+			ObjGraphic.Color = heatColor;
 		}
 		
 		/// <summary>
@@ -121,7 +108,7 @@ namespace Atomation.Resources
 		/// </summary>
 		public void HeightGraphic(float heightVal)
 		{
-			FloorGraphic.Color = new Color(heightVal, heightVal, heightVal);
+			ObjGraphic.Color = new Color(heightVal, heightVal, heightVal);
 		}
 		/// <summary>
 		/// makes terrain display as height map
@@ -184,7 +171,7 @@ namespace Atomation.Resources
 			// {
 			// 	moistureColor = Colors.DarkBlue;
 			// }
-			FloorGraphic.Color = moistureColor;
+			ObjGraphic.Color = moistureColor;
 		}
 	}
 }

@@ -11,6 +11,7 @@ namespace Atomation.Map
 	public class ChunkHandler
 	{
 		private readonly int visibleChunks;
+		private int chunkSize;
 
 		private List<Chunk> lastUpdatedChunks;
 		private Dictionary<Vector2, Chunk> chunkArray;
@@ -21,69 +22,83 @@ namespace Atomation.Map
 		{
 			worldMap = map;
 
-			visibleChunks = Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);//  - 1;
+			visibleChunks = 1;// Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);//  - 1;
+
+			// making chunk size based on tiles not pixels
+			chunkSize = Chunk.CHUNK_SIZE * MapSettings.CELL_SIZE;
 
 			lastUpdatedChunks = new List<Chunk>();
 			chunkArray = new Dictionary<Vector2, Chunk>();
 		}
 
+	
+
 		/// <summary>
-		/// gets the position of the chunk aligned on the tile grid
+		/// gets the position of a chunk at the given cords
 		/// </summary>
-		private Vector2 GetChunkWorldPosition(Vector2 worldPosition)
+		private Vector2 GetChunkCords(Vector2 worldPosition)
 		{
-			int x = Mathf.RoundToInt(worldPosition.X * Chunk.CHUNK_SIZE * MapSettings.CELL_SIZE);
-			int y = Mathf.RoundToInt(worldPosition.Y * Chunk.CHUNK_SIZE * MapSettings.CELL_SIZE);
-			Vector2 cords = new Vector2(x, y);
-			return cords;
+
+			int xCord = Mathf.FloorToInt(worldPosition.X /chunkSize);
+			int yCord = Mathf.FloorToInt(worldPosition.Y /chunkSize);
+
+			return new Vector2(xCord, yCord);
 		}
 
 		/// <summary>
-		/// Get the cords aligned to pixel grid of current chunk 
+		/// gets chunks at given world position 
 		/// </summary>
-		public Vector2 GetCurrentChunkCords(Vector2 worldPosition)
+		private Chunk GetChunk(Vector2 worldPosition)
 		{
-			float x = Mathf.RoundToInt(worldPosition.X / Chunk.CHUNK_SIZE / MapSettings.CELL_SIZE);
-			float y = Mathf.RoundToInt(worldPosition.Y / Chunk.CHUNK_SIZE / MapSettings.CELL_SIZE);
-			Vector2 cords = new Vector2(x, y);
-			return cords;
-		}
+			Vector2 chunkPosition = GetChunkCords(worldPosition);
+			// GD.Print($"Chunk Pos: {chunkPosition} { worldPosition}/ {chunkSize} = { Mathf.FloorToInt(worldPosition.X/ chunkSize)},{ Mathf.FloorToInt(worldPosition.Y/ chunkSize)}");
 
-		/// <summary>
-		/// gets chunks at given chunk cords 
-		/// </summary>
-		public Chunk GetChunk(Vector2 worldPosition)
-		{
-			worldPosition = GetCurrentChunkCords(worldPosition);
-			if (chunkArray.ContainsKey(worldPosition))
+			if (chunkArray.ContainsKey(chunkPosition))
 			{
-				return chunkArray[worldPosition];
+				return chunkArray[chunkPosition];
 			}
 			else
 			{
-				GD.PushError($"ERROR: tried to access NULL chunk {worldPosition}");
+				GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{chunkPosition} WorldPos:{worldPosition}");
 				return null;
 			}
 		}
 
-		public void SetTerrain(Vector2 worldPosition, Terrain terrain)
+		/// <summary>
+		/// sets terrain at world position
+		/// </summary>
+		public void SetTerrain(Terrain terrain)
 		{
-			Chunk chunk = GetChunk(worldPosition);
+			Chunk chunk = GetChunk(terrain.Coordinate.WorldPosition);
 
 			if (chunk == null)
 			{
 				return;
 			}
+			chunk.Terrain.SetObject(terrain.Coordinate.WorldPosition, terrain);
 
-			chunk.Terrain.SetObject(worldPosition, terrain);
-
-			//assign/update neighbors 
-			terrain.UpdateNorthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y-1)));
-			terrain.UpdateSouthNeighbor(GetTerrain(new Vector2(worldPosition.X,worldPosition.Y+1)));
-			terrain.UpdateEastNeighbor(GetTerrain(new Vector2(worldPosition.X+1,worldPosition.Y)));
-			terrain.UpdateWestNeighbor(GetTerrain(new Vector2(worldPosition.X-1,worldPosition.Y)));
-
+			//assign/update neighbors todo
 		}
+
+		/// <summary>
+		/// sets terrain at world position
+		/// </summary>
+		public void SetTerrain(int x, int y,Vector2 pos, Terrain terrain)
+		{
+			Chunk chunk = GetChunk(pos);
+
+			if (chunk == null)
+			{
+				return;
+			}
+			chunk.Terrain.SetObject(x, y, terrain);
+
+			//assign/update neighbors todo
+		}
+
+		/// <summary>
+		/// gets terrain at world position
+		/// </summary>
 		public Terrain GetTerrain(Vector2 worldPosition)
 		{
 			Chunk chunk = GetChunk(worldPosition);
@@ -91,8 +106,20 @@ namespace Atomation.Map
 			{
 				return null;
 			}
-			
 			return chunk.Terrain.GetObject(worldPosition);
+		}
+
+		/// <summary>
+		/// sets terrain at world position
+		/// </summary>
+		public Terrain GetTerrain(int x, int y)
+		{
+			Chunk chunk = GetChunk(new Vector2(x,y));
+			if (chunk == null)
+			{
+				return null;
+			}
+			return chunk.Terrain.GetObject(x, y);
 		}
 
 		/// <summary>
@@ -116,7 +143,7 @@ namespace Atomation.Map
 		/// </summary>
 		public void CheckChunkStatus(Vector2 playerPosition)
 		{
-			Vector2 currentChunkCords = GetCurrentChunkCords(playerPosition);
+			Vector2 currentChunkCords = GetChunkCords(playerPosition);
 
 			//un render all last active chunks
 			foreach (var chunk in lastUpdatedChunks)
@@ -124,19 +151,19 @@ namespace Atomation.Map
 				chunk.SetVisibility(false);
 			}
 			lastUpdatedChunks.Clear();
-			
+
 			//Run through surrounding chunks at player position 
-			for (int xOffset = -visibleChunks; xOffset < visibleChunks  /*+1 todo when threaded*/; xOffset++)
+			for (int xOffset = -visibleChunks; xOffset < visibleChunks /*+1 todo when threaded*/; xOffset++)
 			{
 				for (int yOffset = -visibleChunks; yOffset < visibleChunks /*+1 todo when threaded*/; yOffset++)
 				{
 					Vector2 viewChunkCord = new Vector2(currentChunkCords.X + xOffset, currentChunkCords.Y + yOffset);
-					
+
 					if (chunkArray.ContainsKey(viewChunkCord))
 					{
 						Chunk chunk = chunkArray[viewChunkCord];
 
-						chunk.UpdateVisibility(viewChunkCord);
+						chunk.UpdateVisibility(playerPosition);
 						if (chunk.Rendered)
 						{
 							lastUpdatedChunks.Add(chunk);
@@ -144,12 +171,11 @@ namespace Atomation.Map
 					}
 					else
 					{
-						Vector2 chunkCord = GetChunkWorldPosition(viewChunkCord);
+						Vector2 chunkCord = viewChunkCord * Chunk.CHUNK_SIZE;
 						Chunk newChunk = new(chunkCord, MapSettings.CELL_SIZE);
 						worldMap.AddChild(newChunk);
 
 						chunkArray.Add(viewChunkCord, newChunk);
-
 						WorldGenerator.GenerateChunk(chunkCord, this);
 					}
 				}

@@ -4,7 +4,7 @@ using Atomation.Resources;
 using Atomation.PlayerChar;
 using Godot;
 using System.Collections.Generic;
-using Atomation.Thing;
+using Atomation.Things;
 /// <summary>
 /// Main class which handles manning the game through different scene
 /// </summary>
@@ -43,4 +43,4 @@ public partial class Main : Node2D
 
 
 
-	}	
+}

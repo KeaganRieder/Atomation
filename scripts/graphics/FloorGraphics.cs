@@ -2,7 +2,13 @@ using Godot;
 using Atomation.Map;
 
 namespace Atomation.Resources
-{	
+{
+	//todo
+	//make structure graphics or redo to make different types, based on complexity
+	// like a simple graphic for something that only has one texture, well another for
+	//call animated for something with an animation
+
+
 	/// <summary>
 	/// decides how to blend seams between two different terrain
 	/// and ground types
@@ -25,7 +31,7 @@ namespace Atomation.Resources
 			ObjGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 			color = new Color(Colors.Black);
 			ObjGraphic.Color = color;
-            ObjGraphic.VisibilityLayer = 1;
+			ObjGraphic.VisibilityLayer = 1;
 
 			terrainNode.AddChild(ObjGraphic);
 		}
@@ -45,7 +51,7 @@ namespace Atomation.Resources
 		{
 			ObjGraphic.Color = color;
 		}
-		
+
 		/// <summary>
 		/// makes terrain display as heat map
 		/// where -.9 is darkRed(hot), and 1 is blue(cold)
@@ -101,7 +107,7 @@ namespace Atomation.Resources
 
 			ObjGraphic.Color = heatColor;
 		}
-		
+
 		/// <summary>
 		/// makes terrain display as height map
 		/// where -1 is black (lowest ground), and 1 is while (hightest ground)

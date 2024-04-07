@@ -1,5 +1,5 @@
 using Godot;
-using Atomation.Thing;
+using Atomation.Things;
 using Atomation.Resources;
 
 namespace Atomation.Map
@@ -38,7 +38,7 @@ namespace Atomation.Map
 
 		public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
 		{
-			chunkPos = origin*MapSettings.CELL_SIZE;
+			chunkPos = origin * MapSettings.CELL_SIZE;
 			heightMap.Offset = origin;
 			temperatureMap.Offset = origin;
 			moistureMap.Offset = origin;
@@ -47,44 +47,54 @@ namespace Atomation.Map
 			{
 				for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
 				{
-					Terrain terrain = new Terrain(new Coordinate(x,y,origin));
+					Terrain terrain = new Terrain(new Coordinate(x, y, origin));
 
 					//calculate generation values
 					heightMap.CalculateHeight(x, y, terrain);
 					temperatureMap.CalculateHeat(y, terrain);
 					moistureMap.CalculateMoisture(x, y, terrain);
 
-					determineTerrainType(terrain);
-
-					chunkHandler.SetTerrain(x, y, chunkPos,terrain);
+					SetLandscape(x, y, terrain, chunkHandler);
 
 					terrain.UpdateGraphic(WorldMap.MapVisualIzation);
 				}
 			}
-			
+
 		}
-		
+
 
 		/// <summary>
 		/// using a terrains hight, determines if it's elevated ground, water or 
 		/// just land
 		/// </summary>
-		private void determineTerrainType(Terrain terrain)
+		private void SetLandscape(int x, int y, Terrain terrain, ChunkHandler chunkHandler)
 		{
 			float height = terrain.HeightValue;
 
-			if (height <= shoreHeight)
+			if (height > mountainBase)
 			{
-				SetWaterType(terrain, height);
+				SetElevationType(terrain, out Structure structure);
+				if (structure != null)
+				{
+					chunkHandler.SetTerrain(x, y, chunkPos, terrain);
+
+					chunkHandler.SetStructure(x, y, chunkPos, structure);
+				}
 			}
-			else if (height >= mountainBase)
+			else if (height <= shoreHeight)
 			{
-				SetElevatedTerrain(terrain, height);
+				SetWater(terrain);
+				chunkHandler.SetTerrain(x, y, chunkPos, terrain);
+
 			}
 			else
 			{
 				SetBiome(terrain);
+				chunkHandler.SetTerrain(x, y, chunkPos, terrain);
+
 			}
+
+
 		}
 
 		/// <summary>
@@ -111,37 +121,53 @@ namespace Atomation.Map
 			}
 			terrain.ReadConfigs(def);
 		}
+
 		/// <summary>
-		/// using provided terrain determines the type of water it is
+		/// sets the terrain to be a typeof water depending on how it's hieght 
 		/// </summary>
-		private void SetWaterType(Terrain terrain, float height)
+		private void SetWater(Terrain terrain)
 		{
+			float height = terrain.HeightValue;
+
 			if (height < deepWater)
 			{
-				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Deep Water"));
+				terrain.ReadConfigs(DefDatabase.GetTerrainDef("Deep Water"));
 			}
 			else if (height < shallowWater)
 			{
-				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Shallow Water"));
+				terrain.ReadConfigs(DefDatabase.GetTerrainDef("Shallow Water"));
 			}
-			else if (height < shoreHeight)
+			else
 			{
-				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Sand"));
+				terrain.ReadConfigs(DefDatabase.GetTerrainDef("Sand"));
 			}
+
 		}
 
 		/// <summary>
-		/// using provided terrain determines the type of Elevated ground it is
+		/// checks the provided terrains elevation to see if it's water or if its mountain.
+		/// if it's mountain or water return true, otherwise false saying it's just normal
+		/// ground
 		/// </summary>
-		private void SetElevatedTerrain(Terrain terrain, float height)
+		private void SetElevationType(Terrain terrain, out Structure structure)
 		{
-			if (height > mountainHeight)
+			float height = terrain.HeightValue;
+			//it's some point in a mountain
+			if (height > mountainBase && height < mountainHeight)
 			{
-				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Gravel"));
+				terrain.ReadConfigs(DefDatabase.GetTerrainDef("Gravel"));
+				structure = null;
 			}
-			else if (height > mountainBase)
+			else if (height > mountainHeight)
 			{
-				terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Slate"));
+				terrain.ReadConfigs(DefDatabase.GetTerrainDef("Slate"));
+				structure = new Structure(terrain.Coordinate);
+				structure.ReadConfigs(DefDatabase.GetStructureDef("Slate Wall"));
+
+			}
+			else
+			{
+				structure = null;
 			}
 		}
 	}

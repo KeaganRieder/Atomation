@@ -1,0 +1,36 @@
+{
+  "Defs": {
+    "Slate Wall": {
+      "Name": "Slate Wall",
+      "Description": "A slate stone wall",
+      "Graphic Data": {
+        "texturePath": "",
+        "color": {
+          "R": 0.4392157,
+          "G": 0.5019608,
+          "B": 0.5647059,
+          "A": 1.0,
+          "R8": 112,
+          "G8": 128,
+          "B8": 144,
+          "A8": 255,
+          "H": 0.5833333,
+          "S": 0.22222225,
+          "V": 0.5647059,
+          "Luminance": 0.49315143
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Health",
+          "Value": 100.0,
+          "Description": "object Hit Points",
+          "Min Value": 0.0,
+          "Max Value": 100.0,
+          "Base Value": 100.0
+        }
+      ],
+      "stat Modifiers": []
+    }
+  }
+}

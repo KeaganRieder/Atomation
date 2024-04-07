@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Godot;
-using Atomation.Thing;
+using Atomation.Things;
 using Newtonsoft.Json;
 
 namespace Atomation.Resources

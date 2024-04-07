@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using Atomation.Thing;
+using Atomation.Things;
 
 namespace Atomation.Map
 {
@@ -38,7 +38,6 @@ namespace Atomation.Map
 		/// </summary>
 		private Vector2 GetChunkCords(Vector2 worldPosition)
 		{
-
 			int xCord = Mathf.FloorToInt(worldPosition.X /chunkSize);
 			int yCord = Mathf.FloorToInt(worldPosition.Y /chunkSize);
 
@@ -51,8 +50,7 @@ namespace Atomation.Map
 		private Chunk GetChunk(Vector2 worldPosition)
 		{
 			Vector2 chunkPosition = GetChunkCords(worldPosition);
-			// GD.Print($"Chunk Pos: {chunkPosition} { worldPosition}/ {chunkSize} = { Mathf.FloorToInt(worldPosition.X/ chunkSize)},{ Mathf.FloorToInt(worldPosition.Y/ chunkSize)}");
-
+			
 			if (chunkArray.ContainsKey(chunkPosition))
 			{
 				return chunkArray[chunkPosition];
@@ -120,6 +118,61 @@ namespace Atomation.Map
 				return null;
 			}
 			return chunk.Terrain.GetObject(x, y);
+		}
+
+		/// <summary>
+		/// sets structure at world position
+		/// </summary>
+		public void SetStructure(Structure structure){
+			Chunk chunk = GetChunk(structure.Coordinate.WorldPosition);
+
+			if (chunk == null)
+			{
+				return;
+			}
+			chunk.Buildings.SetObject(structure.Coordinate.WorldPosition, structure);
+
+		}
+		/// <summary>
+		/// sets structure at world position
+		/// </summary>
+		public void SetStructure(int x, int y,Vector2 pos,Structure structure)
+		{
+			Chunk chunk = GetChunk(pos);
+
+			if (chunk == null)
+			{
+				return;
+			}
+			chunk.Buildings.SetObject(x, y, structure);
+
+			//assign/update neighbors todo
+		}
+
+		/// <summary>
+		/// gets structure at world position
+		/// </summary>
+		public Structure GetStructure(Vector2 worldPosition)
+		{
+			Chunk chunk = GetChunk(worldPosition);
+			if (chunk == null)
+			{
+				return null;
+			}
+			return chunk.Buildings.GetObject(worldPosition);
+		}
+
+		/// <summary>
+		/// gets structure at world position
+		/// </summary>
+		public Structure GetStructure(int x, int y)
+		{
+			Chunk chunk = GetChunk(new Vector2(x,y));
+			if (chunk == null)
+			{
+				return null;
+			}
+			return chunk.Buildings.GetObject(x, y);
 		}
 
 		/// <summary>

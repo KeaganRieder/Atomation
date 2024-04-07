@@ -1,5 +1,5 @@
 using Godot;
-using Atomation.Thing;
+using Atomation.Things;
 using Atomation.Resources;
 
 namespace Atomation.Map

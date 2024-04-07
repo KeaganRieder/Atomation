@@ -3,7 +3,7 @@ using Atomation.Map;
 using Atomation.Resources;
 using System;
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
 	/// <summary>
 	/// the terrain/floor of the games world. this object is the base visual in

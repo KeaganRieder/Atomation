@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Atomation.Resources;
 using Atomation.PlayerChar;
-using Atomation.Thing;
+using Atomation.Things;
 
 using Godot;
 

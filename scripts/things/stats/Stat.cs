@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using Newtonsoft.Json;
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
     /// <summary>
     /// class used for all stats which can be modified

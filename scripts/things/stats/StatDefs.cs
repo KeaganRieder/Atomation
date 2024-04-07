@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
     /// <summary>
 	// /// used in creation and formatting of a config file design to be read, 

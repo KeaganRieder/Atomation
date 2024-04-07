@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Atomation.Thing;
+using Atomation.Things;
 using Godot;
 
 namespace Atomation.Map

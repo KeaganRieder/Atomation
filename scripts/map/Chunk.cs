@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
-using Atomation.Thing;
+using Atomation.Things;
 using Atomation.Resources;
 
 namespace Atomation.Map
@@ -23,6 +23,7 @@ namespace Atomation.Map
 		public Coordinate coordinate{ get; private set; }
 
 		public Grid<Terrain> Terrain { get; private set; }
+		public Grid<Structure> Buildings { get; private set; }
 
 		public Chunk(Vector2 worldPosition, float cellSize)
 		{
@@ -33,6 +34,7 @@ namespace Atomation.Map
 			Rendered = true;
 			
 			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition,this);
+			Buildings = new Grid<Structure>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition,this);
 		}
 
 		/// <summary>

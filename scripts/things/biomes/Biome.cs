@@ -3,7 +3,7 @@ using Atomation.Resources;
 using Godot;
 using Newtonsoft.Json;
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
         public struct BiomeLabel
         {
@@ -67,7 +67,7 @@ namespace Atomation.Thing
             {
                 if (elevation < terrainHeight)
                 {
-                    return DefDatabase.GetTerrainConfig(terrain[terrainHeight]);
+                    return DefDatabase.GetTerrainDef(terrain[terrainHeight]);
                 }
             }
 

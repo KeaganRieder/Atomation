@@ -1,7 +1,7 @@
 using Godot;
 using Newtonsoft.Json;
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
     public interface ICompThing
 	{

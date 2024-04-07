@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Atomation;
 using Atomation.Resources;
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
 	/// <summary>
 	/// base of all complex things inside the game. these are things which 

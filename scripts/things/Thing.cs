@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
 	/// <summary>
 	/// base of all basic things inside the game. these things are often used

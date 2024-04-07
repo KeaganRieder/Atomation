@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using Atomation.Thing;
+using Atomation.Things;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -13,6 +13,7 @@ namespace Atomation.Resources
     public static class DefDatabase
     {
         private static DefFile<TerrainDef> TerrainDefs;
+        private static DefFile<StructureDef> StructureDefs;
         private static DefFile<Biome> BiomeDefs;
 
         /// <summary>
@@ -22,19 +23,21 @@ namespace Atomation.Resources
         {             
             GD.Print("Loading Terrain Def Files");
             TerrainDefs = new DefFile<TerrainDef>(FilePath.TERRAIN_FOLDER);
-
             GD.Print("Loading Biome Def Files");
-            BiomeDefs = new DefFile<Biome>(FilePath.BIOME_FOLDER);         
+            BiomeDefs = new DefFile<Biome>(FilePath.BIOME_FOLDER);    
+            GD.Print("Loading Structure Def Files");
+            StructureDefs  = new DefFile<StructureDef>(FilePath.STRUCTURE_FOLDER);
         }
 
         /// <summary>
         /// access cached terrain config data, and returns the terrain
         /// based on the ID
         /// </summary>
-        public static TerrainDef GetTerrainConfig(string terrainID)
+        public static TerrainDef GetTerrainDef(string terrainID)
         {
             return TerrainDefs[terrainID];
         }
+
         /// <summary>
         /// access cached terrain config data, and returns the terrain
         /// based on the moistureVal and temperateVal
@@ -53,8 +56,11 @@ namespace Atomation.Resources
                 }
             }
             
-            //FileContents
             return null;
+        }
+
+        public static StructureDef GetStructureDef(string StructureID){
+            return StructureDefs[StructureID];
         }
     }
 }

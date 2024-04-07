@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 
-namespace Atomation.Thing
+namespace Atomation.Things
 {
 	public enum ModifierType
 	{

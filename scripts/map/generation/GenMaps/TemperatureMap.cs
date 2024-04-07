@@ -1,4 +1,4 @@
-using Atomation.Thing;
+using Atomation.Things;
 using Godot;
 using Newtonsoft.Json;
 

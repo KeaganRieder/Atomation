@@ -1,11 +1,12 @@
+using Godot;
 namespace Atomation.Things
 {
-    /// <summary>
+     /// <summary>
 	/// used in creating and formatting a config file design to be read, 
     /// and cached at game start and then used in create an instance of 
-    /// a Terrain
+    /// a Structure
 	/// </summary>
-    public class TerrainDef : CompThingDef
+    public class StructureDef : CompThingDef
     {
     }
 }

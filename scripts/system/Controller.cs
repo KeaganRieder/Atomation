@@ -1,7 +1,7 @@
 using Atomation.Map;
 using Atomation.PlayerChar;
 using Atomation.Resources;
-using Atomation.Thing;
+using Atomation.Things;
 using Godot;
 
 namespace Atomation
@@ -70,7 +70,7 @@ namespace Atomation
 					//rework how position is set, make only done in grid class
 					Coordinate cords = new Coordinate(terrainCords);
 					terrain = new Terrain(cords);
-					terrain.ReadConfigs(DefDatabase.GetTerrainConfig("Grass"));
+					terrain.ReadConfigs(DefDatabase.GetTerrainDef("Grass"));
 
 					Map.ChunkHandler.SetTerrain(terrain);
 				}

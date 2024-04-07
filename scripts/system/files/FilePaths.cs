@@ -20,6 +20,10 @@ namespace Atomation.Resources
         /// </summary>
         public const string TERRAIN_FOLDER = DEFINITION_FOLDER + "terrain/";
         /// <summary>
+        /// data/core/defs/structures/
+        /// </summary>
+        public const string STRUCTURE_FOLDER = DEFINITION_FOLDER + "structures/";
+        /// <summary>
         /// data/core/defs/biomes/
         /// </summary>
         public const string BIOME_FOLDER = DEFINITION_FOLDER + "biomes/"; 

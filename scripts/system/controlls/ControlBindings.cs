@@ -7,17 +7,14 @@ using Newtonsoft.Json.Converters;
 namespace Atomation
 {
     /// <summary>
-    /// the keybindings in the game. defines what they are and 
-    /// how to properly mange them.
-    /// 
-    /// key codes can be found here https://docs.godotengine.org/en/stable/classes/class_%40globalscope.html#enum-globalscope-key
+    /// handles the key and mouse bindings for controls in the game
     /// </summary>
-    public class KeyBindings
+    public class ControlBindings
     {
         [JsonProperty]
         private Dictionary<string, Key> keyBindings;
 
-        public KeyBindings()
+        public ControlBindings()
         {
              keyBindings = new Dictionary<string, Key>(){
                 {"GenerateNewMap", Key.H},
@@ -34,7 +31,7 @@ namespace Atomation
             };
 
         }
-        public KeyBindings(string path)
+        public ControlBindings(string path)
         {
             LoadBindings(path);
           
@@ -47,7 +44,7 @@ namespace Atomation
         {
             LoadMouseBindings();
 
-            KeyBindings loadedBinding = FileManger.ReadJsonFile<KeyBindings>(FilePath.KEYBINDINGS_FOLDER, bindingFile);
+            ControlBindings loadedBinding = FileManger.ReadJsonFile<ControlBindings>(FilePath.KEYBINDINGS_FOLDER, bindingFile);
 
             //assigning 
             foreach (var binding in loadedBinding.keyBindings)

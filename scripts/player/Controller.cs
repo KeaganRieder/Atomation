@@ -1,17 +1,16 @@
 using Atomation.Map;
-using Atomation.PlayerChar;
 using Atomation.Resources;
 using Atomation.Things;
 using Godot;
 
-namespace Atomation
+namespace Atomation.PlayerChar
 {
 	/// <summary>
 	/// class which handles controls for the game
 	/// </summary>
 	public partial class Controller : Node2D
 	{
-		private KeyBindings keyBindings;
+		private ControlBindings keyBindings;
 
 		public WorldMap Map { get; set; }
 		public Player PlayerBody { get; set; }
@@ -20,7 +19,7 @@ namespace Atomation
 		{
 			Name = "Controller";
 			Position = Vector2.Zero;
-			keyBindings = new KeyBindings("default_bindings");
+			keyBindings = new ControlBindings("default_bindings");
 		}
 
 		public override void _Input(InputEvent inputEvent)
@@ -48,11 +47,13 @@ namespace Atomation
 
 			if (inputEvent.IsActionPressed("Left Click"))
 			{
+
 				int x = Mathf.FloorToInt(mousePos.X / MapSettings.CELL_SIZE);
 				int y = Mathf.FloorToInt(mousePos.Y / MapSettings.CELL_SIZE);
 				Vector2 terrainCords = new Vector2(x, y);
+				Coordinate coordinate = new Coordinate(terrainCords);
 
-				Terrain terrain = Map.ChunkHandler.GetTerrain(mousePos);//());
+				Terrain terrain = Map.ChunkHandler.GetTerrain(mousePos);
 
 				if (terrain != null)
 				{
@@ -67,12 +68,12 @@ namespace Atomation
 				}
 				else if (terrain == null)
 				{
-					//rework how position is set, make only done in grid class
-					Coordinate cords = new Coordinate(terrainCords);
-					terrain = new Terrain(cords);
+					
+
+					terrain = new Terrain(coordinate);
 					terrain.ReadConfigs(DefDatabase.GetTerrainDef("Grass"));
 
-					Map.ChunkHandler.SetTerrain(terrain);
+					Map.ChunkHandler.SetTerrain(terrain,terrainCords);
 				}
 			}
 			if (inputEvent.IsActionPressed("Right Click"))

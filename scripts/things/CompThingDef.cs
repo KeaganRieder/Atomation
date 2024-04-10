@@ -16,15 +16,16 @@ namespace Atomation.Things
 		public GraphicData GraphicData { get; set; }
 		[JsonProperty("Stats", Order = 2)]
 		public Stat[] StatDefs { get; set; }
-		[JsonProperty("stat Modifiers",Order = 3)]
+		[JsonProperty("Stat Modifiers", Order = 3)]
 		public StatModifier[] StatModifersDefs { get; set; }
 
 		/// <summary>
 		/// creates stat from provided configs and then attempts to add 
 		/// them to the correct collection
 		/// </summary>
-		public Dictionary<string, Stat> FormatStats()
+		public Dictionary<string, Stat> Stats()
 		{
+
 			Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
 			foreach (Stat config in StatDefs)
 			{
@@ -39,13 +40,14 @@ namespace Atomation.Things
 
 			}
 			return stats;
+
 		}
 
 		/// <summary>
 		/// creates stat modifier from provided configs and then attempts to add 
 		/// them to the correct collection
 		/// </summary>
-		public Dictionary<string, StatModifier> FormatStatModifers()
+		public Dictionary<string, StatModifier> StatModifers()
 		{
 			Dictionary<string, StatModifier> modifiers = new Dictionary<string, StatModifier>();
 			foreach (StatModifier config in StatModifersDefs)
@@ -61,7 +63,10 @@ namespace Atomation.Things
 
 			}
 			return modifiers;
+
 		}
+
+
 	}
 
 

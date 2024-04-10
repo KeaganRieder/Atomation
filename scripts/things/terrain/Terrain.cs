@@ -15,19 +15,14 @@ namespace Atomation.Things
 		public float HeatValue { get; set; }
 		public float MoistureValue { get; set; }
 
-		public FloorGraphic FloorGraphic { get; set; }
-
-		public Terrain NorthNeighbor { get; private set; }
-		public Terrain SouthNeighbor { get; private set; }
-		public Terrain WestNeighbor { get; private set; }
-		public Terrain EastNeighbor { get; private set; }
+		public BasicGraphic Graphic { get; set; }
 
 		public Terrain(Coordinate coord)
 		{
 			coordinate = coord;
 			Position = coordinate.WorldPosition;
 
-			FloorGraphic = new FloorGraphic(this);
+			Graphic = new BasicGraphic(this);
 		}
 
 		/// <summary>
@@ -39,83 +34,29 @@ namespace Atomation.Things
 		{
 			Name = config.Name + Coordinate.ToString();
 			Description = config.Description;
-			stats = config.FormatStats();
-			modifiers = config.FormatStatModifers();
-			FloorGraphic.ConfigureGraphic(config.GraphicData);
+			stats = config.Stats();
+			modifiers = config.StatModifers();
+			Graphic.ConfigureGraphic(config.GraphicData);
 		}
 
-
-//todo neighbors
-		public void UpdateNorthNeighbor(Terrain northNeighbor)
-		{
-			if (northNeighbor != null)
-			{
-				NorthNeighbor = northNeighbor;
-
-				if (northNeighbor.SouthNeighbor != this)
-				{
-					northNeighbor.SouthNeighbor = this;
-				}
-				return;
-			}
-		}
-		public void UpdateSouthNeighbor(Terrain southNeighbor)
-		{
-			if (southNeighbor != null)
-			{
-				SouthNeighbor = southNeighbor;
-
-				if (southNeighbor.NorthNeighbor != this)
-				{
-					southNeighbor.NorthNeighbor = this;
-				}
-				return;
-			}
-		}
-		public void UpdateEastNeighbor(Terrain eastNeighbor)
-		{
-			if (eastNeighbor != null)
-			{
-				EastNeighbor = eastNeighbor;
-
-				if (eastNeighbor.WestNeighbor != this)
-				{
-					eastNeighbor.WestNeighbor = this;
-				}
-				return;
-			}
-		}
-		public void UpdateWestNeighbor(Terrain westNeighbor)
-		{
-			if (westNeighbor != null)
-			{
-				WestNeighbor = westNeighbor;
-
-				if (westNeighbor.EastNeighbor != this)
-				{
-					westNeighbor.EastNeighbor = this;
-				}
-				return;
-			}
-		}
-
+		
 		public void UpdateGraphic(VisualizationMode displayMode)
 		{
 			if (displayMode == VisualizationMode.Default)
 			{
-				FloorGraphic.DefaultGraphic();
+				Graphic.DefaultGraphic();
 			}
 			else if (displayMode == VisualizationMode.Height)
 			{
-				FloorGraphic.HeightGraphic(HeightValue);
+				Graphic.HeightGraphic(HeightValue);
 			}
 			else if (displayMode == VisualizationMode.Heat)
 			{
-				FloorGraphic.HeatGraphic(HeatValue);
+				Graphic.HeatGraphic(HeatValue);
 			}
 			else
 			{
-				FloorGraphic.MoistureGraphic(MoistureValue);
+				Graphic.MoistureGraphic(MoistureValue);
 			}
 		}
 	}

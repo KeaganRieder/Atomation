@@ -48,9 +48,7 @@ namespace Atomation.Map
 			CreateOutline();
 		}
 
-		/// <summary>
-		/// creates outline 
-		/// </summary>
+		/// <summary> creates outline  </summary>
 		private void CreateOutline()
 		{
 

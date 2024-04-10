@@ -38,7 +38,7 @@
           "Base Value": 1.0
         }
       ],
-      "stat Modifiers": [
+      "Stat Modifiers": [
         {
           "Name": "WalkSpeed",
           "Description": "The speed something can walk on this",
@@ -85,7 +85,7 @@
           "Base Value": 1.0
         }
       ],
-      "stat Modifiers": [
+      "Stat Modifiers": [
         {
           "Name": "WalkSpeed",
           "Description": "The speed something can walk on this",
@@ -132,7 +132,7 @@
           "Base Value": 1.0
         }
       ],
-      "stat Modifiers": [
+      "Stat Modifiers": [
         {
           "Name": "WalkSpeed",
           "Description": "The speed something can walk on this",
@@ -179,7 +179,7 @@
           "Base Value": 1.0
         }
       ],
-      "stat Modifiers": [
+      "Stat Modifiers": [
         {
           "Name": "WalkSpeed",
           "Description": "The speed something can walk on this",
@@ -226,7 +226,7 @@
           "Base Value": 1.0
         }
       ],
-      "stat Modifiers": [
+      "Stat Modifiers": [
         {
           "Name": "WalkSpeed",
           "Description": "The speed something can walk on this",
@@ -273,7 +273,7 @@
           "Base Value": 1.0
         }
       ],
-      "stat Modifiers": [
+      "Stat Modifiers": [
         {
           "Name": "WalkSpeed",
           "Description": "The speed something can walk on this",
@@ -320,7 +320,7 @@
           "Base Value": 1.0
         }
       ],
-      "stat Modifiers": [
+      "Stat Modifiers": [
         {
           "Name": "WalkSpeed",
           "Description": "The speed something can walk on this",

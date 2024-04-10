@@ -8,24 +8,12 @@ namespace Atomation.Resources
 	// like a simple graphic for something that only has one texture, well another for
 	//call animated for something with an animation
 
-
 	/// <summary>
-	/// decides how to blend seams between two different terrain
-	/// and ground types
+	/// Basic graphic that isn't animated and is static following creation
 	/// </summary>
-	public enum EdgeType
+	public class BasicGraphic : Graphic
 	{
-		Default,
-		Rough,
-		Smooth,
-	}
-
-	/// <summary>
-	/// class which defines floor graphics 
-	/// </summary>
-	public class FloorGraphic : Graphic
-	{
-		public FloorGraphic(Node2D terrainNode)
+		public BasicGraphic(Node2D terrainNode)
 		{
 			ObjGraphic = new ColorRect();
 			ObjGraphic.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);

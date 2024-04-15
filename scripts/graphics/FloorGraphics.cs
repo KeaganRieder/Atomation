@@ -1,8 +1,9 @@
-using Godot;
+namespace Atomation.Resources;
+
 using Atomation.Map;
 
-namespace Atomation.Resources
-{
+using Godot;
+
 	//todo
 	//make structure graphics or redo to make different types, based on complexity
 	// like a simple graphic for something that only has one texture, well another for
@@ -141,31 +142,7 @@ namespace Atomation.Resources
 			{
 				moistureColor = Colors.Blue;
 			}
-			// if (moistureVal < 0.1)
-			// {
-			// 	moistureColor = Colors.Red;
-			// }
-			// else if (moistureVal < 0.27)
-			// {
-			// 	moistureColor = Colors.Orange;
-			// }
-			// else if (moistureVal < 0.4)
-			// {
-			// 	moistureColor = Colors.Yellow;
-			// }
-			// else if (moistureVal < 0.6)
-			// {
-			// 	moistureColor = Colors.Green;
-			// }
-			// else if (moistureVal < 0.8)
-			// {
-			// 	moistureColor = Colors.Blue;
-			// }
-			// else
-			// {
-			// 	moistureColor = Colors.DarkBlue;
-			// }
 			ObjGraphic.Color = moistureColor;
 		}
 	}
-}
+

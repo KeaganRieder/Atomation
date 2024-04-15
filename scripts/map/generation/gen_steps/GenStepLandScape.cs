@@ -54,7 +54,7 @@ public class GenStepLandScape : GenStep
 				temperatureMap.CalculateHeat(y, terrain);
 				moistureMap.CalculateMoisture(x, y, terrain);
 
-				SetLandscape(x, y, terrain, chunkHandler);
+				SetLandscape(terrain, chunkHandler);
 
 				terrain.UpdateGraphic(WorldMap.MapVisualIzation);
 			}
@@ -66,33 +66,26 @@ public class GenStepLandScape : GenStep
 	/// using a terrains hight, determines if it's elevated ground, water or 
 	/// just land
 	/// </summary>
-	private void SetLandscape(int x, int y, Terrain terrain, ChunkHandler chunkHandler)
+	private void SetLandscape(Terrain terrain, ChunkHandler chunkHandler)
 	{
 		float height = terrain.HeightValue;
+		Structure structure = null;
 
 		if (height > mountainBase)
 		{
-			SetElevationType(terrain, out Structure structure);
-			chunkHandler.SetTerrain(x, y, chunkPos, terrain);
-
-			if (structure != null)
-			{
-
-				chunkHandler.SetStructure(x, y, chunkPos, structure);
-			}
+			SetElevationType(terrain, out structure);
 		}
 		else if (height <= shoreHeight)
 		{
 			SetWater(terrain);
-			chunkHandler.SetTerrain(x, y, chunkPos, terrain);
-
 		}
 		else
 		{
 			SetBiome(terrain);
-			chunkHandler.SetTerrain(x, y, chunkPos, terrain);
-
 		}
+
+		chunkHandler.SetTerrain(terrain);
+		chunkHandler.SetStructure(structure);
 
 
 	}

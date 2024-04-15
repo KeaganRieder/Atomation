@@ -1,6 +1,7 @@
+namespace Atomation.Things;
+
 using Godot;
-namespace Atomation.Things
-{
+
     /// <summary>
 	/// used in creating and formatting a config file design to be read, 
     /// and cached at game start and then used in create an instance of 
@@ -9,4 +10,4 @@ namespace Atomation.Things
     public class StructureDef : CompThingDef
     {
     }
-}
+

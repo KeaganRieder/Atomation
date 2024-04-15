@@ -10,7 +10,7 @@ using Godot;
 /// </summary>
 public class CoordinateTest : UnitTest
 {
-    private Coordinate coord;
+    private Coordinate cord;
 
     public CoordinateTest() : base("CoordinateTest")
     {
@@ -21,6 +21,7 @@ public class CoordinateTest : UnitTest
     {
         base.RunTest();
 
+        //chunks increas in intervals of 16*32 or chunkSize*cellSize
         TryCoordPosition(new Vector2(0, 0), new Vector2(0, 0), new Vector2I(0, 0), new Vector2(0, 0), new Vector2(0, 0));
         TryCoordPosition(0, 0, new Vector2(0, 0), new Vector2(0, 0), new Vector2I(0, 0), new Vector2(0, 0), new Vector2(0, 0));
 
@@ -40,31 +41,31 @@ public class CoordinateTest : UnitTest
         base.TestResults();
     }
 
-    private void TryCoordPosition(Vector2 worldPosition, Vector2 expectedPosition, Vector2I ExpectedXY, Vector2 ExpectedChunk,
-    Vector2 ExpectedChunkWorld)
+    private void TryCoordPosition(Vector2 worldPosition, Vector2 expectedPosition, Vector2I ExpectedXY, Vector2 ExpectedChunkWorld,
+    Vector2 ExpectedChunk)
     {
-        coord = new Coordinate(worldPosition);
+        cord = new Coordinate(worldPosition);
         TryWorldPosition(expectedPosition);
         TryXYPosition(ExpectedXY);
-        TryChunkWorldPosition(ExpectedChunk);
-        TryChunkPosition(ExpectedChunkWorld);
+        TryChunkWorldPosition(ExpectedChunkWorld );
+        TryChunkPosition(ExpectedChunk);
     }
 
-    private void TryCoordPosition(int x, int y, Vector2 ChunkPos, Vector2 expectedPosition, Vector2I ExpectedXY, Vector2 ExpectedChunk,
-    Vector2 ExpectedChunkWorld)
+    private void TryCoordPosition(int x, int y, Vector2 ChunkPos, Vector2 expectedPosition, Vector2I ExpectedXY, Vector2 ExpectedChunkWorld,
+    Vector2 ExpectedChunk )
     {
 
-        coord = new Coordinate(x, y, ChunkPos);
+        cord = new Coordinate(x, y, ChunkPos);
         TryWorldPosition(expectedPosition);
         TryXYPosition(ExpectedXY);
-        TryChunkWorldPosition(ExpectedChunk);
-        TryChunkPosition(ExpectedChunkWorld);
+        TryChunkWorldPosition(ExpectedChunkWorld );
+        TryChunkPosition(ExpectedChunk);
     }
 
     private void TryWorldPosition(Vector2 expected)
     {
         totalTests++;
-        VectorAssertions assert = new VectorAssertions(coord.WorldPosition);
+        VectorAssertions assert = new VectorAssertions(cord.WorldPosition);
         try
         {
             assert.IsEqual(expected);
@@ -81,7 +82,7 @@ public class CoordinateTest : UnitTest
     private void TryXYPosition(Vector2I expected)
     {
         totalTests++;
-        VectorAssertions assert = new VectorAssertions(coord.XYPosition);
+        VectorAssertions assert = new VectorAssertions(cord.XYPosition);
         try
         {
             assert.IsEqual(expected);
@@ -98,19 +99,7 @@ public class CoordinateTest : UnitTest
     private void TryChunkWorldPosition(Vector2 expected)
     {
         totalTests++;
-        VectorAssertions assert = new VectorAssertions(coord.ChunkWorldPos);
-        try
-        {
-            assert.IsEqual(expected);
-        }
-        catch (Exception errMsg)
-        {
-            failedTests++;
-            GD.PrintErr($"ChunkPos :{errMsg.Message}");
-            return;
-        }
-
-        assert = new VectorAssertions(coord.ChunkWorldPos);
+        VectorAssertions assert = new VectorAssertions(cord.ChunkWorldPos);
         try
         {
             assert.IsEqual(expected);
@@ -126,7 +115,7 @@ public class CoordinateTest : UnitTest
     private void TryChunkPosition(Vector2 expected)
     {
         totalTests++;
-        VectorAssertions assert = new VectorAssertions(coord.ChunkPosition);
+        VectorAssertions assert = new VectorAssertions(cord.ChunkPosition);
         try
         {
             assert.IsEqual(expected);
@@ -139,4 +128,20 @@ public class CoordinateTest : UnitTest
         }
         PassedTests++;
     }
+
+    private void TryDistance(Vector2 expected, Vector2 test){
+        VectorAssertions assert = new VectorAssertions(test);
+        try
+        {
+            assert.IsEqual(expected);
+        }
+        catch (Exception errMsg)
+        {
+            failedTests++;
+            GD.PrintErr($"ChunkPos :{errMsg.Message}");
+            return;
+        }
+    }
+
+    // private void TryXYPosition-
 }

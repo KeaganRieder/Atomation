@@ -60,7 +60,7 @@ namespace Atomation.Map
 			base._Ready();
 
 			GD.Print("Generating Map");
-			ChunkHandler.CheckChunkStatus((Vector2)Player.Position);
+			ChunkHandler.CheckChunkStatus(Player.Coordinate);
 			GD.Print("Generation Complete");
 		}
 

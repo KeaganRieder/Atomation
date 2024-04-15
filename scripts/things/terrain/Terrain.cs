@@ -1,63 +1,64 @@
+namespace Atomation.Things;
+
 using Godot;
 using Atomation.Map;
 using Atomation.Resources;
 using System;
 
-namespace Atomation.Things
+
+/// <summary>
+/// the terrain/floor of the games world. this object is the base visual in
+/// a game world with other objects being placed on top of it
+/// </summary>
+public partial class Terrain : CompThing
 {
-	/// <summary>
-	/// the terrain/floor of the games world. this object is the base visual in
-	/// a game world with other objects being placed on top of it
-	/// </summary>
-	public partial class Terrain : CompThing
+	public float HeightValue { get; set; }
+	public float HeatValue { get; set; }
+	public float MoistureValue { get; set; }
+
+	public BasicGraphic Graphic { get; set; }
+
+	public Terrain(Coordinate coord)
 	{
-		public float HeightValue { get; set; }
-		public float HeatValue { get; set; }
-		public float MoistureValue { get; set; }
+		coordinate = coord;
+		Position = coordinate.WorldPosition;
 
-		public BasicGraphic Graphic { get; set; }
+		Graphic = new BasicGraphic(this);
+	}
 
-		public Terrain(Coordinate coord)
+	/// <summary>
+	/// reading the configuration data for the given tile
+	/// and setting it for anything in which is needing
+	/// configuration at current call
+	/// </summary>
+	public void ReadConfigs(TerrainDef config)
+	{
+		Name = config.Name + Coordinate.ToString();
+		Description = config.Description;
+		stats = config.Stats();
+		modifiers = config.StatModifers();
+		Graphic.ConfigureGraphic(config.GraphicData);
+	}
+
+
+	public void UpdateGraphic(VisualizationMode displayMode)
+	{
+		if (displayMode == VisualizationMode.Default)
 		{
-			coordinate = coord;
-			Position = coordinate.WorldPosition;
-
-			Graphic = new BasicGraphic(this);
+			Graphic.DefaultGraphic();
 		}
-
-		/// <summary>
-		/// reading the configuration data for the given tile
-		/// and setting it for anything in which is needing
-		/// configuration at current call
-		/// </summary>
-		public void ReadConfigs(TerrainDef config)
+		else if (displayMode == VisualizationMode.Height)
 		{
-			Name = config.Name + Coordinate.ToString();
-			Description = config.Description;
-			stats = config.Stats();
-			modifiers = config.StatModifers();
-			Graphic.ConfigureGraphic(config.GraphicData);
+			Graphic.HeightGraphic(HeightValue);
 		}
-
-		
-		public void UpdateGraphic(VisualizationMode displayMode)
+		else if (displayMode == VisualizationMode.Heat)
 		{
-			if (displayMode == VisualizationMode.Default)
-			{
-				Graphic.DefaultGraphic();
-			}
-			else if (displayMode == VisualizationMode.Height)
-			{
-				Graphic.HeightGraphic(HeightValue);
-			}
-			else if (displayMode == VisualizationMode.Heat)
-			{
-				Graphic.HeatGraphic(HeatValue);
-			}
-			else
-			{
-				Graphic.MoistureGraphic(MoistureValue);
-			}
+			Graphic.HeatGraphic(HeatValue);
+		}
+		else
+		{
+			Graphic.MoistureGraphic(MoistureValue);
 		}
 	}
 }
+

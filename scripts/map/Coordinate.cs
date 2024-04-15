@@ -18,13 +18,10 @@ public class Coordinate
 
     /// <summary> objects current world position </summary>
     public Vector2 WorldPosition { get; private set; }
-
     /// <summary> objects Chunk position relative to the chunk grid </summary>
     public Vector2 ChunkPosition { get; private set; }
-
     /// <summary> objects Chunk position in the world </summary>
     public Vector2 ChunkWorldPos { get; private set; }
-
     /// <summary> objects current x y position in the world </summary>
     public Vector2I XYPosition { get; private set; }
 
@@ -43,10 +40,9 @@ public class Coordinate
     }
 
     public Coordinate(int x, int y, Vector2 chunkPosition) : this()
-    { 
+    {
         XYPosition = new Vector2I(x, y);
         FindChunkPosition(chunkPosition);
-
         FindWorldPosition();
     }
 
@@ -84,13 +80,28 @@ public class Coordinate
         ChunkPosition = new Vector2(xCord, yCord);
         ChunkWorldPos = ChunkPosition * totalChunkSize;
     }
-     /// <summary>
+
+    /// <summary>
     /// finds the chunk cords which the object currently resides in
     /// </summary>
     private void FindChunkPosition(Vector2 chunkPos)
     {
-        ChunkPosition = chunkPos / chunkSize ;
+        ChunkPosition = chunkPos / chunkSize;
         ChunkWorldPos = ChunkPosition * totalChunkSize;
+    }
+
+    /// <summary>
+    /// calculates distance form provided coord, and returns closest 
+    /// point
+    /// </summary>
+    public float Distance(Coordinate coord)
+    {
+        float x = Mathf.Abs((WorldPosition - coord.WorldPosition).X);
+        float y = Mathf.Abs((WorldPosition - coord.WorldPosition).Y);
+        
+        float distance = Mathf.Min(x,y);
+
+        return distance;
     }
 
     /// <summary>
@@ -100,6 +111,7 @@ public class Coordinate
     {
         WorldPosition = coords;
         FindXYCords();
+        FindChunkPosition();
     }
 
     /// <summary>
@@ -118,12 +130,6 @@ public class Coordinate
         return cords;
     }
 
-    public static Coordinate operator +(Coordinate coord, Vector2 worldPos)
-    {
-        coord.WorldPosition += worldPos;
-        coord.FindXYCords();
-        return coord;
-    }
 
 
 }

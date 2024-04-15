@@ -24,7 +24,7 @@ namespace Atomation.Map
 			Width = width;
 			Height = height;
 			CellSize = cellSize;
-			Origin = origin *cellSize;
+			Origin = origin * cellSize;
 			this.chunk = chunk;
 
 			InitializeGrid();
@@ -95,6 +95,26 @@ namespace Atomation.Map
 		/// <summary>
 		/// sets the object at given cords
 		/// </summary>
+		public void SetObject(GridObj obj)
+		{
+			int x = obj.Coordinate.XYPosition.X;
+			int y = obj.Coordinate.XYPosition.X;
+
+			if (x >= 0 && y >= 0 && x < Width && y < Width)
+			{
+				gridArray[x, y] = obj;
+
+				chunk.AddChild(obj.Node);
+			}
+			else
+			{
+				GD.PrintErr($"{x},{y} are out of bounds for current grid");
+			}
+		}
+
+		/// <summary>
+		/// sets the object at given cords
+		/// </summary>
 		public void SetObject(int x, int y, GridObj obj)
 		{
 			if (x >= 0 && y >= 0 && x < Width && y < Width)
@@ -113,7 +133,7 @@ namespace Atomation.Map
 		/// sets the object at given cords
 		/// </summary>
 		public void SetObject(Vector2 worldPosition, GridObj obj)
-		{			
+		{
 			GetXY(worldPosition, out int x, out int y);
 
 			SetObject(x, y, obj);

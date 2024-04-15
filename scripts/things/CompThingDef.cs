@@ -1,71 +1,68 @@
+namespace Atomation.Things;
+
 using Godot;
 using System.Collections.Generic;
 using Atomation.Resources;
 using Newtonsoft.Json;
 
-namespace Atomation.Things
+/// <summary>
+/// used in creating and formatting a config file design to be read, 
+/// and cached at game start and then used in create an instance of 
+/// a complex things
+/// </summary>
+public abstract class CompThingDef : Thing
 {
+	[JsonProperty("Graphic Data", Order = 1)]
+	public GraphicData GraphicData { get; set; }
+	[JsonProperty("Stats", Order = 2)]
+	public Stat[] StatDefs { get; set; }
+	[JsonProperty("Stat Modifiers", Order = 3)]
+	public StatModifier[] StatModifersDefs { get; set; }
+
 	/// <summary>
-	/// used in creating and formatting a config file design to be read, 
-	/// and cached at game start and then used in create an instance of 
-	/// a complex things
+	/// creates stat from provided configs and then attempts to add 
+	/// them to the correct collection
 	/// </summary>
-	public abstract class CompThingDef : Thing
+	public Dictionary<string, Stat> Stats()
 	{
-		[JsonProperty("Graphic Data", Order = 1)]
-		public GraphicData GraphicData { get; set; }
-		[JsonProperty("Stats", Order = 2)]
-		public Stat[] StatDefs { get; set; }
-		[JsonProperty("Stat Modifiers", Order = 3)]
-		public StatModifier[] StatModifersDefs { get; set; }
 
-		/// <summary>
-		/// creates stat from provided configs and then attempts to add 
-		/// them to the correct collection
-		/// </summary>
-		public Dictionary<string, Stat> Stats()
+		Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
+		foreach (Stat config in StatDefs)
 		{
-
-			Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
-			foreach (Stat config in StatDefs)
+			if (!stats.ContainsKey(config.Name))
 			{
-				if (!stats.ContainsKey(config.Name))
-				{
-					stats.Add(config.Name, new Stat(config));
-				}
-				else
-				{
-					GD.PushError($"{config.Name} is already a modifier on object");
-				}
-
+				stats.Add(config.Name, new Stat(config));
 			}
-			return stats;
+			else
+			{
+				GD.PushError($"{config.Name} is already a modifier on object");
+			}
 
 		}
+		return stats;
 
-		/// <summary>
-		/// creates stat modifier from provided configs and then attempts to add 
-		/// them to the correct collection
-		/// </summary>
-		public Dictionary<string, StatModifier> StatModifers()
+	}
+
+	/// <summary>
+	/// creates stat modifier from provided configs and then attempts to add 
+	/// them to the correct collection
+	/// </summary>
+	public Dictionary<string, StatModifier> StatModifers()
+	{
+		Dictionary<string, StatModifier> modifiers = new Dictionary<string, StatModifier>();
+		foreach (StatModifier config in StatModifersDefs)
 		{
-			Dictionary<string, StatModifier> modifiers = new Dictionary<string, StatModifier>();
-			foreach (StatModifier config in StatModifersDefs)
+			if (!modifiers.ContainsKey(config.Name))
 			{
-				if (!modifiers.ContainsKey(config.Name))
-				{
-					modifiers.Add(config.Name, new StatModifier(config));
-				}
-				else
-				{
-					GD.PushError($"{config.Name} is already a modifier on object");
-				}
-
+				modifiers.Add(config.Name, new StatModifier(config));
 			}
-			return modifiers;
+			else
+			{
+				GD.PushError($"{config.Name} is already a modifier on object");
+			}
 
 		}
-
+		return modifiers;
 
 	}
 

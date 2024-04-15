@@ -22,7 +22,7 @@ public class ChunkHandler
 	{
 		worldMap = map;
 
-		visibleChunks = 1;// Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE);//  - 1;
+		visibleChunks = Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE)  - 1;
 
 		// making chunk size based on tiles not pixels
 		chunkSize = Chunk.CHUNK_SIZE * MapSettings.CELL_SIZE;
@@ -30,8 +30,6 @@ public class ChunkHandler
 		lastUpdatedChunks = new List<Chunk>();
 		chunkArray = new Dictionary<Vector2, Chunk>();
 	}
-
-
 
 	/// <summary>
 	/// gets the position of a chunk at the given cords
@@ -63,35 +61,53 @@ public class ChunkHandler
 	}
 
 	/// <summary>
+	/// gets chunks at given world position 
+	/// </summary>
+	private Chunk GetChunk(Coordinate coords)
+	{
+		// Vector2 chunkPosition = GetChunkCords(worldPosition);
+
+		if (chunkArray.ContainsKey(coords.ChunkPosition))
+		{
+			return chunkArray[coords.ChunkPosition];
+		}
+		else
+		{
+			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{coords.ChunkPosition} WorldPos:{coords.WorldPosition}");
+			return null;
+		}
+	}
+
+	/// <summary>
 	/// sets terrain at world position
 	/// </summary>
-	public void SetTerrain(Terrain terrain, Vector2 worldPosition)
+	public void SetTerrain(Terrain terrain)
 	{
-		Chunk chunk = GetChunk(terrain.Coordinate.WorldPosition);
+		if (terrain == null)
+		{
+			return;
+		}
+
+		Chunk chunk = GetChunk(terrain.Coordinate);
 
 		if (chunk == null)
 		{
 			return;
 		}
 		chunk.Terrain.SetObject(terrain.Coordinate.WorldPosition, terrain);
-
-		//assign/update neighbors todo
 	}
 
 	/// <summary>
-	/// sets terrain at world position
+	/// gets terrain at world position
 	/// </summary>
-	public void SetTerrain(int x, int y, Vector2 pos, Terrain terrain)
+	public Terrain GetTerrain(Coordinate cord)
 	{
-		Chunk chunk = GetChunk(pos);
-
+		Chunk chunk = GetChunk(cord);
 		if (chunk == null)
 		{
-			return;
+			return null;
 		}
-		chunk.Terrain.SetObject(x, y, terrain);
-
-		//assign/update neighbors todo
+		return chunk.Terrain.GetObject(cord.WorldPosition);
 	}
 
 	/// <summary>
@@ -108,72 +124,36 @@ public class ChunkHandler
 	}
 
 	/// <summary>
-	/// sets terrain at world position
-	/// </summary>
-	public Terrain GetTerrain(int x, int y)
-	{
-		Chunk chunk = GetChunk(new Vector2(x, y));
-		if (chunk == null)
-		{
-			return null;
-		}
-		return chunk.Terrain.GetObject(x, y);
-	}
-
-	/// <summary>
 	/// sets structure at world position
 	/// </summary>
 	public void SetStructure(Structure structure)
 	{
-		Chunk chunk = GetChunk(structure.Coordinate.WorldPosition);
+		if (structure == null)
+		{
+			return;
+		}
+
+		Chunk chunk = GetChunk(structure.Coordinate);
 
 		if (chunk == null)
 		{
 			return;
 		}
 		chunk.Buildings.SetObject(structure.Coordinate.WorldPosition, structure);
-
 	}
-	/// <summary>
-	/// sets structure at world position
-	/// </summary>
-	public void SetStructure(int x, int y, Vector2 pos, Structure structure)
-	{
-		Chunk chunk = GetChunk(pos);
 
-		if (chunk == null)
-		{
-			return;
-		}
-		chunk.Buildings.SetObject(x, y, structure);
-
-		//assign/update neighbors todo
-	}
 
 	/// <summary>
 	/// gets structure at world position
 	/// </summary>
-	public Structure GetStructure(Vector2 worldPosition)
+	public Structure GetStructure(Coordinate cord)
 	{
-		Chunk chunk = GetChunk(worldPosition);
+		Chunk chunk = GetChunk(cord);
 		if (chunk == null)
 		{
 			return null;
 		}
-		return chunk.Buildings.GetObject(worldPosition);
-	}
-
-	/// <summary>
-	/// gets structure at world position
-	/// </summary>
-	public Structure GetStructure(int x, int y)
-	{
-		Chunk chunk = GetChunk(new Vector2(x, y));
-		if (chunk == null)
-		{
-			return null;
-		}
-		return chunk.Buildings.GetObject(x, y);
+		return chunk.Buildings.GetObject(cord.WorldPosition);
 	}
 
 	/// <summary>
@@ -195,9 +175,9 @@ public class ChunkHandler
 	/// runs through surrounding chunks and decides wether or not 
 	/// to hide them based on distance form player
 	/// </summary>
-	public void CheckChunkStatus(Vector2 playerPosition)
+	public void CheckChunkStatus(Coordinate playerPosition)
 	{
-		Vector2 currentChunkCords = GetChunkCords(playerPosition);
+		Vector2 currentChunkCords = playerPosition.ChunkPosition;
 
 		//un render all last active chunks
 		foreach (var chunk in lastUpdatedChunks)
@@ -207,9 +187,9 @@ public class ChunkHandler
 		lastUpdatedChunks.Clear();
 
 		//Run through surrounding chunks at player position 
-		for (int xOffset = -visibleChunks; xOffset < visibleChunks /*+1 todo when threaded*/; xOffset++)
+		for (int xOffset = -visibleChunks; xOffset < visibleChunks+1; xOffset++)
 		{
-			for (int yOffset = -visibleChunks; yOffset < visibleChunks /*+1 todo when threaded*/; yOffset++)
+			for (int yOffset = -visibleChunks; yOffset < visibleChunks +1; yOffset++)
 			{
 				Vector2 viewChunkCord = new Vector2(currentChunkCords.X + xOffset, currentChunkCords.Y + yOffset);
 

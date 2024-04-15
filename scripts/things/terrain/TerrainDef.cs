@@ -1,11 +1,10 @@
-namespace Atomation.Things
+namespace Atomation.Things;
+
+/// <summary>
+/// used in creating and formatting a config file design to be read, 
+/// and cached at game start and then used in create an instance of 
+/// a Terrain
+/// </summary>
+public class TerrainDef : CompThingDef
 {
-    /// <summary>
-	/// used in creating and formatting a config file design to be read, 
-    /// and cached at game start and then used in create an instance of 
-    /// a Terrain
-	/// </summary>
-    public class TerrainDef : CompThingDef
-    {
-    }
 }

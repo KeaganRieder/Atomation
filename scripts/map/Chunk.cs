@@ -38,23 +38,6 @@ namespace Atomation.Map
 		}
 
 		/// <summary>
-		/// gets distance form chunks top left (if negative y) or bot left (if positive y)
-		/// corner cords to the provided at worldPosition
-		/// </summary>
-		private float GetDistance(Vector2 worldPosition)
-		{
-			//this needs fixing
-			worldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X / cellSize), Mathf.FloorToInt(worldPosition.Y / cellSize));
-
-			//align chunk to the pixel gird
-			Vector2 chunkPos = coordinate.WorldPosition / cellSize;
-			Vector2 chunkDistance = chunkPos - worldPosition;
-
-			int distance = Mathf.FloorToInt(Mathf.Min(Mathf.Abs(chunkDistance.X), Mathf.Abs(chunkDistance.Y)));
-			return distance;
-		}
-
-		/// <summary>
 		/// updates the visualization mode of all tiles
 		/// </summary>
 		public void UpdateTerrainVisualization(VisualizationMode displayMode)
@@ -73,10 +56,9 @@ namespace Atomation.Map
 		/// checks viewer distance from chunk and then decided based on rendered distance
 		/// to decide weather or not to hide/un render chunk.
 		/// </summary>
-		public void UpdateVisibility(Vector2 viewerCords)
+		public void UpdateVisibility(Coordinate viewerCords)
 		{
-			//if within render bounds then keep rendered otherwise un render it
-			bool visible = GetDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
+			bool visible = coordinate.Distance(viewerCords) <=MapSettings.MAX_LOAD_DIST;
 			
 			SetVisibility(visible);
 		}

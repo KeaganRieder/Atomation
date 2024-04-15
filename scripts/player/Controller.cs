@@ -24,7 +24,7 @@ namespace Atomation.PlayerChar
 
 		public override void _Input(InputEvent inputEvent)
 		{
-			Map.ChunkHandler.CheckChunkStatus(PlayerBody.Position);
+			Map.ChunkHandler.CheckChunkStatus(PlayerBody.Coordinate);
 			PlayerBody.Move();
 
 			VisualizationEvents(inputEvent);
@@ -73,7 +73,7 @@ namespace Atomation.PlayerChar
 					terrain = new Terrain(coordinate);
 					terrain.ReadConfigs(DefDatabase.GetTerrainDef("Grass"));
 
-					Map.ChunkHandler.SetTerrain(terrain,terrainCords);
+					Map.ChunkHandler.SetTerrain(terrain);
 				}
 			}
 			if (inputEvent.IsActionPressed("Right Click"))

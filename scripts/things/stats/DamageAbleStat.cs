@@ -21,13 +21,13 @@ public class DamageAbleStat : StatBase
     }
 
 
-    public override void Damage(int damageAmt)
+    public override void Damage(float damageAmt)
     {
         damage += damageAmt;
 
         updateValue = true;
     }
-    public override void Heal(int damageAmt)
+    public override void Heal(float damageAmt)
     {
         if (damage > 0)
         {

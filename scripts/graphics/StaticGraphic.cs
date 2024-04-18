@@ -1,5 +1,6 @@
 namespace Atomation.Resources;
 
+using Atomation.Map;
 using Godot;
 
 /// <summary>
@@ -13,13 +14,22 @@ public partial class StaticGraphic : Sprite2D
     public string TexturePath { get; private set; }
     public Color DefaultColor { get; set; }
 
-    public StaticGraphic() { }
+    public StaticGraphic()
+    {
+        TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png";
+
+        graphicSize = new Vector2I(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
+        Position = graphicSize / 2;
+        SetTexture();
+    }
 
     public StaticGraphic(string texturePath, int variants, Vector2I graphicSize, Color defaultColor)
     {
         TexturePath = FilePaths.TEXTURE_FOLDER + texturePath;
         this.variants = variants;
         this.graphicSize = graphicSize;
+        Position = graphicSize / 2;
+
         DefaultColor = defaultColor;
         SetTexture();
     }
@@ -32,6 +42,8 @@ public partial class StaticGraphic : Sprite2D
         graphicSize = configs.GraphicSize;
         variants = configs.Variants;
 
+        Position = graphicSize / 2;
+
         SetTexture();
     }
 
@@ -41,22 +53,16 @@ public partial class StaticGraphic : Sprite2D
 
         if (variants > 1)
         {
-            Texture2D[] textureArray = FileManger.ReadTextureGroup(TexturePath, variants);
+            Texture2D[] textureArray = FileManger.ReadTextureGroup(TexturePath, graphicSize, variants);
             RandomNumberGenerator rng = new RandomNumberGenerator();
             texture = textureArray[rng.RandiRange(0, variants)];
         }
         else
         {
-            texture = FileManger.ReadTexture(TexturePath);
+            texture = FileManger.ReadTexture(TexturePath, graphicSize);
         }
-
-        if (texture.GetImage().GetSize() != graphicSize)
-        {
-            // GD.PushWarning($"Texture is size is incorrect scaling from {texture.GetImage().GetSize()} to {graphicSize}");
-            texture.GetImage().Resize(graphicSize.X, graphicSize.Y, Image.Interpolation.Bilinear);
-        }
-
         Texture = texture;
+
         SetDefaultColor();
     }
 

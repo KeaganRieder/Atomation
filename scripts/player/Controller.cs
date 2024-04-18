@@ -41,22 +41,33 @@ namespace Atomation.PlayerChar
 		/// </summary>
 		private void MouseInputs(InputEventMouseButton inputEvent)
 		{
-			// Input.ParseInputEvent(ie);
-			// MakeInputLocal(inputEvent);
 			Vector2 mousePos = inputEvent.Position - GetViewport().CanvasTransform.Origin;
 
 			if (inputEvent.IsActionPressed("Left Click"))
 			{
+				// int x = Mathf.FloorToInt(mousePos.X / MapSettings.CELL_SIZE);
+				// int y = Mathf.FloorToInt(mousePos.Y / MapSettings.CELL_SIZE);
+				// Vector2 mouseCords = new Vector2(x, y);
+				Coordinate mouseCords = new Coordinate(mousePos);
 
-				int x = Mathf.FloorToInt(mousePos.X / MapSettings.CELL_SIZE);
-				int y = Mathf.FloorToInt(mousePos.Y / MapSettings.CELL_SIZE);
-				Vector2 terrainCords = new Vector2(x, y);
-				Coordinate coordinate = new Coordinate(terrainCords);
-
-				Terrain terrain = Map.ChunkHandler.GetTerrain(mousePos);
-
-				if (terrain != null)
+				if (Map.ChunkHandler.GetStructure(mouseCords) != null)
 				{
+					Structure structure = Map.ChunkHandler.GetStructure(mouseCords);
+					structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(PlayerBody.StatSheet.GetStat(StatKeys.ATTACK_DAMAGE).Value);
+					if (structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Value <= 0)
+					{
+						structure.Visible = false;
+					}
+					if (structure.Visible)
+					{
+						GD.Print($"{structure.Name} HP: {structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Value}");
+					}
+				}
+
+				else if (Map.ChunkHandler.GetTerrain(mouseCords) != null)
+				{
+					GD.Print("terrain");
+					Terrain terrain = Map.ChunkHandler.GetTerrain(mouseCords);
 					if (terrain.Visible)
 					{
 						terrain.Visible = false;
@@ -66,14 +77,9 @@ namespace Atomation.PlayerChar
 						terrain.Visible = true;
 					}
 				}
-				else if (terrain == null)
+				else
 				{
-					
-
-					terrain = new Terrain(coordinate);
-					terrain.ReadConfigs(DefDatabase.GetTerrainDef("Grass"));
-
-					Map.ChunkHandler.SetTerrain(terrain);
+					GD.Print("nothing here");
 				}
 			}
 			if (inputEvent.IsActionPressed("Right Click"))

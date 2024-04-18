@@ -12,8 +12,6 @@ using Atomation.Resources;
 /// </summary>
 public partial class Structure : CompThing
 {
-	// public BasicGraphic FloorGraphic { get; set; }
-
 	public Structure(Coordinate coord)
 	{
 		coordinate = coord;
@@ -32,8 +30,8 @@ public partial class Structure : CompThing
 	{
 		Name = config.Name + Coordinate.ToString();
 		Description = config.Description;
-		// StatSheet = config.StatSheet;
-		// Graphic.Configure(config.GraphicData);
+		StatSheet = new StatSheet (config.StatSheet, this);
+		Graphic.Configure(config.GraphicData);
 	}
 
 

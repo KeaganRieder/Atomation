@@ -2,31 +2,48 @@ namespace Atomation.Things;
 
 using System.Collections.Generic;
 using Godot;
+using Newtonsoft.Json;
 
 /// <summary>
 /// An stat sheet contains an object stat modifiers and Stats
 /// </summary>
 public class StatSheet
 {
-    public Dictionary<string, StatBase> Stats { get; private set; }
+    [JsonProperty("Stats", Order = 1)]
+    private Dictionary<string, StatBase> stats;
 
-    public Dictionary<string, StatModifierBase> StatModifers { get; private set; }
+    [JsonProperty("StatModifers", Order = 2)]
+    private Dictionary<string, StatModifierBase> statModifers;
 
     public StatSheet()
     {
-        Stats = new Dictionary<string, StatBase>();
-        StatModifers = new Dictionary<string, StatModifierBase>();
+
     }
 
-    public StatSheet(Dictionary<string, StatBase> stats = null, Dictionary<string, StatModifierBase> statModifers = null)
+    public StatSheet(Dictionary<string, StatBase> stats, Dictionary<string, StatModifierBase> statModifers)
     {
-        this.Stats = (stats == null) ? new Dictionary<string, StatBase>() : stats;
-        this.StatModifers = (StatModifers == null) ? new Dictionary<string, StatModifierBase>() : statModifers;
+        this.stats = stats;
+        this.statModifers = statModifers;
+    }
+
+    public StatSheet(StatSheet statSheet, object source = null)
+    {
+        this.stats = new Dictionary<string, StatBase>();
+        this.statModifers = new Dictionary<string, StatModifierBase>();
+
+        foreach (var stat in statSheet.stats)
+        {
+            this.stats.Add(stat.Key, new StatBase(stat.Value));
+        }
+        foreach (var modifier in statSheet.statModifers)
+        {
+            this.statModifers.Add(modifier.Key, new StatModifierBase(modifier.Value));
+        }
     }
 
     public StatBase GetStat(string key)
     {
-        if (Stats.TryGetValue(key, out StatBase stat))
+        if (stats.TryGetValue(key, out StatBase stat))
         {
             return stat;
         }
@@ -37,7 +54,7 @@ public class StatSheet
     }
     public StatModifierBase GetStatModifier(string key)
     {
-        if (StatModifers.TryGetValue(key, out StatModifierBase stat))
+        if (statModifers.TryGetValue(key, out StatModifierBase stat))
         {
             return stat;
         }

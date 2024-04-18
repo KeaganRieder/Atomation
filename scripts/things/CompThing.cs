@@ -17,7 +17,7 @@ public abstract partial class CompThing : Node2D, ICompThing
 
 	public Node2D Node { get => this; }
 
-	public StaticGraphic Graphic { get; protected set; }
+	public StaticGraphic Graphic { get; set; }
 
 
 }

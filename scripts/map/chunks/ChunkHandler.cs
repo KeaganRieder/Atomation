@@ -22,7 +22,7 @@ public class ChunkHandler
 	{
 		worldMap = map;
 
-		visibleChunks = Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE)  - 1;
+		visibleChunks = Mathf.FloorToInt(MapSettings.MAX_LOAD_DIST / Chunk.CHUNK_SIZE) - 1;
 
 		// making chunk size based on tiles not pixels
 		chunkSize = Chunk.CHUNK_SIZE * MapSettings.CELL_SIZE;
@@ -142,13 +142,25 @@ public class ChunkHandler
 		chunk.Buildings.SetObject(structure.Coordinate.WorldPosition, structure);
 	}
 
-
+	/// <summary>
+	/// gets terrain at world position
+	/// </summary>
+	public Structure GetStructure(Vector2 worldPosition)
+	{
+		Chunk chunk = GetChunk(worldPosition);
+		if (chunk == null)
+		{
+			return null;
+		}
+		return chunk.Buildings.GetObject(worldPosition);
+	}
 	/// <summary>
 	/// gets structure at world position
 	/// </summary>
 	public Structure GetStructure(Coordinate cord)
 	{
 		Chunk chunk = GetChunk(cord);
+
 		if (chunk == null)
 		{
 			return null;
@@ -187,9 +199,9 @@ public class ChunkHandler
 		lastUpdatedChunks.Clear();
 
 		//Run through surrounding chunks at player position 
-		for (int xOffset = -visibleChunks+1; xOffset < visibleChunks; xOffset++)//+1
+		for (int xOffset = -visibleChunks; xOffset < visibleChunks; xOffset++)//+1
 		{
-			for (int yOffset = -visibleChunks+1; yOffset < visibleChunks ; yOffset++)//+1
+			for (int yOffset = -visibleChunks; yOffset < visibleChunks; yOffset++)//+1
 			{
 				Vector2 viewChunkCord = new Vector2(currentChunkCords.X + xOffset, currentChunkCords.Y + yOffset);
 

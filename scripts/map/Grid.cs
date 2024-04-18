@@ -51,13 +51,36 @@ namespace Atomation.Map
 		/// <summary> creates outline  </summary>
 		private void CreateOutline()
 		{
-
 			Line2D line;
 			Color color = Colors.Black;
 			int width = 1;
+			// //inner grid
+			// for (int x = 0; x < Width; x++)
+			// {
+			// 	for (int y = 0; y < Height; y++)
+			// 	{
+			// 		line = new Line2D();
+			// 		line.ZIndex = 10;
+			// 		line.Width = width;
+			// 		line.AddPoint(GetWorldPosition(x, y));
+			// 		line.AddPoint(GetWorldPosition(x, y + 1));
+			// 		chunk.AddChild(line);
+			// 		outLines.Add(line);
+
+			// 		line = new Line2D();
+			// 		line.ZIndex = 10;
+			// 		line.Width = width;
+			// 		line.AddPoint(GetWorldPosition(x, y));
+			// 		line.AddPoint(GetWorldPosition(x + 1, y));
+			// 		chunk.AddChild(line);
+			// 		outLines.Add(line);
+			// 	}
+			// }
+			
 
 			// grid bounds
 			line = new Line2D();
+			line.ZIndex = 10;
 			line.AddPoint(GetWorldPosition(0, 0));
 			line.AddPoint(GetWorldPosition(0, Height));
 			line.AddPoint(GetWorldPosition(0, 0));

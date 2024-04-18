@@ -39,15 +39,14 @@ public partial class Player : CompThing
 				{StatKeys.MAX_HEALTH, new DamageAbleStat(StatKeys.MAX_HEALTH, "players hit points", 100)},
 				{StatKeys.ATTACK_DAMAGE, new DamageAbleStat(StatKeys.ATTACK_DAMAGE, "players Attack dmg", 10)}};
 
-		StatSheet = new StatSheet(stats);
+		StatSheet = new StatSheet(stats, new Dictionary<string, StatModifierBase>());
 	}
 
 	public void Move()
 	{
 		//figure out how to smooth movement
-		
 		Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-		Position += velocityVector.Normalized() * StatSheet.Stats[StatKeys.MOVE_SPEED].Value;
+		Position += velocityVector.Normalized() * StatSheet.GetStat(StatKeys.MOVE_SPEED).Value;
 		Coordinate.UpdateWorldPosition(Position);
 		//todo: animation code here at some point
 	}

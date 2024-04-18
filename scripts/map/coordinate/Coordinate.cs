@@ -110,6 +110,7 @@ public class Coordinate
     public void UpdateWorldPosition(Vector2 coords)
     {
         WorldPosition = coords;
+
         FindXYCords();
         FindChunkPosition();
     }

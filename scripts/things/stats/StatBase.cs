@@ -22,23 +22,36 @@ public class StatBase : Thing
 
     [JsonProperty("Value", Order = 2)]
     protected float baseValue;
+    protected float currentValue;
     protected float damage;
 
     private List<FlatStatModifier> flatStatModifiers;
 
     protected bool updateValue;
 
-    public StatBase()
+    protected StatBase()
     {
         flatStatModifiers = new();
     }
-
     public StatBase(string name, string description, float baseValue, StatType statType = StatType.Undefined) : base()
     {
         Name = name;
         Description = description;
         Type = statType;
         this.baseValue = baseValue;
+        currentValue = baseValue;
+        damage = 0;
+
+        updateValue = false;
+    }
+
+    public StatBase(StatBase statBase) : base()
+    {
+        Name = statBase.Name;
+        Description = statBase.Description;
+        Type = statBase.Type;
+        baseValue = statBase.BaseValue;
+        currentValue = statBase.BaseValue;
         damage = 0;
 
         updateValue = false;
@@ -46,7 +59,6 @@ public class StatBase : Thing
 
     [JsonIgnore]
     public virtual float MaxValue { get => baseValue; }
-
     [JsonIgnore]
     public virtual float BaseValue { get => baseValue; }
 
@@ -59,10 +71,8 @@ public class StatBase : Thing
             {
                 UpdateStat();
             }
-            return Value;
+            return currentValue;
         }
-
-        private set { Value = value; }
     }
 
     /// <summary>
@@ -83,7 +93,6 @@ public class StatBase : Thing
         {
             GD.PushError($"{statModifier.Name} is of Percentage type which is currently not implemented");
         }
-
     }
 
     /// <summary>
@@ -126,20 +135,34 @@ public class StatBase : Thing
     }
 
     /// <summary>
-    /// Apply damage to stat
+    /// damage stat
     /// </summary>
-    public virtual void Damage(int damageAmt) { }
-    /// <summary>
-    /// Remove damage to stat
-    /// </summary>
-    public virtual void Heal(int damageAmt) { }
+    public virtual void Damage(float damageAmt)
+    {
+        damage += damageAmt;
 
+        updateValue = true;
+    }
+    /// <summary>
+    /// heal stat
+    /// </summary>
+    public virtual void Heal(float damageAmt)
+    {
+        if (damage > 0)
+        {
+            damage = 0;
+            return;
+        }
+        damage += damageAmt;
+
+        updateValue = true;
+    }
     protected virtual void UpdateStat()
     {
-        float flat = ApplyFlatModifiers();
-        float finalValue = flat;
+        // float flat = ApplyFlatModifiers();
+        // float finalValue = flat;
 
-        Value = finalValue - damage;
+        currentValue = baseValue - damage;
         updateValue = false;
     }
 
@@ -153,5 +176,10 @@ public class StatBase : Thing
         return flatVal;
     }
 
+    public override string ToString()
+    {
+        string objString = $"{Value}";
+        return objString;
+    }
 
 }

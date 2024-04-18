@@ -16,7 +16,6 @@ public partial class Terrain : CompThing
 	public float HeatValue { get; set; }
 	public float MoistureValue { get; set; }
 
-
 	public Terrain(Coordinate coord)
 	{
 		coordinate = coord;
@@ -34,8 +33,9 @@ public partial class Terrain : CompThing
 	{
 		Name = config.Name + Coordinate.ToString();
 		Description = config.Description;
-		// StatSheet = config.StatSheet;//new StatSheet(, this);
-		// Graphic.Configure(config.GraphicData);
+		StatSheet = new StatSheet (config.StatSheet, this);
+
+		Graphic.Configure(config.GraphicData);
 	}
 
 	public void UpdateGraphic(VisualizationMode displayMode)

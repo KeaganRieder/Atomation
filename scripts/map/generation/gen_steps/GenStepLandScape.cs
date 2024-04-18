@@ -100,7 +100,8 @@ public class GenStepLandScape : GenStep
 
 		if (biome == null)
 		{
-			terrain.Graphic.DefaultColor = new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue);
+			terrain.Graphic.DefaultColor = Colors.Red;
+
 			return;
 		}
 
@@ -116,7 +117,7 @@ public class GenStepLandScape : GenStep
 	}
 
 	/// <summary>
-	/// sets the terrain to be a typeof water depending on how it's hieght 
+	/// sets the terrain to be a typeof water depending on how it's height 
 	/// </summary>
 	private void SetWater(Terrain terrain)
 	{
@@ -145,7 +146,7 @@ public class GenStepLandScape : GenStep
 	private void SetElevationType(Terrain terrain, out Structure structure)
 	{
 		float height = terrain.HeightValue;
-		
+
 		//it's some point in a mountain
 		if (height > mountainBase && height < mountainHeight)
 		{

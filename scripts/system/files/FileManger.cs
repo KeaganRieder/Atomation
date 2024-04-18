@@ -95,45 +95,54 @@ public class FileManger
 	}
 
 	/// <summary>
-	/// reads in .png files, converting it to a texture2d to be used in the game. if
-	/// texture at given location doesn't exist returns default texture
+	/// reads in .png files, and converts it to a texture2d object at the given size. if 
+	/// the path doesn't contain a image then set texture to default Undefined one
 	/// </summary>
-	public static Texture2D ReadTexture(string filePath)
+	public static Texture2D ReadTexture(string filePath, Vector2I TextureSize)
 	{
-		Texture2D texture = default;
+		Image image;
 
 		if (File.Exists(filePath))
 		{
-			Image image = Image.LoadFromFile(filePath);
-			texture = ImageTexture.CreateFromImage(image);
+			image = Image.LoadFromFile(filePath);
 		}
 		else
-		{			
+		{
 			// GD.PushError($"Texture: {filePath} doesn't exist");
 			filePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png";
-			Image image = Image.LoadFromFile(filePath);
-			texture = ImageTexture.CreateFromImage(image);
+			image = Image.LoadFromFile(filePath);
 		}
 
-		return texture;
+
+		if (image.GetSize() != TextureSize)
+		{
+			// GD.PushWarning($"Texture is size is incorrect scaling from {texture.GetImage().GetSize()} to {graphicSize}");
+
+			image.Resize(TextureSize.X, TextureSize.Y, Image.Interpolation.Bilinear);
+
+		}
+
+		return  ImageTexture.CreateFromImage(image);
+;
 	}
 
 	/// <summary>
 	/// reads in a collection of .png files, converting them to be a texture2d which is used as objects graphics
 	/// </summary>
-	public static Texture2D[] ReadTextureGroup(string filePath, int variants){
+	public static Texture2D[] ReadTextureGroup(string filePath,Vector2I TextureSize, int variants)
+	{
 
 		Texture2D[] textureArray = new Texture2D[variants];
 
 		for (int i = 0; i < variants; i++)
 		{
-			string path = filePath + "_" +i;
-			
-			textureArray[i] = ReadTexture(path);
+			string path = filePath + "_" + i;
+
+			textureArray[i] = ReadTexture(path,TextureSize);
 		}
 
 		return default;
 	}
 
-	
+
 }

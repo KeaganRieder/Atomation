@@ -12,15 +12,15 @@ using Atomation.Resources;
 /// </summary>
 public partial class Structure : CompThing
 {
-	public BasicGraphic FloorGraphic { get; set; }
+	// public BasicGraphic FloorGraphic { get; set; }
 
 	public Structure(Coordinate coord)
 	{
 		coordinate = coord;
 		Position = coordinate.WorldPosition;
 
-		FloorGraphic = new BasicGraphic(this);
-		FloorGraphic.ObjGraphic.VisibilityLayer = 3;
+		Graphic = new StaticGraphic();
+		AddChild(Graphic);
 	}
 
 	/// <summary>
@@ -32,9 +32,8 @@ public partial class Structure : CompThing
 	{
 		Name = config.Name + Coordinate.ToString();
 		Description = config.Description;
-		stats = config.Stats();
-		modifiers = config.StatModifers();
-		FloorGraphic.ConfigureGraphic(config.GraphicData);
+		// StatSheet = config.StatSheet;
+		// Graphic.Configure(config.GraphicData);
 	}
 
 

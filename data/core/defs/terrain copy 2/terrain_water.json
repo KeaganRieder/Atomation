@@ -1,0 +1,239 @@
+{
+  "Defs": {
+    "Marsh": {
+      "Name": "Marsh",
+      "Description": "It's a marshy",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/marsh",
+        "color": {
+          "R": 0.33333334,
+          "G": 0.41960785,
+          "B": 0.18431373,
+          "A": 1.0,
+          "R8": 85,
+          "G8": 107,
+          "B8": 47,
+          "A8": 255,
+          "H": 0.22777776,
+          "S": 0.5607477,
+          "V": 0.41960785,
+          "Luminance": 0.38427767
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 0.0,
+          "Base Value": 1.0
+        }
+      ],
+      "Stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Shallow Ocean": {
+      "Name": "Shallow Ocean",
+      "Description": "It's shallow ocean",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/shallow_ocean",
+        "color": {
+          "R": 0.18039216,
+          "G": 0.54509807,
+          "B": 0.34117648,
+          "A": 1.0,
+          "R8": 46,
+          "G8": 139,
+          "B8": 87,
+          "A8": 255,
+          "H": 0.40681005,
+          "S": 0.66906476,
+          "V": 0.54509807,
+          "Luminance": 0.45283842
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 0.0,
+          "Base Value": 1.0
+        }
+      ],
+      "Stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Shallow Water": {
+      "Name": "Shallow Water",
+      "Description": "It's shallow water",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/shallow_water",
+        "color": {
+          "R": 0.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "R8": 0,
+          "G8": 255,
+          "B8": 255,
+          "A8": 255,
+          "H": 0.5,
+          "S": 1.0,
+          "V": 1.0,
+          "Luminance": 0.7874
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 0.0,
+          "Base Value": 1.0
+        }
+      ],
+      "Stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Deep Ocean Water": {
+      "Name": "Shallow Ocean Water",
+      "Description": "It's Deep ocean water",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/shallow_ocean",
+        "color": {
+          "R": 0.56078434,
+          "G": 0.7372549,
+          "B": 0.56078434,
+          "A": 1.0,
+          "R8": 143,
+          "G8": 188,
+          "B8": 143,
+          "A8": 255,
+          "H": 0.33333334,
+          "S": 0.23936169,
+          "V": 0.7372549,
+          "Luminance": 0.6869961
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 0.0,
+          "Base Value": 1.0
+        }
+      ],
+      "Stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    },
+    "Deep Water": {
+      "Name": "Deep Water",
+      "Description": "It's Deep ocean water",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/shallow_water",
+        "color": {
+          "R": 0.0,
+          "G": 0.0,
+          "B": 0.54509807,
+          "A": 1.0,
+          "R8": 0,
+          "G8": 0,
+          "B8": 139,
+          "A8": 255,
+          "H": 0.6666667,
+          "S": 1.0,
+          "V": 0.54509807,
+          "Luminance": 0.03935608
+        }
+      },
+      "Stats": [
+        {
+          "Name": "Fertility",
+          "Value": 2.0,
+          "Description": "The fertility of the object",
+          "Min Value": 0.1,
+          "Max Value": 0.0,
+          "Base Value": 2.0
+        },
+        {
+          "Name": "Beauty",
+          "Value": 1.0,
+          "Description": "The Beauty of the object",
+          "Min Value": 0.0,
+          "Max Value": 0.0,
+          "Base Value": 1.0
+        }
+      ],
+      "Stat Modifiers": [
+        {
+          "Name": "WalkSpeed",
+          "Description": "The speed something can walk on this",
+          "Base Value": 0.5,
+          "Modifier Type": "MultiplicativePercentage"
+        }
+      ]
+    }
+  }
+}

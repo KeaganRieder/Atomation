@@ -1,57 +1,11 @@
 {
   "Defs": {
-    "Grass": {
-      "Name": "Grass",
-      "Description": "It's grassy",
-      "Graphic Data": {
-        "texturePath": "terrain/natural/grass",
-        "color": {
-          "R": 0.18039216,
-          "G": 0.54509807,
-          "B": 0.34117648,
-          "A": 1.0,
-          "R8": 46,
-          "G8": 139,
-          "B8": 87,
-          "A8": 255,
-          "H": 0.40681005,
-          "S": 0.66906476,
-          "V": 0.54509807,
-          "Luminance": 0.45283842
-        }
-      },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 1.0,
-          "Base Value": 2.0
-        },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
-        }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.8,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
-    },
     "Forest Grass": {
       "Name": "Forest Grass",
-      "Description": "It's darker grass found in a forest",
+      "Description": "it's grass within a forest",
       "Graphic Data": {
         "texturePath": "terrain/natural/forest_grass",
+        "Texture Variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.39215687,
@@ -65,87 +19,83 @@
           "S": 1.0,
           "V": 0.39215687,
           "Luminance": 0.2804706
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 1.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 1.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.7
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.8,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     },
-    "Rich Soil": {
-      "Name": "Rich Soil",
-      "Description": "It's soil that crops can grow well one",
+    "Grass": {
+      "Name": "Grass",
+      "Description": "it's grass",
       "Graphic Data": {
-        "texturePath": "terrain/natural/rich_soil",
+        "texturePath": "terrain/natural/grass",
+        "Texture Variants": 1,
         "color": {
-          "R": 0.7372549,
-          "G": 0.56078434,
-          "B": 0.56078434,
+          "R": 0.0,
+          "G": 1.0,
+          "B": 0.0,
           "A": 1.0,
-          "R8": 188,
-          "G8": 143,
-          "B8": 143,
+          "R8": 0,
+          "G8": 255,
+          "B8": 0,
           "A8": 255,
-          "H": 0.0,
-          "S": 0.23936169,
-          "V": 0.7372549,
-          "Luminance": 0.598302
+          "H": 0.33333334,
+          "S": 1.0,
+          "V": 1.0,
+          "Luminance": 0.7152
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 1.5,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 1.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 1.0
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     },
     "Soil": {
       "Name": "Soil",
-      "Description": "It's soil ",
+      "Description": "it's soil",
       "Graphic Data": {
         "texturePath": "terrain/natural/soil",
+        "Texture Variants": 1,
         "color": {
           "R": 0.64705884,
           "G": 0.16470589,
@@ -159,40 +109,83 @@
           "S": 0.74545455,
           "V": 0.64705884,
           "Luminance": 0.2672541
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 1.5,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 1.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.7
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
+      }
+    },
+    "Rich Soil": {
+      "Name": "Rich Soil",
+      "Description": "it's rich soil, corps grow well here",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/soil",
+        "Texture Variants": 1,
+        "color": {
+          "R": 0.7372549,
+          "G": 0.56078434,
+          "B": 0.56078434,
+          "A": 1.0,
+          "R8": 188,
+          "G8": 143,
+          "B8": 143,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.23936169,
+          "V": 0.7372549,
+          "Luminance": 0.598302
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
-      ]
+      },
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 2.0
+          }
+        },
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.7
+          }
+        }
+      }
     },
     "Sand": {
       "Name": "Sand",
-      "Description": "it's sand",
+      "Description": "it's rough, corse and gets everywhere",
       "Graphic Data": {
         "texturePath": "terrain/natural/sand",
+        "Texture Variants": 1,
         "color": {
           "R": 1.0,
           "G": 1.0,
@@ -206,87 +199,38 @@
           "S": 1.0,
           "V": 1.0,
           "Luminance": 0.9278
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.5
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
-    },
-    "Gravel": {
-      "Name": "Gravel",
-      "Description": "it's sand",
-      "Graphic Data": {
-        "texturePath": "terrain/natural/gravel",
-        "color": {
-          "R": 0.74509805,
-          "G": 0.74509805,
-          "B": 0.74509805,
-          "A": 1.0,
-          "R8": 190,
-          "G8": 190,
-          "B8": 190,
-          "A8": 255,
-          "H": 0.0,
-          "S": 0.0,
-          "V": 0.74509805,
-          "Luminance": 0.745098
-        }
-      },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
-        },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
-        }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.2,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     },
     "Ice": {
       "Name": "Ice",
-      "Description": "it's slippery",
+      "Description": "it's slippery,and cold",
       "Graphic Data": {
-        "texturePath": "terrain/natural/ice",
+        "texturePath": "terrain/natural/Ice",
+        "Texture Variants": 1,
         "color": {
           "R": 1.0,
           "G": 1.0,
@@ -300,34 +244,31 @@
           "S": 0.0,
           "V": 1.0,
           "Luminance": 1.0
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.5
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.4,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     }
   }
 }

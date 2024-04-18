@@ -30,7 +30,7 @@ namespace Atomation.Things
         public float MaxTemperature;
 
         [JsonProperty("biomeTerrain")]
-        private Dictionary<float, string> terrain;
+        private Dictionary<float, string> terrain = null;
 
         [JsonProperty("biomeColor")]
         public Color Color;

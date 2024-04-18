@@ -2,56 +2,10 @@
   "Defs": {
     "Marsh": {
       "Name": "Marsh",
-      "Description": "It's a marshy",
+      "Description": "it's Marshy",
       "Graphic Data": {
         "texturePath": "terrain/natural/marsh",
-        "color": {
-          "R": 0.33333334,
-          "G": 0.41960785,
-          "B": 0.18431373,
-          "A": 1.0,
-          "R8": 85,
-          "G8": 107,
-          "B8": 47,
-          "A8": 255,
-          "H": 0.22777776,
-          "S": 0.5607477,
-          "V": 0.41960785,
-          "Luminance": 0.38427767
-        }
-      },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
-        },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 0.0,
-          "Base Value": 1.0
-        }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
-    },
-    "Shallow Ocean": {
-      "Name": "Shallow Ocean",
-      "Description": "It's shallow ocean",
-      "Graphic Data": {
-        "texturePath": "terrain/natural/shallow_ocean",
+        "Texture Variants": 1,
         "color": {
           "R": 0.18039216,
           "G": 0.54509807,
@@ -65,134 +19,128 @@
           "S": 0.66906476,
           "V": 0.54509807,
           "Luminance": 0.45283842
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 0.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.4
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     },
-    "Shallow Water": {
-      "Name": "Shallow Water",
-      "Description": "It's shallow water",
+    "Shallow Ocean": {
+      "Name": "Shallow Ocean",
+      "Description": "it's Ocean which is shallow",
       "Graphic Data": {
-        "texturePath": "terrain/natural/shallow_water",
+        "texturePath": "terrain/natural/ocean",
+        "Texture Variants": 1,
         "color": {
           "R": 0.0,
-          "G": 1.0,
+          "G": 0.0,
           "B": 1.0,
           "A": 1.0,
           "R8": 0,
-          "G8": 255,
+          "G8": 0,
           "B8": 255,
           "A8": 255,
-          "H": 0.5,
+          "H": 0.6666667,
           "S": 1.0,
           "V": 1.0,
-          "Luminance": 0.7874
+          "Luminance": 0.0722
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 0.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.5
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     },
-    "Deep Ocean Water": {
-      "Name": "Shallow Ocean Water",
-      "Description": "It's Deep ocean water",
+    "Shallow Water": {
+      "Name": "Shallow Water",
+      "Description": "it's shallow water",
       "Graphic Data": {
-        "texturePath": "terrain/natural/shallow_ocean",
+        "texturePath": "terrain/natural/water",
+        "Texture Variants": 1,
         "color": {
-          "R": 0.56078434,
-          "G": 0.7372549,
-          "B": 0.56078434,
+          "R": 0.6784314,
+          "G": 0.84705883,
+          "B": 0.9019608,
           "A": 1.0,
-          "R8": 143,
-          "G8": 188,
-          "B8": 143,
+          "R8": 173,
+          "G8": 216,
+          "B8": 230,
           "A8": 255,
-          "H": 0.33333334,
-          "S": 0.23936169,
-          "V": 0.7372549,
-          "Luminance": 0.6869961
+          "H": 0.5409357,
+          "S": 0.24782607,
+          "V": 0.9019608,
+          "Luminance": 0.8151726
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 0.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.5
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     },
-    "Deep Water": {
-      "Name": "Deep Water",
-      "Description": "It's Deep ocean water",
+    "Deep Ocean": {
+      "Name": "Deep Ocean",
+      "Description": "it's Ocean which is Deep",
       "Graphic Data": {
-        "texturePath": "terrain/natural/shallow_water",
+        "texturePath": "terrain/natural/ocean",
+        "Texture Variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.0,
@@ -206,34 +154,76 @@
           "S": 1.0,
           "V": 0.54509807,
           "Luminance": 0.03935608
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 0.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.0
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.5,
-          "Modifier Type": "MultiplicativePercentage"
+      }
+    },
+    "Deep Water": {
+      "Name": "Deep Water",
+      "Description": "it's deep water, which you have to swim through",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/water",
+        "Texture Variants": 1,
+        "color": {
+          "R": 0.25490198,
+          "G": 0.4117647,
+          "B": 0.88235295,
+          "A": 1.0,
+          "R8": 65,
+          "G8": 105,
+          "B8": 225,
+          "A8": 255,
+          "H": 0.625,
+          "S": 0.71111107,
+          "V": 0.88235295,
+          "Luminance": 0.41239217
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
-      ]
+      },
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
+        },
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.2
+          }
+        }
+      }
     }
   }
 }

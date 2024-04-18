@@ -100,14 +100,14 @@ public class GenStepLandScape : GenStep
 
 		if (biome == null)
 		{
-			terrain.Graphic.Color = new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue);
+			terrain.Graphic.DefaultColor = new Color(terrain.HeightValue, terrain.HeightValue, terrain.HeightValue);
 			return;
 		}
 
 		TerrainDef def = biome == null ? null : biome.GetTerrain(terrain.HeightValue);
 		if (def == null)
 		{
-			terrain.Graphic.Color = Colors.Red;
+			terrain.Graphic.DefaultColor = Colors.Red;
 			GD.Print($"{biome.Name} {terrain.HeightValue}");
 
 			return;
@@ -145,6 +145,7 @@ public class GenStepLandScape : GenStep
 	private void SetElevationType(Terrain terrain, out Structure structure)
 	{
 		float height = terrain.HeightValue;
+		
 		//it's some point in a mountain
 		if (height > mountainBase && height < mountainHeight)
 		{

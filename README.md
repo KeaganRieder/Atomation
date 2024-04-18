@@ -50,11 +50,11 @@ Chunks allow for the map to be divided into more manageable sections and are use
 * chunks are "switched off" or unloaded if they are a certain distance from the player. that distance
 being determined in the [ChunkHandler class](scripts/map/ChunkHandler.cs) by:
 ``` C#
-    public const float MAX_LOAD_DIST = 64; // 64 tiles away from player current position
+	public const float MAX_LOAD_DIST = 64; // 64 tiles away from player current position
 
-    // making it so load distance is based on chunks not tiles. Chunk.CHUNK_SIZE = 32 tiles, 
-    // so visibleChunks = 2 chunks away from player are loaded
-    visibleChunks = Mathf.RoundToInt(MAX_LOAD_DIST / Chunk.CHUNK_SIZE); 
+	// making it so load distance is based on chunks not tiles. Chunk.CHUNK_SIZE = 32 tiles, 
+	// so visibleChunks = 2 chunks away from player are loaded
+	visibleChunks = Mathf.RoundToInt(MAX_LOAD_DIST / Chunk.CHUNK_SIZE); 
 ```
 This allows for chunks which don't aren't near the player to not be unloaded saving cpu cycles
 from needing to render object which aren't important.

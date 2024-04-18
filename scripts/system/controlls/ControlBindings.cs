@@ -44,7 +44,7 @@ namespace Atomation
         {
             LoadMouseBindings();
 
-            ControlBindings loadedBinding = FileManger.ReadJsonFile<ControlBindings>(FilePath.KEYBINDINGS_FOLDER, bindingFile);
+            ControlBindings loadedBinding = FileManger.ReadJsonFile<ControlBindings>(FilePaths.KEYBINDINGS_FOLDER, bindingFile);
 
             //assigning 
             foreach (var binding in loadedBinding.keyBindings)

@@ -10,9 +10,19 @@ public abstract class Thing : IThing
 {
 	[JsonProperty("Name", Order = -2)]
 	public virtual string Name { get; set; }
+
 	[JsonIgnore]
 	public virtual string Key { get => Name; }
+
 	[JsonProperty("Description", Order = -1)]
 	public virtual string Description { get; set; }
+
+	protected Thing(){}
+
+	protected Thing(string name, string description){
+		Name = name;
+		Description = description;
+	}
+
 }
 

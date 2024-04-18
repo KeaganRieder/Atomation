@@ -187,9 +187,9 @@ public class ChunkHandler
 		lastUpdatedChunks.Clear();
 
 		//Run through surrounding chunks at player position 
-		for (int xOffset = -visibleChunks; xOffset < visibleChunks+1; xOffset++)
+		for (int xOffset = -visibleChunks+1; xOffset < visibleChunks; xOffset++)//+1
 		{
-			for (int yOffset = -visibleChunks; yOffset < visibleChunks +1; yOffset++)
+			for (int yOffset = -visibleChunks+1; yOffset < visibleChunks ; yOffset++)//+1
 			{
 				Vector2 viewChunkCord = new Vector2(currentChunkCords.X + xOffset, currentChunkCords.Y + yOffset);
 

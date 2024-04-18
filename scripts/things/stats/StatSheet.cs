@@ -1,27 +1,43 @@
 namespace Atomation.Things;
 
 using System.Collections.Generic;
+using Godot;
+
 /// <summary>
-/// acts as an access point to stats and stat modifiers that objects have
+/// An stat sheet contains an object stat modifiers and Stats
 /// </summary>
 public class StatSheet
 {
-    private Dictionary<string, Stat> stats;
-    private Dictionary<string, StatModifier> statModifiers;
+    public Dictionary<string, StatBase> Stats { get; private set; }
 
-    public StatSheet(Dictionary<string, Stat> stats, Dictionary<string, StatModifier> statModifiers)
+    public Dictionary<string, StatModifierBase> StatModifers { get; private set; }
+
+    public StatSheet()
     {
-        this.stats = stats;
-        this.statModifiers = statModifiers;
+        Stats = new Dictionary<string, StatBase>();
+        StatModifers = new Dictionary<string, StatModifierBase>();
     }
 
-    public void SetStat()
+    public StatSheet(Dictionary<string, StatBase> stats = null, Dictionary<string, StatModifierBase> statModifers = null)
     {
-
+        this.Stats = (stats == null) ? new Dictionary<string, StatBase>() : stats;
+        this.StatModifers = (StatModifers == null) ? new Dictionary<string, StatModifierBase>() : statModifers;
     }
-    public Stat GetStat(string statID)
+
+    public StatBase GetStat(string key)
     {
-        if (stats.TryGetValue(statID, out Stat stat))
+        if (Stats.TryGetValue(key, out StatBase stat))
+        {
+            return stat;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public StatModifierBase GetStatModifier(string key)
+    {
+        if (StatModifers.TryGetValue(key, out StatModifierBase stat))
         {
             return stat;
         }
@@ -31,27 +47,22 @@ public class StatSheet
         }
     }
 
-    public void SetModifier()
+    public void ApplyModifiers(Dictionary<string, StatModifierBase> modifiers)
     {
+        StatBase stat;
 
-    }
-    public StatModifier GetModifier(string statModifierID)
-    {
-        if (statModifiers.TryGetValue(statModifierID, out StatModifier statModifier))
+        foreach (var modifier in modifiers)
         {
-            return statModifier;
-        }
-        else
-        {
-            return null;
+            string statKey = modifier.Value.TargetStat;
+            if ((stat = GetStat(statKey)) != null)
+            {
+                stat.AddModifier(modifier.Value);
+            }
         }
     }
-
-    public void ApplyModifiers(StatSheet statSheet)
+    public void RemoveModifiers()
     {
+        GD.Print("implementation of removing stat modifiers is needed");
 
     }
-
-
-
 }

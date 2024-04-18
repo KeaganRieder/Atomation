@@ -1,10 +1,101 @@
 {
   "Defs": {
+    "Gravel": {
+      "Name": "Gravel",
+      "Description": "it's made of smaller rocks",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/gravel",
+        "Texture Variants": 1,
+        "color": {
+          "R": 0.74509805,
+          "G": 0.74509805,
+          "B": 0.74509805,
+          "A": 1.0,
+          "R8": 190,
+          "G8": 190,
+          "B8": 190,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.0,
+          "V": 0.74509805,
+          "Luminance": 0.745098
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
+        }
+      },
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.5
+          }
+        },
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.5
+          }
+        }
+      }
+    },
+    "Marble": {
+      "Name": "Marble",
+      "Description": "it's white rock which looks nice",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/rock_floor",
+        "Texture Variants": 1,
+        "color": {
+          "R": 0.9607843,
+          "G": 0.9607843,
+          "B": 0.9607843,
+          "A": 1.0,
+          "R8": 245,
+          "G8": 245,
+          "B8": 245,
+          "A8": 255,
+          "H": 0.0,
+          "S": 0.0,
+          "V": 0.9607843,
+          "Luminance": 0.9607843
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
+        }
+      },
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
+        },
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.5
+          }
+        }
+      }
+    },
     "Slate": {
       "Name": "Slate",
-      "Description": "It's a nice black rock",
+      "Description": "it's a black rock which looks nice",
       "Graphic Data": {
-        "texturePath": "terrain/natural/slate",
+        "texturePath": "terrain/natural/rock_floor",
+        "Texture Variants": 1,
         "color": {
           "R": 0.6627451,
           "G": 0.6627451,
@@ -18,81 +109,31 @@
           "S": 0.0,
           "V": 0.6627451,
           "Luminance": 0.6627451
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
+      "Stat Sheet": {
+        "Stats": {
+          "fertility": {
+            "Name": "fertility",
+            "Description": "The tile's fertility",
+            "Stat Type": "Undefined",
+            "Value": 0.0
+          }
         },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
+        "StatModifers": {
+          "Move Speed": {
+            "Name": "MoveSpeed Modifier",
+            "Description": "Tiles effect on Move Speed",
+            "Target Stat": "Move Speed",
+            "Modifier Type": "Flat",
+            "Value": 0.5
+          }
         }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.7,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
-    },
-    "Marble": {
-      "Name": "Marble",
-      "Description": "It's white rock",
-      "Graphic Data": {
-        "texturePath": "terrain/natural/Marble",
-        "color": {
-          "R": 0.827451,
-          "G": 0.827451,
-          "B": 0.827451,
-          "A": 1.0,
-          "R8": 211,
-          "G8": 211,
-          "B8": 211,
-          "A8": 255,
-          "H": 0.0,
-          "S": 0.0,
-          "V": 0.827451,
-          "Luminance": 0.827451
-        }
-      },
-      "Stats": [
-        {
-          "Name": "Fertility",
-          "Value": 2.0,
-          "Description": "The fertility of the object",
-          "Min Value": 0.1,
-          "Max Value": 0.0,
-          "Base Value": 2.0
-        },
-        {
-          "Name": "Beauty",
-          "Value": 1.0,
-          "Description": "The Beauty of the object",
-          "Min Value": 0.0,
-          "Max Value": 1.0,
-          "Base Value": 1.0
-        }
-      ],
-      "Stat Modifiers": [
-        {
-          "Name": "WalkSpeed",
-          "Description": "The speed something can walk on this",
-          "Base Value": 0.7,
-          "Modifier Type": "MultiplicativePercentage"
-        }
-      ]
+      }
     }
   }
 }

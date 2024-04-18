@@ -129,7 +129,4 @@ public class Coordinate
         string cords = $" {XYPosition}, {WorldPosition}, ";
         return cords;
     }
-
-
-
 }

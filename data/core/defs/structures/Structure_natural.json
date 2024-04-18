@@ -1,10 +1,11 @@
 {
   "Defs": {
-    "Slate Wall": {
+    "Slate": {
       "Name": "Slate Wall",
-      "Description": "A slate stone wall",
+      "Description": "A rock face made of slate",
       "Graphic Data": {
-        "texturePath": "",
+        "texturePath": "terrain/natural/rock_wall",
+        "Texture Variants": 1,
         "color": {
           "R": 0.4392157,
           "G": 0.5019608,
@@ -18,19 +19,60 @@
           "S": 0.22222225,
           "V": 0.5647059,
           "Luminance": 0.49315143
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
       },
-      "Stats": [
-        {
-          "Name": "Health",
-          "Value": 100.0,
-          "Description": "object Hit Points",
-          "Min Value": 0.0,
-          "Max Value": 100.0,
-          "Base Value": 100.0
+      "Stat Sheet": {
+        "Stats": {
+          "Max Health": {
+            "Name": "Max Health",
+            "Description": "The health of the wall",
+            "Stat Type": "Undefined",
+            "Value": 200.0
+          }
+        },
+        "StatModifers": {}
+      }
+    },
+    "Marble wall": {
+      "Name": "Marble wall",
+      "Description": "A rock face made of Marble",
+      "Graphic Data": {
+        "texturePath": "terrain/natural/rock_wall",
+        "Texture Variants": 1,
+        "color": {
+          "R": 0.972549,
+          "G": 0.972549,
+          "B": 1.0,
+          "A": 1.0,
+          "R8": 248,
+          "G8": 248,
+          "B8": 255,
+          "A8": 255,
+          "H": 0.6666667,
+          "S": 0.027450979,
+          "V": 1.0,
+          "Luminance": 0.974531
+        },
+        "Graphic Size": {
+          "X": 16,
+          "Y": 16
         }
-      ],
-      "Stat Modifiers": []
+      },
+      "Stat Sheet": {
+        "Stats": {
+          "Max Health": {
+            "Name": "Max Health",
+            "Description": "The health of the wall",
+            "Stat Type": "Undefined",
+            "Value": 100.0
+          }
+        },
+        "StatModifers": {}
+      }
     }
   }
 }

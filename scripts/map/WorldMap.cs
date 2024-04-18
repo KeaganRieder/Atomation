@@ -46,7 +46,7 @@ namespace Atomation.Map
 			this.Player = Player;
 			MapVisualIzation = VisualizationMode.Default;
 
-			mapSettings = FileManger.ReadJsonFile<MapSettings>(FilePath.CONFIG_FOLDER, "map_settings");
+			mapSettings = FileManger.ReadJsonFile<MapSettings>(FilePaths.CONFIG_FOLDER, "map_settings");
 
 			WorldGenerator.Initialize(mapSettings.genSettings);
 			ChunkHandler = new ChunkHandler(this);

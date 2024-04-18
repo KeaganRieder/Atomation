@@ -1,56 +1,55 @@
+namespace Atomation.PlayerChar;
+
 using Godot;
+using Atomation.Resources;
 using Atomation.Things;
 using System.Collections.Generic;
 using Atomation.Map;
 
-namespace Atomation.PlayerChar
+
+
+/// <summary>
+/// defines the player
+/// </summary>
+public partial class Player : CompThing
 {
-	/// <summary>
-	/// defines the player
-	/// </summary>
-	public partial class Player : CompThing
+	public CharacterBody2D Body { get; private set; }
+	public Camera Camera { get; private set; }
+
+	public Player()
 	{
-		public ColorRect Graphic;
-		public CharacterBody2D Body { get; private set; }
-		public Camera Camera { get; private set; }
+		Initialize();
+		Name = "player";
 
-		public Player()
-		{	
-			Initialize();	
-			Name = "player";
+		coordinate = new Coordinate(Vector2.Zero);
 
-			coordinate = new Coordinate(Vector2.Zero);
+		Body = new CharacterBody2D();
+		Camera = new Camera();
+		Graphic = new StaticGraphic("player", 1, new Vector2I(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE), Colors.White);
 
-			Body = new CharacterBody2D();
-			Camera = new Camera();
-			Graphic = new ColorRect
-			{
-				Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE * 2),
-				Color = new Color(Colors.White),
-				VisibilityLayer = 2
-			};
+		AddChild(Camera);
+		AddChild(Graphic);
+		AddChild(Body);
+	}
 
-			AddChild(Camera);
-			AddChild(Graphic);
-			AddChild(Body);
-		}
+	private void Initialize()
+	{
+		Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>(){
+				{StatKeys.MOVE_SPEED, new StatBase(StatKeys.MOVE_SPEED, "players moveSpeed", 1, StatType.Constant)},
+				{StatKeys.MAX_HEALTH, new DamageAbleStat(StatKeys.MAX_HEALTH, "players hit points", 100)},
+				{StatKeys.ATTACK_DAMAGE, new DamageAbleStat(StatKeys.ATTACK_DAMAGE, "players Attack dmg", 10)}};
 
-		private void Initialize(){
-			stats = new Dictionary<string, Stat>(){
-				{"MoveSpeed", new Stat("MoveSpeed", "players moveSpeed", 1, 0.1f, 2)}};
-		}
+		StatSheet = new StatSheet(stats);
+	}
 
-		public void Move()
-		{
-			//figure out how to smooth movement
-
-			Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-			Position += velocityVector.Normalized() * Stat("MoveSpeed").Value;
-			Coordinate.UpdateWorldPosition(Position);
-			//todo: animation code here at some point
-		}
-
+	public void Move()
+	{
+		//figure out how to smooth movement
 		
+		Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
+		Position += velocityVector.Normalized() * StatSheet.Stats[StatKeys.MOVE_SPEED].Value;
+		Coordinate.UpdateWorldPosition(Position);
+		//todo: animation code here at some point
 	}
 
 }

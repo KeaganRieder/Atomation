@@ -2,10 +2,6 @@ namespace Atomation.Map;
 
 using Godot;
 
-
-/// <summary>
-/// represents an objects Coordinate in the game world, chunk or grids
-/// </summary>
 /// <summary>
 /// a Coordinate in the game world contains, methods convert
 /// it between different grids
@@ -18,10 +14,13 @@ public class Coordinate
 
     /// <summary> objects current world position </summary>
     public Vector2 WorldPosition { get; private set; }
+
     /// <summary> objects Chunk position relative to the chunk grid </summary>
-    public Vector2 ChunkPosition { get; private set; }
+    public Vector2 ChunkGridPosition { get; private set; }
+
     /// <summary> objects Chunk position in the world </summary>
-    public Vector2 ChunkWorldPos { get; private set; }
+    public Vector2 ChunkWorldPos { get { return ChunkGridPosition * totalChunkSize; } }
+
     /// <summary> objects current x y position in the world </summary>
     public Vector2I XYPosition { get; private set; }
 
@@ -64,8 +63,8 @@ public class Coordinate
     /// </summary>
     private void FindWorldPosition()
     {
-        float x = XYPosition.X * cellSize + ChunkWorldPos.X;
-        float y = XYPosition.Y * cellSize + ChunkWorldPos.Y;
+        float x = (XYPosition.X * cellSize) + ChunkWorldPos.X;
+        float y = (XYPosition.Y * cellSize) + ChunkWorldPos.Y;
         WorldPosition = new Vector2(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
     }
 
@@ -77,8 +76,8 @@ public class Coordinate
         int xCord = Mathf.FloorToInt(WorldPosition.X / totalChunkSize);
         int yCord = Mathf.FloorToInt(WorldPosition.Y / totalChunkSize);
 
-        ChunkPosition = new Vector2(xCord, yCord);
-        ChunkWorldPos = ChunkPosition * totalChunkSize;
+        ChunkGridPosition = new Vector2(xCord, yCord);
+        // ChunkWorldPos = ChunkPosition * totalChunkSize;
     }
 
     /// <summary>
@@ -86,20 +85,37 @@ public class Coordinate
     /// </summary>
     private void FindChunkPosition(Vector2 chunkPos)
     {
-        ChunkPosition = chunkPos / chunkSize;
-        ChunkWorldPos = ChunkPosition * totalChunkSize;
+        ChunkGridPosition = chunkPos / chunkSize;
+        // ChunkWorldPos = ChunkPosition * totalChunkSize;
     }
 
     /// <summary>
-    /// calculates distance form provided coord, and returns closest 
-    /// point
+    /// world distance from given cord
     /// </summary>
-    public float Distance(Coordinate coord)
+    public float Distance(Coordinate cord)
     {
-        float x = Mathf.Abs((WorldPosition - coord.WorldPosition).X);
-        float y = Mathf.Abs((WorldPosition - coord.WorldPosition).Y);
-        
-        float distance = Mathf.Min(x,y);
+        Vector2 from = WorldPosition;
+        Vector2 to = cord.WorldPosition;
+
+        float distance = from.DistanceTo(to);
+
+        return Mathf.Round(distance);
+    }
+
+    /// <summary>
+    /// distance from chunk
+    /// </summary>
+    public float ChunkDistance(Coordinate cord)
+    {
+        Vector2 from = WorldPosition / cellSize;
+        Vector2 to = cord.WorldPosition / cellSize;
+
+        float distance = Mathf.Round(from.DistanceTo(to));
+
+        // float x = Mathf.Abs((ChunkWorldPos - cord.ChunkWorldPos).X);
+        // float y = Mathf.Abs((ChunkWorldPos - cord.ChunkWorldPos).Y);
+
+        // float distance = Mathf.Min(x, y) / chunkSize;
 
         return distance;
     }

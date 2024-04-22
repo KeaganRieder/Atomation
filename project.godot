@@ -28,3 +28,7 @@ project/assembly_name="Atomation"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
+
+[gdunit4]
+
+report/godot/push_error=true

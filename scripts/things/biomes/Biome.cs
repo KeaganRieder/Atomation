@@ -54,8 +54,6 @@ namespace Atomation.Things
         {
         }
 
-
-
         /// <summary>
         /// returns the key for the terrain which is present in the biome
         /// and corresponds to the

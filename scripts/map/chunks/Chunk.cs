@@ -27,11 +27,11 @@ namespace Atomation.Map
 
 		public Chunk(Vector2 worldPosition, float cellSize)
 		{
-			Name = $"Chunk {worldPosition / CHUNK_SIZE}";
-
 			this.cellSize = cellSize;
 			coordinate = new Coordinate(worldPosition);
 			Rendered = true;
+
+			Name = $"Chunk {worldPosition*cellSize}, {worldPosition/CHUNK_SIZE}";
 
 			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
 			Buildings = new Grid<Structure>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
@@ -58,7 +58,7 @@ namespace Atomation.Map
 		/// </summary>
 		public void UpdateVisibility(Coordinate viewerCords)
 		{
-			bool visible = coordinate.Distance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
+			bool visible = coordinate.ChunkDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
 
 			SetVisibility(visible);
 		}

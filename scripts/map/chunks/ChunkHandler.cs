@@ -67,13 +67,13 @@ public class ChunkHandler
 	{
 		// Vector2 chunkPosition = GetChunkCords(worldPosition);
 
-		if (chunkArray.ContainsKey(coords.ChunkPosition))
+		if (chunkArray.ContainsKey(coords.ChunkGridPosition))
 		{
-			return chunkArray[coords.ChunkPosition];
+			return chunkArray[coords.ChunkGridPosition];
 		}
 		else
 		{
-			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{coords.ChunkPosition} WorldPos:{coords.WorldPosition}");
+			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{coords.ChunkGridPosition} WorldPos:{coords.WorldPosition}");
 			return null;
 		}
 	}
@@ -189,7 +189,7 @@ public class ChunkHandler
 	/// </summary>
 	public void CheckChunkStatus(Coordinate playerPosition)
 	{
-		Vector2 currentChunkCords = playerPosition.ChunkPosition;
+		Vector2 currentChunkCords = playerPosition.ChunkGridPosition;
 
 		//un render all last active chunks
 		foreach (var chunk in lastUpdatedChunks)

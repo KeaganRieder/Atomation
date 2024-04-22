@@ -6,11 +6,13 @@
     <LangVersion>11.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <!--Required for GdUnit4-->
     <PackageReference Include="gdUnit4.api" Version="4.2.3" />
     <PackageReference Include="gdUnit4.test.adapter" Version="1.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <!--Required for GdUnit4-->
+   
+
   </ItemGroup>
 </Project>
 

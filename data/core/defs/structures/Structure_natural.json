@@ -30,7 +30,7 @@
           "Max Health": {
             "Name": "Max Health",
             "Description": "The health of the wall",
-            "Stat Type": "Undefined",
+            "Stat Type": "Modifiable",
             "Value": 200.0
           }
         },
@@ -67,7 +67,7 @@
           "Max Health": {
             "Name": "Max Health",
             "Description": "The health of the wall",
-            "Stat Type": "Undefined",
+            "Stat Type": "Modifiable",
             "Value": 100.0
           }
         },

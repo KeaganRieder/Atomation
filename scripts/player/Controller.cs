@@ -24,7 +24,7 @@ namespace Atomation.PlayerChar
 
 		public override void _Input(InputEvent inputEvent)
 		{
-			Map.ChunkHandler.CheckChunkStatus(PlayerBody.Coordinate);
+			Map.CheckChunkStatus(PlayerBody.Coordinate);
 			PlayerBody.Move();
 
 			VisualizationEvents(inputEvent);
@@ -50,24 +50,24 @@ namespace Atomation.PlayerChar
 				// Vector2 mouseCords = new Vector2(x, y);
 				Coordinate mouseCords = new Coordinate(mousePos);
 
-				if (Map.ChunkHandler.GetStructure(mouseCords) != null)
+				if (Map.GetStructure(mouseCords) != null)
 				{
-					Structure structure = Map.ChunkHandler.GetStructure(mouseCords);
-					structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(PlayerBody.StatSheet.GetStat(StatKeys.ATTACK_DAMAGE).Value);
-					if (structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Value <= 0)
+					Structure structure = Map.GetStructure(mouseCords);
+					structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(PlayerBody.StatSheet.GetStat(StatKeys.ATTACK_DAMAGE).CurrentValue);
+					if (structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
 					{
 						structure.Visible = false;
 					}
 					if (structure.Visible)
 					{
-						GD.Print($"{structure.Name} HP: {structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Value}");
+						GD.Print($"{structure.Name} HP: {structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue}");
 					}
 				}
 
-				else if (Map.ChunkHandler.GetTerrain(mouseCords) != null)
+				else if (Map.GetTerrain(mouseCords) != null)
 				{
 					GD.Print("terrain");
-					Terrain terrain = Map.ChunkHandler.GetTerrain(mouseCords);
+					Terrain terrain = Map.GetTerrain(mouseCords);
 					if (terrain.Visible)
 					{
 						terrain.Visible = false;
@@ -84,8 +84,8 @@ namespace Atomation.PlayerChar
 			}
 			if (inputEvent.IsActionPressed("Right Click"))
 			{
-				int x = Mathf.FloorToInt(mousePos.X / MapSettings.CELL_SIZE);
-				int y = Mathf.FloorToInt(mousePos.Y / MapSettings.CELL_SIZE);
+				int x = Mathf.FloorToInt(mousePos.X / WorldMap.CELL_SIZE);
+				int y = Mathf.FloorToInt(mousePos.Y / WorldMap.CELL_SIZE);
 				Vector2 cords = new Vector2(x, y);
 
 				GD.Print($"Mouse: {PlayerBody.GetViewport().GetMousePosition()} Global {GetGlobalMousePosition()}");
@@ -105,22 +105,22 @@ namespace Atomation.PlayerChar
 
 			if (inputEvent.IsActionPressed("Default"))
 			{
-				Map.ChunkHandler.UpdateVisualizationMode(VisualizationMode.Default);
+				Map.UpdateVisualizationMode(VisualizationMode.Default);
 				GD.Print("Default");
 			}
 			if (inputEvent.IsActionPressed("VisualizeMoisture"))
 			{
-				Map.ChunkHandler.UpdateVisualizationMode(VisualizationMode.Moisture);
+				Map.UpdateVisualizationMode(VisualizationMode.Moisture);
 				GD.Print("Moisture");
 			}
 			if (inputEvent.IsActionPressed("VisualizeHeat"))
 			{
-				Map.ChunkHandler.UpdateVisualizationMode(VisualizationMode.Heat);
+				Map.UpdateVisualizationMode(VisualizationMode.Heat);
 				GD.Print("Heat");
 			}
 			if (inputEvent.IsActionPressed("VisualizeHeight"))
 			{
-				Map.ChunkHandler.UpdateVisualizationMode(VisualizationMode.Height);
+				Map.UpdateVisualizationMode(VisualizationMode.Height);
 				GD.Print("Height");
 			}
 		}

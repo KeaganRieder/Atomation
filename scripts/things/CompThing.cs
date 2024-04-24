@@ -19,5 +19,9 @@ public abstract partial class CompThing : Node2D, ICompThing
 
 	public StaticGraphic Graphic { get; set; }
 
+	public virtual void Damage(float amount){}
+	public virtual void Heal(float amount){}
+
+
 
 }

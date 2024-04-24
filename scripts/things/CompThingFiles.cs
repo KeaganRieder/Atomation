@@ -24,7 +24,7 @@ public abstract class CompThingDetails : Thing
 		GraphicData = graphicData;
 		if (graphicData.GraphicSize == Vector2I.Zero)
         {
-            graphicData.GraphicSize = new Vector2I(MapSettings.CELL_SIZE,MapSettings.CELL_SIZE);
+            graphicData.GraphicSize = new Vector2I(WorldMap.CELL_SIZE,WorldMap.CELL_SIZE);
         }
 		StatSheet = statSheet;
 

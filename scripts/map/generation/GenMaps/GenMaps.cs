@@ -44,7 +44,7 @@ namespace Atomation.Map
         /// updates the configs for the given generation map based on ones
         /// provided
         /// </summary>
-        public virtual void UpdateConfigs(MapGenSettings mapGenSettings){}
+        public virtual void UpdateConfigs(GenSettings mapGenSettings){}
 
     }
 

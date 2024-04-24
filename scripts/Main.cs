@@ -28,24 +28,20 @@ public partial class Main : Node2D
    public override void _Ready()
    {
       base._Ready();
-      // ColorRect center = new ColorRect();
-      // center.ZIndex = 11;
-      // center.Color = Colors.Red;
-      // center.Size = new Vector2(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
 
       ResourceManger.LoadFiles();
 
       Player Player = new Player();
-      Map = new WorldMap(Player);
+      Map = new WorldMap();
+      Map.LoadMap();
 
       controller = new Controller();
       controller.Map = Map;
       controller.PlayerBody = Player;
 
-      // // AddChild(center);
       AddChild(Map);
       AddChild(Player);
       AddChild(controller);
-   }
+   }  
 
 }

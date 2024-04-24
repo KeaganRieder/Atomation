@@ -15,30 +15,30 @@ public class GenStepLandScape : GenStep
 	private float mountainHeight;
 	private float mountainBase;
 
-	public GenStepLandScape(MapGenSettings genConfig)
+	public GenStepLandScape(GenSettings genConfig)
 	{
 		heightMap = new HeightMap(genConfig, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 		temperatureMap = new TemperatureMap(genConfig, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 		moistureMap = new MoistureMap(genConfig, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
 
-		deepWater = genConfig.seaLevel;
-		shallowWater = genConfig.seaLevel + 0.1f;
-		shoreHeight = genConfig.seaLevel + 0.2f;
+		deepWater = genConfig.HeightMapConfigs.SeaLevel;
+		shallowWater = deepWater + 0.1f;
+		shoreHeight = shallowWater + 0.1f;
 
-		mountainHeight = genConfig.mountainSize;
-		mountainBase = genConfig.mountainSize - 0.1f;
+		mountainHeight = genConfig.HeightMapConfigs.MountainSize;
+		mountainBase = genConfig.HeightMapConfigs.MountainSize - 0.1f;
 	}
 
-	public void UpdateConfigs(MapGenSettings genConfig)
+	public void UpdateConfigs(GenSettings genConfig)
 	{
 		heightMap.UpdateConfigs(genConfig);
 		temperatureMap.UpdateConfigs(genConfig);
 		moistureMap.UpdateConfigs(genConfig);
 	}
 
-	public override void RunStep(Vector2 origin, ChunkHandler chunkHandler)
+	public override void RunStep(Vector2 origin, WorldMap chunkHandler)
 	{
-		chunkPos = origin * MapSettings.CELL_SIZE;
+		chunkPos = origin * WorldMap.CELL_SIZE;
 		heightMap.Offset = origin;
 		temperatureMap.Offset = origin;
 		moistureMap.Offset = origin;
@@ -56,7 +56,7 @@ public class GenStepLandScape : GenStep
 
 				SetLandscape(terrain, chunkHandler);
 
-				terrain.UpdateGraphic(WorldMap.MapVisualIzation);
+				terrain.UpdateGraphic(VisualizationMode.Default);
 			}
 		}
 
@@ -66,7 +66,7 @@ public class GenStepLandScape : GenStep
 	/// using a terrains hight, determines if it's elevated ground, water or 
 	/// just land
 	/// </summary>
-	private void SetLandscape(Terrain terrain, ChunkHandler chunkHandler)
+	private void SetLandscape(Terrain terrain, WorldMap chunkHandler)
 	{
 		float height = terrain.HeightValue;
 		Structure structure = null;

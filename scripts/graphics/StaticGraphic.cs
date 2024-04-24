@@ -18,7 +18,7 @@ public partial class StaticGraphic : Sprite2D
     {
         TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png";
 
-        graphicSize = new Vector2I(MapSettings.CELL_SIZE, MapSettings.CELL_SIZE);
+        graphicSize = new Vector2I(WorldMap.CELL_SIZE, WorldMap.CELL_SIZE);
         Position = graphicSize / 2;
         SetTexture();
     }

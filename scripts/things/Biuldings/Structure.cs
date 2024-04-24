@@ -34,6 +34,13 @@ public partial class Structure : CompThing
 		Graphic.Configure(config.GraphicData);
 	}
 
+	public override void Damage(float amount){
+		StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
+	}
+	public override void Heal(float amount){
+		StatSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
+	}
+
 
 
 }

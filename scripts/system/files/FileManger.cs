@@ -108,7 +108,6 @@ public class FileManger
 		}
 		else
 		{
-			// GD.PushError($"Texture: {filePath} doesn't exist");
 			filePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png";
 			image = Image.LoadFromFile(filePath);
 		}
@@ -116,8 +115,6 @@ public class FileManger
 
 		if (image.GetSize() != TextureSize)
 		{
-			// GD.PushWarning($"Texture is size is incorrect scaling from {texture.GetImage().GetSize()} to {graphicSize}");
-
 			image.Resize(TextureSize.X, TextureSize.Y, Image.Interpolation.Bilinear);
 
 		}

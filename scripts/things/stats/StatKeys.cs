@@ -9,7 +9,7 @@ public static class StatKeys
     public const string ATTACK_DAMAGE = "Attack Damage";
     public const string MOVE_SPEED = "Move Speed";
     
-    public const string Fertility = "fertility";
+    public const string FERTILITY = "fertility";
 
 
 }

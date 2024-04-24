@@ -9,7 +9,7 @@ public enum StatType
 {
     Undefined = 0,
     Constant = 1,
-    DamageAble = 2,
+    Modifiable = 2,
 }
 
 /// <summary>
@@ -32,6 +32,8 @@ public class StatBase : Thing
     protected StatBase()
     {
         flatStatModifiers = new();
+        updateValue = true;
+
     }
     public StatBase(string name, string description, float baseValue, StatType statType = StatType.Undefined) : base()
     {
@@ -42,7 +44,7 @@ public class StatBase : Thing
         currentValue = baseValue;
         damage = 0;
 
-        updateValue = false;
+        updateValue = true;
     }
 
     public StatBase(StatBase statBase) : base()
@@ -51,10 +53,10 @@ public class StatBase : Thing
         Description = statBase.Description;
         Type = statBase.Type;
         baseValue = statBase.BaseValue;
-        currentValue = statBase.BaseValue;
+        currentValue = baseValue;
         damage = 0;
 
-        updateValue = false;
+        updateValue = true;
     }
 
     [JsonIgnore]
@@ -63,7 +65,7 @@ public class StatBase : Thing
     public virtual float BaseValue { get => baseValue; }
 
     [JsonIgnore]
-    public virtual float Value
+    public virtual float CurrentValue
     {
         get
         {
@@ -80,16 +82,16 @@ public class StatBase : Thing
     /// </summary>
     public virtual void AddModifier(StatModifierBase statModifier)
     {
-        if (statModifier.Type == ModifierTypeNew.Undefined)
+        if (statModifier.Type == ModifierType.Undefined)
         {
             GD.PushError($"{statModifier.Name} is of undefined type");
         }
-        else if (statModifier.Type == ModifierTypeNew.Flat)
+        else if (statModifier.Type == ModifierType.Flat)
         {
             flatStatModifiers.Add((FlatStatModifier)statModifier);
             updateValue = true;
         }
-        else if (statModifier.Type == ModifierTypeNew.Percentage)
+        else if (statModifier.Type == ModifierType.Percentage)
         {
             GD.PushError($"{statModifier.Name} is of Percentage type which is currently not implemented");
         }
@@ -100,15 +102,15 @@ public class StatBase : Thing
     /// </summary>
     public virtual void RemoveModifier(StatModifierBase statModifier)
     {
-        if (statModifier.Type == ModifierTypeNew.Undefined)
+        if (statModifier.Type == ModifierType.Undefined)
         {
             GD.PushError($"{statModifier.Name} is of undefined type");
         }
-        else if (statModifier.Type == ModifierTypeNew.Flat)
+        else if (statModifier.Type == ModifierType.Flat)
         {
             RemoveModifier((FlatStatModifier)statModifier, flatStatModifiers);
         }
-        else if (statModifier.Type == ModifierTypeNew.Percentage)
+        else if (statModifier.Type == ModifierType.Percentage)
         {
             GD.PushError($"{statModifier.Name} is of Percentage type which is currently not implemented");
 
@@ -139,29 +141,19 @@ public class StatBase : Thing
     /// </summary>
     public virtual void Damage(float damageAmt)
     {
-        damage += damageAmt;
+        // damage += damageAmt;
 
-        updateValue = true;
+        // updateValue = true;
     }
     /// <summary>
     /// heal stat
     /// </summary>
     public virtual void Heal(float damageAmt)
     {
-        if (damage > 0)
-        {
-            damage = 0;
-            return;
-        }
-        damage += damageAmt;
-
         updateValue = true;
     }
     protected virtual void UpdateStat()
     {
-        // float flat = ApplyFlatModifiers();
-        // float finalValue = flat;
-
         currentValue = baseValue - damage;
         updateValue = false;
     }
@@ -178,7 +170,7 @@ public class StatBase : Thing
 
     public override string ToString()
     {
-        string objString = $"{Value}";
+        string objString = $"{CurrentValue}";
         return objString;
     }
 

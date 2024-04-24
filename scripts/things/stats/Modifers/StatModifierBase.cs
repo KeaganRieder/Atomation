@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 /// <summary>
 /// the type of stat modifier
 /// </summary>
-public enum ModifierTypeNew
+public enum ModifierType
 {
 	Undefined = 0,
 	Flat = 1,
@@ -26,14 +26,14 @@ public class StatModifierBase : Thing
 	public float Value { get; protected set; }
 
 	[JsonConverter(typeof(StringEnumConverter)), JsonProperty("Modifier Type", Order = 1)]
-	public ModifierTypeNew Type { get; protected set; }
+	public ModifierType Type { get; protected set; }
 
 	[JsonIgnore]
 	public object Source { get; protected set; }
 
 	protected StatModifierBase() { }
 
-	public StatModifierBase(string name, string description, string targetStat, float value, ModifierTypeNew type = ModifierTypeNew.Undefined,
+	public StatModifierBase(string name, string description, string targetStat, float value, ModifierType type = ModifierType.Undefined,
 	object source = null)
 	{
 		Name = name;
@@ -44,10 +44,11 @@ public class StatModifierBase : Thing
 		Source = source;
 	}
 
-	public StatModifierBase(StatModifierBase statModifier,object source = null)
+	public StatModifierBase(StatModifierBase statModifier, object source = null)
 	{
 		Name = statModifier.Name;
 		Description = statModifier.Description;
+		TargetStat = statModifier.TargetStat;
 		Value = statModifier.Value;
 		Type = statModifier.Type;
 		Source = source;

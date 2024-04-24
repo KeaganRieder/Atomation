@@ -4,7 +4,6 @@ using Godot;
 using Atomation.Things;
 using Newtonsoft.Json;
 
-
 /// <summary>
 /// class which is used by the FileManger to load def files 
 /// and cached them to be reference through games runtime

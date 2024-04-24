@@ -28,16 +28,52 @@ public class StatSheet
 
     public StatSheet(StatSheet statSheet, object source = null)
     {
-        this.stats = new Dictionary<string, StatBase>();
-        this.statModifers = new Dictionary<string, StatModifierBase>();
+        stats = new Dictionary<string, StatBase>();
+        statModifers = new Dictionary<string, StatModifierBase>();
 
         foreach (var stat in statSheet.stats)
         {
-            this.stats.Add(stat.Key, new StatBase(stat.Value));
+            AddStats(stat.Key, stat.Value);
         }
         foreach (var modifier in statSheet.statModifers)
         {
-            this.statModifers.Add(modifier.Key, new StatModifierBase(modifier.Value));
+            AddModifiers(modifier.Key, modifier.Value);
+        }
+    }
+
+    private void AddStats(string key, StatBase stat){
+        
+        if (stat.Type == StatType.Modifiable)
+        {
+            stats.Add(key, new ModifiableStat(stat));
+        }
+        else if (stat.Type == StatType.Constant)
+        {
+            // GD.PushError("Constant Stat are currently not implemented");
+            stats.Add(key, new StatBase(stat));
+        }
+        else
+        {
+            // GD.PushError("Stat type is undefined");
+            stats.Add(key, new StatBase(stat));
+        }
+    }
+
+    private void AddModifiers(string key, StatModifierBase statModifier){
+        
+        if (statModifier.Type == ModifierType.Flat)
+        {
+            statModifers.Add(key, new FlatStatModifier(statModifier));
+        }
+        else if (statModifier.Type == ModifierType.Percentage)
+        {
+            // GD.PushError("Percentage modifiers are currently not implemented");
+            statModifers.Add(key, new StatModifierBase(statModifier));
+        }
+        else
+        {
+            // GD.PushError("Stat modified type is undefined");
+            statModifers.Add(key, new StatModifierBase(statModifier));
         }
     }
 

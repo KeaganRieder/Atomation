@@ -14,9 +14,14 @@ namespace Atomation.Map
 	public partial class Chunk : Node2D
 	{
 		/// <summary>
-		/// the length and width of a chunk in terms of pixels.
+		/// the how many pixels make up the length and width of a chunk
 		/// </summary>
 		public const int CHUNK_SIZE = 32;
+
+		/// <summary>
+		/// the how many tiles make up the length and width of a chunk
+		/// </summary>
+		public const int TOTAL_CHUNK_SIZE = CHUNK_SIZE * WorldMap.CELL_SIZE;
 
 		public float cellSize { get; private set; }
 		public bool Rendered { get; private set; }
@@ -58,7 +63,7 @@ namespace Atomation.Map
 		/// </summary>
 		public void UpdateVisibility(Coordinate viewerCords)
 		{
-			bool visible = coordinate.ChunkDistance(viewerCords) <= MapSettings.MAX_LOAD_DIST;
+			bool visible = coordinate.ChunkDistance(viewerCords) <= MapSettings.MaxLoadDistance;
 
 			SetVisibility(visible);
 		}

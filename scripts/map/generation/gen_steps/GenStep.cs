@@ -13,7 +13,7 @@ namespace Atomation.Map
 
         protected Vector2 chunkPos;
 
-        public virtual void RunStep(Vector2 origin, ChunkHandler chunkHandler) { }
+        public virtual void RunStep(Vector2 origin, WorldMap chunkHandler) { }
 
 
     }

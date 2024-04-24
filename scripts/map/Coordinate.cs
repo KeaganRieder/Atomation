@@ -8,9 +8,6 @@ using Godot;
 /// </summary>
 public class Coordinate
 {
-    private float cellSize;
-    private float chunkSize;
-    private float totalChunkSize;
 
     /// <summary> objects current world position </summary>
     public Vector2 WorldPosition { get; private set; }
@@ -19,26 +16,19 @@ public class Coordinate
     public Vector2 ChunkGridPosition { get; private set; }
 
     /// <summary> objects Chunk position in the world </summary>
-    public Vector2 ChunkWorldPos { get { return ChunkGridPosition * totalChunkSize; } }
+    public Vector2 ChunkWorldPos { get { return ChunkGridPosition * Chunk.TOTAL_CHUNK_SIZE; } }
 
     /// <summary> objects current x y position in the world </summary>
     public Vector2I XYPosition { get; private set; }
 
-    private Coordinate()
-    {
-        cellSize = MapSettings.CELL_SIZE;
-        chunkSize = Chunk.CHUNK_SIZE;
-        totalChunkSize = chunkSize * cellSize;
-    }
-
-    public Coordinate(Vector2 worldPosition) : this()
+    public Coordinate(Vector2 worldPosition)
     {
         WorldPosition = new Vector2(Mathf.FloorToInt(worldPosition.X), Mathf.FloorToInt(worldPosition.Y));
         FindChunkPosition();
         FindXYCords();
     }
 
-    public Coordinate(int x, int y, Vector2 chunkPosition) : this()
+    public Coordinate(int x, int y, Vector2 chunkPosition)
     {
         XYPosition = new Vector2I(x, y);
         FindChunkPosition(chunkPosition);
@@ -52,8 +42,8 @@ public class Coordinate
     private void FindXYCords()
     {
         // y = Mathf.Abs(Mathf.FloorToInt((worldPosition - Origin).Y / CellSize));
-        int x = Mathf.Abs(Mathf.FloorToInt((WorldPosition.X - ChunkWorldPos.X) / cellSize));
-        int y = Mathf.Abs(Mathf.FloorToInt((WorldPosition.Y - ChunkWorldPos.Y) / cellSize));
+        int x = Mathf.Abs(Mathf.FloorToInt((WorldPosition.X - ChunkWorldPos.X) / WorldMap.CELL_SIZE));
+        int y = Mathf.Abs(Mathf.FloorToInt((WorldPosition.Y - ChunkWorldPos.Y) / WorldMap.CELL_SIZE));
 
         XYPosition = new Vector2I(x, y);
     }
@@ -63,8 +53,8 @@ public class Coordinate
     /// </summary>
     private void FindWorldPosition()
     {
-        float x = (XYPosition.X * cellSize) + ChunkWorldPos.X;
-        float y = (XYPosition.Y * cellSize) + ChunkWorldPos.Y;
+        float x = (XYPosition.X * WorldMap.CELL_SIZE) + ChunkWorldPos.X;
+        float y = (XYPosition.Y * WorldMap.CELL_SIZE) + ChunkWorldPos.Y;
         WorldPosition = new Vector2(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
     }
 
@@ -73,11 +63,10 @@ public class Coordinate
     /// </summary>
     private void FindChunkPosition()
     {
-        int xCord = Mathf.FloorToInt(WorldPosition.X / totalChunkSize);
-        int yCord = Mathf.FloorToInt(WorldPosition.Y / totalChunkSize);
+        int xCord = Mathf.FloorToInt(WorldPosition.X / Chunk.TOTAL_CHUNK_SIZE);
+        int yCord = Mathf.FloorToInt(WorldPosition.Y / Chunk.TOTAL_CHUNK_SIZE);
 
         ChunkGridPosition = new Vector2(xCord, yCord);
-        // ChunkWorldPos = ChunkPosition * totalChunkSize;
     }
 
     /// <summary>
@@ -85,7 +74,7 @@ public class Coordinate
     /// </summary>
     private void FindChunkPosition(Vector2 chunkPos)
     {
-        ChunkGridPosition = chunkPos / chunkSize;
+        ChunkGridPosition = chunkPos / Chunk.CHUNK_SIZE;
         // ChunkWorldPos = ChunkPosition * totalChunkSize;
     }
 
@@ -107,15 +96,11 @@ public class Coordinate
     /// </summary>
     public float ChunkDistance(Coordinate cord)
     {
-        Vector2 from = WorldPosition / cellSize;
-        Vector2 to = cord.WorldPosition / cellSize;
+        Vector2 from = WorldPosition / WorldMap.CELL_SIZE;
+        Vector2 to = cord.WorldPosition / WorldMap.CELL_SIZE;
 
         float distance = Mathf.Round(from.DistanceTo(to));
 
-        // float x = Mathf.Abs((ChunkWorldPos - cord.ChunkWorldPos).X);
-        // float y = Mathf.Abs((ChunkWorldPos - cord.ChunkWorldPos).Y);
-
-        // float distance = Mathf.Min(x, y) / chunkSize;
 
         return distance;
     }

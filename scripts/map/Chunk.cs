@@ -1,78 +1,107 @@
-using System;
-using System.Collections.Generic;
+namespace Atomation.Map;
+
 using Godot;
 using Atomation.Things;
-using Atomation.Resources;
 
-namespace Atomation.Map
+/// <summary>
+/// A chunk is a 32 x 32 tiles section of the map that contains
+/// various values, it is either loaded or unloaded depending on where 
+/// the player is, as well as other aspects
+/// </summary>
+public partial class Chunk : Node2D
 {
-	/// <summary>
-	/// A chunk is a 32 x 32 tiles section of the map that contains
-	/// various values, it is either loaded or unloaded depending on where 
-	/// the player is, as well as other aspects
-	/// </summary>
-	public partial class Chunk : Node2D
+	/// <summary> how many pixels make up the length and width of a chunk </summary>
+	public const int CHUNK_SIZE = 32;
+
+	/// <summary> how many tiles make up the length and width of a chunk </summary>
+	public const int TOTAL_CHUNK_SIZE = CHUNK_SIZE * MapData.CELL_SIZE;
+
+	public float CellSize { get; private set; }
+	public bool Rendered { get; private set; }
+	public Coordinate coordinate { get; private set; }
+
+	public Grid<Terrain> Terrain { get; private set; }
+	public Grid<Structure> Buildings { get; private set; }
+
+	public Chunk(Vector2 worldPosition, float cellSize)
 	{
-		/// <summary>
-		/// the how many pixels make up the length and width of a chunk
-		/// </summary>
-		public const int CHUNK_SIZE = 32;
+		CellSize = cellSize;
+		coordinate = new Coordinate(worldPosition);
+		Rendered = true;
 
-		/// <summary>
-		/// the how many tiles make up the length and width of a chunk
-		/// </summary>
-		public const int TOTAL_CHUNK_SIZE = CHUNK_SIZE * WorldMap.CELL_SIZE;
+		Name = $"Chunk {coordinate.ChunkGridPosition}, {coordinate.ChunkWorldPos}";
 
-		public float cellSize { get; private set; }
-		public bool Rendered { get; private set; }
-		public Coordinate coordinate { get; private set; }
+		Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
+		Buildings = new Grid<Structure>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
+	}
 
-		public Grid<Terrain> Terrain { get; private set; }
-		public Grid<Structure> Buildings { get; private set; }
+	public Chunk(SavedChunk savedChunk)
+	{
+		CellSize = savedChunk.CellSize;
+		coordinate = savedChunk.Cords;
+		Rendered = savedChunk.Rendered;
 
-		public Chunk(Vector2 worldPosition, float cellSize)
+		Name = $"Chunk {coordinate.ChunkGridPosition}, {coordinate.ChunkWorldPos}";
+
+		Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, CellSize, coordinate.WorldPosition, this);
+		Buildings = new Grid<Structure>(CHUNK_SIZE, CHUNK_SIZE, CellSize, coordinate.WorldPosition, this);
+
+		foreach (var savedTerrain in savedChunk.SavedTerrain)
 		{
-			this.cellSize = cellSize;
-			coordinate = new Coordinate(worldPosition);
-			Rendered = true;
-
-			Name = $"Chunk {worldPosition*cellSize}, {worldPosition/CHUNK_SIZE}";
-
-			Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
-			Buildings = new Grid<Structure>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
+			Terrain terrain = new Terrain(savedTerrain);
+			Vector2I cord = terrain.Coordinate.XYPosition;
+			Terrain.SetObject(cord.X,cord.Y, terrain);
 		}
-
-		/// <summary>
-		/// updates the visualization mode of all tiles
-		/// </summary>
-		public void UpdateTerrainVisualization(VisualizationMode displayMode)
+		foreach (var savedStructure in savedChunk.SavedStructure)
 		{
-			// Terrain
-			for (int x = 0; x < CHUNK_SIZE; x++)
+			Structure structure = new Structure(savedStructure);
+			Vector2I cord = structure.Coordinate.XYPosition;
+			Buildings.SetObject(cord.X,cord.Y, structure);
+		}
+	}
+
+	/// <summary>
+	/// updates the visualization mode of all tiles
+	/// </summary>
+	public void UpdateVisualization(VisualizationMode displayMode)
+	{
+		Structure structure;
+
+		for (int x = 0; x < CHUNK_SIZE; x++)
+		{
+			for (int y = 0; y < CHUNK_SIZE; y++)
 			{
-				for (int y = 0; y < CHUNK_SIZE; y++)
+				Terrain.GetObject(x, y).UpdateGraphic(displayMode);
+				if ((structure = Buildings.GetObject(x, y)) != null)
 				{
-					Terrain.GetObject(x, y).UpdateGraphic(displayMode);
+					if (displayMode != VisualizationMode.Default)
+					{
+						structure.Visible = false;
+					}
+					else
+					{
+						structure.Visible = true;
+					}
 				}
 			}
 		}
+	}
 
-		/// <summary>
-		/// checks viewer distance from chunk and then decided based on rendered distance
-		/// to decide weather or not to hide/un render chunk.
-		/// </summary>
-		public void UpdateVisibility(Coordinate viewerCords)
-		{
-			bool visible = coordinate.ChunkDistance(viewerCords) <= MapSettings.MaxLoadDistance;
+	/// <summary>
+	/// checks viewer distance from chunk and then decided based on rendered distance
+	/// to decide weather or not to hide/un render chunk.
+	/// </summary>
+	public void UpdateVisibility(Coordinate viewerCords)
+	{
+		bool visible = coordinate.ChunkDistance(viewerCords) <= MapData.GetData().RenderDistance;
 
-			SetVisibility(visible);
-		}
+		SetVisibility(visible);
+	}
 
-		public void SetVisibility(bool visible)
-		{
-			Rendered = visible;
+	public void SetVisibility(bool visible)
+	{
+		Rendered = visible;
 
-			Visible = Rendered;
-		}
+		Visible = Rendered;
 	}
 }

@@ -8,20 +8,11 @@ using static GdUnit4.Assertions;
 [TestSuite]
 public class TestMap
 {
-//     [Before]
-//     public void SetUp(){
-
-//     }
 
     [TestCase]
     public void TestChunks()
     {
         
     }
-
-    // [After]
-    // public void CleanUp(){
-
-    // }
 }
 

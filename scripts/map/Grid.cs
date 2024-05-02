@@ -8,7 +8,7 @@ namespace Atomation.Map
 	/// <summary>
 	/// the games grid in which all objects are aligned to
 	/// </summary>
-	public class Grid<GridObj> where GridObj : ICompThing
+	public class Grid<GridObj> where GridObj : IThing
 	{
 		public int Width { get; private set; }
 		public int Height { get; private set; }

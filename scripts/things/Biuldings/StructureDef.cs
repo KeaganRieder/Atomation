@@ -7,7 +7,7 @@ using Atomation.Resources;
 /// and cached at game start and then used in create an instance of 
 /// a Structure
 /// </summary>
-public class StructureDef : CompThingDetails
+public class StructureDef : ThingDef
 {
     public StructureDef() { }
     public StructureDef(string name, string description, StatSheet statSheet, GraphicData graphicData)

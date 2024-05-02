@@ -5,7 +5,6 @@ using Godot;
 using Atomation.Things;
 using Atomation.Resources;
 
-
 /// <summary> terrain tiles display mode </summary>
 public enum VisualizationMode
 {
@@ -23,52 +22,80 @@ public enum VisualizationMode
 /// </summary>
 public partial class WorldMap : Node2D
 {
-	/// <summary>
-	/// how many pixels a tile is 16 x 16 is the normal
-	/// </summary>
-	public const int CELL_SIZE = 16;
-
+	private static WorldMap instance;
+	private readonly MapData data;
+	private readonly WorldGenerator generator;
 	private readonly int visibleChunks;
 	private List<Chunk> lastUpdatedChunks;
 	private Dictionary<Vector2, Chunk> chunkArray;
 
 	private VisualizationMode visualizationMode;
 
-	public MapSettings MapSettings { get; set; }
-
-	public WorldMap()
+	private WorldMap()
 	{
+		Name = "WorldMap";
+
+		data = MapData.GetData();
+
 		visualizationMode = VisualizationMode.Default;
 
-		visibleChunks = Mathf.FloorToInt(MapSettings.MaxLoadDistance / Chunk.CHUNK_SIZE);
+		visibleChunks = Mathf.FloorToInt(data.RenderDistance / Chunk.CHUNK_SIZE);
 
 		lastUpdatedChunks = new List<Chunk>();
 		chunkArray = new Dictionary<Vector2, Chunk>();
+	}
 
-		MapSettings = FileManger.ReadJsonFile<MapSettings>(FilePaths.CONFIG_FOLDER, "map_settings");
-		WorldGenerator.Initialize(MapSettings.GenSettings);
+	public static WorldMap GetInstance()
+	{
+		if (instance == null)
+		{
+			instance = new WorldMap();
+		}
+		return instance;
+	}
+
+	public SavedMap Save()
+	{
+		List<SavedChunk> savedChunks = new List<SavedChunk>();
+
+		foreach (var chunk in chunkArray)
+		{
+			savedChunks.Add(new SavedChunk(chunk.Value));
+		}
+
+		return new SavedMap(savedChunks.ToArray());
 	}
 
 	/// <summary> generates a map from save </summary>
-	public void LoadMap()
+	public void Load(SavedMap savedMap)
 	{
-		GD.Print("Generating Map");
-
-		Coordinate coordinate = new Coordinate(MapSettings.GenSettings.Center);
-		CheckChunkStatus(coordinate);
-
-		GD.Print("Generation Complete");
-
+		GD.Print("Loading Map");
+		ClearMap();
+		data.Load(savedMap.MapSettings);
+		foreach (var savedChunk in savedMap.SavedChunks)
+		{
+			Chunk chunk = new Chunk(savedChunk);
+			chunkArray.Add(chunk.coordinate.ChunkGridPosition, chunk);
+			AddChild(chunk);
+		}
 	}
 
-	/// <summary> generates the final map following customization </summary>
-	public void FinalizeMapSetUp()
+	/// <summary> generates a map from save </summary>
+	public void ClearMap()
 	{
-		GD.Print("Generating Map");
-
-		//todo
-
-		GD.Print("Generation Complete");
+		foreach (var chunkInfo in chunkArray)
+		{
+			DestroyChunk(chunkInfo);
+		}
+		chunkArray = new Dictionary<Vector2, Chunk>();
+	}
+	/// <summary> destroys chunk at given cords </summary>
+	private void DestroyChunk(KeyValuePair<Vector2, Chunk> chunkInfo)
+	{
+		if (IsInstanceValid(chunkInfo.Value))
+		{
+			chunkInfo.Value.QueueFree();
+		}
 	}
 
 	/// <summary> gets the position of a chunk at the given cords </summary>
@@ -81,17 +108,17 @@ public partial class WorldMap : Node2D
 	}
 
 	/// <summary> gets chunks at given world position </summary>
-	private Chunk GetChunk(Coordinate coords)
+	private Chunk GetChunk(Coordinate cords)
 	{
 		// Vector2 chunkPosition = GetChunkCords(worldPosition);
 
-		if (chunkArray.ContainsKey(coords.ChunkGridPosition))
+		if (chunkArray.ContainsKey(cords.ChunkGridPosition))
 		{
-			return chunkArray[coords.ChunkGridPosition];
+			return chunkArray[cords.ChunkGridPosition];
 		}
 		else
 		{
-			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{coords.ChunkGridPosition} WorldPos:{coords.WorldPosition}");
+			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{cords.ChunkGridPosition} WorldPos:{cords.WorldPosition}");
 			return null;
 		}
 	}
@@ -110,6 +137,7 @@ public partial class WorldMap : Node2D
 		{
 			return;
 		}
+		terrain.UpdateGraphic(visualizationMode);
 		chunk.Terrain.SetObject(terrain.Coordinate.WorldPosition, terrain);
 	}
 
@@ -154,14 +182,14 @@ public partial class WorldMap : Node2D
 	}
 
 	/// <summary> update tile visualization color mode </summary>
-	public void UpdateVisualizationMode(VisualizationMode displayMode)
+	public void SetVisualizationMode(VisualizationMode displayMode)
 	{
 		if (visualizationMode != displayMode)
 		{
 			visualizationMode = displayMode;
 			for (int i = 0; i < lastUpdatedChunks.Count; i++)
 			{
-				lastUpdatedChunks[i].UpdateTerrainVisualization(displayMode);
+				lastUpdatedChunks[i].UpdateVisualization(displayMode);
 			}
 		}
 	}
@@ -201,14 +229,16 @@ public partial class WorldMap : Node2D
 				else
 				{
 					Vector2 chunkCord = viewChunkCord * Chunk.CHUNK_SIZE;
-					Chunk newChunk = new(chunkCord, CELL_SIZE);
+					Chunk newChunk = new(chunkCord, MapData.CELL_SIZE);
 					AddChild(newChunk);
 
 					chunkArray.Add(viewChunkCord, newChunk);
-					WorldGenerator.GenerateChunk(chunkCord, this);
+
+					WorldGenerator.GetInstance().GenerateChunk(chunkCord);
+
+					lastUpdatedChunks.Add(newChunk);
 				}
 			}
-
 		}
 	}
 

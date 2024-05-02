@@ -7,23 +7,58 @@ using Godot;
 /// the running/execution of gensteps to generate the game
 /// world or chunks with in it
 /// </summary>
-public static class WorldGenerator
+public class WorldGenerator
 {
-    private static GenStepLandScape genStepLandScape;
+    private static WorldGenerator instance;
 
-    public static GenSettings GenConfig { get; set; }
+    private GenStepLandscape genStepLandscape;
 
-    public static void Initialize(GenSettings configs)
+    public WorldGenerator()
     {
-        GenConfig = configs;
-        genStepLandScape = new GenStepLandScape(GenConfig);
+        genStepLandscape = new GenStepLandscape();
     }
 
-    /// <summary>
-    /// Used to Generate new Chunks
+    public static WorldGenerator GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new WorldGenerator();
+        }
+        return instance;
+    }
+
+    public void RegenerateMap(){
+        WorldMap map = WorldMap.GetInstance();
+
+
+    }
+
+    /// <summary> 
+    /// runs gen steps to generate the initial chunks in a map
+    /// these are general the 'spawn chunks' 
     /// </summary>
-    public static void GenerateChunk(Vector2 ChunkCord, WorldMap chunkHandler)
+    public void GenerateMap()
     {
-        genStepLandScape.RunStep(ChunkCord, chunkHandler);
+        GD.Print("Generating map");
+        MapData mapData = MapData.GetData();
+        WorldMap map = WorldMap.GetInstance();
+        Coordinate spawn = new Coordinate(mapData.SpawnCord);
+
+        map.ClearMap();
+        map.CheckChunkStatus(spawn);
+        GD.Print("Generation complete");
     }
+
+    /// <summary> runs gen steps to generate a new chunk </summary>
+    public void GenerateChunk(Vector2 origin)
+    {
+        genStepLandscape.SetGenSize(new Vector2(Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE));
+        genStepLandscape.SetOrigin(origin);
+
+        genStepLandscape.RunStep();
+    }
+
+
+
+
 }

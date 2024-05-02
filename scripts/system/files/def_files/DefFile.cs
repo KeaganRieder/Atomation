@@ -8,7 +8,7 @@ using Atomation.Things;
 using Newtonsoft.Json;
 
 
-public class DefFile<defType> where defType : IThing
+public class DefFile<defType> where defType : IDef
 {
     [JsonProperty("Defs")]
     protected Dictionary<string, defType> defs;
@@ -24,7 +24,7 @@ public class DefFile<defType> where defType : IThing
     public DefFile(Dictionary<string, defType> contents, string path, string fileName)
     {
         defs = contents;
-        FileManger.WriteJsonFile(path, fileName, this);
+        FileUtility.WriteJsonFile(path, fileName, this);
     }
 
     /// <summary>
@@ -45,11 +45,11 @@ public class DefFile<defType> where defType : IThing
             string[] files = Directory.GetFiles(folderPath);
             foreach (string filePath in files)
             {
-                DefFile<defType> defFile = FileManger.ReadJsonFile<DefFile<defType>>(filePath);
+                DefFile<defType> defFile = FileUtility.ReadJsonFile<DefFile<defType>>(filePath);
 
                 foreach (var def in defFile.defs)
                 {
-                    CacheFileData(def.Value.Key, def.Value);
+                    CacheFileData(def.Value.GetKey(), def.Value);
                 }
             }
         }

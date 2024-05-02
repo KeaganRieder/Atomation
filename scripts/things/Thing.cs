@@ -1,28 +1,40 @@
 namespace Atomation.Things;
 
-using Newtonsoft.Json;
+using Atomation.Resources;
+using Atomation.Map;
+using Godot;
+
+public interface IThing
+{
+	public Node2D Node { get; }
+	public Coordinate Coordinate { get; }
+}
 
 /// <summary>
-/// base of all basic things inside the game. these things are often used
-/// with other basic things to cerate more complex things
+/// base of all complex things inside the game. these are things which 
+/// generally appear in the world or have more complex functionality
 /// </summary>
-public abstract class Thing : IThing
+public abstract partial class Thing : Node2D, IThing
 {
-	[JsonProperty("Name", Order = -2)]
-	public virtual string Name { get; set; }
+	protected Coordinate coordinate;
+	public string DefName { get; protected set; }
+	public string Description { get; set; }
+	public Coordinate Coordinate { get => coordinate; protected set { coordinate = value; } }
+	public StatSheet StatSheet { get; protected set; }
 
-	[JsonIgnore]
-	public virtual string Key { get => Name; }
+	public Node2D Node { get => this; }
 
-	[JsonProperty("Description", Order = -1)]
-	public virtual string Description { get; set; }
+	public StaticGraphic Graphic { get; set; }
 
-	protected Thing(){}
+	public virtual void Heal(float amount) { }
+	public virtual void Damage(float amount) { }
 
-	protected Thing(string name, string description){
-		Name = name;
-		Description = description;
+	public virtual void DestroyNode()
+	{
+		if (IsInstanceValid(Node))
+		{
+			Node.QueueFree();
+		}
 	}
-
 }
 

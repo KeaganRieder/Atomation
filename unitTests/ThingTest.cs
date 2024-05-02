@@ -11,7 +11,7 @@ using static GdUnit4.Assertions;
 public class ThingTest
 {
     [TestCase]
-    public void TestTerrainDefFileExist()
+    public void TestTerrainDefFilesExist()
     {
         string naturalTerrain = FilePaths.TERRAIN_FOLDER + "terrain_natural.json";
         string terrainWater = FilePaths.TERRAIN_FOLDER + "terrain_natural.json";
@@ -23,7 +23,7 @@ public class ThingTest
     }
 
     [TestCase]
-    public void TestStructureDefFileExist()
+    public void TestStructureDefFilesExist()
     {
         string naturalStructure = FilePaths.STRUCTURE_FOLDER + "structure_natural.json";
 
@@ -31,7 +31,7 @@ public class ThingTest
     }
 
     [TestCase]
-    public void TestBiomeFileExist()
+    public void TestBiomeFilesExist()
     {
         string cold = FilePaths.BIOME_FOLDER + "biome_cold.json";
         string hot = FilePaths.BIOME_FOLDER + "biome_hot.json";
@@ -45,9 +45,9 @@ public class ThingTest
     [TestCase]
     public void TestLoadingDefs()
     {
-        DefDatabase.LoadResources();
+        DefDatabase defs = DefDatabase.GetInstance();
 
-        TerrainDef grassDef = DefDatabase.GetTerrainDef("Grass");
+        TerrainDef grassDef = defs.GetTerrainDef("Grass");
         AssertThat(grassDef.Name).IsEqual("Grass");
         AssertThat(grassDef.StatSheet.GetStat(StatKeys.FERTILITY).Name).IsEqual(StatKeys.FERTILITY);
         AssertThat(grassDef.StatSheet.GetStat(StatKeys.FERTILITY).Description).IsEqual("The tile's fertility");

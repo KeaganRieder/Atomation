@@ -15,7 +15,7 @@ public enum StatType
 /// <summary>
 /// base of stats
 /// </summary>
-public class StatBase : Thing
+public class StatBase : Def
 {
     [JsonConverter(typeof(StringEnumConverter)), JsonProperty("Stat Type", Order = 1)]
     public StatType Type { get; protected set; }

@@ -8,16 +8,14 @@ using Newtonsoft.Json;
 /// class which is used by the FileManger to load def files 
 /// and cached them to be reference through games runtime
 /// </summary>
-public static class DefDatabase
+public class DefDatabase
 {
+    private static DefDatabase instance;
     private static DefFile<TerrainDef> TerrainDefs;
     private static DefFile<StructureDef> StructureDefs;
     private static DefFile<Biome> BiomeDefs;
 
-    /// <summary>
-    /// Loads resources and def files form files
-    /// </summary>
-    public static void LoadResources()
+    private DefDatabase()
     {
         GD.Print("Loading Terrain Def Files");
         TerrainDefs = new DefFile<TerrainDef>(FilePaths.TERRAIN_FOLDER);
@@ -27,11 +25,19 @@ public static class DefDatabase
         StructureDefs = new DefFile<StructureDef>(FilePaths.STRUCTURE_FOLDER);
     }
 
+    public static DefDatabase GetInstance(){
+        if (instance == null)
+        {
+            instance = new DefDatabase();
+        }
+        return instance;
+    }
+
     /// <summary>
     /// access cached terrain config data, and returns the terrain
     /// based on the ID
     /// </summary>
-    public static TerrainDef GetTerrainDef(string terrainID)
+    public TerrainDef GetTerrainDef(string terrainID)
     {
         return TerrainDefs[terrainID];
     }
@@ -40,7 +46,7 @@ public static class DefDatabase
     /// access cached terrain config data, and returns the terrain
     /// based on the moistureVal and temperateVal
     /// </summary>
-    public static Biome GetBiome(float moisture, float temperate)
+    public Biome GetBiome(float moisture, float temperate)
     {
         foreach (var biome in BiomeDefs.FileContents)
         {
@@ -57,7 +63,7 @@ public static class DefDatabase
         return null;
     }
 
-    public static StructureDef GetStructureDef(string StructureID)
+    public StructureDef GetStructureDef(string StructureID)
     {
         return StructureDefs[StructureID];
     }

@@ -5,49 +5,27 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 
-
 /// <summary>
 /// Handles files, defining methods allowing,
 /// formatting, reading/writing and the process they are read
 /// upon game start
 /// </summary>
-public class FileManger
+public static class FileUtility
 {
-	public FileManger()
-	{
-	}
-
-	/// <summary>
-	/// loads files, this function is generally called
-	/// during start up
-	/// </summary>
-	public void LoadFiles()
-	{
-		GD.Print("Loading Resources");
-		DefDatabase.LoadResources();
-		GD.Print("Loading Complete");
-	}
-
-	/// <summary>
-	/// formats object using default formatting and then writes it to json
-	/// at specified location
-	/// </summary>
-	public static void WriteJsonFile<ObjType>(string filePath, string fileName, ObjType obj)
-	{
-		JsonSerializerSettings settings = new JsonSerializerSettings()
-		{
-			Formatting = Formatting.Indented,
-			// NullValueHandling = NullValueHandling.Ignore,
-		};
-
-		WriteJsonFile(filePath, fileName, obj, settings);
-	}
 	/// <summary>
 	/// formats object using custom formatting and then writes it to json
 	/// at specified location
 	/// </summary>
-	public static void WriteJsonFile<ObjType>(string filePath, string fileName, ObjType obj, JsonSerializerSettings settings)
+	public static void WriteJsonFile<ObjType>(string filePath, string fileName, ObjType obj, JsonSerializerSettings settings = null)
 	{
+		if (settings == null)
+		{
+			settings = new JsonSerializerSettings()
+			{
+				Formatting = Formatting.Indented,
+			};
+		}
+
 		filePath = ProjectSettings.GlobalizePath(filePath);
 
 		if (!Directory.Exists(filePath))
@@ -57,7 +35,6 @@ public class FileManger
 
 		filePath += fileName + ".json";
 		string jsonData = JsonConvert.SerializeObject(obj, settings);
-
 		try
 		{
 			File.WriteAllText(filePath, jsonData);
@@ -119,14 +96,14 @@ public class FileManger
 
 		}
 
-		return  ImageTexture.CreateFromImage(image);
-;
+		return ImageTexture.CreateFromImage(image);
+		;
 	}
 
 	/// <summary>
 	/// reads in a collection of .png files, converting them to be a texture2d which is used as objects graphics
 	/// </summary>
-	public static Texture2D[] ReadTextureGroup(string filePath,Vector2I TextureSize, int variants)
+	public static Texture2D[] ReadTextureGroup(string filePath, Vector2I TextureSize, int variants)
 	{
 
 		Texture2D[] textureArray = new Texture2D[variants];
@@ -135,11 +112,9 @@ public class FileManger
 		{
 			string path = filePath + "_" + i;
 
-			textureArray[i] = ReadTexture(path,TextureSize);
+			textureArray[i] = ReadTexture(path, TextureSize);
 		}
 
 		return default;
 	}
-
-
 }

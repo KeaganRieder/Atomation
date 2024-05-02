@@ -3,18 +3,16 @@ namespace Atomation.Things;
 using Godot;
 using Atomation.Map;
 using Atomation.Resources;
-using System;
-
 
 /// <summary>
 /// the terrain/floor of the games world. this object is the base visual in
 /// a game world with other objects being placed on top of it
 /// </summary>
-public partial class Terrain : CompThing
+public partial class Terrain : Thing
 {
-	public float HeightValue { get; set; }
-	public float HeatValue { get; set; }
-	public float MoistureValue { get; set; }
+	public float Elevation { get; set; }
+	public float Temperature { get; set; }
+	public float Moisture { get; set; }
 
 	public Terrain(Coordinate coord)
 	{
@@ -24,18 +22,47 @@ public partial class Terrain : CompThing
 		AddChild(Graphic);
 	}
 
+	public Terrain(SavedTerrain savedTerrain)
+	{
+		Graphic = new StaticGraphic();
+		AddChild(Graphic);
+
+		Elevation = savedTerrain.Elevation;
+		Temperature = savedTerrain.Temperature;
+		Moisture = savedTerrain.Moisture;
+
+		Coordinate = savedTerrain.Cords;
+		Position = coordinate.WorldPosition;
+		StatSheet = savedTerrain.StatSheet;
+
+		//move this into the def data base and make it return a default object
+		if (savedTerrain.Name != null)
+		{
+			ReadConfigs(DefDatabase.GetInstance().GetTerrainDef(savedTerrain.Name), true);
+		}
+		else
+		{
+            Graphic.DefaultColor = Colors.Red;
+		}
+	}
+
 	/// <summary>
 	/// reading the configuration data for the given tile
 	/// and setting it for anything in which is needing
 	/// configuration at current call
 	/// </summary>
-	public void ReadConfigs(TerrainDef config)
+	public void ReadConfigs(TerrainDef config, bool loading = false)
 	{
-		Name = config.Name + Coordinate.ToString();
+		DefName = config.Name;
+		Name = DefName + Coordinate.ToString();
 		Description = config.Description;
-		StatSheet = new StatSheet (config.StatSheet, this);
+		if (!loading)
+		{
+			StatSheet = new StatSheet(config.StatSheet, this);
+		}
 
 		Graphic.Configure(config.GraphicData);
+		UpdateGraphic(VisualizationMode.Default);
 	}
 
 	public void UpdateGraphic(VisualizationMode displayMode)
@@ -66,43 +93,43 @@ public partial class Terrain : CompThing
 	{
 		Color heatColor;
 
-		if (HeatValue < -1.3)
+		if (Temperature < -1.3)
 		{
 			heatColor = Colors.White;
 		}
-		else if (HeatValue < -1.0)
+		else if (Temperature < -1.0)
 		{
 			heatColor = Colors.Pink;
 		}
-		else if (HeatValue < -0.8)
+		else if (Temperature < -0.8)
 		{
 			heatColor = Colors.Purple;
 		}
-		else if (HeatValue < -0.5)
+		else if (Temperature < -0.5)
 		{
 			heatColor = Colors.DarkBlue;
 		}
-		else if (HeatValue < -0.25)
+		else if (Temperature < -0.25)
 		{
 			heatColor = Colors.Cyan;
 		}
-		else if (HeatValue < 0.25)
+		else if (Temperature < 0.25)
 		{
 			heatColor = Colors.Green;
 		}
-		else if (HeatValue < 0.7)
+		else if (Temperature < 0.7)
 		{
 			heatColor = Colors.DarkGreen;
 		}
-		else if (HeatValue < 1)
+		else if (Temperature < 1)
 		{
 			heatColor = Colors.Yellow;
 		}
-		else if (HeatValue < 1.25)
+		else if (Temperature < 1.25)
 		{
 			heatColor = Colors.Orange;
 		}
-		else if (HeatValue < 1.7)
+		else if (Temperature < 1.7)
 		{
 			heatColor = Colors.Red;
 		}
@@ -111,7 +138,7 @@ public partial class Terrain : CompThing
 			heatColor = Colors.DarkRed;
 		}
 
-		Graphic.Modulate  = heatColor;
+		Graphic.Modulate = heatColor;
 	}
 
 	/// <summary>
@@ -120,7 +147,7 @@ public partial class Terrain : CompThing
 	/// </summary>
 	public void HeightGraphic()
 	{
-		Graphic.Modulate = new Color(HeightValue, HeightValue, HeightValue);
+		Graphic.Modulate = new Color(Elevation, Elevation, Elevation);
 	}
 
 	/// <summary>
@@ -132,27 +159,27 @@ public partial class Terrain : CompThing
 		//this needs work
 		Color moistureColor;
 
-		if (MoistureValue < 0.27)
+		if (Moisture < 0.27)
 		{
 			moistureColor = Colors.Red;
 
 		}
-		else if (MoistureValue < 0.4)
+		else if (Moisture < 0.4)
 		{
 			moistureColor = Colors.Orange;
 
 		}
-		else if (MoistureValue < 0.5)
+		else if (Moisture < 0.5)
 		{
 			moistureColor = Colors.Yellow;
 
 		}
-		else if (MoistureValue < 0.7)
+		else if (Moisture < 0.7)
 		{
 			moistureColor = Colors.Green;
 
 		}
-		else if (MoistureValue < 0.8)
+		else if (Moisture < 0.8)
 		{
 			moistureColor = Colors.Cyan;
 		}
@@ -162,5 +189,4 @@ public partial class Terrain : CompThing
 		}
 		Graphic.Modulate = moistureColor;
 	}
-
 }

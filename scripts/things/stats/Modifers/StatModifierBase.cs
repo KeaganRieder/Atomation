@@ -17,7 +17,7 @@ public enum ModifierType
 /// <summary>
 /// base stat modifier
 /// </summary>
-public class StatModifierBase : Thing
+public class StatModifierBase : Def
 {
 	[JsonProperty("Target Stat", Order = 1)]
 	public string TargetStat { get; protected set; }

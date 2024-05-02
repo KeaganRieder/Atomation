@@ -1,78 +1,74 @@
+namespace Atomation.Things;
+
 using System.Collections.Generic;
 using Atomation.Resources;
 using Godot;
 using Newtonsoft.Json;
 
-namespace Atomation.Things
+public struct BiomeLabel
 {
-        public struct BiomeLabel
+    public float minMoisture;
+    public float maxMoisture;
+    public float minTemperature;
+    public float maxTemperature;
+
+}
+
+/// <summary>
+/// biomes are used to determine the types of terrain based on
+/// the provide elevation, moisture and temperature
+/// </summary>
+public class Biome : Def
+{
+    [JsonProperty("minMoisture")]
+    public float MinMoisture;
+    [JsonProperty("maxMoisture")]
+    public float MaxMoisture;
+    [JsonProperty("minTemperature")]
+    public float MinTemperature;
+    [JsonProperty("maxTemperature")]
+    public float MaxTemperature;
+
+    [JsonProperty("biomeTerrain")]
+    private Dictionary<float, string> terrain = null;
+
+    [JsonProperty("biomeColor")]
+    public Color Color;
+
+    public override string GetKey()
+    {
+        BiomeLabel biomeLabel = new BiomeLabel()
         {
-            public float minMoisture;
-            public float maxMoisture;
-            public float minTemperature;
-            public float maxTemperature;
-            
-        }
+            minMoisture = MinMoisture,
+            maxMoisture = MaxMoisture,
+            minTemperature = MinTemperature,
+            maxTemperature = MaxTemperature,
+        };
+        return JsonConvert.SerializeObject(biomeLabel);
+    }
+
+    public Biome()
+    {
+    }
 
     /// <summary>
-    /// biomes are used to determine the types of terrain based on
-    /// the provide elevation, moisture and temperature
+    /// returns the key for the terrain which is present in the biome
+    /// and corresponds to the
     /// </summary>
-    public class Biome : Thing
+    public TerrainDef GetTerrain(float elevation)
     {
-        [JsonProperty("minMoisture")]
-        public float MinMoisture;
-        [JsonProperty("maxMoisture")]
-        public float MaxMoisture;
-        [JsonProperty("minTemperature")]
-        public float MinTemperature;
-        [JsonProperty("maxTemperature")]
-        public float MaxTemperature;
-
-        [JsonProperty("biomeTerrain")]
-        private Dictionary<float, string> terrain = null;
-
-        [JsonProperty("biomeColor")]
-        public Color Color;
-
-        [JsonIgnore]
-        public override string Key
+        //try and get a terrain
+        foreach (float terrainHeight in terrain.Keys)
         {
-            get
+            if (elevation < terrainHeight)
             {
-                BiomeLabel biomeLabel = new BiomeLabel(){
-                    minMoisture = MinMoisture,
-                    maxMoisture = MaxMoisture,
-                    minTemperature = MinTemperature,
-                    maxTemperature = MaxTemperature,
-                };
-                return JsonConvert.SerializeObject(biomeLabel);
+                return DefDatabase.GetInstance().GetTerrainDef(terrain[terrainHeight]);
             }
         }
 
-        public Biome()
-        {
-        }
-
-        /// <summary>
-        /// returns the key for the terrain which is present in the biome
-        /// and corresponds to the
-        /// </summary>
-        public TerrainDef GetTerrain(float elevation)
-        {
-            //try and get a terrain
-            foreach (float terrainHeight in terrain.Keys)
-            {
-                if (elevation < terrainHeight)
-                {
-                    return DefDatabase.GetTerrainDef(terrain[terrainHeight]);
-                }
-            }
-
-            // if no terrain meeting requirement then pick closest
-            return null;
-        }
-
-
+        // if no terrain meeting requirement then pick closest
+        return null;
     }
+
+
 }

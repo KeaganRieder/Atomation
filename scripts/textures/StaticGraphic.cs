@@ -18,7 +18,7 @@ public partial class StaticGraphic : Sprite2D
     {
         TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png";
 
-        graphicSize = new Vector2I(WorldMap.CELL_SIZE, WorldMap.CELL_SIZE);
+        graphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE);
         Position = graphicSize / 2;
         SetTexture();
     }
@@ -53,13 +53,13 @@ public partial class StaticGraphic : Sprite2D
 
         if (variants > 1)
         {
-            Texture2D[] textureArray = FileManger.ReadTextureGroup(TexturePath, graphicSize, variants);
+            Texture2D[] textureArray = FileUtility.ReadTextureGroup(TexturePath, graphicSize, variants);
             RandomNumberGenerator rng = new RandomNumberGenerator();
             texture = textureArray[rng.RandiRange(0, variants)];
         }
         else
         {
-            texture = FileManger.ReadTexture(TexturePath, graphicSize);
+            texture = FileUtility.ReadTexture(TexturePath, graphicSize);
         }
         Texture = texture;
 

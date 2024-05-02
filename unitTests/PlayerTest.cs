@@ -1,7 +1,7 @@
 namespace Atomation.UnitTests;
 
 using Atomation.Map;
-using Atomation.PlayerChar;
+using Atomation.Player;
 using Atomation.Things;
 using GdUnit4;
 using Godot;
@@ -13,7 +13,7 @@ public class PlayerTest
     [TestCase]
     public void TestPlayerCreation()
     {
-        Player player = AutoFree(new Player());
+        PlayerChar player = AutoFree( PlayerChar.GetInstance());
 
         AssertThat(player.Coordinate.WorldPosition).IsEqual(Vector2.Zero);
         AssertThat(player.Coordinate.ChunkGridPosition).IsEqual(Vector2.Zero);
@@ -48,7 +48,7 @@ public class PlayerTest
     [TestCase]
     public void TestPlayerStatChange ()
     {
-        Player player = AutoFree(new Player());
+        PlayerChar player = AutoFree( PlayerChar.GetInstance());
 
         AssertThat(player.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue).IsEqual(100);
 

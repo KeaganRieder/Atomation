@@ -1,4 +1,4 @@
-namespace Atomation.PlayerChar;
+namespace Atomation.Player;
 
 using Godot;
 using Atomation.Resources;
@@ -6,54 +6,73 @@ using Atomation.Things;
 using System.Collections.Generic;
 using Atomation.Map;
 
-
-
 /// <summary>
 /// defines the player
 /// </summary>
-public partial class Player : CompThing
+public partial class PlayerChar : Thing
 {
+	private static PlayerChar playerInstance;
+
 	public CharacterBody2D Body { get; private set; }
 	public Camera Camera { get; private set; }
 
-	public Player()
+	private PlayerChar()
 	{
-		Initialize();
 		Name = "player";
 		Description = "The player Character";
 
-		SetSpawn(new Coordinate(Vector2.Zero));
-
-		Body = new CharacterBody2D();
-		Camera = new Camera();
-		Graphic = new StaticGraphic("player", 1, new Vector2I(WorldMap.CELL_SIZE, WorldMap.CELL_SIZE), Colors.White);
-
-		AddChild(Camera);
-		AddChild(Graphic);
-		AddChild(Body);
-	}
-
-	private void Initialize()
-	{
 		Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>(){
 				{StatKeys.MOVE_SPEED, new ModifiableStat(StatKeys.MOVE_SPEED, "players moveSpeed", 1)},
 				{StatKeys.MAX_HEALTH, new ModifiableStat(StatKeys.MAX_HEALTH, "players hit points", 100)},
 				{StatKeys.ATTACK_DAMAGE, new ModifiableStat(StatKeys.ATTACK_DAMAGE, "players Attack dmg", 10)}};
 
 		StatSheet = new StatSheet(stats, new Dictionary<string, StatModifierBase>());
-	}
 
-	public void SetSpawn(Coordinate coordinate)
+		SetSpawn(new Coordinate(Vector2.Zero));
+
+		Body = new CharacterBody2D();
+		Camera = new Camera();
+		Graphic = new StaticGraphic("player", 1, new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE), Colors.White);
+
+		AddChild(Camera);
+		AddChild(Graphic);
+		AddChild(Body);
+	}
+	public static PlayerChar GetInstance()
 	{
-		Coordinate = coordinate;
+		if (playerInstance == null)
+		{
+			playerInstance = new PlayerChar();
+		}
+
+		return playerInstance;
 	}
 
-	public override void Damage(float amount){
+	public SavedPlayer Save(){
+		return new SavedPlayer(this);
+	}
+	public void Load(SavedPlayer loadedData){
+		GD.Print("Loading Player");
+		
+		Name = loadedData.Name;
+        SetSpawn(loadedData.Cords);
+        StatSheet = loadedData.StatSheet;
+	}
+
+	public override void Damage(float amount)
+	{
 		//todo death
 		StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
 	}
-	public override void Heal(float amount){
+	public override void Heal(float amount)
+	{
 		StatSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
+	}
+
+	public void SetSpawn(Coordinate cord)
+	{
+		coordinate = cord;
+		Position =cord.WorldPosition;
 	}
 
 	public void Move()
@@ -64,5 +83,4 @@ public partial class Player : CompThing
 		Coordinate.UpdateWorldPosition(Position);
 		//todo: animation code here at some point
 	}
-
 }

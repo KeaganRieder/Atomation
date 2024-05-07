@@ -9,12 +9,12 @@ using Atomation.Resources;
 /// <summary>
 /// defines basic structures
 /// </summary>
-public partial class Structure : Thing
+public partial class Structure : BaseThing
 {
 	public Structure(Coordinate coord)
 	{
 		coordinate = coord;
-		Position = coordinate.WorldPosition;
+		Position = coordinate.GetWorldPosition();
 
 		Graphic = new StaticGraphic();
 		AddChild(Graphic);
@@ -23,14 +23,12 @@ public partial class Structure : Thing
 	{
 		Graphic = new StaticGraphic();
 		AddChild(Graphic);
-		
-		Coordinate = savedStructure.Cords;
-		Position = coordinate.WorldPosition;
-		StatSheet = savedStructure.StatSheet;
-		if (savedStructure.Name != null)
-		{
-			ReadConfigs(DefDatabase.GetInstance().GetStructureDef(savedStructure.Name), true);
-		}
+
+		coordinate = savedStructure.Cords;
+		Position = coordinate.GetWorldPosition();
+		StatSheet = new StatSheet(savedStructure.StatSheet, this);
+
+		ReadConfigs(DefDatabase.GetInstance().GetStructureDef(savedStructure.Name), true);
 	}
 
 	/// <summary>
@@ -41,7 +39,7 @@ public partial class Structure : Thing
 	public void ReadConfigs(StructureDef config, bool loading = false)
 	{
 		DefName = config.Name;
-		Name = DefName + Coordinate.ToString();
+		Name = DefName + coordinate.ToString();
 		Description = config.Description;
 		if (!loading)
 		{
@@ -50,11 +48,29 @@ public partial class Structure : Thing
 		Graphic.Configure(config.GraphicData);
 	}
 
-	public override void Damage(float amount)
+	public void Damage(float amount)
 	{
 		StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
+
+		if (StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
+		{
+			WorldMap.GetInstance().SetStructure(coordinate, null);
+			DestroyNode();
+		}
 	}
-	public override void Heal(float amount)
+	public void Damage(StatSheet statSheet)
+	{
+		StatBase dmg = statSheet.GetStat(StatKeys.ATTACK_DAMAGE);
+
+		if (dmg != null)
+		{
+			GD.Print($"dmg: {dmg.CurrentValue}");
+
+			Damage(dmg.CurrentValue);
+		}
+	}
+
+	public void Heal(float amount)
 	{
 		StatSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
 	}

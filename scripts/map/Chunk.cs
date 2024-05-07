@@ -17,46 +17,56 @@ public partial class Chunk : Node2D
 	public const int TOTAL_CHUNK_SIZE = CHUNK_SIZE * MapData.CELL_SIZE;
 
 	public float CellSize { get; private set; }
-	public bool Rendered { get; private set; }
-	public Coordinate coordinate { get; private set; }
+	private bool Rendered;
+	public ChunkCoordinate Coordinate { get; private set; }
 
-	public Grid<Terrain> Terrain { get; private set; }
-	public Grid<Structure> Buildings { get; private set; }
+	public Grid<Terrain> TerrainGrid { get; private set; }
+	public Grid<Structure> StructureGrid { get; private set; }
 
-	public Chunk(Vector2 worldPosition, float cellSize)
+
+	public Chunk(Vector2 worldPosition)
 	{
-		CellSize = cellSize;
-		coordinate = new Coordinate(worldPosition);
+		CellSize = MapData.CELL_SIZE;
+		Coordinate = new ChunkCoordinate(worldPosition);
 		Rendered = true;
 
-		Name = $"Chunk {coordinate.ChunkGridPosition}, {coordinate.ChunkWorldPos}";
+		Name = $"Chunk {Coordinate}";
 
-		Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
-		Buildings = new Grid<Structure>(CHUNK_SIZE, CHUNK_SIZE, cellSize, worldPosition, this);
+		TerrainGrid = new Grid<Terrain>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
+		StructureGrid = new Grid<Structure>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
+	}
+
+	public Chunk(int x, int y)
+	{
+		CellSize = MapData.CELL_SIZE;
+		Coordinate = new ChunkCoordinate(x, y);
+		Rendered = true;
+		Name = $"Chunk {Coordinate}";
+
+		TerrainGrid = new Grid<Terrain>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
+		StructureGrid = new Grid<Structure>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
 	}
 
 	public Chunk(SavedChunk savedChunk)
 	{
 		CellSize = savedChunk.CellSize;
-		coordinate = savedChunk.Cords;
+		Coordinate = savedChunk.Cords;
 		Rendered = savedChunk.Rendered;
 
-		Name = $"Chunk {coordinate.ChunkGridPosition}, {coordinate.ChunkWorldPos}";
+		Name = $"Chunk {Coordinate}";
 
-		Terrain = new Grid<Terrain>(CHUNK_SIZE, CHUNK_SIZE, CellSize, coordinate.WorldPosition, this);
-		Buildings = new Grid<Structure>(CHUNK_SIZE, CHUNK_SIZE, CellSize, coordinate.WorldPosition, this);
+		TerrainGrid = new Grid<Terrain>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
+		StructureGrid = new Grid<Structure>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
 
 		foreach (var savedTerrain in savedChunk.SavedTerrain)
 		{
 			Terrain terrain = new Terrain(savedTerrain);
-			Vector2I cord = terrain.Coordinate.XYPosition;
-			Terrain.SetObject(cord.X,cord.Y, terrain);
+			TerrainGrid.SetObject(terrain.GetCoordinate(), terrain);
 		}
 		foreach (var savedStructure in savedChunk.SavedStructure)
 		{
 			Structure structure = new Structure(savedStructure);
-			Vector2I cord = structure.Coordinate.XYPosition;
-			Buildings.SetObject(cord.X,cord.Y, structure);
+			StructureGrid.SetObject(structure.GetCoordinate(), structure);
 		}
 	}
 
@@ -71,8 +81,8 @@ public partial class Chunk : Node2D
 		{
 			for (int y = 0; y < CHUNK_SIZE; y++)
 			{
-				Terrain.GetObject(x, y).UpdateGraphic(displayMode);
-				if ((structure = Buildings.GetObject(x, y)) != null)
+				TerrainGrid.GetObject(x, y).UpdateGraphic(displayMode);
+				if ((structure = StructureGrid.GetObject(x, y)) != null)
 				{
 					if (displayMode != VisualizationMode.Default)
 					{
@@ -88,20 +98,29 @@ public partial class Chunk : Node2D
 	}
 
 	/// <summary>
-	/// checks viewer distance from chunk and then decided based on rendered distance
-	/// to decide weather or not to hide/un render chunk.
+	/// updates viability of chunk if it's within render distance
 	/// </summary>
 	public void UpdateVisibility(Coordinate viewerCords)
 	{
-		bool visible = coordinate.ChunkDistance(viewerCords) <= MapData.GetData().RenderDistance;
+		MapData data = MapData.GetData();
 
+		float distanceToViewier = Mathf.Sqrt(Coordinate.DistanceTo(viewerCords));
+
+		bool visible = distanceToViewier <= data.GetRenderDistance();
 		SetVisibility(visible);
 	}
-
+	/// <summary> sets if chunk is render or not </summary>
 	public void SetVisibility(bool visible)
 	{
 		Rendered = visible;
 
 		Visible = Rendered;
+	}
+
+
+	/// <summary> returns Visibility of chunk </summary>
+	public bool CheckVisibility()
+	{
+		return Rendered;
 	}
 }

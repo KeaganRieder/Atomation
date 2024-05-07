@@ -24,7 +24,6 @@ public partial class WorldMap : Node2D
 {
 	private static WorldMap instance;
 	private readonly MapData data;
-	private readonly WorldGenerator generator;
 	private readonly int visibleChunks;
 	private List<Chunk> lastUpdatedChunks;
 	private Dictionary<Vector2, Chunk> chunkArray;
@@ -39,7 +38,7 @@ public partial class WorldMap : Node2D
 
 		visualizationMode = VisualizationMode.Default;
 
-		visibleChunks = Mathf.FloorToInt(data.RenderDistance / Chunk.CHUNK_SIZE);
+		visibleChunks = Mathf.FloorToInt(data.GetRenderDistance() / Chunk.CHUNK_SIZE);
 
 		lastUpdatedChunks = new List<Chunk>();
 		chunkArray = new Dictionary<Vector2, Chunk>();
@@ -75,7 +74,7 @@ public partial class WorldMap : Node2D
 		foreach (var savedChunk in savedMap.SavedChunks)
 		{
 			Chunk chunk = new Chunk(savedChunk);
-			chunkArray.Add(chunk.coordinate.ChunkGridPosition, chunk);
+			chunkArray.Add(chunk.Coordinate.GetXYPosition(), chunk);
 			AddChild(chunk);
 		}
 	}
@@ -83,11 +82,12 @@ public partial class WorldMap : Node2D
 	/// <summary> generates a map from save </summary>
 	public void ClearMap()
 	{
-		foreach (var chunkInfo in chunkArray)
+		foreach (var chunk in chunkArray)
 		{
-			DestroyChunk(chunkInfo);
+			DestroyChunk(chunk);
 		}
 		chunkArray = new Dictionary<Vector2, Chunk>();
+		lastUpdatedChunks = new List<Chunk>();
 	}
 	/// <summary> destroys chunk at given cords </summary>
 	private void DestroyChunk(KeyValuePair<Vector2, Chunk> chunkInfo)
@@ -98,27 +98,18 @@ public partial class WorldMap : Node2D
 		}
 	}
 
-	/// <summary> gets the position of a chunk at the given cords </summary>
-	private Vector2 GetChunkCords(Vector2 worldPosition)
-	{
-		int xCord = Mathf.FloorToInt(worldPosition.X / Chunk.TOTAL_CHUNK_SIZE);
-		int yCord = Mathf.FloorToInt(worldPosition.Y / Chunk.TOTAL_CHUNK_SIZE);
-
-		return new Vector2(xCord, yCord);
-	}
-
 	/// <summary> gets chunks at given world position </summary>
 	private Chunk GetChunk(Coordinate cords)
 	{
-		// Vector2 chunkPosition = GetChunkCords(worldPosition);
+		ChunkCoordinate ChunkCords = cords.ToChunkCords();
 
-		if (chunkArray.ContainsKey(cords.ChunkGridPosition))
+		if (chunkArray.ContainsKey(ChunkCords.GetXYPosition()))
 		{
-			return chunkArray[cords.ChunkGridPosition];
+			return chunkArray[ChunkCords.GetXYPosition()];
 		}
 		else
 		{
-			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{cords.ChunkGridPosition} WorldPos:{cords.WorldPosition}");
+			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{ChunkCords.GetXYPosition} WorldPos:{ChunkCords.GetWorldPosition}");
 			return null;
 		}
 	}
@@ -131,16 +122,25 @@ public partial class WorldMap : Node2D
 			return;
 		}
 
-		Chunk chunk = GetChunk(terrain.Coordinate);
+		Chunk chunk = GetChunk(terrain.GetCoordinate());
 
 		if (chunk == null)
 		{
 			return;
 		}
 		terrain.UpdateGraphic(visualizationMode);
-		chunk.Terrain.SetObject(terrain.Coordinate.WorldPosition, terrain);
+		chunk.TerrainGrid.SetObject(terrain.GetCoordinate(),terrain);
 	}
-
+	/// <summary> sets terrain at world position </summary>
+	public void SetTerrain(Coordinate cord, Terrain terrain)
+	{
+		Chunk chunk = GetChunk(cord);
+		if (chunk == null)
+		{
+			return;
+		}
+		chunk.TerrainGrid.SetObject(cord.GetWorldPosition(), terrain);
+	}
 	/// <summary> gets terrain at world position </summary>
 	public Terrain GetTerrain(Coordinate cord)
 	{
@@ -149,7 +149,7 @@ public partial class WorldMap : Node2D
 		{
 			return null;
 		}
-		return chunk.Terrain.GetObject(cord.WorldPosition);
+		return chunk.TerrainGrid.GetObject(cord);
 	}
 
 	/// <summary> sets structure at world position </summary>
@@ -160,15 +160,24 @@ public partial class WorldMap : Node2D
 			return;
 		}
 
-		Chunk chunk = GetChunk(structure.Coordinate);
+		Chunk chunk = GetChunk(structure.GetCoordinate());
 
 		if (chunk == null)
 		{
 			return;
 		}
-		chunk.Buildings.SetObject(structure.Coordinate.WorldPosition, structure);
+		chunk.StructureGrid.SetObject(structure.GetCoordinate(),structure);
 	}
-
+	/// <summary> sets structure at world position </summary>
+	public void SetStructure(Coordinate cord, Structure structure)
+	{
+		Chunk chunk = GetChunk(cord);
+		if (chunk == null)
+		{
+			return;
+		}
+		chunk.StructureGrid.SetObject(cord, structure);
+	}
 	/// <summary> gets structure at world position </summary>
 	public Structure GetStructure(Coordinate cord)
 	{
@@ -178,7 +187,7 @@ public partial class WorldMap : Node2D
 		{
 			return null;
 		}
-		return chunk.Buildings.GetObject(cord.WorldPosition);
+		return chunk.StructureGrid.GetObject(cord);
 	}
 
 	/// <summary> update tile visualization color mode </summary>
@@ -198,9 +207,9 @@ public partial class WorldMap : Node2D
 	/// runs through surrounding chunks and decides wether or not 
 	/// to hide them based on distance form player
 	/// </summary>
-	public void CheckChunkStatus(Coordinate playerPosition)
+	public void UpdateVisibleChunks(Coordinate playerPosition)
 	{
-		Vector2 currentChunkCords = playerPosition.ChunkGridPosition;
+		Vector2 currentChunkCords = playerPosition.ToChunkCords().GetXYPosition();
 
 		//un render all last active chunks
 		foreach (var chunk in lastUpdatedChunks)
@@ -221,7 +230,7 @@ public partial class WorldMap : Node2D
 					Chunk chunk = chunkArray[viewChunkCord];
 
 					chunk.UpdateVisibility(playerPosition);
-					if (chunk.Rendered)
+					if (chunk.CheckVisibility())
 					{
 						lastUpdatedChunks.Add(chunk);
 					}
@@ -229,7 +238,7 @@ public partial class WorldMap : Node2D
 				else
 				{
 					Vector2 chunkCord = viewChunkCord * Chunk.CHUNK_SIZE;
-					Chunk newChunk = new(chunkCord, MapData.CELL_SIZE);
+					Chunk newChunk = new(Mathf.FloorToInt(viewChunkCord.X),Mathf.FloorToInt(viewChunkCord.Y));
 					AddChild(newChunk);
 
 					chunkArray.Add(viewChunkCord, newChunk);
@@ -241,5 +250,4 @@ public partial class WorldMap : Node2D
 			}
 		}
 	}
-
 }

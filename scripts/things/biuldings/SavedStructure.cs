@@ -8,7 +8,7 @@ public class SavedStructure : SavedThing
     [JsonConstructor]
     protected SavedStructure() { }
 
-    public SavedStructure(Structure toSave) : base(toSave.DefName, toSave.Coordinate, toSave.StatSheet)
+    public SavedStructure(Structure toSave) : base(toSave.DefName, toSave.GetCoordinate(), toSave.StatSheet)
     {
 
     }

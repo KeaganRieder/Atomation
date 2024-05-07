@@ -9,133 +9,199 @@ using static GdUnit4.Assertions;
 public class TestCoordinate
 {
     [TestCase]
-    public void TestWorldPosition()
+    public void TestCoordinateWorld()
     {
         Coordinate cord = new Coordinate(new Vector2(0, 0));
-        AssertThat(cord.WorldPosition).IsEqual(Vector2.Zero);
-        AssertThat(cord.ChunkGridPosition).IsEqual(Vector2.Zero);
-        AssertThat(cord.ChunkWorldPos).IsEqual(Vector2.Zero);
-        AssertThat(cord.XYPosition).IsEqual(Vector2I.Zero);
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
         cord = new Coordinate(new Vector2(16, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(16, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(0, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(0, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(1, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(16, 0));
+
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
 
         cord = new Coordinate(new Vector2(512, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
         cord = new Coordinate(new Vector2(513, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(513, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(513, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
         cord = new Coordinate(new Vector2(528, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(528, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(1, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(528, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
 
-        cord = new Coordinate(new Vector2(560, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(560, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(3, 0));
-
-        cord = new Coordinate(new Vector2(-512, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(-512, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(-1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(-512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(0, 0));
-
-        cord = new Coordinate(new Vector2(-512,-512));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(-512, -512));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(-1, -1));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(-512, -512));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(0, 0));
-
+        cord = new Coordinate(new Vector2(528, 528));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(528, 528));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 1));
+    }
+    [TestCase]
+    public void TestCoordinateNegWorld()
+    {
+        Coordinate cord = new Coordinate(new Vector2(-16, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-16, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(31, 0));
     }
 
     [TestCase]
-    public void TestXYPosition()
+    public void TestCoordinateXY()
     {
         Coordinate cord = new Coordinate(0, 0, new Vector2(0, 0));
-        AssertThat(cord.WorldPosition).IsEqual(Vector2.Zero);
-        AssertThat(cord.ChunkGridPosition).IsEqual(Vector2.Zero);
-        AssertThat(cord.ChunkWorldPos).IsEqual(Vector2.Zero);
-        AssertThat(cord.XYPosition).IsEqual(Vector2I.Zero);
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
         cord = new Coordinate(1, 0, new Vector2(0, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(16, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(0, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(0, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(1, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(16, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
 
         cord = new Coordinate(0, 0, new Vector2(32, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
         cord = new Coordinate(0, 0, new Vector2(-32, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(-512, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(-1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(-512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
         cord = new Coordinate(1, 0, new Vector2(32, 0));
-        AssertThat(cord.WorldPosition).IsEqual(new Vector2(528, 0));
-        AssertThat(cord.ChunkGridPosition).IsEqual(new Vector2(1, 0));
-        AssertThat(cord.ChunkWorldPos).IsEqual(new Vector2(512, 0));
-        AssertThat(cord.XYPosition).IsEqual(new Vector2I(1, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(528, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
     }
 
     [TestCase]
-    public void TestWorldDistance()
+    public void TestCoordinateNegXY()
     {
-        Coordinate cord = new Coordinate(0, 0, new Vector2(0, 0));
-        Coordinate cord2 = new Coordinate(1, 0, new Vector2(0, 0));
-        AssertFloat(cord.Distance(cord2)).IsEqual(16);
+        Coordinate cord = new Coordinate(0, 0, new Vector2(-1, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
-        cord = new Coordinate(0, 0, new Vector2(0, 0));
-        cord2 = new Coordinate(1, 1, new Vector2(0, 0));
-        AssertFloat(cord.Distance(cord2)).IsEqual(23);
+        cord = new Coordinate(1, 0, new Vector2(-1, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-496, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
 
-        cord = new Coordinate(new Vector2(-512,-512));
-        cord2 = new Coordinate(new Vector2(56,56));
-        AssertFloat(cord.Distance(cord2)).IsEqual(803);
-
-        cord = new Coordinate(new Vector2(-512,-512));
-        cord2 = new Coordinate(new Vector2(512,512));
-        AssertFloat(cord.Distance(cord2)).IsEqual(1448);
+        cord = new Coordinate(31, 0, new Vector2(-1, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-16, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(31, 0));
     }
 
     [TestCase]
-    public void TestChunkDistance()
+    public void TestChunkWorld()
     {
-        Coordinate cord = new Coordinate(0, 0, new Vector2(0, 0));
-        Coordinate cord2 = new Coordinate(1, 0, new Vector2(0, 0));
-        AssertFloat(cord.ChunkDistance(cord2)).IsEqual(1);
+        ChunkCoordinate cord = new ChunkCoordinate(new Vector2(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
-        cord = new Coordinate(0, 0, new Vector2(0, 0));
-        cord2 = new Coordinate(1, 1, new Vector2(0, 0));
-        AssertFloat(cord.ChunkDistance(cord2)).IsEqual(1);
+        cord = new ChunkCoordinate(new Vector2(496, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
 
-        cord = new Coordinate(new Vector2(-512,-512));
-        cord2 = new Coordinate(new Vector2(56,56));
-        AssertFloat(cord.ChunkDistance(cord2)).IsEqual(50);
+        cord = new ChunkCoordinate(new Vector2(512, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
 
-        cord = new Coordinate(new Vector2(-512,-512));
-        cord2 = new Coordinate(new Vector2(512,512));
-        AssertFloat(cord.ChunkDistance(cord2)).IsEqual(91);
+        cord = new ChunkCoordinate(new Vector2(512, 512));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 512));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 1));
 
-        cord = new Coordinate(new Vector2(0,512));
-        cord2 = new Coordinate(new Vector2(0,514));
-        AssertFloat(cord.ChunkDistance(cord2)).IsEqual(0);
+        cord = new ChunkCoordinate(new Vector2(1024, 512));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(1024, 512));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(2, 1));
     }
+
+    [TestCase]
+    public void TestChunkNegWorld()
+    {
+        ChunkCoordinate cord = new ChunkCoordinate(new Vector2(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        cord = new ChunkCoordinate(new Vector2(-512, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(-1, 0));
+
+        cord = new ChunkCoordinate(new Vector2(-528, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-1024, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(-2, 0));
+
+        cord = new ChunkCoordinate(new Vector2(-512, -512));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-512, -512));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(-1, -1));
+    }
+
+    [TestCase]
+    public void TestChunkXY()
+    {
+        ChunkCoordinate cord = new ChunkCoordinate(0, 0);
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        cord = new ChunkCoordinate(1, 0);
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
+
+        cord = new ChunkCoordinate(1, 1);
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 512));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 1));
+
+        cord = new ChunkCoordinate(2, 1);
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(1024, 512));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(2, 1));
+    }
+
+    [TestCase]
+    public void TestChunkBounds()
+    {
+        Coordinate cord = new Coordinate(new Vector2(512, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        cord = new ChunkCoordinate(new Vector2(512, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
+
+        cord = new Coordinate(new Vector2(496, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(496, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(31, 0));
+
+        cord = new ChunkCoordinate(new Vector2(496, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        cord = new Coordinate(new Vector2(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        cord = new ChunkCoordinate(new Vector2(0, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(0, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        cord = new Coordinate(new Vector2(-512, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        cord = new ChunkCoordinate(new Vector2(-512, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(-512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(-1, 0));
+    }
+
+    [TestCase]
+    public void TestCordConversion()
+    {
+        Coordinate cord = new Coordinate(new Vector2(512, 0));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        ChunkCoordinate chunkCord = cord.ToChunkCords();
+        AssertThat(chunkCord.GetWorldPosition()).IsEqual(new Vector2(512, 0));
+        AssertThat(chunkCord.GetXYPosition()).IsEqual(new Vector2I(1, 0));
+
+        cord = new Coordinate(new Vector2(1024, 512));
+        AssertThat(cord.GetWorldPosition()).IsEqual(new Vector2(1024, 512));
+        AssertThat(cord.GetXYPosition()).IsEqual(new Vector2I(0, 0));
+
+        chunkCord = cord.ToChunkCords();
+        AssertThat(chunkCord.GetWorldPosition()).IsEqual(new Vector2(1024, 512));
+        AssertThat(chunkCord.GetXYPosition()).IsEqual(new Vector2I(2, 1));
+    }
+
 }

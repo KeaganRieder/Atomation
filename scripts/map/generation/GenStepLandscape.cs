@@ -38,14 +38,17 @@ public class GenStepLandscape : GenStep
                 Coordinate coordinate = new Coordinate(x, y, origin);
                 Terrain terrain = new Terrain(coordinate);
 
-                float heightValue = heightMap.CalculateNoise(x, y);
-                terrain.Elevation = heightValue;
-                terrain.Temperature = temperatureMap.CalculateNoise(x, y, heightValue);
-                terrain.Moisture = moistureMap.CalculateNoise(x, y);
+                float height = heightMap.CalculateNoise(x, y);
+                float temperature = temperatureMap.CalculateNoise(x, y, height);
+
+                terrain.Elevation = height;
+                terrain.Temperature = temperature;
+                terrain.Moisture = moistureMap.CalculateNoise(x, y, height, temperature);
 
                 ChooseTerrain(terrain);
             }
         }
+        moistureMap.PrintMinMax();
     }
 
     private void CalculateLandHeight()
@@ -141,7 +144,7 @@ public class GenStepLandscape : GenStep
         if (terrain.Elevation > mapData.MountainHeight)
         {
             terrain.ReadConfigs(DefDatabase.GetInstance().GetTerrainDef("Slate"));
-            mountainWall = new Structure(terrain.Coordinate);
+            mountainWall = new Structure(terrain.GetCoordinate());
             mountainWall.ReadConfigs(DefDatabase.GetInstance().GetStructureDef("Slate Wall"));
         }
         else if (terrain.Elevation > mountainBase)
@@ -149,7 +152,6 @@ public class GenStepLandscape : GenStep
             terrain.ReadConfigs(DefDatabase.GetInstance().GetTerrainDef("Slate"));
             mountainWall = null;
         }
-        //if (terrain.Elevation > mountainEdge)
         else
         {
             terrain.ReadConfigs(DefDatabase.GetInstance().GetTerrainDef("Gravel"));

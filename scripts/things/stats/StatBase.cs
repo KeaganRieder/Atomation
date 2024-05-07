@@ -141,9 +141,9 @@ public class StatBase : Def
     /// </summary>
     public virtual void Damage(float damageAmt)
     {
-        // damage += damageAmt;
+        damage += damageAmt;
 
-        // updateValue = true;
+        updateValue = true;
     }
     /// <summary>
     /// heal stat

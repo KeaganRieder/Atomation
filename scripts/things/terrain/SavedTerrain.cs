@@ -12,7 +12,7 @@ public class SavedTerrain : SavedThing
     [JsonConstructor]
     protected SavedTerrain() { }
 
-    public SavedTerrain(Terrain toSave) : base(toSave.DefName, toSave.Coordinate, toSave.StatSheet)
+    public SavedTerrain(Terrain toSave) : base(toSave.DefName, toSave.GetCoordinate(), toSave.StatSheet)
     {
         Elevation = toSave.Elevation;
         Temperature = toSave.Temperature;

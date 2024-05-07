@@ -21,7 +21,6 @@ public interface IDef
 /// </summary>
 public abstract class Def : IDef
 {
-
     [JsonProperty("Name", Order = -1)]
     public string Name { get; set; }
 

@@ -7,6 +7,9 @@ using Atomation.Things;
 using Godot;
 using System.Collections.Generic;
 
+/// <summary>
+/// class used mainly to format def files for things
+/// </summary>
 public static class FileFormatting
 {
     public static void FormatTerrain()

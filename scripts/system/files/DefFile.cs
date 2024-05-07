@@ -7,16 +7,12 @@ using Godot;
 using Atomation.Things;
 using Newtonsoft.Json;
 
-
 public class DefFile<defType> where defType : IDef
 {
     [JsonProperty("Defs")]
     protected Dictionary<string, defType> defs;
 
-    public DefFile()
-    {
-        //default constructor used for json reading
-    }
+    public DefFile() { }
 
     /// <summary>
     /// constructor which is used primarily for formatting new def file

@@ -13,22 +13,25 @@ public class PlayerTest
     [TestCase]
     public void TestPlayerCreation()
     {
-        PlayerChar player = AutoFree( PlayerChar.GetInstance());
+        PlayerChar player = AutoFree(PlayerChar.GetInstance());
+        PlayerChar player2 = AutoFree(PlayerChar.GetInstance());
 
-        AssertThat(player.Coordinate.WorldPosition).IsEqual(Vector2.Zero);
-        AssertThat(player.Coordinate.ChunkGridPosition).IsEqual(Vector2.Zero);
-        AssertThat(player.Coordinate.ChunkWorldPos).IsEqual(Vector2.Zero);
-        AssertThat(player.Coordinate.XYPosition).IsEqual(Vector2I.Zero);
+        AssertThat(player).IsEqual(player2);
+
+        AssertThat(player.GetCoordinate().GetWorldPosition()).IsEqual(Vector2.Zero);
+        AssertThat(player.GetCoordinate().GetXYPosition()).IsEqual(Vector2I.Zero);
+        AssertThat(player.GetCoordinate().ToChunkCords().GetWorldPosition()).IsEqual(Vector2.Zero);
+        AssertThat(player.GetCoordinate().ToChunkCords().GetXYPosition()).IsEqual(Vector2I.Zero);
 
         player.SetSpawn(new Coordinate(new Vector2(-512, -512)));
-        AssertThat(player.Coordinate.WorldPosition).IsEqual(new Vector2(-512, -512));
-        AssertThat(player.Coordinate.ChunkGridPosition).IsEqual(new Vector2(-1, -1));
-        AssertThat(player.Coordinate.ChunkWorldPos).IsEqual(new Vector2(-512, -512));
-        AssertThat(player.Coordinate.XYPosition).IsEqual(new Vector2I(0, 0));
+        AssertThat(player.GetCoordinate().GetWorldPosition()).IsEqual(new Vector2(-512, -512));
+        AssertThat(player.GetCoordinate().GetXYPosition()).IsEqual(new Vector2I(0, 0));
+        AssertThat(player.GetCoordinate().ToChunkCords().GetWorldPosition()).IsEqual(new Vector2(-512, -512));
+        AssertThat(player.GetCoordinate().ToChunkCords().GetXYPosition()).IsEqual(new Vector2I(-1, -1));
 
         AssertThat(player.Name).IsEqual("player");
         AssertThat(player.Description).IsEqual("The player Character");
-    
+
         AssertThat(player.StatSheet.GetStat(StatKeys.MOVE_SPEED).Name).IsEqual(StatKeys.MOVE_SPEED);
         AssertThat(player.StatSheet.GetStat(StatKeys.MOVE_SPEED).Description).IsEqual("players moveSpeed");
         AssertThat(player.StatSheet.GetStat(StatKeys.MOVE_SPEED).CurrentValue).IsEqual(1);
@@ -46,9 +49,9 @@ public class PlayerTest
     }
 
     [TestCase]
-    public void TestPlayerStatChange ()
+    public void TestPlayerStatChange()
     {
-        PlayerChar player = AutoFree( PlayerChar.GetInstance());
+        PlayerChar player = AutoFree(PlayerChar.GetInstance());
 
         AssertThat(player.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue).IsEqual(100);
 

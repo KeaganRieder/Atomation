@@ -48,6 +48,7 @@ public class ThingTest
         DefDatabase defs = DefDatabase.GetInstance();
 
         TerrainDef grassDef = defs.GetTerrainDef("Grass");
+        
         AssertThat(grassDef.Name).IsEqual("Grass");
         AssertThat(grassDef.StatSheet.GetStat(StatKeys.FERTILITY).Name).IsEqual(StatKeys.FERTILITY);
         AssertThat(grassDef.StatSheet.GetStat(StatKeys.FERTILITY).Description).IsEqual("The tile's fertility");
@@ -78,4 +79,6 @@ public class ThingTest
         AssertThat(grass.StatSheet.GetStatModifier(StatKeys.MOVE_SPEED).Value).IsEqual(1.0f);
         AssertThat(grass.StatSheet.GetStatModifier(StatKeys.MOVE_SPEED).Type).IsEqual(ModifierType.Flat);
     }
+
+  
 }

@@ -9,7 +9,7 @@ using Atomation.Map;
 /// <summary>
 /// defines the player
 /// </summary>
-public partial class PlayerChar : Thing
+public partial class PlayerChar : BaseThing
 {
 	private static PlayerChar playerInstance;
 
@@ -59,20 +59,10 @@ public partial class PlayerChar : Thing
         StatSheet = loadedData.StatSheet;
 	}
 
-	public override void Damage(float amount)
-	{
-		//todo death
-		StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
-	}
-	public override void Heal(float amount)
-	{
-		StatSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
-	}
-
 	public void SetSpawn(Coordinate cord)
 	{
 		coordinate = cord;
-		Position =cord.WorldPosition;
+		Position = cord.GetWorldPosition();
 	}
 
 	public void Move()
@@ -80,7 +70,28 @@ public partial class PlayerChar : Thing
 		//figure out how to smooth movement
 		Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
 		Position += velocityVector.Normalized() * StatSheet.GetStat(StatKeys.MOVE_SPEED).CurrentValue;
-		Coordinate.UpdateWorldPosition(Position);
-		//todo: animation code here at some point
+		coordinate.SetPosition(Position);
+		WorldMap.GetInstance().UpdateVisibleChunks(coordinate);
 	}
+
+	public void Damage(float amount)
+	{
+		//todo death
+		StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
+	}
+	public void Damage(StatSheet statSheet)
+	{
+		StatBase dmg = statSheet.GetStat(StatKeys.ATTACK_DAMAGE);
+
+		if (dmg != null)
+		{
+			Damage(dmg.CurrentValue);
+		}
+	}
+	public void Heal(float amount)
+	{
+		StatSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
+	}
+
+
 }

@@ -9,7 +9,7 @@ public class SavedChunk
 {
     public float CellSize;
     public bool Rendered;
-    public Coordinate Cords;
+    public ChunkCoordinate Cords;
 
     public List<SavedTerrain> SavedTerrain;
     public List <SavedStructure> SavedStructure;
@@ -18,9 +18,9 @@ public class SavedChunk
 
     public SavedChunk(Chunk toSave)
     {
-        Cords = toSave.coordinate;
+        Cords = toSave.Coordinate;
         CellSize = toSave.CellSize;
-        Rendered = toSave.Rendered;
+        Rendered = toSave.CheckVisibility();
 
         SavedTerrain = new List<SavedTerrain>();
         SavedStructure = new List<SavedStructure>();
@@ -29,13 +29,13 @@ public class SavedChunk
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
             {
-                if (toSave.Terrain.GetObject(x, y) != null)
+                if (toSave.TerrainGrid.GetObject(x, y) != null)
                 {
-                    SavedTerrain.Add  (new SavedTerrain(toSave.Terrain.GetObject(x, y)));
+                    SavedTerrain.Add  (new SavedTerrain(toSave.TerrainGrid.GetObject(x, y)));
                 }
-                if (toSave.Buildings.GetObject(x, y) != null)
+                if (toSave.StructureGrid.GetObject(x, y) != null)
                 {
-                    SavedStructure.Add (new SavedStructure(toSave.Buildings.GetObject(x, y)));
+                    SavedStructure.Add (new SavedStructure(toSave.StructureGrid.GetObject(x, y)));
                 }
             }
         }

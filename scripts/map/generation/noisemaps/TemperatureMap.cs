@@ -10,9 +10,9 @@ public class TemperatureMap : NoiseMap
     {
         float latitude = Mathf.Abs(y + offset.Y - mapData.EquatorHeight);
 
-        float equatorHeat = latitude / mapData.MapSize.Y;
+        float equatorHeat = (latitude / mapData.GetSize().Y) * -1;
 
-        float avgTemperature = (equatorHeat * -1 * mapData.TemperatureMultiplier) -
+        float avgTemperature = (equatorHeat * mapData.TemperatureMultiplier) -
         (elevation / mapData.TemperatureHeightLoss * mapData.TemperatureLoss) + mapData.BaseTemperature;
 
         return avgTemperature;

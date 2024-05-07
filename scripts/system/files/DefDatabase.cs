@@ -25,7 +25,8 @@ public class DefDatabase
         StructureDefs = new DefFile<StructureDef>(FilePaths.STRUCTURE_FOLDER);
     }
 
-    public static DefDatabase GetInstance(){
+    public static DefDatabase GetInstance()
+    {
         if (instance == null)
         {
             instance = new DefDatabase();
@@ -39,7 +40,11 @@ public class DefDatabase
     /// </summary>
     public TerrainDef GetTerrainDef(string terrainID)
     {
-        return TerrainDefs[terrainID];
+        if (terrainID != null && terrainID != "Undefined Terrain")
+        {
+            return TerrainDefs[terrainID];
+        }
+        return TerrainDef.Undefined();
     }
 
     /// <summary>
@@ -65,6 +70,10 @@ public class DefDatabase
 
     public StructureDef GetStructureDef(string StructureID)
     {
-        return StructureDefs[StructureID];
+        if (StructureID != null && StructureID != "Undefine Structure")
+        {
+            return StructureDefs[StructureID];
+        }
+        return StructureDef.Undefined();
     }
 }

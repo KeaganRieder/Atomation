@@ -1,5 +1,7 @@
 namespace Atomation.Things;
 
+using System.Collections.Generic;
+using Atomation.Map;
 using Atomation.Resources;
 using Godot;
 using Newtonsoft.Json;
@@ -24,6 +26,19 @@ public class TerrainDef : ThingDef
     : base(name, description, statSheet, graphicData)
     {
         Parent = parent;
+    }
+
+    public static TerrainDef Undefined()
+    {
+        return new TerrainDef("Undefined Terrain", " ",
+                      new StatSheet(new Dictionary<string, StatBase> { }, new Dictionary<string, StatModifierBase> { }),
+                      new GraphicData()
+                      {
+                          TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
+                          Variants = 1,
+                          Color = Colors.Purple,
+                          GraphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE)
+                      });
     }
 
     public override string GetKey()

@@ -6,6 +6,8 @@
         "Layerable",
         "Mathf",
         "Newtonsoft",
-        "statmodifers"
+        "renderdistnace",
+        "statmodifers",
+        "worldpostion"
     ]
 }

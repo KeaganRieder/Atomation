@@ -8,7 +8,7 @@ using Atomation.Resources;
 /// the terrain/floor of the games world. this object is the base visual in
 /// a game world with other objects being placed on top of it
 /// </summary>
-public partial class Terrain : Thing
+public partial class Terrain : BaseThing
 {
 	public float Elevation { get; set; }
 	public float Temperature { get; set; }
@@ -17,7 +17,7 @@ public partial class Terrain : Thing
 	public Terrain(Coordinate coord)
 	{
 		coordinate = coord;
-		Position = coordinate.WorldPosition;
+		Position = coordinate.GetWorldPosition();
 		Graphic = new StaticGraphic();
 		AddChild(Graphic);
 	}
@@ -31,19 +31,12 @@ public partial class Terrain : Thing
 		Temperature = savedTerrain.Temperature;
 		Moisture = savedTerrain.Moisture;
 
-		Coordinate = savedTerrain.Cords;
-		Position = coordinate.WorldPosition;
+		SetPosition(savedTerrain.Cords);
+		Position = coordinate.GetWorldPosition();
 		StatSheet = savedTerrain.StatSheet;
 
 		//move this into the def data base and make it return a default object
-		if (savedTerrain.Name != null)
-		{
-			ReadConfigs(DefDatabase.GetInstance().GetTerrainDef(savedTerrain.Name), true);
-		}
-		else
-		{
-            Graphic.DefaultColor = Colors.Red;
-		}
+		ReadConfigs(DefDatabase.GetInstance().GetTerrainDef(savedTerrain.Name), true);
 	}
 
 	/// <summary>
@@ -54,7 +47,7 @@ public partial class Terrain : Thing
 	public void ReadConfigs(TerrainDef config, bool loading = false)
 	{
 		DefName = config.Name;
-		Name = DefName + Coordinate.ToString();
+		Name = DefName + coordinate.ToString();
 		Description = config.Description;
 		if (!loading)
 		{
@@ -157,36 +150,46 @@ public partial class Terrain : Thing
 	public void MoistureGraphic()
 	{
 		//this needs work
-		Color moistureColor;
+		Color moistureColor = Colors.Gray;
 
-		if (Moisture < 0.27)
+		if (Moisture < 0)
 		{
-			moistureColor = Colors.Red;
-
+			moistureColor = new Color(Mathf.Abs(Moisture), .5f, .5f);
 		}
-		else if (Moisture < 0.4)
+		if (Moisture >= 0)
 		{
-			moistureColor = Colors.Orange;
-
-		}
-		else if (Moisture < 0.5)
-		{
-			moistureColor = Colors.Yellow;
+			moistureColor = new Color(1, Moisture, 1);
 
 		}
-		else if (Moisture < 0.7)
-		{
-			moistureColor = Colors.Green;
 
-		}
-		else if (Moisture < 0.8)
-		{
-			moistureColor = Colors.Cyan;
-		}
-		else
-		{
-			moistureColor = Colors.Blue;
-		}
+		// if (Moisture < 0.27)
+		// {
+		// 	moistureColor = Colors.Red;
+
+		// }
+		// else if (Moisture < 0.4)
+		// {
+		// 	moistureColor = Colors.Orange;
+
+		// }
+		// else if (Moisture < 0.5)
+		// {
+		// 	moistureColor = Colors.Yellow;
+
+		// }
+		// else if (Moisture < 0.7)
+		// {
+		// 	moistureColor = Colors.Green;
+
+		// }
+		// else if (Moisture < 0.8)
+		// {
+		// 	moistureColor = Colors.Cyan;
+		// }
+		// else
+		// {
+		// 	moistureColor = Colors.Blue;
+		// }
 		Graphic.Modulate = moistureColor;
 	}
 }

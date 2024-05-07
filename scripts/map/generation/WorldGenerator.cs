@@ -29,8 +29,6 @@ public class WorldGenerator
 
     public void RegenerateMap(){
         WorldMap map = WorldMap.GetInstance();
-
-
     }
 
     /// <summary> 
@@ -42,10 +40,10 @@ public class WorldGenerator
         GD.Print("Generating map");
         MapData mapData = MapData.GetData();
         WorldMap map = WorldMap.GetInstance();
-        Coordinate spawn = new Coordinate(mapData.SpawnCord);
+        Coordinate spawn = new Coordinate(mapData.GetSpawn());
 
         map.ClearMap();
-        map.CheckChunkStatus(spawn);
+        map.UpdateVisibleChunks(spawn);
         GD.Print("Generation complete");
     }
 

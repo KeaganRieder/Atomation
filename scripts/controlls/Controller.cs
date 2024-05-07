@@ -40,7 +40,7 @@ public partial class Controller : Node2D
         WorldControls(input);
 
         if (input.IsAction("MoveLeft") || input.IsAction("MoveRight") || input.IsAction("MoveUp") || input.IsAction("MoveDown"))
-        { 
+        {
             //figure out how to get "IsActionPressed" to work
             playerTarget.Move();
         }
@@ -66,7 +66,6 @@ public partial class Controller : Node2D
     {
         Vector2 mousePos = input.Position - GetViewport().CanvasTransform.Origin;
         return new Coordinate(mousePos);
-
     }
 
     private void WorldControls(InputEvent input)
@@ -110,16 +109,11 @@ public partial class Controller : Node2D
         if (MapTarget.GetStructure(cords) != null)
         {
             Structure structure = MapTarget.GetStructure(cords);
-            structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(playerTarget.StatSheet.GetStat(StatKeys.ATTACK_DAMAGE).CurrentValue);
 
-            if (structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
-            {
-                structure.Visible = false;
-            }
-            if (structure.Visible)
-            {
-                GD.Print($"{structure.Name} HP: {structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue}");
-            }
+            structure.Damage(playerTarget.StatSheet);
+            
+            GD.Print($"{structure.Name} HP: {structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue}");
+
         }
 
         else if (MapTarget.GetTerrain(cords) != null)

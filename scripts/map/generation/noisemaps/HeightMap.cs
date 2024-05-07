@@ -18,7 +18,7 @@ public class HeightMap : NoiseMap
         float sampleX = (x + offset.X) / mapData.Scale;
         float sampleY = (y + offset.Y) / mapData.Scale;
 
-        noiseGen.Seed = mapData.Seed;
+        noiseGen.Seed = mapData.GetSeed();
         noiseGen.Frequency = mapData.Frequency;
         noiseGen.FractalGain = mapData.Gain;
         noiseGen.FractalOctaves = mapData.Octaves;

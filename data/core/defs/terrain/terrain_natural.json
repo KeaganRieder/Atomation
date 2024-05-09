@@ -1,11 +1,21 @@
 {
   "Defs": {
+    "NaturalTerrainBase": {
+      "collidable": false,
+      "supportProvided": "None",
+      "supportReq": "None",
+      "graphicData": null,
+      "statSheet": null,
+      "defName": "NaturalTerrainBase",
+      "description": "Todo"
+    },
     "Forest Grass": {
-      "Name": "Forest Grass",
-      "Description": "it's grass within a forest",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Heavy",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/forest_grass",
-        "Texture Variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.39215687,
@@ -20,37 +30,40 @@
           "V": 0.39215687,
           "Luminance": 0.2804706
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 1.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 1.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.7
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.7
           }
         }
-      }
+      },
+      "defName": "Forest Grass",
+      "description": "it's grass within a forest"
     },
     "Grass": {
-      "Name": "Grass",
-      "Description": "it's grass",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Heavy",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/grass",
-        "Texture Variants": 1,
         "color": {
           "R": 0.0,
           "G": 1.0,
@@ -65,37 +78,40 @@
           "V": 1.0,
           "Luminance": 0.7152
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 1.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 1.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 1.0
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 1.0
           }
         }
-      }
+      },
+      "defName": "Grass",
+      "description": "it's grass"
     },
     "Soil": {
-      "Name": "Soil",
-      "Description": "it's soil",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Heavy",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/soil",
-        "Texture Variants": 1,
         "color": {
           "R": 0.64705884,
           "G": 0.16470589,
@@ -110,37 +126,40 @@
           "V": 0.64705884,
           "Luminance": 0.2672541
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 1.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 1.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.7
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.7
           }
         }
-      }
+      },
+      "defName": "Soil",
+      "description": "it's soil"
     },
     "Rich Soil": {
-      "Name": "Rich Soil",
-      "Description": "it's rich soil, corps grow well here",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Heavy",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/soil",
-        "Texture Variants": 1,
         "color": {
           "R": 0.7372549,
           "G": 0.56078434,
@@ -155,37 +174,40 @@
           "V": 0.7372549,
           "Luminance": 0.598302
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 2.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 2.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.7
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.7
           }
         }
-      }
+      },
+      "defName": "Rich Soil",
+      "description": "it's rich soil, corps grow well here"
     },
     "Sand": {
-      "Name": "Sand",
-      "Description": "it's rough, corse and gets everywhere",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Heavy",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/sand",
-        "Texture Variants": 1,
         "color": {
           "R": 1.0,
           "G": 1.0,
@@ -200,37 +222,40 @@
           "V": 1.0,
           "Luminance": 0.9278
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 0.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 0.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.5
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.5
           }
         }
-      }
+      },
+      "defName": "Sand",
+      "description": "it's rough, corse and gets everywhere"
     },
     "Ice": {
-      "Name": "Ice",
-      "Description": "it's slippery,and cold",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Light",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/Ice",
-        "Texture Variants": 1,
         "color": {
           "R": 1.0,
           "G": 1.0,
@@ -245,30 +270,32 @@
           "V": 1.0,
           "Luminance": 1.0
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 0.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 0.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.5
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.5
           }
         }
-      }
+      },
+      "defName": "Ice",
+      "description": "it's slippery,and cold"
     }
   }
 }

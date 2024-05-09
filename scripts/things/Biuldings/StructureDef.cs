@@ -1,9 +1,12 @@
 namespace Atomation.Things;
 
 using System.Collections.Generic;
-using Atomation.Map;
-using Atomation.Resources;
+using Map;
+using Resources;
 using Godot;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 
 
 /// <summary>
@@ -13,21 +16,28 @@ using Godot;
 /// </summary>
 public class StructureDef : ThingDef
 {
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SupportType supportReq { get; set; }
+
+    [JsonConstructor]
     public StructureDef() { }
     public StructureDef(string name, string description, StatSheet statSheet, GraphicData graphicData)
     : base(name, description, statSheet, graphicData) { }
 
-    public static StructureDef Undefined(){
+    public static StructureDef Undefined()
+    {
         return new StructureDef("Undefine Structure", "",
-             new StatSheet(new Dictionary<string, StatBase>{},
-             new Dictionary<string, StatModifierBase>{
-             }),
-             new GraphicData(){
-                TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
-                Variants = 1,
-                Color = Colors.Purple,
-                GraphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE)
-             }); 
+             new StatSheet(new Dictionary<string, StatBase> { },
+
+             new Dictionary<string, StatModifierBase> { }),
+             new GraphicData()
+             {
+                 texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
+                 variants = 1,
+                 color = Colors.Purple,
+                 graphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE)
+             })
+        { supportReq = SupportType.Undefined};
     }
 }
 

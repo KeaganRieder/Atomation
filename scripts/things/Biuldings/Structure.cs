@@ -1,81 +1,94 @@
 namespace Atomation.Things;
 
-using System.Collections.Generic;
+using Atomation.Resources;
+using Atomation.Map;
 using Godot;
 using Newtonsoft.Json;
-using Atomation.Map;
-using Atomation.Resources;
 
 /// <summary>
-/// defines basic structures
+/// a structure or building is something that is either naturally
+/// occurring in the game or is built and placed by the player
 /// </summary>
-public partial class Structure : BaseThing
+public class Structure : ThingBase
 {
-	public Structure(Coordinate coord)
-	{
-		coordinate = coord;
-		Position = coordinate.GetWorldPosition();
+    private SupportType supportReq;
+    private StaticGraphic graphic;
+    // private  
 
-		Graphic = new StaticGraphic();
-		AddChild(Graphic);
-	}
-	public Structure(SavedStructure savedStructure)
-	{
-		Graphic = new StaticGraphic();
-		AddChild(Graphic);
+    [JsonConstructor]
+    public Structure() { }
 
-		coordinate = savedStructure.Cords;
-		Position = coordinate.GetWorldPosition();
-		StatSheet = new StatSheet(savedStructure.StatSheet, this);
+    public Structure(Structure loaded)
+    {
+        node = new Node2D();
+        graphic = new StaticGraphic();
+        node.AddChild(graphic);
 
-		ReadConfigs(DefDatabase.GetInstance().GetStructureDef(savedStructure.Name), true);
-	}
+        SetPosition(loaded.cords);
+        defName = loaded.defName;
+        statSheet = new StatSheet(loaded.statSheet, this);
 
-	/// <summary>
-	/// reading the configuration data for the given tile
-	/// and setting it for anything in which is needing
-	/// configuration at current call
-	/// </summary>
-	public void ReadConfigs(StructureDef config, bool loading = false)
-	{
-		DefName = config.Name;
-		Name = DefName + coordinate.ToString();
-		Description = config.Description;
-		if (!loading)
-		{
-			StatSheet = new StatSheet(config.StatSheet, this);
-		}
-		Graphic.Configure(config.GraphicData);
-	}
+        Configure(DefDatabase.GetInstance().GetStructureDef(defName), true);
+    }
 
-	public void Damage(float amount)
-	{
-		StatSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
+    public Structure(Coordinate cord)
+    {
+        node = new Node2D();
+        graphic = new StaticGraphic();
+        node.AddChild(graphic);
 
-		if (StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
-		{
-			WorldMap.GetInstance().SetStructure(coordinate, null);
-			DestroyNode();
-		}
-	}
-	public void Damage(StatSheet statSheet)
-	{
-		StatBase dmg = statSheet.GetStat(StatKeys.ATTACK_DAMAGE);
+        cords = cord;
+        SetPosition(cord);
+    }
+    ~Structure()
+    {
+        DestroyNode();
+    }
 
-		if (dmg != null)
-		{
-			GD.Print($"dmg: {dmg.CurrentValue}");
+    public void Configure(StructureDef def, bool loading = false)
+    {
+        defName = def.defName;
+        description = def.description;
+        supportReq = def.supportReq;
 
-			Damage(dmg.CurrentValue);
-		}
-	}
+        node.Name = $"{defName} {cords}";
+        graphic.Configure(def.graphicData);
+        if (!loading)
+        {
+            statSheet = new StatSheet(def.statSheet, this);
+        }
+    }
 
-	public void Heal(float amount)
-	{
-		StatSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
-	}
+    public StaticGraphic GetGraphic()
+    {
+        return graphic;
+    }
+    public SupportType GetRequiredSupport()
+    {
+        return supportReq;
+    }
 
+    public void Damage(float amount)
+    {
+        statSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
+        if (statSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
+        {
+            WorldMap.GetInstance().SetStructure(cords,null);
+            DestroyNode();
+            return;
+        }
+    }
+    public void Damage(StatSheet statSheet)
+    {
+        StatBase dmg = statSheet.GetStat(StatKeys.ATTACK_DAMAGE);
 
-
+        if (dmg != null)
+        {
+            Damage(dmg.CurrentValue);
+        }
+    }
+    public void Heal(float amount)
+    {
+        statSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
+    }
 }
-

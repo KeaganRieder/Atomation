@@ -110,23 +110,22 @@ public partial class Controller : Node2D
         {
             Structure structure = MapTarget.GetStructure(cords);
 
-            structure.Damage(playerTarget.StatSheet);
-            
-            GD.Print($"{structure.Name} HP: {structure.StatSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue}");
+            structure.Damage(playerTarget.GetStatSheet());
+            GD.Print($"{structure.GetNode().Name} HP: {structure.GetStatSheet().GetStat(StatKeys.MAX_HEALTH).CurrentValue}");
 
         }
 
         else if (MapTarget.GetTerrain(cords) != null)
         {
-            GD.Print("terrain");
             Terrain terrain = MapTarget.GetTerrain(cords);
-            if (terrain.Visible)
+            GD.Print($"{terrain.GetNode().Name}");
+            if (terrain.GetNode().Visible)
             {
-                terrain.Visible = false;
+                terrain.GetNode().Visible = false;
             }
             else
             {
-                terrain.Visible = true;
+                terrain.GetNode().Visible = true;
             }
         }
 

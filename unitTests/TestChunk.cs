@@ -45,12 +45,11 @@ public class TestChunk
         AssertThat(terrainGrid).IsNotNull();
 
         Coordinate cord = new Coordinate(0, 0, new Vector2(0, 0));
-
         TerrainDef terrainDef = TerrainDef.Undefined();
-        Terrain terrain = AutoFree(new Terrain(cord));
-        terrain.ReadConfigs(terrainDef);
-        terrainGrid.SetObject(0, 0, terrain);
+        Terrain terrain = new Terrain(cord);
+        terrain.Configure(terrainDef);
 
+        terrainGrid.SetObject(0, 0, terrain);
         AssertThat(terrainGrid.GetObject(0, 0)).IsNotNull();
         AssertThat(terrainGrid.GetObject(new Vector2(0, 0))).IsNotNull();
         AssertThat(terrainGrid.GetObject(new Vector2(1, 0))).IsNotNull();
@@ -61,14 +60,17 @@ public class TestChunk
         AssertThat(terrainGrid.GetObject(new Vector2(16, 0))).IsNull();
         AssertThat(terrainGrid.GetObject(cord)).IsNull();
 
+        terrain.DestroyNode();
         cord = new Coordinate(16, 0, new Vector2(0, 0));
-        terrain = AutoFree(new Terrain(cord));
-        terrain.ReadConfigs(terrainDef);
+        terrain = new Terrain(cord);
+        terrain.Configure(terrainDef);
 
         terrainGrid.SetObject(cord, terrain);
         AssertThat(terrainGrid.GetObject(16, 0)).IsNotNull();
         AssertThat(terrainGrid.GetObject(new Vector2(256, 0))).IsNotNull();
         AssertThat(terrainGrid.GetObject(cord)).IsNotNull();
+
+        terrain.DestroyNode();
     }
 
     [TestCase]
@@ -84,11 +86,10 @@ public class TestChunk
         Coordinate cord = new Coordinate(0, 0, new Vector2(0, 0));
 
         StructureDef structureDef = StructureDef.Undefined();
-        Structure structure = AutoFree(new Structure(cord));
-        structure.ReadConfigs(structureDef);
+        Structure structure = new Structure(cord);
+        structure.Configure(structureDef);
 
-        structureGrid.SetObject(0,0,structure);
-
+        structureGrid.SetObject(0, 0, structure);
         AssertThat(structureGrid.GetObject(0, 0)).IsNotNull();
         AssertThat(structureGrid.GetObject(new Vector2(0, 0))).IsNotNull();
         AssertThat(structureGrid.GetObject(new Vector2(1, 0))).IsNotNull();
@@ -99,15 +100,17 @@ public class TestChunk
         AssertThat(structureGrid.GetObject(new Vector2(16, 0))).IsNull();
         AssertThat(structureGrid.GetObject(cord)).IsNull();
 
+        structure.DestroyNode();
         cord = new Coordinate(16, 0, new Vector2(0, 0));
-        structure = AutoFree(new Structure(cord));
-        structure.ReadConfigs(structureDef);
+        structure = new Structure(cord);
+        structure.Configure(structureDef);
 
         structureGrid.SetObject(cord, structure);
         AssertThat(structureGrid.GetObject(16, 0)).IsNotNull();
         AssertThat(structureGrid.GetObject(new Vector2(256, 0))).IsNotNull();
         AssertThat(structureGrid.GetObject(cord)).IsNotNull();
 
+        structure.DestroyNode();
     }
 
     [TestCase]
@@ -145,41 +148,42 @@ public class TestChunk
     }
 
     [TestCase]
-    public void TestRenderDistance(){
-        Chunk chunk = AutoFree(new Chunk(0,0));
-        Coordinate cord = new Coordinate(new Vector2(0,0));
+    public void TestRenderDistance()
+    {
+        Chunk chunk = AutoFree(new Chunk(0, 0));
+        Coordinate cord = new Coordinate(new Vector2(0, 0));
 
-        AssertThat( MapData.GetData().GetTileRenderDistance()).IsEqual(512);
+        AssertThat(MapData.GetData().GetTileRenderDistance()).IsEqual(512);
         AssertThat(chunk.Coordinate.squaredDistanceTo(cord)).IsEqual(0);
         chunk.UpdateVisibility(cord);
         AssertBool(chunk.CheckVisibility()).IsTrue();
 
-        cord = new Coordinate(new Vector2(512,0));
+        cord = new Coordinate(new Vector2(512, 0));
         AssertThat(chunk.Coordinate.squaredDistanceTo(cord)).IsEqual(23);
         chunk.UpdateVisibility(cord);
         AssertBool(chunk.CheckVisibility()).IsTrue();
 
-        cord = new Coordinate(new Vector2(512,512)); //1,1 
+        cord = new Coordinate(new Vector2(512, 512)); //1,1 
         AssertThat(chunk.Coordinate.squaredDistanceTo(cord)).IsEqual(27);
         chunk.UpdateVisibility(cord);
         AssertBool(chunk.CheckVisibility()).IsTrue();
 
-        chunk = AutoFree(new Chunk(1,1));
+        chunk = AutoFree(new Chunk(1, 1));
         AssertThat(chunk.Coordinate.squaredDistanceTo(cord)).IsEqual(0);
         chunk.UpdateVisibility(cord);
         AssertBool(chunk.CheckVisibility()).IsTrue();
 
-        chunk = AutoFree(new Chunk(-1,-1));
+        chunk = AutoFree(new Chunk(-1, -1));
         AssertThat(chunk.Coordinate.squaredDistanceTo(cord)).IsEqual(38);
         chunk.UpdateVisibility(cord);
         AssertBool(chunk.CheckVisibility()).IsFalse();
 
-        chunk = AutoFree(new Chunk(0,-1));
+        chunk = AutoFree(new Chunk(0, -1));
         AssertThat(chunk.Coordinate.squaredDistanceTo(cord)).IsEqual(34);
         chunk.UpdateVisibility(cord);
         AssertBool(chunk.CheckVisibility()).IsFalse();
 
-        chunk = AutoFree(new Chunk(-1,0));
+        chunk = AutoFree(new Chunk(-1, 0));
         AssertThat(chunk.Coordinate.squaredDistanceTo(cord)).IsEqual(34);
         chunk.UpdateVisibility(cord);
         AssertBool(chunk.CheckVisibility()).IsFalse();

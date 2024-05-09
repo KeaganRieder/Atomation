@@ -1,11 +1,12 @@
 {
   "Defs": {
     "Marsh": {
-      "Name": "Marsh",
-      "Description": "it's Marshy",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Medium",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/marsh",
-        "Texture Variants": 1,
         "color": {
           "R": 0.18039216,
           "G": 0.54509807,
@@ -20,37 +21,40 @@
           "V": 0.54509807,
           "Luminance": 0.45283842
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 0.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 0.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.4
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.4
           }
         }
-      }
+      },
+      "defName": "Marsh",
+      "description": "it's Marshy"
     },
     "Shallow Ocean": {
-      "Name": "Shallow Ocean",
-      "Description": "it's Ocean which is shallow",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Medium",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/ocean",
-        "Texture Variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.0,
@@ -65,37 +69,40 @@
           "V": 1.0,
           "Luminance": 0.0722
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 0.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 0.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.5
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.5
           }
         }
-      }
+      },
+      "defName": "Shallow Ocean",
+      "description": "it's Ocean which is shallow"
     },
     "Shallow Water": {
-      "Name": "Shallow Water",
-      "Description": "it's shallow water",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "Medium",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/water",
-        "Texture Variants": 1,
         "color": {
           "R": 0.6784314,
           "G": 0.84705883,
@@ -110,37 +117,40 @@
           "V": 0.9019608,
           "Luminance": 0.8151726
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 0.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 0.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.5
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.5
           }
         }
-      }
+      },
+      "defName": "Shallow Water",
+      "description": "it's shallow water"
     },
     "Deep Ocean": {
-      "Name": "Deep Ocean",
-      "Description": "it's Ocean which is Deep",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "None",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/ocean",
-        "Texture Variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.0,
@@ -155,37 +165,40 @@
           "V": 0.54509807,
           "Luminance": 0.03935608
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 0.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 0.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.0
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.0
           }
         }
-      }
+      },
+      "defName": "Deep Ocean",
+      "description": "it's Ocean which is Deep"
     },
     "Deep Water": {
-      "Name": "Deep Water",
-      "Description": "it's deep water, which you have to swim through",
-      "Graphic Data": {
+      "collidable": false,
+      "supportProvided": "None",
+      "supportReq": "None",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/water",
-        "Texture Variants": 1,
         "color": {
           "R": 0.25490198,
           "G": 0.4117647,
@@ -200,30 +213,32 @@
           "V": 0.88235295,
           "Luminance": 0.41239217
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "fertility": {
-            "Name": "fertility",
-            "Description": "The tile's fertility",
-            "Stat Type": "Undefined",
-            "Value": 0.0
+            "defName": "fertility",
+            "description": "The tile's fertility",
+            "Type": "Undefined",
+            "baseValue": 0.0
           }
         },
         "StatModifers": {
           "Move Speed": {
-            "Name": "MoveSpeed Modifier",
-            "Description": "Tiles effect on Move Speed",
-            "Target Stat": "Move Speed",
-            "Modifier Type": "Flat",
-            "Value": 0.2
+            "defName": "MoveSpeed Modifier",
+            "description": "Tiles effect on Move Speed",
+            "modifierType": "Flat",
+            "targetStat": "Move Speed",
+            "value": 0.2
           }
         }
-      }
+      },
+      "defName": "Deep Water",
+      "description": "it's deep water, which you have to swim through"
     }
   }
 }

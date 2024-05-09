@@ -17,10 +17,10 @@ public enum StatType
 /// </summary>
 public class StatBase : Def
 {
-    [JsonConverter(typeof(StringEnumConverter)), JsonProperty("Stat Type", Order = 1)]
+    [JsonConverter(typeof(StringEnumConverter)), JsonProperty(Order = 1)]
     public StatType Type { get; protected set; }
 
-    [JsonProperty("Value", Order = 2)]
+    [JsonProperty(Order = 2)]
     protected float baseValue;
     protected float currentValue;
     protected float damage;
@@ -37,8 +37,8 @@ public class StatBase : Def
     }
     public StatBase(string name, string description, float baseValue, StatType statType = StatType.Undefined) : base()
     {
-        Name = name;
-        Description = description;
+        defName = name;
+        this.description = description;
         Type = statType;
         this.baseValue = baseValue;
         currentValue = baseValue;
@@ -49,8 +49,8 @@ public class StatBase : Def
 
     public StatBase(StatBase statBase) : base()
     {
-        Name = statBase.Name;
-        Description = statBase.Description;
+        defName = statBase.defName;
+        description = statBase.description;
         Type = statBase.Type;
         baseValue = statBase.BaseValue;
         currentValue = baseValue;
@@ -84,7 +84,7 @@ public class StatBase : Def
     {
         if (statModifier.Type == ModifierType.Undefined)
         {
-            GD.PushError($"{statModifier.Name} is of undefined type");
+            GD.PushError($"{statModifier.defName} is of undefined type");
         }
         else if (statModifier.Type == ModifierType.Flat)
         {
@@ -93,7 +93,7 @@ public class StatBase : Def
         }
         else if (statModifier.Type == ModifierType.Percentage)
         {
-            GD.PushError($"{statModifier.Name} is of Percentage type which is currently not implemented");
+            GD.PushError($"{statModifier.defName} is of Percentage type which is currently not implemented");
         }
     }
 
@@ -104,7 +104,7 @@ public class StatBase : Def
     {
         if (statModifier.Type == ModifierType.Undefined)
         {
-            GD.PushError($"{statModifier.Name} is of undefined type");
+            GD.PushError($"{statModifier.defName} is of undefined type");
         }
         else if (statModifier.Type == ModifierType.Flat)
         {
@@ -112,7 +112,7 @@ public class StatBase : Def
         }
         else if (statModifier.Type == ModifierType.Percentage)
         {
-            GD.PushError($"{statModifier.Name} is of Percentage type which is currently not implemented");
+            GD.PushError($"{statModifier.defName} is of Percentage type which is currently not implemented");
 
         }
     }
@@ -122,7 +122,7 @@ public class StatBase : Def
     /// </summary>
     public virtual void RemoveModifier(object source)
     {
-        //todo
+        GD.PushError("Remove Modifier From Source Not Implemented");
     }
 
     /// <summary>

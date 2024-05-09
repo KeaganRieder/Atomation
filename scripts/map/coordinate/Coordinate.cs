@@ -11,11 +11,11 @@ using System;
 public class Coordinate
 {
     /// <summary> objects current x y position in the world </summary>
-    [JsonProperty("X,Y Cords")]
+    [JsonProperty()]
     protected Vector2I XYPosition;
 
     /// <summary> objects current world position </summary>
-    [JsonProperty("World Position")]
+    [JsonProperty()]
     protected Vector2 worldPosition;
 
     private Vector2 offset;
@@ -85,10 +85,12 @@ public class Coordinate
         XYFromWorld();
     }
 
-    public virtual Vector2I GetXYPosition(){
+    public virtual Vector2I GetXYPosition()
+    {
         return XYPosition;
     }
-    public virtual Vector2 GetWorldPosition(){
+    public virtual Vector2 GetWorldPosition()
+    {
         return worldPosition;
     }
 
@@ -102,7 +104,7 @@ public class Coordinate
         return distance;
     }
 
-     /// <summary>
+    /// <summary>
     /// squared distance from cord to provided
     /// </summary>
     public virtual float squaredDistanceTo(Coordinate cord)
@@ -120,7 +122,7 @@ public class Coordinate
     {
         return new ChunkCoordinate(worldPosition);
     }
-    
+
     /// <summary>
     /// convert to normal cords from chunk cords
     /// </summary>
@@ -129,6 +131,8 @@ public class Coordinate
         return new Coordinate(worldPosition);
     }
 
+    // public static implicit operator Vector2(Coordinate cord) => cord.GetWorldPosition();
+    // public static implicit operator Vector2I(Coordinate cord) => cord.GetXYPosition();
     public override string ToString()
     {
         string cords = $"{XYPosition}, {worldPosition}";

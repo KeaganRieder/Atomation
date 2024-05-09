@@ -15,6 +15,14 @@ public class TemperatureMap : NoiseMap
         float avgTemperature = (equatorHeat * mapData.TemperatureMultiplier) -
         (elevation / mapData.TemperatureHeightLoss * mapData.TemperatureLoss) + mapData.BaseTemperature;
 
+        if (avgTemperature > max)
+        {
+            max = avgTemperature;
+        }
+        if (avgTemperature < min)
+        {
+            min = avgTemperature;
+        }
         return avgTemperature;
     }
 }

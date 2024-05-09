@@ -1,11 +1,10 @@
 {
   "Defs": {
     "Slate": {
-      "Name": "Slate Wall",
-      "Description": "A rock face made of slate",
-      "Graphic Data": {
+      "supportReq": "Heavy",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/rock_wall",
-        "Texture Variants": 1,
         "color": {
           "R": 0.4392157,
           "G": 0.5019608,
@@ -20,29 +19,30 @@
           "V": 0.5647059,
           "Luminance": 0.49315143
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "Max Health": {
-            "Name": "Max Health",
-            "Description": "The health of the wall",
-            "Stat Type": "Modifiable",
-            "Value": 200.0
+            "defName": "Max Health",
+            "description": "The health of the wall",
+            "Type": "Undefined",
+            "baseValue": 200.0
           }
         },
         "StatModifers": {}
-      }
+      },
+      "defName": "Slate Wall",
+      "description": "A rock face made of slate"
     },
     "Marble wall": {
-      "Name": "Marble wall",
-      "Description": "A rock face made of Marble",
-      "Graphic Data": {
+      "supportReq": "Heavy",
+      "graphicData": {
+        "variants": 1,
         "texturePath": "terrain/natural/rock_wall",
-        "Texture Variants": 1,
         "color": {
           "R": 0.972549,
           "G": 0.972549,
@@ -57,22 +57,24 @@
           "V": 1.0,
           "Luminance": 0.974531
         },
-        "Graphic Size": {
+        "graphicSize": {
           "X": 16,
           "Y": 16
         }
       },
-      "Stat Sheet": {
+      "statSheet": {
         "Stats": {
           "Max Health": {
-            "Name": "Max Health",
-            "Description": "The health of the wall",
-            "Stat Type": "Modifiable",
-            "Value": 100.0
+            "defName": "Max Health",
+            "description": "The health of the wall",
+            "Type": "Undefined",
+            "baseValue": 100.0
           }
         },
         "StatModifers": {}
-      }
+      },
+      "defName": "Marble wall",
+      "description": "A rock face made of Marble"
     }
   }
 }

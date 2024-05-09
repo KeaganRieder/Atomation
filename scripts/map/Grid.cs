@@ -99,7 +99,7 @@ public class Grid<GridObj> where GridObj : IThing
 
             if (obj != null)
             {
-                parentNode.AddChild(obj.Node);
+                parentNode.AddChild(obj.GetNode());
             }
         }
     }

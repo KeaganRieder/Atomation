@@ -1,195 +1,214 @@
 namespace Atomation.Things;
 
-using Godot;
-using Atomation.Map;
 using Atomation.Resources;
+using Atomation.Map;
+using Godot;
+using Newtonsoft.Json;
 
 /// <summary>
-/// the terrain/floor of the games world. this object is the base visual in
-/// a game world with other objects being placed on top of it
+/// Terrain make up the floor or ground in the game. it is the building
+/// block in which structure and other things are place on top of 
 /// </summary>
-public partial class Terrain : BaseThing
+public class Terrain : ThingBase
 {
-	public float Elevation { get; set; }
-	public float Temperature { get; set; }
-	public float Moisture { get; set; }
+    private SupportType supportProvided;
+    private SupportType supportReq;
+    private bool collidable;
 
-	public Terrain(Coordinate coord)
-	{
-		coordinate = coord;
-		Position = coordinate.GetWorldPosition();
-		Graphic = new StaticGraphic();
-		AddChild(Graphic);
-	}
+    private StaticGraphic graphic;
 
-	public Terrain(SavedTerrain savedTerrain)
-	{
-		Graphic = new StaticGraphic();
-		AddChild(Graphic);
+    [JsonProperty("elevation")]
+    public float Elevation;
+    [JsonProperty("temperature")]
+    public float Temperature;
+    [JsonProperty("moisture")]
+    public float Moisture;
 
-		Elevation = savedTerrain.Elevation;
-		Temperature = savedTerrain.Temperature;
-		Moisture = savedTerrain.Moisture;
+    [JsonConstructor]
+    public Terrain() { }
 
-		SetPosition(savedTerrain.Cords);
-		Position = coordinate.GetWorldPosition();
-		StatSheet = savedTerrain.StatSheet;
+    public Terrain(Terrain loaded)
+    {
+        node = new Node2D();
+        graphic = new StaticGraphic();
+        node.AddChild(graphic);
+        SetPosition(loaded.GetCoordinate());
 
-		//move this into the def data base and make it return a default object
-		ReadConfigs(DefDatabase.GetInstance().GetTerrainDef(savedTerrain.Name), true);
-	}
+        defName = loaded.defName;
+        Elevation = loaded.Elevation;
+        Temperature = loaded.Temperature;
+        Moisture = loaded.Moisture;
+        statSheet = new StatSheet(loaded.statSheet, this);
 
-	/// <summary>
-	/// reading the configuration data for the given tile
-	/// and setting it for anything in which is needing
-	/// configuration at current call
-	/// </summary>
-	public void ReadConfigs(TerrainDef config, bool loading = false)
-	{
-		DefName = config.Name;
-		Name = DefName + coordinate.ToString();
-		Description = config.Description;
-		if (!loading)
-		{
-			StatSheet = new StatSheet(config.StatSheet, this);
-		}
+        Configure(DefDatabase.GetInstance().GetTerrainDef(loaded.defName), true);
+    }
 
-		Graphic.Configure(config.GraphicData);
-		UpdateGraphic(VisualizationMode.Default);
-	}
+    public Terrain(Coordinate cord)
+    {
+        node = new Node2D();
+        graphic = new StaticGraphic();
+        node.AddChild(graphic);
 
-	public void UpdateGraphic(VisualizationMode displayMode)
-	{
-		if (displayMode == VisualizationMode.Default)
-		{
-			Graphic.SetDefaultColor();
-		}
-		else if (displayMode == VisualizationMode.Height)
-		{
-			HeightGraphic();
-		}
-		else if (displayMode == VisualizationMode.Heat)
-		{
-			HeatGraphic();
-		}
-		else
-		{
-			MoistureGraphic();
-		}
-	}
+        SetPosition(cord);
+    }
+    ~Terrain()
+    {
+        DestroyNode();
+    }
 
-	/// <summary>
-	/// makes terrain display as heat map
-	/// where -.9 is darkRed(hot), and 1 is blue(cold)
-	/// </summary>
-	public void HeatGraphic()
-	{
-		Color heatColor;
+    public void Configure(TerrainDef def, bool loading = false)
+    {
+        defName = def.defName;
+        description = def.description;
+        collidable = def.collidable;
 
-		if (Temperature < -1.3)
-		{
-			heatColor = Colors.White;
-		}
-		else if (Temperature < -1.0)
-		{
-			heatColor = Colors.Pink;
-		}
-		else if (Temperature < -0.8)
-		{
-			heatColor = Colors.Purple;
-		}
-		else if (Temperature < -0.5)
-		{
-			heatColor = Colors.DarkBlue;
-		}
-		else if (Temperature < -0.25)
-		{
-			heatColor = Colors.Cyan;
-		}
-		else if (Temperature < 0.25)
-		{
-			heatColor = Colors.Green;
-		}
-		else if (Temperature < 0.7)
-		{
-			heatColor = Colors.DarkGreen;
-		}
-		else if (Temperature < 1)
-		{
-			heatColor = Colors.Yellow;
-		}
-		else if (Temperature < 1.25)
-		{
-			heatColor = Colors.Orange;
-		}
-		else if (Temperature < 1.7)
-		{
-			heatColor = Colors.Red;
-		}
-		else
-		{
-			heatColor = Colors.DarkRed;
-		}
+        supportProvided = def.supportProvided;
+        supportReq = def.supportReq;
 
-		Graphic.Modulate = heatColor;
-	}
+        node.Name = $"{defName} {cords}";
+        graphic.Configure(def.graphicData);
+        UpdateGraphic(VisualizationMode.Default);
 
-	/// <summary>
-	/// makes terrain display as height map
-	/// where -1 is black (lowest ground), and 1 is while (hightest ground)
-	/// </summary>
-	public void HeightGraphic()
-	{
-		Graphic.Modulate = new Color(Elevation, Elevation, Elevation);
-	}
+        if (!loading)
+        {
+            statSheet = new StatSheet(def.statSheet, this);
 
-	/// <summary>
-	/// makes terrain display as height map
-	/// where -1 is black (lowest ground), and 1 is while (hightest ground)
-	/// </summary>
-	public void MoistureGraphic()
-	{
-		//this needs work
-		Color moistureColor = Colors.Gray;
+        }
+    }
 
-		if (Moisture < 0)
-		{
-			moistureColor = new Color(Mathf.Abs(Moisture), .5f, .5f);
-		}
-		if (Moisture >= 0)
-		{
-			moistureColor = new Color(1, Moisture, 1);
+    public void SetElation(float val)
+    {
+        Elevation = val;
+    }
+    public void SetMoisture(float val)
+    {
+        Moisture = val;
+    }
+    public void SetTemperature(float val)
+    {
+        Temperature = val;
+    }
 
-		}
+    public float GetElation()
+    {
+        return Elevation;
+    }
+    public float GetMoisture()
+    {
+        return Moisture;
+    }
+    public float GetTemperature()
+    {
+        return Temperature;
+    }
 
-		// if (Moisture < 0.27)
-		// {
-		// 	moistureColor = Colors.Red;
+    public void UpdateGraphic(VisualizationMode displayMode)
+    {
+        if (displayMode == VisualizationMode.Default)
+        {
+            graphic.SetDefaultColor();
+        }
+        else if (displayMode == VisualizationMode.Height)
+        {
+            GetHeightColor();
+        }
+        else if (displayMode == VisualizationMode.Heat)
+        {
+            GetHeatColor();
+        }
+        else
+        {
+            GetMoistureColor();
+        }
+    }
 
-		// }
-		// else if (Moisture < 0.4)
-		// {
-		// 	moistureColor = Colors.Orange;
+    public StaticGraphic GetGraphic()
+    {
+        return graphic;
+    }
+    public void GetHeatColor()
+    {
+        Color heatColor;
 
-		// }
-		// else if (Moisture < 0.5)
-		// {
-		// 	moistureColor = Colors.Yellow;
+        if (Temperature < -1.3)
+        {
+            heatColor = Colors.White;
+        }
+        else if (Temperature < -1.0)
+        {
+            heatColor = Colors.Pink;
+        }
+        else if (Temperature < -0.8)
+        {
+            heatColor = Colors.Purple;
+        }
+        else if (Temperature < -0.5)
+        {
+            heatColor = Colors.DarkBlue;
+        }
+        else if (Temperature < -0.25)
+        {
+            heatColor = Colors.Cyan;
+        }
+        else if (Temperature < 0.25)
+        {
+            heatColor = Colors.Green;
+        }
+        else if (Temperature < 0.7)
+        {
+            heatColor = Colors.DarkGreen;
+        }
+        else if (Temperature < 1)
+        {
+            heatColor = Colors.Yellow;
+        }
+        else if (Temperature < 1.25)
+        {
+            heatColor = Colors.Orange;
+        }
+        else if (Temperature < 1.7)
+        {
+            heatColor = Colors.Red;
+        }
+        else
+        {
+            heatColor = Colors.DarkRed;
+        }
 
-		// }
-		// else if (Moisture < 0.7)
-		// {
-		// 	moistureColor = Colors.Green;
+        graphic.Modulate = heatColor;
+    }
 
-		// }
-		// else if (Moisture < 0.8)
-		// {
-		// 	moistureColor = Colors.Cyan;
-		// }
-		// else
-		// {
-		// 	moistureColor = Colors.Blue;
-		// }
-		Graphic.Modulate = moistureColor;
-	}
+    public void GetHeightColor()
+    {
+        graphic.Modulate = new Color(Elevation, Elevation, Elevation);
+    }
+
+    public void GetMoistureColor()
+    {
+        //this needs work
+        Color moistureColor = Colors.Gray;
+
+        if (Moisture < 0)
+        {
+            moistureColor = new Color(Mathf.Abs(Moisture), .5f, .5f);
+        }
+        if (Moisture >= 0)
+        {
+            moistureColor = new Color(1, Moisture, 1);
+
+        }
+
+        graphic.Modulate = moistureColor;
+    }
+
+
+    public bool Supports(SupportType supportReq)
+    {
+        if (supportProvided <= supportReq)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

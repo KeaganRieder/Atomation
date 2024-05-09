@@ -30,15 +30,9 @@ public class SaveHandler
     {
         GD.Print("Saving game");
 
-        //maybe make this in the save files constructor, which just requires 
-        // a string and then does the rest? 
-        SaveFile save = new SaveFile();
-
-        save.Name = "Quick Save";
-        save.SavedPlayerData = PlayerChar.GetInstance().Save();
-        save.SavedMapData = WorldMap.GetInstance().Save();
-//new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore,Formatting = Formatting.Indented }
-        FileUtility.WriteJsonFile(FilePaths.SAVE_FOLDER, save.Name, save,new JsonSerializerSettings());
+        SaveFile save = new SaveFile("Quick Save");
+        // new JsonSerializerSettings()
+        FileUtility.WriteJsonFile(FilePaths.SAVE_FOLDER, save.GetName(), save,null);
         GD.Print("Saved");
     }
 
@@ -46,8 +40,6 @@ public class SaveHandler
     {
         GD.Print("Loading");
         SaveFile save = FileUtility.ReadJsonFile<SaveFile>(FilePaths.SAVE_FOLDER, "Quick Save");
-        WorldMap.GetInstance().Load(save.SavedMapData);
-        PlayerChar.GetInstance().Load(save.SavedPlayerData);
+        save.Load();  
     }
-
 }

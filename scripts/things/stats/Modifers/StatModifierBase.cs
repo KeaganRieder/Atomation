@@ -19,14 +19,13 @@ public enum ModifierType
 /// </summary>
 public class StatModifierBase : Def
 {
-	[JsonProperty("Target Stat", Order = 1)]
+	[JsonConverter(typeof(StringEnumConverter)), JsonProperty("modifierType", Order = 1)]
+	public ModifierType Type { get; protected set; }
+	[JsonProperty("targetStat", Order = 2)]
 	public string TargetStat { get; protected set; }
 
-	[JsonProperty("Value", Order = 2)]
+	[JsonProperty("value", Order = 3)]
 	public float Value { get; protected set; }
-
-	[JsonConverter(typeof(StringEnumConverter)), JsonProperty("Modifier Type", Order = 1)]
-	public ModifierType Type { get; protected set; }
 
 	[JsonIgnore]
 	public object Source { get; protected set; }
@@ -36,8 +35,8 @@ public class StatModifierBase : Def
 	public StatModifierBase(string name, string description, string targetStat, float value, ModifierType type = ModifierType.Undefined,
 	object source = null)
 	{
-		Name = name;
-		Description = description;
+		defName = name;
+		this.description = description;
 		TargetStat = targetStat;
 		Value = value;
 		Type = type;
@@ -46,8 +45,8 @@ public class StatModifierBase : Def
 
 	public StatModifierBase(StatModifierBase statModifier, object source = null)
 	{
-		Name = statModifier.Name;
-		Description = statModifier.Description;
+		defName = statModifier.defName;
+		description = statModifier.description;
 		TargetStat = statModifier.TargetStat;
 		Value = statModifier.Value;
 		Type = statModifier.Type;

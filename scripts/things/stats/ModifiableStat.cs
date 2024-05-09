@@ -11,11 +11,12 @@ using Newtonsoft.Json;
 /// </summary>
 public class ModifiableStat : StatBase
 {
-    public ModifiableStat(string name, string description, float baseValue) : base(name, description, baseValue, StatType.Modifiable) { }
+    public ModifiableStat(string name, string description, float baseValue)
+    : base(name, description, baseValue, StatType.Modifiable) { }
     public ModifiableStat(StatBase modifiableStat)
     {
-        Name = modifiableStat.Name;
-        Description = modifiableStat.Description;
+        defName = modifiableStat.defName;
+        description = modifiableStat.description;
         baseValue = modifiableStat.BaseValue;
         Type = StatType.Modifiable;
     }

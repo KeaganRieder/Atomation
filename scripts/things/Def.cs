@@ -7,12 +7,12 @@ public interface IDef
     /// <summary>
     /// objects name
     /// </summary>
-    public string Name { get; set; }
+    public string defName { get; set; }
     /// <summary>
     /// key for cache dictionary, in order to properly sort
     /// and retrieve the item from it
     /// </summary>
-    public virtual string GetKey() { return Name; }
+    public abstract string GetKey();
 }
 
 /// <summary>
@@ -21,27 +21,28 @@ public interface IDef
 /// </summary>
 public abstract class Def : IDef
 {
-    [JsonProperty("Name", Order = -1)]
-    public string Name { get; set; }
+    [JsonProperty(Order = -1)]
+    public string defName { get; set; }
 
-    [JsonProperty("Description", Order = -1)]
-    public string Description { get; set; }
+    [JsonProperty(Order = -1)]
+    public string description { get; set; }
 
+    [JsonConstructor]
     protected Def() { }
 
     protected Def(string name, string description)
     {
-        Name = name;
-        Description = description;
+        defName = name;
+        this.description = description;
     }
 
     public virtual string GetKey()
     {
-        if (Name == "" || Name == null)
+        if (defName == "" || defName == null)
         {
-            Name = "Undefined_Def";
+            defName = "Undefined_Def";
         }
 
-        return Name;
+        return defName;
     }
 }

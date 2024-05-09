@@ -24,7 +24,7 @@ public class MapData
 
     //todo make rest of values private
     // Height map
-    public float Scale = .5f;
+    public float Scale = 1f;
     public int Octaves = 6;
     public float Frequency = 0.02f;
     public float Lacunarity = 2.6f;

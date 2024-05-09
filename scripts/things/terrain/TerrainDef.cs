@@ -5,6 +5,7 @@ using Atomation.Map;
 using Atomation.Resources;
 using Godot;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 /// <summary>
 /// data class used in formatting terrain def files that once written to a json
@@ -13,20 +14,16 @@ using Newtonsoft.Json;
 /// </summary>
 public class TerrainDef : ThingDef
 {
-    [JsonProperty("Layerable")]
-    public bool Layerable { get; set; }
-    [JsonProperty("Collidable")]
-    public bool Collidable { get; set; }
+    public bool collidable { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SupportType supportProvided { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SupportType supportReq { get; set; }
 
+    [JsonConstructor]
     public TerrainDef() { }
     public TerrainDef(string name, string description, StatSheet statSheet, GraphicData graphicData)
     : base(name, description, statSheet, graphicData) { }
-
-    public TerrainDef(string name, string parent, string description, StatSheet statSheet, GraphicData graphicData)
-    : base(name, description, statSheet, graphicData)
-    {
-        Parent = parent;
-    }
 
     public static TerrainDef Undefined()
     {
@@ -34,21 +31,21 @@ public class TerrainDef : ThingDef
                       new StatSheet(new Dictionary<string, StatBase> { }, new Dictionary<string, StatModifierBase> { }),
                       new GraphicData()
                       {
-                          TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
-                          Variants = 1,
-                          Color = Colors.Purple,
-                          GraphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE)
+                          texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
+                          variants = 1,
+                          color = Colors.Purple,
+                          graphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE)
                       });
     }
 
     public override string GetKey()
     {
-        if (Name == "" || Name == null)
+        if (defName == "" || defName == null)
         {
-            Name = Parent;
+            defName = "Undefined Terrain";
         }
 
-        return Name;
+        return defName;
     }
 
 }

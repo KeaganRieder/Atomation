@@ -36,13 +36,13 @@ public partial class StaticGraphic : Sprite2D
 
     public void Configure(GraphicData configs)
     {
-        DefaultColor = configs.Color;
-        TexturePath = FilePaths.TEXTURE_FOLDER + configs.TexturePath;
+        DefaultColor = configs.color;
+        TexturePath = FilePaths.TEXTURE_FOLDER + configs.texturePath;
 
-        graphicSize = configs.GraphicSize;
-        variants = configs.Variants;
+        graphicSize = configs.graphicSize;
+        variants = configs.variants;
 
-        Position = graphicSize / 2;
+        // Position = graphicSize / 2;
 
         SetTexture();
     }

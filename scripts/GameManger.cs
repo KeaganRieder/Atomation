@@ -21,8 +21,20 @@ public partial class GameManger : Node2D
    {
       saveSystem = SaveHandler.GetInstance();
    }
+   ~GameManger()
+   {
+      if (IsInstanceValid(this))
+      {
+         foreach (var child in GetChildren())
+         {
+            child.QueueFree();
+         }
+         QueueFree();
+      }
+   }
 
-   public static GameManger GetInstance(){
+   public static GameManger GetInstance()
+   {
       if (instance == null)
       {
          instance = new GameManger();
@@ -36,6 +48,8 @@ public partial class GameManger : Node2D
    public override void _Ready()
    {
       base._Ready();
+      StructureDefs.FormatNaturalStructureDefs();
+      TerrainDefs.FormatTerrainDefs();
 
       LoadResources();
 
@@ -44,12 +58,12 @@ public partial class GameManger : Node2D
       AddChild(worldMap);
       AddChild(Controller.GetInstance());
       AddChild(PlayerChar.GetInstance());
-   }   
+   }
 
    public static void LoadResources()
-	{
-		GD.Print("Loading Resources");
-		DefDatabase.GetInstance();
-		GD.Print("Loading Complete\n");
-	}
+   {
+      GD.Print("Loading Resources");
+      DefDatabase.GetInstance();
+      GD.Print("Loading Complete\n");
+   }
 }

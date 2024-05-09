@@ -8,8 +8,8 @@ public class FlatStatModifier : StatModifierBase
 
     public FlatStatModifier(StatModifierBase statModifier, object source = null)
     {
-        Name = statModifier.Name;
-        Description = statModifier.Description;
+        defName = statModifier.defName;
+        description = statModifier.description;
 		TargetStat = statModifier.TargetStat;
         Value = statModifier.Value;
         Type = ModifierType.Flat;

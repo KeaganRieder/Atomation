@@ -1,23 +1,49 @@
 namespace Atomation.Resources;
 
+using Newtonsoft.Json;
 using Atomation.Map;
 using Atomation.Player;
 using Godot;
 
 public class SaveFile
 {
-    public int Version { get; set; } = 0;
-    public string Name { get; set; }
+    [JsonProperty]
+    private int version = 0;
+    [JsonProperty]
+    private string name;
+    [JsonProperty]
+    private SavedPlayer savedPlayerData;
+    [JsonProperty]
+    private SavedMap savedMapData;
 
-    public SavedPlayer SavedPlayerData { get; set; }
+    [JsonConstructor]
+    public SaveFile() { }
 
-    public SavedMap SavedMapData { get; set; }
-
-    public SaveFile(){
-
+    public SaveFile(string saveName)
+    {
+        name = saveName;
+        Save();
     }
 
-    public SaveFile(string saveName){
-        
+    public string GetName()
+    {
+        return name;
     }
+     public int GetVersion()
+    {
+        return version;
+    }
+
+    public void Save()
+    {
+        savedPlayerData = PlayerChar.GetInstance().Save();
+        savedMapData = WorldMap.GetInstance().Save();
+    }
+
+    public void Load()
+    {
+        PlayerChar.GetInstance().Load(savedPlayerData);
+        WorldMap.GetInstance().Load(savedMapData);
+    }
+
 }

@@ -48,7 +48,7 @@ public class GenStepLandscape : GenStep
                 ChooseTerrain(terrain);
             }
         }
-        moistureMap.PrintMinMax();
+        temperatureMap.PrintMinMax();
     }
 
     private void CalculateLandHeight()
@@ -57,7 +57,7 @@ public class GenStepLandscape : GenStep
         deepWater = mapData.SeaLevel - 0.2f;
 
         mountainBase = mapData.MountainHeight - 0.1f;
-        mountainEdge = mapData.MountainHeight - 0.2f;
+        mountainEdge = mountainBase - 0.1f;
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class GenStepLandscape : GenStep
         {
             // GD.Print($"no Biome");
 
-            terrain.Graphic.DefaultColor = Colors.Red;
+            terrain.Configure(TerrainDef.Undefined());
 
             return;
         }
@@ -108,12 +108,12 @@ public class GenStepLandscape : GenStep
 
         if (def == null)
         {
-            terrain.Graphic.DefaultColor = Colors.Red;
+            terrain.Configure(TerrainDef.Undefined());
             // GD.Print($"{biome.Name} {terrain.Elevation}");
             return;
         }
 
-        terrain.ReadConfigs(def);
+        terrain.Configure(def);
     }
 
     /// <summary>
@@ -123,16 +123,15 @@ public class GenStepLandscape : GenStep
     {
         if (terrain.Elevation < deepWater)
         {
-            terrain.ReadConfigs(defDatabase.GetTerrainDef("Deep Water"));
+            terrain.Configure(defDatabase.GetTerrainDef("Deep Water"));
         }
         else if (terrain.Elevation < mapData.SeaLevel)
         {
-            terrain.ReadConfigs(defDatabase.GetTerrainDef("Shallow Water"));
+            terrain.Configure(defDatabase.GetTerrainDef("Shallow Water"));
         }
-        //if (terrain.Elevation < shoreLine)
         else
         {
-            terrain.ReadConfigs(defDatabase.GetTerrainDef("Sand"));
+            terrain.Configure(defDatabase.GetTerrainDef("Sand"));
         }
     }
 
@@ -143,18 +142,20 @@ public class GenStepLandscape : GenStep
     {
         if (terrain.Elevation > mapData.MountainHeight)
         {
-            terrain.ReadConfigs(DefDatabase.GetInstance().GetTerrainDef("Slate"));
+            terrain.Configure(DefDatabase.GetInstance().GetTerrainDef("Slate"));
             mountainWall = new Structure(terrain.GetCoordinate());
-            mountainWall.ReadConfigs(DefDatabase.GetInstance().GetStructureDef("Slate Wall"));
+            mountainWall.Configure(DefDatabase.GetInstance().GetStructureDef("Slate Wall"));
         }
         else if (terrain.Elevation > mountainBase)
         {
-            terrain.ReadConfigs(DefDatabase.GetInstance().GetTerrainDef("Slate"));
-            mountainWall = null;
+            terrain.Configure(DefDatabase.GetInstance().GetTerrainDef("Slate"));
+            mountainWall = new Structure(terrain.GetCoordinate());
+            mountainWall.Configure(DefDatabase.GetInstance().GetStructureDef("Slate Wall"));
+            // mountainWall = null;
         }
         else
         {
-            terrain.ReadConfigs(DefDatabase.GetInstance().GetTerrainDef("Gravel"));
+            terrain.Configure(DefDatabase.GetInstance().GetTerrainDef("Gravel"));
             mountainWall = null;
         }
     }

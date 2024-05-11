@@ -11,9 +11,9 @@ using Map;
 /// </summary>
 public partial class Item : ThingBase
 {
-    private float stackLimit;
+    private int stackLimit;
     [JsonProperty]
-    private float quantity;
+    private int quantity;
     private StaticGraphic graphic;
 
     [JsonConstructor]
@@ -36,6 +36,7 @@ public partial class Item : ThingBase
 
     public Item(Coordinate cords)
     {
+        quantity = 1;
         node = new Node2D();
         graphic = new StaticGraphic();
         SetPosition(cords);
@@ -61,7 +62,16 @@ public partial class Item : ThingBase
         return graphic;
     }
 
-    public void IncreaseQuantity(int amt)
+    public int GetQuantity(){
+        return quantity;
+    }
+
+    public bool Stackable()
+    {
+        return stackLimit > 0 && quantity > stackLimit;
+    }
+
+    public void Add(int amt)
     {
         quantity += amt;
         if (quantity >= stackLimit)

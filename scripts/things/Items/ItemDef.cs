@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 public class ItemDef : ThingDef
 {
-    public float stackLimit;
+    public int stackLimit;
     public ItemDef() { }
     public ItemDef(string name, string description, StatSheet statSheet, GraphicData graphicData)
     : base(name, description, statSheet, graphicData) { }

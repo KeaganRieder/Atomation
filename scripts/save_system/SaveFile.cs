@@ -36,14 +36,14 @@ public class SaveFile
 
     public void Save()
     {
-        savedPlayerData = PlayerChar.GetInstance().Save();
-        savedMapData = WorldMap.GetInstance().Save();
+        savedPlayerData = PlayerChar.Instance.Save();
+        savedMapData = WorldMap.Instance.Save();
     }
 
     public void Load()
     {
-        PlayerChar.GetInstance().Load(savedPlayerData);
-        WorldMap.GetInstance().Load(savedMapData);
+        PlayerChar.Instance.Load(savedPlayerData);
+        WorldMap.Instance.Load(savedMapData);
     }
 
 }

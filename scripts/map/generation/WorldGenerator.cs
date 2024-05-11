@@ -10,6 +10,17 @@ using Godot;
 public class WorldGenerator
 {
     private static WorldGenerator instance;
+    public static WorldGenerator Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new WorldGenerator();
+            }
+            return instance;
+        }
+    }
 
     private GenStepLandscape genStepLandscape;
 
@@ -18,17 +29,11 @@ public class WorldGenerator
         genStepLandscape = new GenStepLandscape();
     }
 
-    public static WorldGenerator GetInstance()
-    {
-        if (instance == null)
-        {
-            instance = new WorldGenerator();
-        }
-        return instance;
-    }
 
-    public void RegenerateMap(){
-        WorldMap map = WorldMap.GetInstance();
+
+    public void RegenerateMap()
+    {
+        WorldMap map = WorldMap.Instance;
     }
 
     /// <summary> 
@@ -39,7 +44,7 @@ public class WorldGenerator
     {
         GD.Print("Generating map");
         MapData mapData = MapData.GetData();
-        WorldMap map = WorldMap.GetInstance();
+        WorldMap map = WorldMap.Instance;
         Coordinate spawn = new Coordinate(mapData.GetSpawn());
 
         map.ClearMap();

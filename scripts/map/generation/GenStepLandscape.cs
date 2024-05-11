@@ -82,10 +82,10 @@ public class GenStepLandscape : GenStep
             naturalStructure = null;
         }
 
-        WorldMap.GetInstance().SetTerrain(terrain);
+        WorldMap.Instance.SetTerrain(terrain);
         if (naturalStructure != null)
         {
-            WorldMap.GetInstance().SetStructure(naturalStructure);
+            WorldMap.Instance.SetStructure(naturalStructure);
         }
     }
 

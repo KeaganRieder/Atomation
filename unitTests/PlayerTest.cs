@@ -13,8 +13,8 @@ public class PlayerTest
     [TestCase]
     public void TestPlayerCreation()
     {
-        PlayerChar player = AutoFree(PlayerChar.GetInstance());
-        PlayerChar player2 = AutoFree(PlayerChar.GetInstance());
+        PlayerChar player = AutoFree(PlayerChar.Instance);
+        PlayerChar player2 = AutoFree(PlayerChar.Instance);
 
         AssertThat(player).IsEqual(player2);
 
@@ -50,7 +50,7 @@ public class PlayerTest
     [TestCase]
     public void TestPlayerStatChange()
     {
-        PlayerChar player = AutoFree(PlayerChar.GetInstance());
+        PlayerChar player = AutoFree(PlayerChar.Instance);
 
         AssertThat(player.GetStatSheet().GetStat(StatKeys.MAX_HEALTH).CurrentValue).IsEqual(100);
 

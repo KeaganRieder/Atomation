@@ -53,11 +53,11 @@ public partial class GameManger : Node2D
 
       LoadResources();
 
-      worldMap = WorldMap.GetInstance();
+      worldMap = WorldMap.Instance;
 
       AddChild(worldMap);
-      AddChild(Controller.GetInstance());
-      AddChild(PlayerChar.GetInstance());
+      AddChild(Controller.Instance);
+      AddChild(PlayerChar.Instance);
    }
 
    public static void LoadResources()

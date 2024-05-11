@@ -3,8 +3,8 @@
     "Slate": {
       "supportReq": "Heavy",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/rock_wall",
+        "variants": 1,
         "color": {
           "R": 0.4392157,
           "G": 0.5019608,
@@ -41,8 +41,8 @@
     "Marble wall": {
       "supportReq": "Heavy",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/rock_wall",
+        "variants": 1,
         "color": {
           "R": 0.972549,
           "G": 0.972549,

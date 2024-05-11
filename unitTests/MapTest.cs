@@ -11,8 +11,8 @@ public class TestMap
     [TestCase]
     public void TestMapInstance()
     {
-        WorldMap map1 = AutoFree(WorldMap.GetInstance());
-        WorldMap map2 = AutoFree(WorldMap.GetInstance());
+        WorldMap map1 = AutoFree(WorldMap.Instance);
+        WorldMap map2 = AutoFree(WorldMap.Instance);
 
         AssertThat(map1).IsEqual(map2);
     }
@@ -20,8 +20,8 @@ public class TestMap
     [TestCase]
     public void TestMapGenInstance()
     {
-        WorldGenerator map1 = WorldGenerator.GetInstance();
-        WorldGenerator map2 = WorldGenerator.GetInstance();
+        WorldGenerator map1 = WorldGenerator.Instance;
+        WorldGenerator map2 = WorldGenerator.Instance;
 
         AssertThat(map1).IsEqual(map2);
     }

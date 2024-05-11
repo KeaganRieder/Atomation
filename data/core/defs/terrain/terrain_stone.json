@@ -5,8 +5,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/gravel",
+        "variants": 1,
         "color": {
           "R": 0.74509805,
           "G": 0.74509805,
@@ -53,8 +53,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/rock_floor",
+        "variants": 1,
         "color": {
           "R": 0.9607843,
           "G": 0.9607843,
@@ -101,8 +101,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/rock_floor",
+        "variants": 1,
         "color": {
           "R": 0.6627451,
           "G": 0.6627451,

@@ -7,14 +7,27 @@ using System.Collections.Generic;
 using Atomation.Map;
 
 /// <summary>
-/// defines the player
+/// A player in the game is what the users object is 
 /// </summary>
 public partial class PlayerChar : Node2D
 {
 	private static PlayerChar playerInstance;
+	public static PlayerChar Instance
+	{
+		get
+		{
+			if (playerInstance == null)
+			{
+				playerInstance = new PlayerChar();
+			}
+
+			return playerInstance;
+		}
+	}
 
 	private Coordinate cords;
 	private StatSheet statSheet;
+	private Inventory inventory;
 
 	private StaticGraphic graphic;
 	private CharacterBody2D body;
@@ -32,40 +45,21 @@ public partial class PlayerChar : Node2D
 		statSheet = new StatSheet(stats, new Dictionary<string, StatModifierBase>());
 
 		SetPosition(Vector2.Zero);
-
+		inventory = new Inventory();
 		body = new CharacterBody2D();
 		camera = new Camera();
 		graphic = new StaticGraphic("player", 1, new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE), Colors.White);
 
+		camera.AddChild(inventory);
 		AddChild(camera);
 		AddChild(graphic);
 		AddChild(body);
 	}
-	public static PlayerChar GetInstance()
-	{
-		if (playerInstance == null)
-		{
-			playerInstance = new PlayerChar();
-		}
 
-		return playerInstance;
-	}
-
-	public SavedPlayer Save()
-	{
-		return new SavedPlayer(this);
-	}
-	public void Load(SavedPlayer loadedData)
-	{
-		GD.Print("Loading Player");
-		Name = loadedData.Name;
-		SetPosition(loadedData.Cords);
-		statSheet = loadedData.StatSheet;
-	}
 
 	public void SetPosition(Coordinate cord)
 	{
-		
+
 		cords = cord;
 		Position = cord.GetWorldPosition();
 	}
@@ -94,6 +88,23 @@ public partial class PlayerChar : Node2D
 	{
 		return statSheet;
 	}
+	public Inventory GetInventory()
+	{
+		return inventory;
+	}
+
+	public SavedPlayer Save()
+	{
+		return new SavedPlayer(this);
+	}
+	public void Load(SavedPlayer loadedData)
+	{
+		GD.Print("Loading Player");
+		Name = loadedData.Name;
+		SetPosition(loadedData.Cords);
+		statSheet = loadedData.StatSheet;
+	}
+
 
 	public void Move()
 	{
@@ -101,7 +112,7 @@ public partial class PlayerChar : Node2D
 		Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
 		Position += velocityVector.Normalized() * statSheet.GetStat(StatKeys.MOVE_SPEED).CurrentValue;
 		cords.SetPosition(Position);
-		WorldMap.GetInstance().UpdateVisibleChunks(cords);
+		WorldMap.Instance.UpdateVisibleChunks(cords);
 	}
 
 	public void Damage(float amount)

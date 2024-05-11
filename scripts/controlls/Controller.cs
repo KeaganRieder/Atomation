@@ -8,6 +8,18 @@ using Atomation.Resources;
 public partial class Controller : Node2D
 {
     private static Controller instance;
+    public static Controller Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new Controller();
+            }
+
+            return instance;
+        }
+    }
 
     private SaveHandler saveTarget;
     private PlayerChar playerTarget;
@@ -19,19 +31,9 @@ public partial class Controller : Node2D
         Name = "Controller";
         bindings = new Bindings();
 
-        MapTarget = WorldMap.GetInstance();
-        playerTarget = PlayerChar.GetInstance();
+        MapTarget = WorldMap.Instance;
+        playerTarget = PlayerChar.Instance;
         saveTarget = SaveHandler.GetInstance();
-    }
-
-    public static Controller GetInstance()
-    {
-        if (instance == null)
-        {
-            instance = new Controller();
-        }
-
-        return instance;
     }
 
     public override void _Input(InputEvent input)
@@ -77,7 +79,7 @@ public partial class Controller : Node2D
         }
         if (input.IsActionPressed("GenerateNewMap"))
         {
-            WorldGenerator.GetInstance().GenerateMap();
+            WorldGenerator.Instance.GenerateMap();
         }
         else if (input.IsActionPressed("VisualizeDefault"))
         {

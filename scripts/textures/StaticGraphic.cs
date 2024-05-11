@@ -42,8 +42,6 @@ public partial class StaticGraphic : Sprite2D
         graphicSize = configs.graphicSize;
         variants = configs.variants;
 
-        // Position = graphicSize / 2;
-
         SetTexture();
     }
 

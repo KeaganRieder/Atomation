@@ -73,7 +73,7 @@ public class Structure : ThingBase
         statSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
         if (statSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
         {
-            WorldMap.GetInstance().SetStructure(cords,null);
+            WorldMap.Instance.SetStructure(cords,null);
             DestroyNode();
             return;
         }

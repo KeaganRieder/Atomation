@@ -23,6 +23,18 @@ public enum VisualizationMode
 public partial class WorldMap : Node2D
 {
 	private static WorldMap instance;
+	public static WorldMap Instance
+	{
+		get
+		{
+			if (instance == null)
+			{
+				instance = new WorldMap();
+			}
+			return instance;
+		}
+	}
+
 	private readonly MapData data;
 	private readonly int visibleChunks;
 	private List<Chunk> lastUpdatedChunks;
@@ -42,15 +54,6 @@ public partial class WorldMap : Node2D
 
 		lastUpdatedChunks = new List<Chunk>();
 		chunkArray = new Dictionary<Vector2, Chunk>();
-	}
-
-	public static WorldMap GetInstance()
-	{
-		if (instance == null)
-		{
-			instance = new WorldMap();
-		}
-		return instance;
 	}
 
 	public SavedMap Save()
@@ -129,7 +132,7 @@ public partial class WorldMap : Node2D
 			return;
 		}
 		terrain.UpdateGraphic(visualizationMode);
-		chunk.TerrainGrid.SetObject(terrain.GetCoordinate(),terrain);
+		chunk.TerrainGrid.SetObject(terrain.GetCoordinate(), terrain);
 	}
 	/// <summary> sets terrain at world position </summary>
 	public void SetTerrain(Coordinate cord, Terrain terrain)
@@ -166,7 +169,7 @@ public partial class WorldMap : Node2D
 		{
 			return;
 		}
-		chunk.StructureGrid.SetObject(structure.GetCoordinate(),structure);
+		chunk.StructureGrid.SetObject(structure.GetCoordinate(), structure);
 	}
 	/// <summary> sets structure at world position </summary>
 	public void SetStructure(Coordinate cord, Structure structure)
@@ -238,12 +241,12 @@ public partial class WorldMap : Node2D
 				else
 				{
 					Vector2 chunkCord = viewChunkCord * Chunk.CHUNK_SIZE;
-					Chunk newChunk = new(Mathf.FloorToInt(viewChunkCord.X),Mathf.FloorToInt(viewChunkCord.Y));
+					Chunk newChunk = new(Mathf.FloorToInt(viewChunkCord.X), Mathf.FloorToInt(viewChunkCord.Y));
 					AddChild(newChunk);
 
 					chunkArray.Add(viewChunkCord, newChunk);
 
-					WorldGenerator.GetInstance().GenerateChunk(chunkCord);
+					WorldGenerator.Instance.GenerateChunk(chunkCord);
 
 					lastUpdatedChunks.Add(newChunk);
 				}

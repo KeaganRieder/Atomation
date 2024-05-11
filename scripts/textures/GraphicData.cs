@@ -15,8 +15,8 @@ public enum GraphicType
 /// </summary>
 public class GraphicData
 {
-    public string texturePath { get; set; }
-    public int variants;
-    public Color color { get; set; }
-    public Vector2I graphicSize { get; set; }
+    public string texturePath;
+    public int variants = 0;
+    public Color color;
+    public Vector2I graphicSize;
 }

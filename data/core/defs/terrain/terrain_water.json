@@ -5,8 +5,8 @@
       "supportProvided": "Medium",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/marsh",
+        "variants": 1,
         "color": {
           "R": 0.18039216,
           "G": 0.54509807,
@@ -53,8 +53,8 @@
       "supportProvided": "Medium",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/ocean",
+        "variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.0,
@@ -101,8 +101,8 @@
       "supportProvided": "Medium",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/water",
+        "variants": 1,
         "color": {
           "R": 0.6784314,
           "G": 0.84705883,
@@ -149,8 +149,8 @@
       "supportProvided": "None",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/ocean",
+        "variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.0,
@@ -197,8 +197,8 @@
       "supportProvided": "None",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/water",
+        "variants": 1,
         "color": {
           "R": 0.25490198,
           "G": 0.4117647,

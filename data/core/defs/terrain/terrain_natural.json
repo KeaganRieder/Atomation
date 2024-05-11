@@ -14,8 +14,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/forest_grass",
+        "variants": 1,
         "color": {
           "R": 0.0,
           "G": 0.39215687,
@@ -62,8 +62,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/grass",
+        "variants": 1,
         "color": {
           "R": 0.0,
           "G": 1.0,
@@ -110,8 +110,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/soil",
+        "variants": 1,
         "color": {
           "R": 0.64705884,
           "G": 0.16470589,
@@ -158,8 +158,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/soil",
+        "variants": 1,
         "color": {
           "R": 0.7372549,
           "G": 0.56078434,
@@ -206,8 +206,8 @@
       "supportProvided": "Heavy",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/sand",
+        "variants": 1,
         "color": {
           "R": 1.0,
           "G": 1.0,
@@ -254,8 +254,8 @@
       "supportProvided": "Light",
       "supportReq": "None",
       "graphicData": {
-        "variants": 1,
         "texturePath": "terrain/natural/Ice",
+        "variants": 1,
         "color": {
           "R": 1.0,
           "G": 1.0,

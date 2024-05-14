@@ -40,7 +40,7 @@ public class Terrain : ThingBase
         Moisture = loaded.Moisture;
         statSheet = new StatSheet(loaded.statSheet, this);
 
-        Configure(DefDatabase.GetInstance().GetTerrainDef(loaded.defName), true);
+        Configure(DefDatabase.Instance.GetTerrainDef(loaded.defName), true);
     }
 
     public Terrain(Coordinate cord)

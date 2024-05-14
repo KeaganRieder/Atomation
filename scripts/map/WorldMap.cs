@@ -116,7 +116,11 @@ public partial class WorldMap : Node2D
 			return null;
 		}
 	}
-
+	/// <summary>returns true if chunk at given cords, other wise returns false </summary>
+	public bool ChunkExists(Coordinate cords)
+	{
+		return GetChunk(cords) != null;
+	}
 	/// <summary> sets terrain at world position </summary>
 	public void SetTerrain(Terrain terrain)
 	{

@@ -1,17 +1,13 @@
 namespace Atomation.PlayerChar;
 
 using Atomation.Resources;
+using Atomation.Things;
 using Atomation.Ui;
-
-using System.Collections.Generic;
 using Godot;
 
-public partial class Inventory : Control
+public partial class Inventory : GameUI
 {
-    public const int SLOT_SIZE = 16;
-
-    public bool IsOpen { get; private set; }
-
+    public const int SLOT_SIZE = 32;    
 
     private int padding = 2;
     private int rows;
@@ -21,22 +17,22 @@ public partial class Inventory : Control
 
     private LayoutPreset layoutPreset;
     private PanelContainer slotContainer;
-    private StyleBox inventoryGraphic; //todo
-    private GridContainer gridContainer; //todo
+    private GridContainer gridContainer;
 
-    public Inventory(int columns = 10, int rows = 10, int padding = 10)
+    public Inventory(Node2D parent, int columns = 10, int rows = 10, int padding = 10) : base()
     {
         Name = "Inventory";
         this.columns = columns;
         this.rows = rows;
         this.padding = padding;
+        parent.AddChild(this);
 
         slotContainer = new PanelContainer();
         var marginContainer = new MarginContainer();
         marginContainer.AddMargin(padding);
         slotContainer.AddChild(marginContainer);
 
-        gridContainer = new GridContainer {Columns = columns};
+        gridContainer = new GridContainer { Columns = columns };
         marginContainer.AddChild(gridContainer);
 
         InitializeSlots();
@@ -44,7 +40,7 @@ public partial class Inventory : Control
         AddChild(slotContainer);
         SetAnchor(LayoutPreset.CenterTop);
 
-        // Close();
+        Close();
     }
 
     private void InitializeSlots()
@@ -54,8 +50,7 @@ public partial class Inventory : Control
         {
             for (int y = 0; y < columns; y++)
             {
-                InventorySlot slot = new InventorySlot(this);
-                gridContainer.AddChild(slot);
+                InventorySlot slot = new InventorySlot(this, gridContainer);
                 slots[x, y] = slot;
             }
         }
@@ -68,16 +63,18 @@ public partial class Inventory : Control
         slotContainer.SetAnchorsAndOffsetsPreset(preset);
     }
 
-    public void Open()
+    public void SetItem(int x, int y, Item item)
     {
-        Visible = true;
-        IsOpen = true;
+        slots[x,y].SetItem(item);
     }
 
-    public void Close()
-    {
-        Visible = false;
-        IsOpen = false;
+    public void Sort(){
+        GD.Print("Sorting inventory needing implementation");
+
+    }
+
+    public void TakeAll(){
+        GD.Print("Take All Implementation is needed");
     }
 
 

@@ -48,7 +48,11 @@ public abstract class ThingBase : IThing
     public virtual void SetPosition(Coordinate cord)
     {
         cords = cord;
-        node.Position = cords.GetWorldPosition();
+        if (node != null)
+        {
+            node.Position = cords.GetWorldPosition();
+
+        }
     }
     public virtual void SetPosition(Vector2 cord)
     {

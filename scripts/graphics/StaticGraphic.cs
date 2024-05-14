@@ -1,4 +1,4 @@
-namespace Atomation.Resources;
+namespace Atomation.Resources; //maybe make this into a graphics name space?
 
 using Atomation.Map;
 using Godot;
@@ -62,6 +62,14 @@ public partial class StaticGraphic : Sprite2D
         Texture = texture;
 
         SetDefaultColor();
+    }
+
+    public void SetSize(Vector2I size){
+        graphicSize = size;
+        SetTexture();
+    }
+    public void SetScale(Vector2 scale){
+        Scale = scale;
     }
 
     public void SetDefaultColor()

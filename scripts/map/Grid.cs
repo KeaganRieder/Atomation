@@ -59,7 +59,7 @@ public class Grid<GridObj> where GridObj : IThing
 
         // grid bounds
         line = new Line2D();
-        line.ZIndex = 10;
+        line.ZIndex = 2;
         line.AddPoint(GetWorldPosition(0, 0));
         line.AddPoint(GetWorldPosition(0, size.Y));
         line.AddPoint(GetWorldPosition(0, 0));

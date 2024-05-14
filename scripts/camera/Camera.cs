@@ -12,26 +12,14 @@ namespace Atomation
         private float maxZoom = 2f;
         private float zoomSpeed = 0.1f;
 
-        private Vector2 defaultZoom = new Vector2(1f, 1f);
+        private Vector2 defaultZoom = new Vector2(1.5f, 1.5f);
 
-        public Camera()
+        public Camera(Node2D focus)
         {
             Position = Vector2.Zero;
             Zoom = defaultZoom;
+            focus.AddChild(this);
         }
-
-        public override void _Input(InputEvent inputEvent)
-		{
-			base._Input(inputEvent);
-			if (inputEvent.IsActionPressed("ZoomIn"))
-			{
-				ZoomIn();
-			}
-			if (inputEvent.IsActionPressed("ZoomOut"))
-			{
-				ZoomOut();
-			}
-		}
 
         public void ZoomIn()
         {
@@ -50,6 +38,5 @@ namespace Atomation
             zoomValue.Y = Math.Clamp(Zoom.Y * (1 - zoomSpeed), minZoom, maxZoom);
             Zoom = zoomValue;
         }
-
     }
 }

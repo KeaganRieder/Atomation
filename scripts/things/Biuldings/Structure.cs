@@ -28,7 +28,7 @@ public class Structure : ThingBase
         defName = loaded.defName;
         statSheet = new StatSheet(loaded.statSheet, this);
 
-        Configure(DefDatabase.GetInstance().GetStructureDef(defName), true);
+        Configure(DefDatabase.Instance.GetStructureDef(defName), true);
     }
 
     public Structure(Coordinate cord)

@@ -17,13 +17,16 @@ public partial class GameController : Node2D
 
         SaveHandler = SaveHandler.Instance;
         playerControls = new PlayerControls(player);
-        worldControls = new WorldControls();
+        worldControls = new WorldControls(this);
+
+        player.AddChild(this);
     }
 
     public override void _Input(InputEvent input)
     {
         base._Input(input);
         playerControls.HandleInput(input);
+
         worldControls.HandleInput(input);
 
         if (input.IsActionPressed("QuickSave"))

@@ -142,20 +142,20 @@ public class GenStepLandscape : GenStep
     {
         if (terrain.Elevation > mapData.MountainHeight)
         {
-            terrain.Configure(DefDatabase.GetInstance().GetTerrainDef("Slate"));
+            terrain.Configure(DefDatabase.Instance.GetTerrainDef("Slate"));
             mountainWall = new Structure(terrain.GetCoordinate());
-            mountainWall.Configure(DefDatabase.GetInstance().GetStructureDef("Slate Wall"));
+            mountainWall.Configure(DefDatabase.Instance.GetStructureDef("Slate Wall"));
         }
         else if (terrain.Elevation > mountainBase)
         {
-            terrain.Configure(DefDatabase.GetInstance().GetTerrainDef("Slate"));
+            terrain.Configure(DefDatabase.Instance.GetTerrainDef("Slate"));
             mountainWall = new Structure(terrain.GetCoordinate());
-            mountainWall.Configure(DefDatabase.GetInstance().GetStructureDef("Slate Wall"));
+            mountainWall.Configure(DefDatabase.Instance.GetStructureDef("Slate Wall"));
             // mountainWall = null;
         }
         else
         {
-            terrain.Configure(DefDatabase.GetInstance().GetTerrainDef("Gravel"));
+            terrain.Configure(DefDatabase.Instance.GetTerrainDef("Gravel"));
             mountainWall = null;
         }
     }

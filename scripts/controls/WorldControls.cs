@@ -8,26 +8,27 @@ using Godot;
 public class WorldControls
 {
     private WorldMap worldMap;
+    private GameController parent;
 
-    public WorldControls()
+    public WorldControls(GameController gameController)
     {
         worldMap = WorldMap.Instance;
+        parent = gameController;
     }
 
     public void HandleInput(InputEvent input)
     {
         if (input.IsActionPressed("Interact"))
         {
-            WorldInteraction();
+            WorldInteraction(input);
         }
         GenerationControls(input);
         ChangeVisualMode(input);
-
     }
 
-    private void WorldInteraction()
+    private void WorldInteraction(InputEvent input)
     {
-        Coordinate cords = new Coordinate(Player.Instance.GetMousePosition());
+        Coordinate cords = new Coordinate(parent.GetMousePosition((InputEventMouseButton)input));
 
         if (worldMap.GetStructure(cords) != null)
         {

@@ -1,9 +1,6 @@
 namespace Atomation.Resources;
 
-using Atomation.Map;
-using Atomation.PlayerChar;
 using Godot;
-using Newtonsoft.Json;
 
 /// <summary>
 /// class which defines how game saves are handled

@@ -14,7 +14,7 @@ public abstract class GenStep
 
     protected GenStep(int step = -1)
     {
-        defDatabase = DefDatabase.GetInstance();
+        defDatabase = DefDatabase.Instance;
         mapData = MapData.GetData();
         origin = Vector2.Zero;
         Step = step;

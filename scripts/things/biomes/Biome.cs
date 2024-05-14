@@ -62,7 +62,7 @@ public class Biome : Def
         {
             if (elevation < terrainHeight)
             {
-                return DefDatabase.GetInstance().GetTerrainDef(terrain[terrainHeight]);
+                return DefDatabase.Instance.GetTerrainDef(terrain[terrainHeight]);
             }
         }
 

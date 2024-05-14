@@ -13,7 +13,17 @@ using System.Collections.Generic;
 public partial class GameManger : Node2D
 {
    private static GameManger instance;
-   
+   public static GameManger Instance
+   {
+      get
+      {
+         if (instance == null)
+         {
+            instance = new GameManger();
+         }
+         return instance;
+      }
+   }
 
    private WorldMap worldMap;
 
@@ -32,14 +42,6 @@ public partial class GameManger : Node2D
       }
    }
 
-   public static GameManger GetInstance()
-   {
-      if (instance == null)
-      {
-         instance = new GameManger();
-      }
-      return instance;
-   }
 
    /// <summary>
    /// runs upon node creation
@@ -47,8 +49,9 @@ public partial class GameManger : Node2D
    public override void _Ready()
    {
       base._Ready();
-      StructureDefs.FormatNaturalStructureDefs();
-      TerrainDefs.FormatTerrainDefs();
+      // ItemDefs.FormatResourceItemDefs();
+      // StructureDefs.FormatNaturalStructureDefs();
+      // TerrainDefs.FormatTerrainDefs();
 
       LoadResources();
 
@@ -57,12 +60,14 @@ public partial class GameManger : Node2D
       AddChild(worldMap);
 
       AddChild(Player.Instance);
+
+      
    }
 
    public static void LoadResources()
    {
       GD.Print("Loading Resources");
-      DefDatabase.GetInstance();
+      DefDatabase.Instance.LoadDefs();
       GD.Print("Loading Complete\n");
    }
 }

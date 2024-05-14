@@ -17,9 +17,7 @@ public class GameBindings
 
     public void DefaultBindings()
     {
-
         playerBindings = new Dictionary<string, InputEvent>{
-
             {"MoveLeft", new InputEventKey{PhysicalKeycode = Key.A}},
             {"MoveRight", new InputEventKey{PhysicalKeycode = Key.D}},
             {"MoveDown", new InputEventKey{PhysicalKeycode = Key.S}},
@@ -28,9 +26,10 @@ public class GameBindings
         };
 
         UiBindings = new Dictionary<string, InputEventKey>{
-            {"QuickSave",new InputEventKey{PhysicalKeycode = Key.F5}},
-            {"QuickLoad",new InputEventKey{PhysicalKeycode = Key.F6}},
-            {"Inventory",new InputEventKey{PhysicalKeycode = Key.I}},
+            {"QuickSave", new InputEventKey{PhysicalKeycode = Key.F5}},
+            {"QuickLoad", new InputEventKey{PhysicalKeycode = Key.F6}},
+            {"Inventory", new InputEventKey{PhysicalKeycode = Key.I}},
+            {"Menu", new InputEventKey{PhysicalKeycode = Key.Escape}},
         };
 
         cameraBindings = new Dictionary<string, InputEventKey>
@@ -71,7 +70,8 @@ public class GameBindings
         }
     }
 
-    public void SwapBindings(){
+    public void SwapBindings()
+    {
 
     }
 }

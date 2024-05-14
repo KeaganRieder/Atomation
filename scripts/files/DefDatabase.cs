@@ -11,30 +11,43 @@ using Newtonsoft.Json;
 public class DefDatabase
 {
     private static DefDatabase instance;
+    public static DefDatabase Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new DefDatabase();
+            }
+            return instance;
+        }
+    }
+
     private static DefFile<TerrainDef> TerrainDefs;
     private static DefFile<StructureDef> StructureDefs;
-    // private static DefFile<ItemDef> ItemDefs;
+    private static DefFile<ItemDef> ItemDefs;
     private static DefFile<Biome> BiomeDefs;
+    private static bool loaded;
 
     private DefDatabase()
     {
-        GD.Print("Loading Terrain Def Files");
-        TerrainDefs = new DefFile<TerrainDef>(FilePaths.TERRAIN_FOLDER);
-        GD.Print("Loading Biome Def Files");
-        BiomeDefs = new DefFile<Biome>(FilePaths.BIOME_FOLDER);
-        GD.Print("Loading Structure Def Files");
-        StructureDefs = new DefFile<StructureDef>(FilePaths.STRUCTURE_FOLDER);
-        GD.Print("Loading Item Def Files");
-        // ItemDefs = new DefFile<ItemDef>(FilePaths.ITEM_FOLDER);
+        loaded = false;
     }
 
-    public static DefDatabase GetInstance()
+    public void LoadDefs()
     {
-        if (instance == null)
+        if (!loaded)
         {
-            instance = new DefDatabase();
+            GD.Print("Loading Terrain Def Files");
+            TerrainDefs = new DefFile<TerrainDef>(FilePaths.TERRAIN_FOLDER);
+            GD.Print("Loading Biome Def Files");
+            BiomeDefs = new DefFile<Biome>(FilePaths.BIOME_FOLDER);
+            GD.Print("Loading Structure Def Files");
+            StructureDefs = new DefFile<StructureDef>(FilePaths.STRUCTURE_FOLDER);
+            GD.Print("Loading Item Def Files");
+            ItemDefs = new DefFile<ItemDef>(FilePaths.ITEM_FOLDER);
+            loaded = true;
         }
-        return instance;
     }
 
     /// <summary>
@@ -84,8 +97,7 @@ public class DefDatabase
     {
         if (itemID != null && itemID != "Undefine Item")
         {
-            // return ItemDefs[itemID];
-            return ItemDef.Undefined();
+            return ItemDefs[itemID];
 
         }
         return ItemDef.Undefined();

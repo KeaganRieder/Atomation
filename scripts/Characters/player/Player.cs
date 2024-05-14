@@ -1,24 +1,26 @@
-namespace Atomation.Player;
+namespace Atomation.PlayerChar;
 
 using Godot;
 using Atomation.Resources;
 using Atomation.Things;
 using System.Collections.Generic;
 using Atomation.Map;
+using Atomation.Controls;
+
 
 /// <summary>
 /// A player in the game is what the users object is 
 /// </summary>
-public partial class PlayerChar : Node2D
+public partial class Player : Node2D
 {
-	private static PlayerChar playerInstance;
-	public static PlayerChar Instance
+	private static Player playerInstance;
+	public static Player Instance
 	{
 		get
 		{
 			if (playerInstance == null)
 			{
-				playerInstance = new PlayerChar();
+				playerInstance = new Player();
 			}
 
 			return playerInstance;
@@ -29,11 +31,12 @@ public partial class PlayerChar : Node2D
 	private StatSheet statSheet;
 	private Inventory inventory;
 
+	private GameController gameController;
 	private StaticGraphic graphic;
 	private CharacterBody2D body;
 	private Camera camera;
 
-	private PlayerChar()
+	private Player()
 	{
 		Name = "player";
 
@@ -48,9 +51,11 @@ public partial class PlayerChar : Node2D
 		inventory = new Inventory();
 		body = new CharacterBody2D();
 		camera = new Camera();
+		gameController = new GameController(this);
 		graphic = new StaticGraphic("player", 1, new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE), Colors.White);
 
 		camera.AddChild(inventory);
+		AddChild(gameController);
 		AddChild(camera);
 		AddChild(graphic);
 		AddChild(body);

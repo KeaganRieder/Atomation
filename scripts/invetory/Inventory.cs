@@ -1,4 +1,4 @@
-namespace Atomation.Player;
+namespace Atomation.PlayerChar;
 
 using Atomation.Resources;
 using Atomation.Ui;

@@ -1,8 +1,9 @@
-using Atomation.Player;
+using Atomation.PlayerChar;
 
 using Godot;
 using System;
 
+//delete this
 public partial class Test : Node2D
 {
     private Inventory inventory;

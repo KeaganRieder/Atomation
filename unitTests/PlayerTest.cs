@@ -1,7 +1,7 @@
 namespace Atomation.UnitTests;
 
 using Atomation.Map;
-using Atomation.Player;
+using Atomation.PlayerChar;
 using Atomation.Things;
 using GdUnit4;
 using Godot;
@@ -13,8 +13,8 @@ public class PlayerTest
     [TestCase]
     public void TestPlayerCreation()
     {
-        PlayerChar player = AutoFree(PlayerChar.Instance);
-        PlayerChar player2 = AutoFree(PlayerChar.Instance);
+        Player player = AutoFree(Player.Instance);
+        Player player2 = AutoFree(Player.Instance);
 
         AssertThat(player).IsEqual(player2);
 
@@ -50,7 +50,7 @@ public class PlayerTest
     [TestCase]
     public void TestPlayerStatChange()
     {
-        PlayerChar player = AutoFree(PlayerChar.Instance);
+        Player player = AutoFree(Player.Instance);
 
         AssertThat(player.GetStatSheet().GetStat(StatKeys.MAX_HEALTH).CurrentValue).IsEqual(100);
 

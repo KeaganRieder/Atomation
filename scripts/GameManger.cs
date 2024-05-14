@@ -2,7 +2,7 @@ namespace Atomation;
 
 using Atomation.Map;
 using Atomation.Resources;
-using Atomation.Player;
+using Atomation.PlayerChar;
 using Atomation.Things;
 using Godot;
 using System.Collections.Generic;
@@ -13,13 +13,12 @@ using System.Collections.Generic;
 public partial class GameManger : Node2D
 {
    private static GameManger instance;
+   
 
    private WorldMap worldMap;
-   private SaveHandler saveSystem;
 
    private GameManger()
    {
-      saveSystem = SaveHandler.GetInstance();
    }
    ~GameManger()
    {
@@ -56,8 +55,8 @@ public partial class GameManger : Node2D
       worldMap = WorldMap.Instance;
 
       AddChild(worldMap);
-      AddChild(Controller.Instance);
-      AddChild(PlayerChar.Instance);
+
+      AddChild(Player.Instance);
    }
 
    public static void LoadResources()

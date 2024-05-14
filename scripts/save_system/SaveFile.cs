@@ -2,7 +2,7 @@ namespace Atomation.Resources;
 
 using Newtonsoft.Json;
 using Atomation.Map;
-using Atomation.Player;
+using Atomation.PlayerChar;
 using Godot;
 
 public class SaveFile
@@ -36,13 +36,13 @@ public class SaveFile
 
     public void Save()
     {
-        savedPlayerData = PlayerChar.Instance.Save();
+        savedPlayerData = Player.Instance.Save();
         savedMapData = WorldMap.Instance.Save();
     }
 
     public void Load()
     {
-        PlayerChar.Instance.Load(savedPlayerData);
+        Player.Instance.Load(savedPlayerData);
         WorldMap.Instance.Load(savedMapData);
     }
 

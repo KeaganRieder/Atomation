@@ -1,7 +1,7 @@
 namespace Atomation.Resources;
 
 using Atomation.Map;
-using Atomation.Player;
+using Atomation.PlayerChar;
 using Godot;
 using Newtonsoft.Json;
 
@@ -12,27 +12,26 @@ public class SaveHandler
 {
     private static SaveHandler instance;
 
-    private SaveHandler()
+    public static SaveHandler Instance
     {
-
-    }
-
-    public static SaveHandler GetInstance()
-    {
-        if (instance == null)
+        get
         {
-            instance = new SaveHandler();
+            if (instance == null)
+            {
+                instance = new SaveHandler();
+            }
+            return instance;
         }
-        return instance;
     }
+
+    private SaveHandler() { }
 
     public void QuickSave()
     {
         GD.Print("Saving game");
 
         SaveFile save = new SaveFile("Quick Save");
-        // new JsonSerializerSettings()
-        FileUtility.WriteJsonFile(FilePaths.SAVE_FOLDER, save.GetName(), save,null);
+        FileUtility.WriteJsonFile(FilePaths.SAVE_FOLDER, save.GetName(), save, null);
         GD.Print("Saved");
     }
 
@@ -40,6 +39,6 @@ public class SaveHandler
     {
         GD.Print("Loading");
         SaveFile save = FileUtility.ReadJsonFile<SaveFile>(FilePaths.SAVE_FOLDER, "Quick Save");
-        save.Load();  
+        save.Load();
     }
 }

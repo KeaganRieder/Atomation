@@ -1,4 +1,4 @@
-namespace Atomation.Player;
+namespace Atomation.PlayerChar;
 
 using Atomation.Map;
 using Atomation.Things;
@@ -10,7 +10,7 @@ public class SavedPlayer
     public StatSheet StatSheet;
 
     public SavedPlayer() { }
-    public SavedPlayer(PlayerChar toSave)
+    public SavedPlayer(Player toSave)
     {
         Name = toSave.Name;
         Cords = toSave.GetCoordinate();

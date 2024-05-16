@@ -4,6 +4,7 @@ using Atomation.Resources;
 using Atomation.Map;
 using Godot;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 /// <summary>
 /// a structure or building is something that is either naturally
@@ -13,7 +14,10 @@ public class Structure : ThingBase
 {
     private SupportType supportReq;
     private StaticGraphic graphic;
-    // private  
+
+    // private bool buildAble;
+    private Dictionary<string, int> resources;
+
 
     [JsonConstructor]
     public Structure() { }
@@ -28,11 +32,11 @@ public class Structure : ThingBase
         defName = loaded.defName;
         statSheet = new StatSheet(loaded.statSheet, this);
 
-        Configure(DefDatabase.Instance.GetStructureDef(defName), true);
+        Configure(ThingDatabase.Instance.GetStructureDef(defName), true);
     }
-
     public Structure(Coordinate cord)
     {
+        // buildAble = false;
         node = new Node2D();
         graphic = new StaticGraphic();
         node.AddChild(graphic);
@@ -44,12 +48,25 @@ public class Structure : ThingBase
     {
         DestroyNode();
     }
+    public override void DestroyNode()
+    {
+        if (GodotObject.IsInstanceValid(graphic))
+        {
+            graphic.QueueFree();
+        }
+        base.DestroyNode();
+    }
 
     public void Configure(StructureDef def, bool loading = false)
     {
         defName = def.defName;
         description = def.description;
         supportReq = def.supportReq;
+        resources = new Dictionary<string, int>();
+        foreach (var items in def.buildCost)
+        {
+            resources.Add(items.Key,items.Value);
+        }
 
         node.Name = $"{defName} {cords}";
         graphic.Configure(def.graphicData);
@@ -58,6 +75,7 @@ public class Structure : ThingBase
             statSheet = new StatSheet(def.statSheet, this);
         }
     }
+
 
     public StaticGraphic GetGraphic()
     {
@@ -73,7 +91,15 @@ public class Structure : ThingBase
         statSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
         if (statSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
         {
-            WorldMap.Instance.SetStructure(cords,null);
+            WorldMap.Instance.SetStructure(cords, null);
+            foreach (var item in resources)
+            {
+                Item dropped = new Item(cords);
+                dropped.Configure(ThingDatabase.Instance.GetItemDef(item.Key));
+                dropped.SetQuantity(item.Value);
+                WorldMap.Instance.SetItem(cords, dropped);
+            }
+
             DestroyNode();
             return;
         }

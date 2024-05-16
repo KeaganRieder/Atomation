@@ -1,5 +1,6 @@
-namespace Atomation.Resources;
+namespace Atomation.Systems;
 
+using Atomation.Resources;
 using Godot;
 
 /// <summary>

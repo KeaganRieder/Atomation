@@ -48,7 +48,7 @@ public class GenStepLandscape : GenStep
                 ChooseTerrain(terrain);
             }
         }
-        temperatureMap.PrintMinMax();
+        // temperatureMap.PrintMinMax();
     }
 
     private void CalculateLandHeight()
@@ -82,10 +82,10 @@ public class GenStepLandscape : GenStep
             naturalStructure = null;
         }
 
-        WorldMap.Instance.SetTerrain(terrain);
+        WorldMap.Instance.SetTerrain(terrain.GetCoordinate(), terrain);
         if (naturalStructure != null)
         {
-            WorldMap.Instance.SetStructure(naturalStructure);
+            WorldMap.Instance.SetStructure(naturalStructure.GetCoordinate(), naturalStructure);
         }
     }
 
@@ -142,20 +142,20 @@ public class GenStepLandscape : GenStep
     {
         if (terrain.Elevation > mapData.MountainHeight)
         {
-            terrain.Configure(DefDatabase.Instance.GetTerrainDef("Slate"));
+            terrain.Configure(ThingDatabase.Instance.GetTerrainDef("Slate"));
             mountainWall = new Structure(terrain.GetCoordinate());
-            mountainWall.Configure(DefDatabase.Instance.GetStructureDef("Slate Wall"));
+            mountainWall.Configure(ThingDatabase.Instance.GetStructureDef("Slate Wall"));
         }
         else if (terrain.Elevation > mountainBase)
         {
-            terrain.Configure(DefDatabase.Instance.GetTerrainDef("Slate"));
+            terrain.Configure(ThingDatabase.Instance.GetTerrainDef("Slate"));
             mountainWall = new Structure(terrain.GetCoordinate());
-            mountainWall.Configure(DefDatabase.Instance.GetStructureDef("Slate Wall"));
+            mountainWall.Configure(ThingDatabase.Instance.GetStructureDef("Slate Wall"));
             // mountainWall = null;
         }
         else
         {
-            terrain.Configure(DefDatabase.Instance.GetTerrainDef("Gravel"));
+            terrain.Configure(ThingDatabase.Instance.GetTerrainDef("Gravel"));
             mountainWall = null;
         }
     }

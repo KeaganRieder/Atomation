@@ -6,7 +6,7 @@ using Godot;
 public abstract class GenStep
 {
     protected MapData mapData;
-    protected DefDatabase defDatabase;
+    protected ThingDatabase defDatabase;
     protected Vector2 genSize;
     protected Vector2 origin;
 
@@ -14,7 +14,7 @@ public abstract class GenStep
 
     protected GenStep(int step = -1)
     {
-        defDatabase = DefDatabase.Instance;
+        defDatabase = ThingDatabase.Instance;
         mapData = MapData.GetData();
         origin = Vector2.Zero;
         Step = step;

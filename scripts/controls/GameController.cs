@@ -1,7 +1,7 @@
 namespace Atomation.Controls;
 
 using Atomation.PlayerChar;
-using Atomation.Resources;
+using Atomation.Systems;
 using Godot;
 
 public partial class GameController : Node2D

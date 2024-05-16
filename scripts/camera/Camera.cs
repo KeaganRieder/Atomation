@@ -8,11 +8,12 @@ namespace Atomation
     /// </summary>
     public partial class Camera : Camera2D
     {
+        //redo this at some point
         private float minZoom = 0.5f;
         private float maxZoom = 2f;
         private float zoomSpeed = 0.1f;
 
-        private Vector2 defaultZoom = new Vector2(1.5f, 1.5f);
+        private Vector2 defaultZoom = new Vector2(1f, 1f);
 
         public Camera(Node2D focus)
         {

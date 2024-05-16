@@ -1,7 +1,7 @@
-namespace Atomation.Things;
+namespace  Atomation.Resources;
 
 using Map;
-using Resources;
+using Things;
 using Godot;
 using System.Collections.Generic;
 

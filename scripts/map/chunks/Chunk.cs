@@ -22,7 +22,7 @@ public partial class Chunk : Node2D
 
 	public Grid<Terrain> TerrainGrid { get; private set; }
 	public Grid<Structure> StructureGrid { get; private set; }
-
+	public Grid<Item> ItemGrid { get; private set; }
 
 	public Chunk(Vector2 worldPosition)
 	{
@@ -34,6 +34,7 @@ public partial class Chunk : Node2D
 
 		TerrainGrid = new Grid<Terrain>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
 		StructureGrid = new Grid<Structure>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
+		ItemGrid = new Grid<Item>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this); 
 	}
 
 	public Chunk(int x, int y)
@@ -45,6 +46,7 @@ public partial class Chunk : Node2D
 
 		TerrainGrid = new Grid<Terrain>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
 		StructureGrid = new Grid<Structure>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
+		ItemGrid = new Grid<Item>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this); 
 	}
 
 	public Chunk(SavedChunk savedChunk)
@@ -57,6 +59,7 @@ public partial class Chunk : Node2D
 
 		TerrainGrid = new Grid<Terrain>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
 		StructureGrid = new Grid<Structure>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this);
+		ItemGrid = new Grid<Item>(new Vector2(CHUNK_SIZE, CHUNK_SIZE), Coordinate, this); 
 
 		foreach (var savedTerrain in savedChunk.SavedTerrain)
 		{

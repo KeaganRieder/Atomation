@@ -1,4 +1,4 @@
-namespace Atomation.Resources;
+namespace Atomation.Systems;
 
 using Newtonsoft.Json;
 using Atomation.Map;

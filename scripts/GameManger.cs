@@ -59,15 +59,13 @@ public partial class GameManger : Node2D
 
       AddChild(worldMap);
 
-      AddChild(Player.Instance);
-
-      
+      AddChild(Player.Instance);      
    }
 
    public static void LoadResources()
    {
       GD.Print("Loading Resources");
-      DefDatabase.Instance.LoadDefs();
+      ThingDatabase.Instance.LoadDefs();
       GD.Print("Loading Complete\n");
    }
 }

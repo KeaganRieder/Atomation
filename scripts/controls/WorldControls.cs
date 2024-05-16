@@ -20,22 +20,29 @@ public class WorldControls
     {
         if (input.IsActionPressed("Interact"))
         {
-            WorldInteraction(input);
+            WorldInteraction((InputEventMouseButton)input);
         }
         GenerationControls(input);
         ChangeVisualMode(input);
     }
 
-    private void WorldInteraction(InputEvent input)
+    private void WorldInteraction(InputEventMouseButton input)
     {
-        Coordinate cords = new Coordinate(parent.GetMousePosition((InputEventMouseButton)input));
+        Coordinate cords = new Coordinate(parent.GetMousePosition(input));
 
         if (worldMap.GetStructure(cords) != null)
         {
             Structure structure = worldMap.GetStructure(cords);
 
             structure.Damage(Player.Instance.GetStatSheet());
-            GD.Print($"{structure.GetNode().Name} HP: {structure.GetStatSheet().GetStat(StatKeys.MAX_HEALTH).CurrentValue}");
+            GD.Print($"{structure.GetName()} {structure.GetCoordinate()} HP: {structure.GetStatSheet().GetStat(StatKeys.MAX_HEALTH).CurrentValue}");
+        }
+        else if (worldMap.GetItem(cords) != null)
+        {
+            Item item = worldMap.GetItem(cords);
+            GD.Print($"{item.GetName()}");
+            item.PickUp(Player.Instance.GetInventory());
+
         }
         else if (worldMap.GetTerrain(cords) != null)
         {

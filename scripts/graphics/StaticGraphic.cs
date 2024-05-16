@@ -1,4 +1,4 @@
-namespace Atomation.Resources; //maybe make this into a graphics name space?
+namespace Atomation.Resources; 
 
 using Atomation.Map;
 using Godot;

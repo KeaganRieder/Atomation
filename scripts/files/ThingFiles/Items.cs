@@ -1,7 +1,7 @@
-namespace Atomation.Things;
+namespace  Atomation.Resources;
 
 using Map;
-using Resources;
+using Things;
 using Godot;
 using System.Collections.Generic;
 
@@ -19,10 +19,11 @@ public static class ItemDefs
                 defName = "Stone", 
                 description = "It's Stony",
                 stackLimit = 64,
+                stackable = true,
                 graphicData = new GraphicData{
                     texturePath = "item/resource/stone",
                     variants = 1,
-                    color = Colors.LightGray, 
+                    color = Colors.Black, 
                     graphicSize = new Vector2I(8,8),
                 }, 
                 statSheet = new StatSheet(new Dictionary<string, StatBase>{

@@ -1,7 +1,10 @@
 {
   "Defs": {
-    "Slate": {
+    "Slate Wall": {
       "supportReq": "Heavy",
+      "buildCost": {
+        "Stone": 5
+      },
       "graphicData": {
         "texturePath": "terrain/natural/rock_wall",
         "variants": 1,
@@ -40,22 +43,25 @@
     },
     "Marble wall": {
       "supportReq": "Heavy",
+      "buildCost": {
+        "Stone": 5
+      },
       "graphicData": {
         "texturePath": "terrain/natural/rock_wall",
         "variants": 1,
         "color": {
-          "R": 0.972549,
-          "G": 0.972549,
-          "B": 1.0,
+          "R": 0.4392157,
+          "G": 0.5019608,
+          "B": 0.5647059,
           "A": 1.0,
-          "R8": 248,
-          "G8": 248,
-          "B8": 255,
+          "R8": 112,
+          "G8": 128,
+          "B8": 144,
           "A8": 255,
-          "H": 0.6666667,
-          "S": 0.027450979,
-          "V": 1.0,
-          "Luminance": 0.974531
+          "H": 0.5833333,
+          "S": 0.22222225,
+          "V": 0.5647059,
+          "Luminance": 0.49315143
         },
         "graphicSize": {
           "X": 16,

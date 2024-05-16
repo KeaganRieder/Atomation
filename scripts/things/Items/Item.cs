@@ -5,6 +5,7 @@ using Godot;
 using Resources;
 using Map;
 using Atomation.PlayerChar;
+using Atomation.Systems;
 
 
 /// <summary>
@@ -12,78 +13,154 @@ using Atomation.PlayerChar;
 /// </summary>
 public partial class Item : ThingBase
 {
+    private bool stackable;
     private int stackLimit;
+
     [JsonProperty]
-    private int quantity;
-    private StaticGraphic graphic;
+    protected int quantity;
+
+    protected StaticGraphic graphic;
 
     [JsonConstructor]
-    public Item()
+    public Item() { }
+    public Item(Item loaded)
     {
-
-    }
-
-    public Item(Item loaded, bool inventoryItem = false)
-    {
-        graphic = new StaticGraphic();
-
-        if (!inventoryItem)
-        {
-            node = new Node2D();
-            node.AddChild(graphic);
-        }
-
-        SetPosition(loaded.cords);
         defName = loaded.defName;
         quantity = loaded.quantity;
+        graphic = new StaticGraphic();
 
-        ReadConfigs(DefDatabase.Instance.GetItemDef(defName), true, inventoryItem);
+        SetPosition(loaded.cords);
+
+        Configure(ThingDatabase.Instance.GetItemDef(defName), true);
     }
     public Item(Coordinate cords)
     {
         quantity = 1;
-        node = new Node2D();
         graphic = new StaticGraphic();
         statSheet = new StatSheet();
-
-        node.AddChild(graphic);
         SetPosition(cords);
     }
+    ~Item()
+    {
+        DestroyNode();
+    }
 
-    public void ReadConfigs(ItemDef itemDef, bool loading = false, bool inventoryItem = false)
+    public void Configure(ItemDef itemDef, bool loading = false)
     {
         defName = itemDef.defName;
         description = itemDef.description;
-        stackLimit = itemDef.stackLimit;
+        stackable = itemDef.stackable;
+
+        stackLimit = stackable ? itemDef.stackLimit : 1;
 
         graphic.Configure(itemDef.graphicData);
+        graphic.Name = defName + cords.ToString();
 
-        if (!inventoryItem)
-        {
-            node.Name = defName + cords.ToString();
-        }
         if (!loading)
         {
             statSheet = (itemDef.statSheet == null) ? new StatSheet() : new StatSheet(itemDef.statSheet, this);
         }
     }
-
-    public StaticGraphic GetGraphic()
+    /// <summary> destroys all nodes of item </summary>
+    public override void DestroyNode()
     {
-        return graphic;
+        if (GodotObject.IsInstanceValid(graphic))
+        {
+            graphic.QueueFree();
+            graphic = null;
+        }
     }
 
+    public override void SetPosition(Coordinate cord)
+    {
+        cords = cord;
+        if (graphic != null)
+        {
+            graphic.Position = cords.GetWorldPosition();
+        }
+    }
+
+    /// <summary> sets quantity of item </summary>
+    public void SetQuantity(int amt)
+    {
+        quantity = amt;
+        if (quantity > stackLimit)
+        {
+            quantity = stackLimit;
+            GD.PrintErr($"Set Item {defName} to be over stack limit");
+        }
+        if (quantity < 0)
+        {
+            quantity = 0;
+            GD.PrintErr($"Set Item {defName} to be less then 0");
+        }
+    }
+    
+    /// <summary>
+    /// adds amount until stack limit is reached and then returns
+    /// the remaining
+    /// </summary>
+    public int AddAmount(int amount)
+    {
+        int remaining = 0;
+        quantity += amount;
+
+        if (quantity > stackLimit)
+        {
+            remaining = (quantity - stackLimit > 0) ? quantity - stackLimit : 0;
+            quantity = stackLimit;
+        }
+
+        return remaining;
+    }
+    /// <summary>
+    /// adds amount until stack limit is reached and then returns
+    /// the remaining
+    /// </summary>
+    public void AddAmount(Item item)
+    {
+        item.SetQuantity(AddAmount(item.quantity));
+    }
+
+    /// <summary> 
+    /// attempts removes the provided amount otherwise returns
+    /// the total amount removed
+    /// </summary>
+    public int RemoveAmount(int amount)
+    {
+        if (amount > quantity)
+        {
+            amount -= quantity;
+            quantity = 0;
+            return amount;
+        }
+
+        quantity -= amount;
+      
+        return 0;
+    }
+
+    public override StaticGraphic GetNode(){
+        return graphic;
+    }
     public int GetQuantity()
     {
         return quantity;
     }
-
     public bool Stackable()
     {
-        return stackLimit > 0 && quantity > stackLimit;
+        return stackable && quantity < stackLimit;
     }
 
-    // public void PickUp(){
-
-    // }
+    public void PickUp(Inventory inventory){
+        inventory.AddItem(this);
+        if (quantity == 0)
+        {
+            WorldMap.Instance.SetItem(cords,null);
+            DestroyNode();
+        }
+    }
+    public void Drop(){
+        //todo
+    }
 }

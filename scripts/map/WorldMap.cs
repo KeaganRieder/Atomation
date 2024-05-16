@@ -112,32 +112,17 @@ public partial class WorldMap : Node2D
 		}
 		else
 		{
-			GD.PushError($"ERROR: tried to access NULL chunk at chunkPos:{ChunkCords.GetXYPosition} WorldPos:{ChunkCords.GetWorldPosition}");
+			GD.PushError($"tried to access NULL chunk at chunkPos:{ChunkCords.GetXYPosition} WorldPos:{ChunkCords.GetWorldPosition}");
 			return null;
 		}
 	}
+	
 	/// <summary>returns true if chunk at given cords, other wise returns false </summary>
 	public bool ChunkExists(Coordinate cords)
 	{
 		return GetChunk(cords) != null;
 	}
-	/// <summary> sets terrain at world position </summary>
-	public void SetTerrain(Terrain terrain)
-	{
-		if (terrain == null)
-		{
-			return;
-		}
-
-		Chunk chunk = GetChunk(terrain.GetCoordinate());
-
-		if (chunk == null)
-		{
-			return;
-		}
-		terrain.UpdateGraphic(visualizationMode);
-		chunk.TerrainGrid.SetObject(terrain.GetCoordinate(), terrain);
-	}
+	
 	/// <summary> sets terrain at world position </summary>
 	public void SetTerrain(Coordinate cord, Terrain terrain)
 	{
@@ -148,6 +133,7 @@ public partial class WorldMap : Node2D
 		}
 		chunk.TerrainGrid.SetObject(cord.GetWorldPosition(), terrain);
 	}
+	
 	/// <summary> gets terrain at world position </summary>
 	public Terrain GetTerrain(Coordinate cord)
 	{
@@ -159,22 +145,6 @@ public partial class WorldMap : Node2D
 		return chunk.TerrainGrid.GetObject(cord);
 	}
 
-	/// <summary> sets structure at world position </summary>
-	public void SetStructure(Structure structure)
-	{
-		if (structure == null)
-		{
-			return;
-		}
-
-		Chunk chunk = GetChunk(structure.GetCoordinate());
-
-		if (chunk == null)
-		{
-			return;
-		}
-		chunk.StructureGrid.SetObject(structure.GetCoordinate(), structure);
-	}
 	/// <summary> sets structure at world position </summary>
 	public void SetStructure(Coordinate cord, Structure structure)
 	{
@@ -195,6 +165,26 @@ public partial class WorldMap : Node2D
 			return null;
 		}
 		return chunk.StructureGrid.GetObject(cord);
+	}
+
+	public void SetItem(Coordinate cord, Item item){
+		Chunk chunk = GetChunk(cord);
+		if (chunk == null)
+		{
+			return;
+		}
+		chunk.ItemGrid.SetObject(cord, item);
+
+	}
+
+	public Item GetItem(Coordinate cord){
+		Chunk chunk = GetChunk(cord);
+		if (chunk == null)
+		{
+			return null;
+		}
+		return chunk.ItemGrid.GetObject(cord);
+
 	}
 
 	/// <summary> update tile visualization color mode </summary>

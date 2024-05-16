@@ -2,6 +2,7 @@ namespace Atomation.PlayerChar;
 
 using Godot;
 using Atomation.Resources;
+using Atomation.Systems;
 using Atomation.Things;
 using System.Collections.Generic;
 using Atomation.Map;
@@ -50,14 +51,6 @@ public partial class Player : Node2D
 		camera = new Camera(this);
 		gameController = new GameController(this);
 		graphic = new StaticGraphic("player", 1, new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE), Colors.White);
-
-		Item test = new Item(new Coordinate(Vector2.Zero));
-		test.ReadConfigs(DefDatabase.Instance.GetItemDef("Stone"));
-		inventory.SetItem(0,0,test);
-
-		inventory.SetItem(1,1,test);
-		inventory.SetItem(2,2,test);
-
 
 		AddChild(graphic);
 		AddChild(body);

@@ -30,11 +30,6 @@ public abstract class ThingBase : IThing
     protected StatSheet statSheet;
     protected Node2D node;
 
-    protected ThingBase() { }
-    ~ThingBase()
-    {
-        DestroyNode();
-    }
 
     public virtual void SetName(string name)
     {
@@ -56,15 +51,7 @@ public abstract class ThingBase : IThing
     }
     public virtual void SetPosition(Vector2 cord)
     {
-        if (cords != null)
-        {
-            cords.SetPosition(cord);
-        }
-        else
-        {
-            cords = new Coordinate(cord);
-        }
-        node.Position = cords.GetWorldPosition();
+        SetPosition(new Coordinate (cord));
     }
 
     public virtual string GetName()
@@ -106,11 +93,8 @@ public abstract class ThingBase : IThing
     {
         if (GodotObject.IsInstanceValid(node))
         {
-            foreach (var child in node.GetChildren())
-            {
-                child.QueueFree();
-            }
             node.QueueFree();
+            node = null;
         }
     }
 }

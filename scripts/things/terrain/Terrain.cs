@@ -40,7 +40,7 @@ public class Terrain : ThingBase
         Moisture = loaded.Moisture;
         statSheet = new StatSheet(loaded.statSheet, this);
 
-        Configure(DefDatabase.Instance.GetTerrainDef(loaded.defName), true);
+        Configure(ThingDatabase.Instance.GetTerrainDef(loaded.defName), true);
     }
 
     public Terrain(Coordinate cord)
@@ -51,9 +51,19 @@ public class Terrain : ThingBase
 
         SetPosition(cord);
     }
+    
     ~Terrain()
     {
         DestroyNode();
+    }
+
+    public override void DestroyNode()
+    {
+        if (GodotObject.IsInstanceValid(graphic))
+        {
+            graphic.QueueFree();
+        }
+        base.DestroyNode();
     }
 
     public void Configure(TerrainDef def, bool loading = false)

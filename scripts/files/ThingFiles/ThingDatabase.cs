@@ -8,16 +8,16 @@ using Newtonsoft.Json;
 /// class which is used by the FileManger to load def files 
 /// and cached them to be reference through games runtime
 /// </summary>
-public class DefDatabase
+public class ThingDatabase
 {
-    private static DefDatabase instance;
-    public static DefDatabase Instance
+    private static ThingDatabase instance;
+    public static ThingDatabase Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = new DefDatabase();
+                instance = new ThingDatabase();
             }
             return instance;
         }
@@ -29,7 +29,7 @@ public class DefDatabase
     private static DefFile<Biome> BiomeDefs;
     private static bool loaded;
 
-    private DefDatabase()
+    private ThingDatabase()
     {
         loaded = false;
     }
@@ -95,10 +95,13 @@ public class DefDatabase
 
     public ItemDef GetItemDef(string itemID)
     {
+        if (itemID == "Test Item")
+        {
+            return ItemDef.TestDef();
+        }
         if (itemID != null && itemID != "Undefine Item")
         {
             return ItemDefs[itemID];
-
         }
         return ItemDef.Undefined();
     }

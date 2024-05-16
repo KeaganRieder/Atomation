@@ -17,7 +17,8 @@ using Newtonsoft.Json.Converters;
 public class StructureDef : ThingDef
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public SupportType supportReq { get; set; }
+    public SupportType supportReq;
+    public Dictionary<string,int> buildCost;
 
     [JsonConstructor]
     public StructureDef() { }

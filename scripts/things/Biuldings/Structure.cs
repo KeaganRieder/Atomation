@@ -26,7 +26,10 @@ public class Structure : ThingBase
     {
         node = new Node2D();
         graphic = new StaticGraphic();
+        collisionBox = new CollisionShape2D();
+
         node.AddChild(graphic);
+        node.AddChild(collisionBox);
 
         SetPosition(loaded.cords);
         defName = loaded.defName;
@@ -39,14 +42,34 @@ public class Structure : ThingBase
         // buildAble = false;
         node = new Node2D();
         graphic = new StaticGraphic();
+        collisionBox = new CollisionShape2D();
+
         node.AddChild(graphic);
+        node.AddChild(collisionBox);
 
         cords = cord;
         SetPosition(cord);
     }
-    ~Structure()
+
+    public void Configure(StructureDef def, bool loading = false)
     {
-        DestroyNode();
+        if (!loading)
+        {
+            defName = def.defName;
+            statSheet = new StatSheet(def.statSheet, this);
+        }
+        description = def.description;
+        supportReq = def.supportReq;
+        resources = new Dictionary<string, int>();
+        foreach (var items in def.buildCost)
+        {
+            resources.Add(items.Key, items.Value);
+        }
+
+        node.Name = $"{defName} {cords}";
+        graphic.Configure(def.graphicData);
+        collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE) };
+        collisionBox.Position = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE) / 2;
     }
     public override void DestroyNode()
     {
@@ -54,29 +77,10 @@ public class Structure : ThingBase
         {
             graphic.QueueFree();
         }
+        collisionBox.QueueFree();
         base.DestroyNode();
     }
-
-    public void Configure(StructureDef def, bool loading = false)
-    {
-        defName = def.defName;
-        description = def.description;
-        supportReq = def.supportReq;
-        resources = new Dictionary<string, int>();
-        foreach (var items in def.buildCost)
-        {
-            resources.Add(items.Key,items.Value);
-        }
-
-        node.Name = $"{defName} {cords}";
-        graphic.Configure(def.graphicData);
-        if (!loading)
-        {
-            statSheet = new StatSheet(def.statSheet, this);
-        }
-    }
-
-
+    
     public StaticGraphic GetGraphic()
     {
         return graphic;

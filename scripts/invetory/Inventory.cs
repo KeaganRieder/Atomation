@@ -55,10 +55,10 @@ public partial class Inventory : GameUI
             }
         }
     }
-    public void SetAnchor(LayoutPreset preset)
+    public override void SetAnchor(LayoutPreset preset)
     {
         layoutPreset = preset;
-        SetAnchorsAndOffsetsPreset(preset);
+        base.SetAnchor(preset);
         slotContainer.SetAnchorsAndOffsetsPreset(preset);
     }
 

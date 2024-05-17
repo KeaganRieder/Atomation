@@ -19,17 +19,18 @@ public interface IThing
 /// </summary>
 public abstract class ThingBase : IThing
 {
-    [JsonProperty(Order = -1)]
+    [JsonProperty(Order = 1)]
     protected string defName;
 
     protected string description;
 
-    [JsonProperty(Order = -1)]
+    [JsonProperty(Order = 1)]
     protected Coordinate cords;
-    [JsonProperty(Order = -1)]
+    [JsonProperty(Order = 1)]
     protected StatSheet statSheet;
-    protected Node2D node;
 
+    protected Node2D node;
+    protected CollisionShape2D collisionBox;
 
     public virtual void SetName(string name)
     {
@@ -89,6 +90,7 @@ public abstract class ThingBase : IThing
     {
         return node;
     }
+   
     public virtual void DestroyNode()
     {
         if (GodotObject.IsInstanceValid(node))

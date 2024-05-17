@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Godot;
 using Resources;
 using Map;
-using Atomation.PlayerChar;
+using Atomation.Pawns;
 using Atomation.Systems;
 
 
@@ -39,10 +39,6 @@ public partial class Item : ThingBase
         graphic = new StaticGraphic();
         statSheet = new StatSheet();
         SetPosition(cords);
-    }
-    ~Item()
-    {
-        DestroyNode();
     }
 
     public void Configure(ItemDef itemDef, bool loading = false)

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Godot;
 using Atomation.Things;
 using Atomation.Resources;
+using Atomation.Pawns;
+
 
 /// <summary> terrain tiles display mode </summary>
 public enum VisualizationMode
@@ -54,6 +56,14 @@ public partial class WorldMap : Node2D
 
 		lastUpdatedChunks = new List<Chunk>();
 		chunkArray = new Dictionary<Vector2, Chunk>();
+
+	}
+
+
+
+	private void OnTimerTimeout()
+	{
+
 	}
 
 	public SavedMap Save()
@@ -92,6 +102,7 @@ public partial class WorldMap : Node2D
 		chunkArray = new Dictionary<Vector2, Chunk>();
 		lastUpdatedChunks = new List<Chunk>();
 	}
+
 	/// <summary> destroys chunk at given cords </summary>
 	private void DestroyChunk(KeyValuePair<Vector2, Chunk> chunkInfo)
 	{
@@ -116,13 +127,13 @@ public partial class WorldMap : Node2D
 			return null;
 		}
 	}
-	
+
 	/// <summary>returns true if chunk at given cords, other wise returns false </summary>
 	public bool ChunkExists(Coordinate cords)
 	{
 		return GetChunk(cords) != null;
 	}
-	
+
 	/// <summary> sets terrain at world position </summary>
 	public void SetTerrain(Coordinate cord, Terrain terrain)
 	{
@@ -133,7 +144,7 @@ public partial class WorldMap : Node2D
 		}
 		chunk.TerrainGrid.SetObject(cord.GetWorldPosition(), terrain);
 	}
-	
+
 	/// <summary> gets terrain at world position </summary>
 	public Terrain GetTerrain(Coordinate cord)
 	{
@@ -167,7 +178,8 @@ public partial class WorldMap : Node2D
 		return chunk.StructureGrid.GetObject(cord);
 	}
 
-	public void SetItem(Coordinate cord, Item item){
+	public void SetItem(Coordinate cord, Item item)
+	{
 		Chunk chunk = GetChunk(cord);
 		if (chunk == null)
 		{
@@ -177,7 +189,8 @@ public partial class WorldMap : Node2D
 
 	}
 
-	public Item GetItem(Coordinate cord){
+	public Item GetItem(Coordinate cord)
+	{
 		Chunk chunk = GetChunk(cord);
 		if (chunk == null)
 		{
@@ -247,4 +260,6 @@ public partial class WorldMap : Node2D
 			}
 		}
 	}
+
+
 }

@@ -2,7 +2,7 @@ namespace Atomation.Systems;
 
 using System.Collections.Generic;
 using Atomation.Map;
-using Atomation.PlayerChar;
+using Atomation.Pawns;
 using Atomation.Things;
 using GdUnit4;
 using Godot;

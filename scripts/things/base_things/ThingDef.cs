@@ -28,7 +28,6 @@ public abstract class ThingDef : Def
         }
     }
    
-
     public override string GetKey()
     {
         if (defName == "" || defName == null)

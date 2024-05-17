@@ -35,9 +35,7 @@ public partial class InventorySlot : Panel
         itemCount.AddThemeConstantOverride("shadow_outline_size", 5);
         itemCount.AddThemeFontSizeOverride("font_size", 16);
 
-        AddChild(itemCount);
-
-        
+        AddChild(itemCount);       
     }
 
     private void SetUpGUiInput(){
@@ -145,6 +143,6 @@ public partial class InventorySlot : Panel
     }
     
     private void HandleRightCLick(){
-        
+         
     }
 }

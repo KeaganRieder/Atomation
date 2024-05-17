@@ -1,18 +1,18 @@
-namespace Atomation.PlayerChar;
+namespace Atomation.Pawns;
 
 using Godot;
 using Atomation.Resources;
 using Atomation.Systems;
 using Atomation.Things;
-using System.Collections.Generic;
-using Atomation.Map;
 using Atomation.Controls;
+using System.Collections.Generic;
+
 
 
 /// <summary>
 /// A player in the game is what the users object is 
 /// </summary>
-public partial class Player : Node2D
+public partial class Player : CharacterBody2D
 {
 	private static Player playerInstance;
 	public static Player Instance
@@ -28,14 +28,13 @@ public partial class Player : Node2D
 		}
 	}
 
-	private Coordinate cords;
 	private StatSheet statSheet;
 	private Inventory inventory;
 
-	private GameController gameController;
-	private StaticGraphic graphic;
-	private CharacterBody2D body;
 	private Camera camera;
+	private PlayerController playerController;
+	private StaticGraphic graphic;
+	//todo Collision
 
 	private Player()
 	{
@@ -44,55 +43,23 @@ public partial class Player : Node2D
 		InitializeStats();
 		ZIndex = VisualLayer.PLAYER;
 
-		SetPosition(Vector2.Zero);
-		body = new CharacterBody2D();
-
+		Position = Vector2.Zero;
+		playerController = new PlayerController(this);
 		inventory = new Inventory(this);
 		camera = new Camera(this);
-		gameController = new GameController(this);
-		graphic = new StaticGraphic("player", 1, new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE), Colors.White);
-
-		AddChild(graphic);
-		AddChild(body);
+		graphic = new StaticGraphic("player", 1, new Vector2I(Map.MapData.CELL_SIZE, Map.MapData.CELL_SIZE), Colors.White, this);
 	}
 
 	private void InitializeStats()
 	{
 		Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>(){
-				{StatKeys.MOVE_SPEED, new ModifiableStat(StatKeys.MOVE_SPEED, "players moveSpeed", 1)},
+				{StatKeys.MOVE_SPEED, new ModifiableStat(StatKeys.MOVE_SPEED, "players moveSpeed", 50)},
 				{StatKeys.MAX_HEALTH, new ModifiableStat(StatKeys.MAX_HEALTH, "players hit points", 100)},
 				{StatKeys.ATTACK_DAMAGE, new ModifiableStat(StatKeys.ATTACK_DAMAGE, "players Attack dmg", 10)}};
 
 		statSheet = new StatSheet(stats, new Dictionary<string, StatModifierBase>());
 	}
 
-	public void SetPosition(Coordinate cord)
-	{
-
-		cords = cord;
-		Position = cord.GetWorldPosition();
-	}
-	public virtual void SetPosition(Vector2 cord)
-	{
-		if (cords != null)
-		{
-			cords.SetPosition(cord);
-		}
-		else
-		{
-			cords = new Coordinate(cord);
-		}
-		Position = cords.GetWorldPosition();
-	}
-
-	public Coordinate GetCoordinate()
-	{
-		if (cords != null)
-		{
-			return cords;
-		}
-		return new Coordinate(Position);
-	}
 	public StatSheet GetStatSheet()
 	{
 		return statSheet;
@@ -114,22 +81,21 @@ public partial class Player : Node2D
 	{
 		GD.Print("Loading Player");
 		Name = loadedData.Name;
-		SetPosition(loadedData.Cords);
+		Position = loadedData.Cords;
 		statSheet = loadedData.StatSheet;
 	}
 
-	public void Move()
+	public void Move(Vector2 direction)
 	{
-		//figure out how to smooth movement
-		Vector2 velocityVector = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-		Position += velocityVector.Normalized() * statSheet.GetStat(StatKeys.MOVE_SPEED).CurrentValue;
-		cords.SetPosition(Position);
-		WorldMap.Instance.UpdateVisibleChunks(cords);
+		// Position += direction.Normalized()
+		// cords.SetPosition(Position);
+		Velocity = direction * statSheet.GetStat(StatKeys.MOVE_SPEED).CurrentValue;
+		MoveAndSlide();
 	}
 
 	public void Damage(float amount)
 	{
-		//todo death
+		//todo death make signal
 		statSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
 	}
 	public void Damage(StatSheet statSheet)

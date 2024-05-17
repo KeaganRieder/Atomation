@@ -5,6 +5,7 @@ using Godot;
 
 public class GameBindings
 {
+    // ScrollContainer
     private Dictionary<string, InputEvent> playerBindings;
     private Dictionary<string, InputEventKey> cameraBindings;
     private Dictionary<string, InputEventKey> worldBindings;
@@ -29,7 +30,7 @@ public class GameBindings
             {"QuickSave", new InputEventKey{PhysicalKeycode = Key.F5}},
             {"QuickLoad", new InputEventKey{PhysicalKeycode = Key.F6}},
             {"Inventory", new InputEventKey{PhysicalKeycode = Key.I}},
-            {"Menu", new InputEventKey{PhysicalKeycode = Key.Escape}},
+            {"Pause", new InputEventKey{PhysicalKeycode = Key.Escape}},
         };
 
         cameraBindings = new Dictionary<string, InputEventKey>

@@ -22,4 +22,9 @@ public abstract partial  class GameUI : Control
         Visible = false;
         IsOpen = false;
     }
+    public virtual void SetAnchor(LayoutPreset preset)
+    {
+        SetAnchorsAndOffsetsPreset(preset);
+    }
+
 }

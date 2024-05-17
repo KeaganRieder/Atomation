@@ -23,7 +23,7 @@ public partial class StaticGraphic : Sprite2D
         SetTexture();
     }
 
-    public StaticGraphic(string texturePath, int variants, Vector2I graphicSize, Color defaultColor)
+    public StaticGraphic(string texturePath, int variants, Vector2I graphicSize, Color defaultColor, Node2D parent)
     {
         TexturePath = FilePaths.TEXTURE_FOLDER + texturePath;
         this.variants = variants;
@@ -32,6 +32,7 @@ public partial class StaticGraphic : Sprite2D
 
         DefaultColor = defaultColor;
         SetTexture();
+        parent.AddChild(this);
     }
 
     public void Configure(GraphicData configs)

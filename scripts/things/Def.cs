@@ -21,10 +21,10 @@ public interface IDef
 /// </summary>
 public abstract class Def : IDef
 {
-    [JsonProperty(Order = -1)]
+    [JsonProperty(Order = 1)]
     public string defName { get; set; }
 
-    [JsonProperty(Order = -1)]
+    [JsonProperty(Order = 1)]
     public string description { get; set; }
 
     [JsonConstructor]

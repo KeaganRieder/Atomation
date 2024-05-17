@@ -114,23 +114,6 @@ public class Coordinate
         return Mathf.Round(distance);
     }
 
-
-    /// <summary>
-    /// convert to chunk cords from normal cords
-    /// </summary>
-    public ChunkCoordinate ToChunkCords()
-    {
-        return new ChunkCoordinate(worldPosition);
-    }
-
-    /// <summary>
-    /// convert to normal cords from chunk cords
-    /// </summary>
-    public Coordinate ToCords()
-    {
-        return new Coordinate(worldPosition);
-    }
-
     // public static implicit operator Vector2(Coordinate cord) => cord.GetWorldPosition();
     // public static implicit operator Vector2I(Coordinate cord) => cord.GetXYPosition();
     public override string ToString()

@@ -131,11 +131,11 @@ public partial class Chunk : Node2D
 
 		Visible = Rendered;
 	}
-
-
 	/// <summary> returns Visibility of chunk </summary>
 	public bool CheckVisibility()
 	{
 		return Rendered;
 	}
+
+	
 }

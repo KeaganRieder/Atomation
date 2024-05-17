@@ -1,7 +1,7 @@
 namespace Atomation.UnitTests;
 
 using Atomation.Map;
-using Atomation.PlayerChar;
+using Atomation.Pawns;
 using Atomation.Things;
 using GdUnit4;
 using Godot;
@@ -17,17 +17,6 @@ public class PlayerTest
         Player player2 = AutoFree(Player.Instance);
 
         AssertThat(player).IsEqual(player2);
-
-        AssertThat(player.GetCoordinate().GetWorldPosition()).IsEqual(Vector2.Zero);
-        AssertThat(player.GetCoordinate().GetXYPosition()).IsEqual(Vector2I.Zero);
-        AssertThat(player.GetCoordinate().ToChunkCords().GetWorldPosition()).IsEqual(Vector2.Zero);
-        AssertThat(player.GetCoordinate().ToChunkCords().GetXYPosition()).IsEqual(Vector2I.Zero);
-
-        player.SetPosition(new Coordinate(new Vector2(-512, -512)));
-        AssertThat(player.GetCoordinate().GetWorldPosition()).IsEqual(new Vector2(-512, -512));
-        AssertThat(player.GetCoordinate().GetXYPosition()).IsEqual(new Vector2I(0, 0));
-        AssertThat(player.GetCoordinate().ToChunkCords().GetWorldPosition()).IsEqual(new Vector2(-512, -512));
-        AssertThat(player.GetCoordinate().ToChunkCords().GetXYPosition()).IsEqual(new Vector2I(-1, -1));
 
         AssertThat(player.Name).IsEqual("player");
 

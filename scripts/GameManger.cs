@@ -2,10 +2,12 @@ namespace Atomation;
 
 using Atomation.Map;
 using Atomation.Resources;
-using Atomation.PlayerChar;
+using Atomation.Pawns;
 using Atomation.Things;
 using Godot;
 using System.Collections.Generic;
+using Atomation.Ui;
+
 
 /// <summary>
 /// Main class which handles manning the game through different scene
@@ -25,11 +27,10 @@ public partial class GameManger : Node2D
       }
    }
 
-   private WorldMap worldMap;
+   private PauseMenu pauseMenu;
 
-   private GameManger()
-   {
-   }
+   private GameManger() { }
+
    ~GameManger()
    {
       if (IsInstanceValid(this))
@@ -52,14 +53,13 @@ public partial class GameManger : Node2D
       // ItemDefs.FormatResourceItemDefs();
       // StructureDefs.FormatNaturalStructureDefs();
       // TerrainDefs.FormatTerrainDefs();
-
       LoadResources();
 
-      worldMap = WorldMap.Instance;
+      AddChild(WorldMap.Instance);
+      AddChild(Player.Instance);
 
-      AddChild(worldMap);
-
-      AddChild(Player.Instance);      
+      pauseMenu = PauseMenu.Instance;
+      Player.Instance.GetCamera().AddChild(pauseMenu);
    }
 
    public static void LoadResources()

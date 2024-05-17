@@ -11,35 +11,37 @@ using Newtonsoft.Json;
 /// </summary>
 public class Terrain : ThingBase
 {
+    [JsonProperty("elevation", Order = 1)]
+    public float Elevation;
+    [JsonProperty("temperature", Order = 1)]
+    public float Temperature;
+    [JsonProperty("moisture", Order = 1)]
+    public float Moisture;
+
     private SupportType supportProvided;
     private SupportType supportReq;
-    private bool collidable;
 
     private StaticGraphic graphic;
 
-    [JsonProperty("elevation")]
-    public float Elevation;
-    [JsonProperty("temperature")]
-    public float Temperature;
-    [JsonProperty("moisture")]
-    public float Moisture;
 
     [JsonConstructor]
     public Terrain() { }
 
     public Terrain(Terrain loaded)
     {
-        node = new Node2D();
-        graphic = new StaticGraphic();
-        node.AddChild(graphic);
-        SetPosition(loaded.GetCoordinate());
-
         defName = loaded.defName;
         Elevation = loaded.Elevation;
         Temperature = loaded.Temperature;
         Moisture = loaded.Moisture;
         statSheet = new StatSheet(loaded.statSheet, this);
 
+        node = new Node2D();
+        graphic = new StaticGraphic();
+
+        node.AddChild(graphic);
+        node.AddChild(collisionBox);
+
+        SetPosition(loaded.GetCoordinate());
         Configure(ThingDatabase.Instance.GetTerrainDef(loaded.defName), true);
     }
 
@@ -47,45 +49,43 @@ public class Terrain : ThingBase
     {
         node = new Node2D();
         graphic = new StaticGraphic();
+        collisionBox = new CollisionShape2D();
+
         node.AddChild(graphic);
+        node.AddChild(collisionBox);
 
         SetPosition(cord);
-    }
-    
-    ~Terrain()
-    {
-        DestroyNode();
-    }
-
-    public override void DestroyNode()
-    {
-        if (GodotObject.IsInstanceValid(graphic))
-        {
-            graphic.QueueFree();
-        }
-        base.DestroyNode();
     }
 
     public void Configure(TerrainDef def, bool loading = false)
     {
-        defName = def.defName;
-        description = def.description;
-        collidable = def.collidable;
+        if (!loading)
+        {
+            defName = def.defName;
+            statSheet = new StatSheet(def.statSheet, this);
+        }
 
+        description = def.description;
         supportProvided = def.supportProvided;
         supportReq = def.supportReq;
 
         node.Name = $"{defName} {cords}";
         graphic.Configure(def.graphicData);
         UpdateGraphic(VisualizationMode.Default);
-
-        if (!loading)
-        {
-            statSheet = new StatSheet(def.statSheet, this);
-
-        }
+        collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE) };
+        collisionBox.Position = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE) / 2;
     }
-
+    
+    public override void DestroyNode()
+    {
+        if (GodotObject.IsInstanceValid(graphic))
+        {
+            graphic.QueueFree();
+            collisionBox.QueueFree();
+        }
+        base.DestroyNode();
+    }
+    
     public void SetElation(float val)
     {
         Elevation = val;

@@ -2,6 +2,7 @@ namespace Atomation.Pawns;
 
 using Godot;
 using Atomation.Things;
+using StatSystem;
 
 public class SavedPlayer
 {

@@ -1,3 +1,0 @@
-things still needing done in stats
-- correct typing upon reading form json
-- making modifiers have their origin/affecting object

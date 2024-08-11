@@ -18,24 +18,29 @@ public struct BiomeLabel
 /// biomes are used to determine the types of terrain based on
 /// the provide elevation, moisture and temperature
 /// </summary>
-public class Biome : Def
+public class Biome : IDef
 {
-    [JsonProperty("minMoisture")]
-    public float MinMoisture;
-    [JsonProperty("maxMoisture")]
-    public float MaxMoisture;
-    [JsonProperty("minTemperature")]
-    public float MinTemperature;
-    [JsonProperty("maxTemperature")]
-    public float MaxTemperature;
+    //     [JsonProperty(Order = 1)]
+    private string defName;
+    private float minMoisture;
+    private float maxMoisture;
+    private float minTemperature;
+    private float maxTemperature;
 
-    [JsonProperty("biomeTerrain")]
+    [JsonProperty("BiomeTerrain")]
     private Dictionary<float, string> terrain = null;
 
-    [JsonProperty("biomeColor")]
+    [JsonProperty("BiomeColor")]
     public Color Color;
 
-    public override string GetKey()
+    public string DefName { get => defName; set => defName = value; }
+    public float MinMoisture { get => minMoisture; set => minMoisture = value; }
+    public float MaxMoisture { get => maxMoisture; set => maxMoisture = value; }
+    public float MinTemperature { get => minTemperature; set => minTemperature = value; }
+    public float MaxTemperature { get => maxTemperature; set => maxTemperature = value; }
+
+
+    public virtual string GetKey()
     {
         BiomeLabel biomeLabel = new BiomeLabel()
         {
@@ -47,8 +52,10 @@ public class Biome : Def
         return JsonConvert.SerializeObject(biomeLabel);
     }
 
-    public Biome()
+    public Biome(float maxTemperature = 0)
     {
+        this.maxTemperature = maxTemperature;
+
     }
 
     /// <summary>

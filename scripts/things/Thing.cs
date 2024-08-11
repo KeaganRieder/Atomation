@@ -1,0 +1,71 @@
+namespace Atomation.Things;
+
+using Resources;
+using StatSystem;
+using GameMap;
+using Godot;
+using Newtonsoft.Json;
+
+/// <summary>
+/// The base class of all things that make up the games world.
+/// </summary>
+public abstract class Thing 
+{
+    protected string name;
+    protected string description;
+
+    protected StatSheet statSheet;
+
+    protected StaticGraphic graphic;
+    protected CollisionShape2D collisionBox;
+
+    protected int gridLayer;
+
+    public Thing()    {    }
+
+    public Thing(ThingDef configs)
+    {
+        Configure(configs);
+    }
+
+    public string Name { get => name; private set => name = value; }
+    [JsonIgnore]
+    public string Description { get => description; private set => description = value; }
+
+    public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
+
+    public Vector2 Position { get => graphic.Position; set => graphic.Position = value; }
+
+    [JsonIgnore]
+    public StaticGraphic Graphic { get => graphic; set => graphic = value; }
+    [JsonIgnore]
+    public CollisionShape2D CollisionBox { get => collisionBox; set => collisionBox = value; }
+    [JsonIgnore]
+    public int GridLayer { get => gridLayer; private set => gridLayer = value; }
+
+    public virtual void Configure(ThingDef config)
+    {
+        if (config == null)
+        {
+            GD.PrintErr("can't configure thing from null configs");
+            return;
+        }
+        name = config.DefName;
+        description = config.Description;
+        statSheet = new StatSheet(config.StatSheet, this);
+    }
+
+    public virtual void DestroyNode()
+    {
+        if (GodotObject.IsInstanceValid(graphic))
+        {
+            graphic.QueueFree();
+            graphic = null;
+        }
+        if (GodotObject.IsInstanceValid(collisionBox))
+        {
+            collisionBox.QueueFree();
+            collisionBox = null;
+        }
+    }
+}

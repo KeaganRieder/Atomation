@@ -1,48 +1,37 @@
-namespace Atomation.Things;
+// namespace Atomation.Things;
 
-using Newtonsoft.Json;
+// using Newtonsoft.Json;
 
-public interface IDef
-{
-    /// <summary>
-    /// objects name
-    /// </summary>
-    public string defName { get; set; }
-    /// <summary>
-    /// key for cache dictionary, in order to properly sort
-    /// and retrieve the item from it
-    /// </summary>
-    public abstract string GetKey();
-}
 
-/// <summary>
-/// base class of all simple things like stats and stat modifiers, as well 
-/// as def file used to create complex things like terrain and structures 
-/// </summary>
-public abstract class Def : IDef
-{
-    [JsonProperty(Order = 1)]
-    public string defName { get; set; }
 
-    [JsonProperty(Order = 1)]
-    public string description { get; set; }
+// /// <summary>
+// /// base class of all simple things like stats and stat modifiers, as well 
+// /// as def file used to create complex things like terrain and structures 
+// /// </summary>
+// public abstract class Def : IDef
+// {
+//     [JsonProperty(Order = 1)]
+//     protected string defName { get; set; }
 
-    [JsonConstructor]
-    protected Def() { }
+//     [JsonProperty(Order = 1)]
+//     public string description { get; set; }
 
-    protected Def(string name, string description)
-    {
-        defName = name;
-        this.description = description;
-    }
+//     [JsonConstructor]
+//     protected Def() { }
 
-    public virtual string GetKey()
-    {
-        if (defName == "" || defName == null)
-        {
-            defName = "Undefined_Def";
-        }
+//     protected Def(string name, string description)
+//     {
+//         DefName = name;
+//         this.description = description;
+//     }
 
-        return defName;
-    }
-}
+//     public virtual string GetKey()
+//     {
+//         if (DefName == "" || DefName == null)
+//         {
+//             DefName = "Undefined_Def";
+//         }
+
+//         return DefName;
+//     }
+// }

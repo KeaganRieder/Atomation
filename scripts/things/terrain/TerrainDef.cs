@@ -1,24 +1,22 @@
 namespace Atomation.Things;
 
 using System.Collections.Generic;
-using Atomation.Map;
-using Atomation.Resources;
+using GameMap;
+using Resources;
+using StatSystem;
 using Godot;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 /// <summary>
-/// data class used in formatting terrain def files that once written to a json
-/// can be read in order to create new instances of terrain based on values defined
-/// in the def file
+/// def file used to define aspects of terrain 
 /// </summary>
 public class TerrainDef : ThingDef
 {
-    public bool collidable { get; set; }
-    [JsonConverter(typeof(StringEnumConverter))]
-    public SupportType supportProvided { get; set; }
-    [JsonConverter(typeof(StringEnumConverter))]
-    public SupportType supportReq { get; set; }
+    private bool collidable;
+
+    private SupportType supportProvided;
+    private SupportType supportReq;
 
     [JsonConstructor]
     public TerrainDef() { }
@@ -34,9 +32,17 @@ public class TerrainDef : ThingDef
                           texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
                           variants = 1,
                           color = Colors.Purple,
-                          graphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE)
+                          graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                       });
     }
+
+    public bool Collidable { get => collidable; set => collidable = value; }
+    
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SupportType SupportProvided { get => supportProvided; set => supportProvided = value; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SupportType SupportReq { get => supportReq; set => supportReq = value; }
+
 
     public override string GetKey()
     {
@@ -47,5 +53,4 @@ public class TerrainDef : ThingDef
 
         return defName;
     }
-
 }

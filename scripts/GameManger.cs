@@ -1,6 +1,6 @@
 namespace Atomation;
 
-using Atomation.Map;
+using Atomation.GameMap;
 using Atomation.Resources;
 using Atomation.Pawns;
 using Atomation.Things;
@@ -52,10 +52,10 @@ public partial class GameManger : Node2D
       base._Ready();
       // ItemDefs.FormatResourceItemDefs();
       // StructureDefs.FormatNaturalStructureDefs();
-      // TerrainDefs.FormatTerrainDefs();
+      TerrainDefs.FormatTerrainDefs();
       LoadResources();
 
-      AddChild(WorldMap.Instance);
+      AddChild(Map.Instance);
       AddChild(Player.Instance);
 
       pauseMenu = PauseMenu.Instance;

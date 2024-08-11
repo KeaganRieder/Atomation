@@ -1,10 +1,38 @@
 {
   "Defs": {
     "Marsh": {
-      "collidable": false,
-      "supportProvided": "Medium",
-      "supportReq": "None",
-      "graphicData": {
+      "Collidable": false,
+      "SupportProvided": "Medium",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
+        "Stats": {
+          "fertility": {
+            "Modifiable": true,
+            "Value": 0.0,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.0,
+            "Description": "The tile's fertility"
+          }
+        },
+        "StatModifers": {
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.4,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
+          }
+        }
+      },
+      "GraphicData": {
         "texturePath": "terrain/natural/marsh",
         "variants": 1,
         "color": {
@@ -26,33 +54,42 @@
           "Y": 16
         }
       },
-      "statSheet": {
+      "DefName": "Marsh",
+      "Description": "it's Marshy"
+    },
+    "Shallow Ocean": {
+      "Collidable": false,
+      "SupportProvided": "Medium",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
         "Stats": {
           "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.0
+            "Modifiable": true,
+            "Value": 0.0,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.0,
+            "Description": "The tile's fertility"
           }
         },
         "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.4
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.5,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
           }
         }
       },
-      "defName": "Marsh",
-      "description": "it's Marshy"
-    },
-    "Shallow Ocean": {
-      "collidable": false,
-      "supportProvided": "Medium",
-      "supportReq": "None",
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/ocean",
         "variants": 1,
         "color": {
@@ -74,33 +111,42 @@
           "Y": 16
         }
       },
-      "statSheet": {
+      "DefName": "Shallow Ocean",
+      "Description": "it's Ocean which is shallow"
+    },
+    "Shallow Water": {
+      "Collidable": false,
+      "SupportProvided": "Medium",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
         "Stats": {
           "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.0
+            "Modifiable": true,
+            "Value": 0.0,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.0,
+            "Description": "The tile's fertility"
           }
         },
         "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.5
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.5,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
           }
         }
       },
-      "defName": "Shallow Ocean",
-      "description": "it's Ocean which is shallow"
-    },
-    "Shallow Water": {
-      "collidable": false,
-      "supportProvided": "Medium",
-      "supportReq": "None",
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/water",
         "variants": 1,
         "color": {
@@ -122,33 +168,42 @@
           "Y": 16
         }
       },
-      "statSheet": {
+      "DefName": "Shallow Water",
+      "Description": "it's shallow water"
+    },
+    "Deep Ocean": {
+      "Collidable": false,
+      "SupportProvided": "None",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
         "Stats": {
           "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.0
+            "Modifiable": true,
+            "Value": 0.0,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.0,
+            "Description": "The tile's fertility"
           }
         },
         "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.5
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.0,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
           }
         }
       },
-      "defName": "Shallow Water",
-      "description": "it's shallow water"
-    },
-    "Deep Ocean": {
-      "collidable": false,
-      "supportProvided": "None",
-      "supportReq": "None",
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/ocean",
         "variants": 1,
         "color": {
@@ -170,33 +225,42 @@
           "Y": 16
         }
       },
-      "statSheet": {
+      "DefName": "Deep Ocean",
+      "Description": "it's Ocean which is Deep"
+    },
+    "Deep Water": {
+      "Collidable": false,
+      "SupportProvided": "None",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
         "Stats": {
           "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.0
+            "Modifiable": true,
+            "Value": 0.0,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.0,
+            "Description": "The tile's fertility"
           }
         },
         "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.0
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.2,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
           }
         }
       },
-      "defName": "Deep Ocean",
-      "description": "it's Ocean which is Deep"
-    },
-    "Deep Water": {
-      "collidable": false,
-      "supportProvided": "None",
-      "supportReq": "None",
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/water",
         "variants": 1,
         "color": {
@@ -218,27 +282,8 @@
           "Y": 16
         }
       },
-      "statSheet": {
-        "Stats": {
-          "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.0
-          }
-        },
-        "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.2
-          }
-        }
-      },
-      "defName": "Deep Water",
-      "description": "it's deep water, which you have to swim through"
+      "DefName": "Deep Water",
+      "Description": "it's deep water, which you have to swim through"
     }
   }
 }

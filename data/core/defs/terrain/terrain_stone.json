@@ -1,10 +1,38 @@
 {
   "Defs": {
     "Gravel": {
-      "collidable": false,
-      "supportProvided": "Heavy",
-      "supportReq": "None",
-      "graphicData": {
+      "Collidable": false,
+      "SupportProvided": "Heavy",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
+        "Stats": {
+          "fertility": {
+            "Modifiable": true,
+            "Value": 0.5,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.5,
+            "Description": "The tile's fertility"
+          }
+        },
+        "StatModifers": {
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.5,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
+          }
+        }
+      },
+      "GraphicData": {
         "texturePath": "terrain/natural/gravel",
         "variants": 1,
         "color": {
@@ -26,33 +54,42 @@
           "Y": 16
         }
       },
-      "statSheet": {
+      "DefName": "Gravel",
+      "Description": "it's made of smaller rocks"
+    },
+    "Marble": {
+      "Collidable": false,
+      "SupportProvided": "Heavy",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
         "Stats": {
           "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.5
+            "Modifiable": true,
+            "Value": 0.0,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.0,
+            "Description": "The tile's fertility"
           }
         },
         "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.5
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.5,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
           }
         }
       },
-      "defName": "Gravel",
-      "description": "it's made of smaller rocks"
-    },
-    "Marble": {
-      "collidable": false,
-      "supportProvided": "Heavy",
-      "supportReq": "None",
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/rock_floor",
         "variants": 1,
         "color": {
@@ -74,33 +111,42 @@
           "Y": 16
         }
       },
-      "statSheet": {
+      "DefName": "Marble",
+      "Description": "it's white rock which looks nice"
+    },
+    "Slate": {
+      "Collidable": false,
+      "SupportProvided": "Heavy",
+      "SupportReq": "None",
+      "StatSheet": {
+        "TargetObject": null,
         "Stats": {
           "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.0
+            "Modifiable": true,
+            "Value": 0.0,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.0,
+            "Description": "The tile's fertility"
           }
         },
         "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.5
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.5,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
           }
         }
       },
-      "defName": "Marble",
-      "description": "it's white rock which looks nice"
-    },
-    "Slate": {
-      "collidable": false,
-      "supportProvided": "Heavy",
-      "supportReq": "None",
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/rock_floor",
         "variants": 1,
         "color": {
@@ -122,27 +168,8 @@
           "Y": 16
         }
       },
-      "statSheet": {
-        "Stats": {
-          "fertility": {
-            "defName": "fertility",
-            "description": "The tile's fertility",
-            "Type": "Undefined",
-            "baseValue": 0.0
-          }
-        },
-        "StatModifers": {
-          "Move Speed": {
-            "defName": "MoveSpeed Modifier",
-            "description": "Tiles effect on Move Speed",
-            "modifierType": "Flat",
-            "targetStat": "Move Speed",
-            "value": 0.5
-          }
-        }
-      },
-      "defName": "Slate",
-      "description": "it's a black rock which looks nice"
+      "DefName": "Slate",
+      "Description": "it's a black rock which looks nice"
     }
   }
 }

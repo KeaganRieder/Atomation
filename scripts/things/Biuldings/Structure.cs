@@ -1,19 +1,20 @@
 namespace Atomation.Things;
 
 using Atomation.Resources;
-using Atomation.Map;
+using Atomation.GameMap;
 using Godot;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Atomation.StatSystem;
+
 
 /// <summary>
 /// a structure or building is something that is either naturally
 /// occurring in the game or is built and placed by the player
 /// </summary>
-public class Structure : ThingBase
+public class Structure : Thing
 {
     private SupportType supportReq;
-    private StaticGraphic graphic;
 
     // private bool buildAble;
     private Dictionary<string, int> resources;
@@ -22,43 +23,37 @@ public class Structure : ThingBase
     [JsonConstructor]
     public Structure() { }
 
-    public Structure(Structure loaded)
+    // public Structure(Structure loaded)
+    // {
+    //     graphic = new StaticGraphic();
+    //     collisionBox = new CollisionShape2D();
+
+    //     graphic.AddChild(collisionBox);
+
+    //     SetPosition(loaded.cords);
+    //     name = loaded.name;
+    //     statSheet = new StatSheet(loaded.statSheet, this);
+
+    //     Configure(ThingDatabase.Instance.GetStructureDef(name), true);
+    // }
+    public Structure(Vector2 position)
     {
-        node = new Node2D();
         graphic = new StaticGraphic();
         collisionBox = new CollisionShape2D();
 
-        node.AddChild(graphic);
-        node.AddChild(collisionBox);
+        graphic.AddChild(collisionBox);
 
-        SetPosition(loaded.cords);
-        defName = loaded.defName;
-        statSheet = new StatSheet(loaded.statSheet, this);
-
-        Configure(ThingDatabase.Instance.GetStructureDef(defName), true);
-    }
-    public Structure(Coordinate cord)
-    {
-        // buildAble = false;
-        node = new Node2D();
-        graphic = new StaticGraphic();
-        collisionBox = new CollisionShape2D();
-
-        node.AddChild(graphic);
-        node.AddChild(collisionBox);
-
-        cords = cord;
-        SetPosition(cord);
+        graphic.Position = position;
     }
 
     public void Configure(StructureDef def, bool loading = false)
     {
         if (!loading)
         {
-            defName = def.defName;
-            statSheet = new StatSheet(def.statSheet, this);
+            name = def.DefName;
+            statSheet = new StatSheet(def.StatSheet, this);
         }
-        description = def.description;
+        description = def.Description;
         supportReq = def.supportReq;
         resources = new Dictionary<string, int>();
         foreach (var items in def.buildCost)
@@ -66,10 +61,10 @@ public class Structure : ThingBase
             resources.Add(items.Key, items.Value);
         }
 
-        node.Name = $"{defName} {cords}";
-        graphic.Configure(def.graphicData);
-        collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE) };
-        collisionBox.Position = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE) / 2;
+        graphic.Name = $"{name} {Position}";
+        graphic.Configure(def.GraphicData);
+        collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) };
+        collisionBox.Position = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) / 2;
     }
     public override void DestroyNode()
     {
@@ -80,7 +75,7 @@ public class Structure : ThingBase
         collisionBox.QueueFree();
         base.DestroyNode();
     }
-    
+
     public StaticGraphic GetGraphic()
     {
         return graphic;
@@ -92,16 +87,16 @@ public class Structure : ThingBase
 
     public void Damage(float amount)
     {
-        statSheet.GetStat(StatKeys.MAX_HEALTH).Damage(amount);
-        if (statSheet.GetStat(StatKeys.MAX_HEALTH).CurrentValue <= 0)
+        statSheet.GetStat("health").Damage += amount;
+        if (statSheet.GetStat("health").CurrentValue <= 0)
         {
-            WorldMap.Instance.SetStructure(cords, null);
+            // Map.Instance.SetStructure(Position, null);
             foreach (var item in resources)
             {
-                Item dropped = new Item(cords);
-                dropped.Configure(ThingDatabase.Instance.GetItemDef(item.Key));
-                dropped.SetQuantity(item.Value);
-                WorldMap.Instance.SetItem(cords, dropped);
+                // Item dropped = new Item(Position);
+                // dropped.Configure(ThingDatabase.Instance.GetItemDef(item.Key));
+                // dropped.SetQuantity(item.Value);
+                // WorldMap.Instance.SetItem(cords, dropped);
             }
 
             DestroyNode();
@@ -110,7 +105,7 @@ public class Structure : ThingBase
     }
     public void Damage(StatSheet statSheet)
     {
-        StatBase dmg = statSheet.GetStat(StatKeys.ATTACK_DAMAGE);
+        StatBase dmg = statSheet.GetStat("attack");
 
         if (dmg != null)
         {
@@ -119,6 +114,6 @@ public class Structure : ThingBase
     }
     public void Heal(float amount)
     {
-        statSheet.GetStat(StatKeys.MAX_HEALTH).Heal(amount);
+        statSheet.GetStat("health").Damage -= amount;
     }
 }

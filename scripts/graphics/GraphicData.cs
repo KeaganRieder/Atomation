@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 public enum GraphicType
 {
-
+//todo
 }
 
 /// <summary>

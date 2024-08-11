@@ -1,8 +1,9 @@
 namespace Atomation.Things;
 
 using System.Collections.Generic;
-using Map;
+using GameMap;
 using Resources;
+using StatSystem;
 using Godot;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -36,7 +37,7 @@ public class StructureDef : ThingDef
                  texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
                  variants = 1,
                  color = Colors.Purple,
-                 graphicSize = new Vector2I(MapData.CELL_SIZE, MapData.CELL_SIZE)
+                 graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
         { supportReq = SupportType.Undefined};
     }

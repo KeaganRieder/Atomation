@@ -38,8 +38,6 @@ public static class GenerationUtil
                 moistureMap[x, y] = moisture + settings.baseMoisture;
             }
         }
-        //todo
         return moistureMap;
     }
-
 }

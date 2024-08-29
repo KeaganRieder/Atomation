@@ -14,38 +14,20 @@ using Newtonsoft.Json;
 public class Terrain : Thing
 {
     private float elevation;
-    private float temperature;   
+    private float temperature;
     private float moisture;
 
     private SupportType supportProvided;
     private SupportType supportReq;
 
-
     [JsonConstructor]
     public Terrain() { }
-
-    public Terrain(Terrain loaded)
-    {
-        name = loaded.name;
-        elevation = loaded.elevation;
-        temperature = loaded.temperature;
-        moisture = loaded.moisture;
-        statSheet = new StatSheet(loaded.statSheet, this);
-
-        graphic = new StaticGraphic();
-
-        graphic.AddChild(collisionBox);
-
-        // SetPosition(loaded.GetCoordinate());
-        Configure(ThingDatabase.Instance.GetTerrainDef(loaded.name), true);
-    }
 
     public Terrain(Vector2 position)
     {
         graphic = new StaticGraphic();
-        graphic.Position = position;
-graphic.SetTexture();
-        // graphic.AddChild(graphic);
+        graphic.Position = position * Map.CELL_SIZE;
+        graphic.SetTexture();
     }
 
     public void Configure(TerrainDef def, bool loading = false)
@@ -62,14 +44,15 @@ graphic.SetTexture();
 
         // collisionBox = new CollisionShape2D();
         // graphic.AddChild(collisionBox);
-
+        GridLayer = def.GridLayer;
         graphic.Name = $"{name} {Position}";
         graphic.Configure(def.GraphicData);
+        
         // UpdateGraphic(VisualizationMode.Default);
-        collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) };
-        collisionBox.Position = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) / 2;
+        // collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) };
+        // collisionBox.Position = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) / 2;
     }
-    
+
     public float Elevation { get => elevation; set => elevation = value; }
     public float Temperature { get => temperature; set => temperature = value; }
     public float Moisture { get => moisture; set => moisture = value; }
@@ -77,16 +60,6 @@ graphic.SetTexture();
     public SupportType SupportProvided { get => supportProvided; set => supportProvided = value; }
     public SupportType SupportReq { get => supportReq; set => supportReq = value; }
 
-    public override void DestroyNode()
-    {
-        if (GodotObject.IsInstanceValid(graphic))
-        {
-            graphic.QueueFree();
-            collisionBox.QueueFree();
-        }
-        base.DestroyNode();
-    }
-    
 
     // public void UpdateGraphic(VisualizationMode displayMode)
     // {
@@ -107,7 +80,7 @@ graphic.SetTexture();
     //     //     GetMoistureColor();
     //     // }
     // }
-   
+
     public bool CanSupport(SupportType supportReq)
     {
         if (supportProvided <= supportReq)

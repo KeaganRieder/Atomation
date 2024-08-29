@@ -1,11 +1,27 @@
 {
   "Defs": {
     "Slate Wall": {
-      "supportReq": "Heavy",
-      "buildCost": {
-        "Stone": 5
+      "DefName": "Slate Wall",
+      "Description": "A rock face made of slate",
+      "StatSheet": {
+        "TargetObject": null,
+        "Stats": {
+          "health": {
+            "Modifiable": true,
+            "Value": 200.0,
+            "MaxValue": 200.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 200.0,
+            "Description": "The health of the wall"
+          }
+        },
+        "StatModifers": {}
       },
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/rock_wall",
         "variants": 1,
         "color": {
@@ -23,30 +39,38 @@
           "Luminance": 0.49315143
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "statSheet": {
-        "Stats": {
-          "Max Health": {
-            "defName": "Max Health",
-            "description": "The health of the wall",
-            "Type": "Undefined",
-            "baseValue": 200.0
-          }
-        },
-        "StatModifers": {}
-      },
-      "defName": "Slate Wall",
-      "description": "A rock face made of slate"
+      "GridLayer": 2,
+      "SupportReq": "Heavy",
+      "BuildCost": {
+        "Stone": 5
+      }
     },
     "Marble wall": {
-      "supportReq": "Heavy",
-      "buildCost": {
-        "Stone": 5
+      "DefName": "Marble wall",
+      "Description": "A rock face made of Marble",
+      "StatSheet": {
+        "TargetObject": null,
+        "Stats": {
+          "health": {
+            "Modifiable": true,
+            "Value": 100.0,
+            "MaxValue": 100.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 100.0,
+            "Description": "The health of the wall"
+          }
+        },
+        "StatModifers": {}
       },
-      "graphicData": {
+      "GraphicData": {
         "texturePath": "terrain/natural/rock_wall",
         "variants": 1,
         "color": {
@@ -64,23 +88,15 @@
           "Luminance": 0.49315143
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "statSheet": {
-        "Stats": {
-          "Max Health": {
-            "defName": "Max Health",
-            "description": "The health of the wall",
-            "Type": "Undefined",
-            "baseValue": 100.0
-          }
-        },
-        "StatModifers": {}
-      },
-      "defName": "Marble wall",
-      "description": "A rock face made of Marble"
+      "GridLayer": 2,
+      "SupportReq": "Heavy",
+      "BuildCost": {
+        "Stone": 5
+      }
     }
   }
 }

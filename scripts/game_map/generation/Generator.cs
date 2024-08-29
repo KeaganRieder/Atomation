@@ -9,7 +9,6 @@ public abstract class Generator<ValueType>
 {
     protected Vector2I genSize;
     protected Vector2I totalSize;
-
     protected Vector2 offset;
 
     protected Generator()

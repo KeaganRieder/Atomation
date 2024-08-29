@@ -2,11 +2,13 @@ namespace Atomation;
 
 using Atomation.GameMap;
 using Atomation.Resources;
-using Atomation.Pawns;
+using Atomation.Player;
 using Atomation.Things;
 using Godot;
-using System.Collections.Generic;
 using Atomation.Ui;
+using Atomation.Systems;
+using Atomation.Settings;
+
 
 
 /// <summary>
@@ -27,45 +29,76 @@ public partial class GameManger : Node2D
       }
    }
 
-   private PauseMenu pauseMenu;
+   private Map gameMap;
+   private PlayerCharacter player;
+   private PlayerKeybindSettings playerKeybindSettings;
+
+   private CustomCamera mainCam;
+
+   // private PauseMenu pauseMenu;
 
    private GameManger() { }
-
-   ~GameManger()
-   {
-      if (IsInstanceValid(this))
-      {
-         foreach (var child in GetChildren())
-         {
-            child.QueueFree();
-         }
-         QueueFree();
-      }
-   }
-
 
    /// <summary>
    /// runs upon node creation
    /// </summary>
    public override void _Ready()
    {
+      FormatFiles();
+
       base._Ready();
-      // ItemDefs.FormatResourceItemDefs();
-      // StructureDefs.FormatNaturalStructureDefs();
-      TerrainDefs.FormatTerrainDefs();
+
+      InitializeGame();
+
       LoadResources();
 
-      AddChild(Map.Instance);
-      AddChild(Player.Instance);
-
-      pauseMenu = PauseMenu.Instance;
-      Player.Instance.GetCamera().AddChild(pauseMenu);
+      StartGame();
    }
 
-   public static void LoadResources()
+   /// <summary>
+   /// used to initialize atomation
+   /// </summary>
+   private void InitializeGame()
+   {
+      mainCam = new CustomCamera();
+      mainCam.UpdateTarget(this);
+
+      gameMap = Map.Instance;
+      AddChild(gameMap);
+
+      playerKeybindSettings = new PlayerKeybindSettings(); //do more work on this
+   }
+
+   /// <summary>
+   /// loads all resources required by the game
+   /// </summary>
+   private void LoadResources()
    {
       GD.Print("Loading Resources");
       ThingDatabase.Instance.LoadDefs();
       GD.Print("Loading Complete\n");
    }
+
+   /// <summary>
+   /// formats def files if needed
+   /// </summary>
+   private void FormatFiles()
+   {
+      // ItemDefs.FormatResourceItemDefs(); todo reformat
+      // StructureDefs.FormatNaturalStructureDefs();
+      // TerrainDefs.FormatTerrainDefs();
+   }
+
+   /// <summary>
+   /// starts the game this is a temporary function tell the main menu is created
+   /// </summary>
+   public void StartGame()
+   {
+      gameMap.Generate();
+
+      player = PlayerCharacter.Instance;
+      mainCam.UpdateTarget(player);
+      AddChild(player);
+   }
+
 }

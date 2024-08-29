@@ -3,22 +3,36 @@ namespace Atomation.GameMap;
 using System.Collections.Generic;
 using Godot;
 
+/// <summary>
+/// a chunk loaders handle updating wether or not chunks are loaded (rendered) or not.
+/// this is decided based on the actors position which is updated on set delate
+/// 
+/// todo figure out why it's not re adding some chunks to last loaded
+/// </summary>
 public class ChunkLoader
 {
-    private Node2D actor;
+    protected Node2D actor;
 
-    private ChunkHandler chunkHandler;
-    private int renderDistance;
-    private int updateDelay;
+    protected ChunkHandler chunkHandler;
+    protected int renderDistance;
+    
+    /// <summary>
+    /// determines the delay (in milliseconds) between checks. 
+    /// </summary>
+    protected int updateDelay;
 
-    private int lastUpdate;
-    private Vector2I lastPosition;
+    protected int lastUpdate;
+    protected Vector2I lastPosition;
 
-    public ChunkLoader(ChunkHandler chunkHandler)
+    public ChunkLoader() { }
+    public ChunkLoader(ChunkHandler chunkHandler, Node2D actor = null)
     {
+        this.actor = actor;
         this.chunkHandler = chunkHandler;
-        renderDistance = 2;
-        updateDelay = 0;//figure out a value for this
+
+        renderDistance = 1;
+
+        updateDelay = 1000; // run the chunk loader every half second 
 
         lastUpdate = 0;
         lastPosition = new Vector2I(-1, -1);
@@ -40,12 +54,12 @@ public class ChunkLoader
             lastUpdate = currentTime;
         }
 
-        Vector2I actorPosition = GetActorPosition(); //do player get position at some point
-
+        Vector2I actorPosition = GetActorPosition();
         if (actorPosition == lastPosition)
         {
             return;
         }
+
         lastPosition = actorPosition;
         UpdateLoaded(actorPosition);
     }
@@ -53,7 +67,7 @@ public class ChunkLoader
     /// <summary>
     /// decides base on position wether to load or unload a chunk
     /// </summary>
-    private void UpdateLoaded(Vector2I position)
+    protected void UpdateLoaded(Vector2I position)
     {
         if (chunkHandler == null)
         {
@@ -61,46 +75,46 @@ public class ChunkLoader
             return;
         }
 
-        List<Vector2I> chunksToLoad = GetLoadedChunks(position);
+        List<Vector2I> chunksToUpdate = GetLoadedChunks(position);
 
-        UnloadChunks(chunksToLoad);
-        LoadChunks(chunksToLoad);
+        UnloadChunks(chunksToUpdate);
+        LoadChunks(chunksToUpdate);
     }
 
     /// <summary>
     /// gets the actor/players position in terms of chunk cords
     /// </summary>
-    private Vector2I GetActorPosition()
+    protected virtual Vector2I GetActorPosition()
     {
         Vector2 actorPosition = Vector2I.Zero;
+
         // todo get player instance and then set that as chunk cords
         if (actor != null)
         {
             actorPosition = actor.GlobalPosition.Floor();
         }
 
-        Vector2I chunkPosition = actorPosition.WorldToChunk();
-
-        return chunkPosition;
+        Vector2 mapPosition = actorPosition.GlobalToMap();
+        Vector2 chunkPosition = mapPosition.MapToChunk();
+        return new Vector2I(Mathf.RoundToInt(chunkPosition.X),Mathf.RoundToInt(chunkPosition.Y));
     }
 
     /// <summary>
     /// gets required chunks to update based on given position
     /// </summary>
-    private List<Vector2I> GetLoadedChunks(Vector2I actorCords)
+    protected List<Vector2I> GetLoadedChunks(Vector2I actorCords)
     {
         Vector2I actorPosition = actorCords;
         List<Vector2I> chunksToLoad = new List<Vector2I>();
-        for (int x = -renderDistance+1; x < renderDistance; x++)
+
+        for (int x = -renderDistance; x < renderDistance+1; x++)
         {
-            for (int y = -renderDistance+1; y < renderDistance; y++)
+            for (int y = -renderDistance; y < renderDistance+1; y++)
             {
                 Vector2I chunkCord = new Vector2I(actorPosition.X + x, actorPosition.Y + y);
-
                 chunksToLoad.Add(chunkCord);
             }
         }
-
         return chunksToLoad;
     }
 
@@ -108,10 +122,16 @@ public class ChunkLoader
     /// runs through chunks at given positions and unloads all that 
     /// should be 
     /// </summary>
-    private void UnloadChunks(List<Vector2I> chunksToLoad)
+    protected void UnloadChunks(List<Vector2I> chunksToLoad)
     {
-        List<Vector2I> lastLoadedChunks = chunkHandler.GetLastLoaded();
-        foreach (var chunk in lastLoadedChunks)
+        List<Vector2I> LoadedChunks = new List<Vector2I>();
+
+        foreach (var chunk in chunkHandler.GetLastLoaded())
+        {
+            LoadedChunks.Add(chunk);
+        }
+
+        foreach (var chunk in LoadedChunks)
         {
             if (!chunksToLoad.Contains(chunk))
             {
@@ -124,7 +144,7 @@ public class ChunkLoader
     /// runs through chunks at given positions and unloads all that 
     /// should be 
     /// </summary>
-    private void LoadChunks(List<Vector2I> chunksToLoad)
+    protected void LoadChunks(List<Vector2I> chunksToLoad)
     {
         foreach (var toLoad in chunksToLoad)
         {

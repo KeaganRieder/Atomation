@@ -17,14 +17,18 @@ using Newtonsoft.Json.Converters;
 /// </summary>
 public class StructureDef : ThingDef
 {
-    [JsonConverter(typeof(StringEnumConverter))]
-    public SupportType supportReq;
-    public Dictionary<string,int> buildCost;
+    private SupportType supportReq;
+    private Dictionary<string, int> buildCost;
+
+    [JsonProperty(Order = 2),JsonConverter(typeof(StringEnumConverter))]
+    public SupportType SupportReq { get => supportReq; set => supportReq = value; }
+    [JsonProperty(Order = 2)]
+    public Dictionary<string, int> BuildCost { get => buildCost; set => buildCost = value; }
 
     [JsonConstructor]
     public StructureDef() { }
-    public StructureDef(string name, string description, StatSheet statSheet, GraphicData graphicData)
-    : base(name, description, statSheet, graphicData) { }
+    public StructureDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = 2)
+    : base(name, description, statSheet, graphicData, gridLayer) { }
 
     public static StructureDef Undefined()
     {
@@ -39,7 +43,7 @@ public class StructureDef : ThingDef
                  color = Colors.Purple,
                  graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
-        { supportReq = SupportType.Undefined};
+        { SupportReq = SupportType.Undefined};
     }
 }
 

@@ -34,7 +34,7 @@ public class MapSettings
     /// </summary>
     public float baseTemperature { get; set; }
 
-    public MapSettings() { }
+    public MapSettings() { DefaultSettings(); }
 
     /// <summary>
     /// sets maps settings to default
@@ -48,6 +48,7 @@ public class MapSettings
 
         noiseMapScale = 1f;
         seed = 0;
+
         elevationMapConfigs = new NoiseMapConfigs
         {
             Scale = noiseMapScale,

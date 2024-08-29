@@ -40,29 +40,29 @@ public class StatSheet
         statModifers = new Dictionary<string, StatModifierBase>();
         stats = new Dictionary<string, StatBase>();
 
-        foreach (var stat in statSheet.stats)
-        {
-            stats.Add(stat.Key, new StatBase(stat.Value));
-        }
+        // foreach (var stat in statSheet.stats)
+        // {
+        //     stats.Add(stat.Key, new StatBase(stat.Value));
+        // }
 
-        foreach (var modifier in statSheet.statModifers)
-        {
-            modifier.Value.Source = targetObject == null ? modifier.Value.Source : targetObject;
+        // foreach (var modifier in statSheet.statModifers)
+        // {
+        //     modifier.Value.Source = targetObject == null ? modifier.Value.Source : targetObject;
 
-            if (modifier.Value.Type == ModifierType.Undefined)
-            {
-                GD.PushError($"{modifier.Value.Name} attempted to use undefined modifier for configs");
-                return;
-            }
-            else if (modifier.Value.Type == ModifierType.Flat)
-            {
-                statModifers.Add(modifier.Key, new FlatModifier((FlatModifier)modifier.Value));
-            }
-            else if (modifier.Value.Type == ModifierType.Percentage)
-            {
-                statModifers.Add(modifier.Key, new PercentageModifier((PercentageModifier)modifier.Value));
-            }
-        }
+        //     if (modifier.Value.Type == ModifierType.Undefined)
+        //     {
+        //         GD.PushError($"{modifier.Value.Name} attempted to use undefined modifier for configs");
+        //         return;
+        //     }
+        //     else if (modifier.Value.Type == ModifierType.Flat)
+        //     {
+        //         statModifers.Add(modifier.Key, new FlatModifier((FlatModifier)modifier.Value));
+        //     }
+        //     else if (modifier.Value.Type == ModifierType.Percentage)
+        //     {
+        //         statModifers.Add(modifier.Key, new PercentageModifier((PercentageModifier)modifier.Value));
+        //     }
+        // }
     }
 
     public object TargetObject { get => targetObject; set => targetObject = value; }

@@ -9,7 +9,8 @@ using Newtonsoft.Json;
 /// <summary>
 /// The base class of all things that make up the games world.
 /// </summary>
-public abstract class Thing 
+
+public abstract class Thing
 {
     protected string name;
     protected string description;
@@ -19,31 +20,47 @@ public abstract class Thing
     protected StaticGraphic graphic;
     protected CollisionShape2D collisionBox;
 
+    /// <summary>
+    /// the rendering/interaction layer the thing is on the grid
+    /// </summary>
     protected int gridLayer;
 
-    public Thing()    {    }
+    public Thing() { }
 
     public Thing(ThingDef configs)
     {
         Configure(configs);
     }
 
+    [JsonProperty(Order = 1)]
     public string Name { get => name; private set => name = value; }
     [JsonIgnore]
     public string Description { get => description; private set => description = value; }
-
+    [JsonProperty(Order = 1)]
     public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
-
+    [JsonProperty(Order = 1)]
     public Vector2 Position { get => graphic.Position; set => graphic.Position = value; }
 
     [JsonIgnore]
     public StaticGraphic Graphic { get => graphic; set => graphic = value; }
     [JsonIgnore]
     public CollisionShape2D CollisionBox { get => collisionBox; set => collisionBox = value; }
-    [JsonIgnore]
-    public int GridLayer { get => gridLayer; private set => gridLayer = value; }
 
-    public virtual void Configure(ThingDef config)
+    [JsonIgnore]
+    public int GridLayer
+    {
+        get => gridLayer;
+        set
+        {
+            gridLayer = value;
+            if (graphic != null)
+            {
+                graphic.RenderingLayer = value;
+            }
+        }
+    }
+
+    public virtual void Configure(ThingDef config, Vector2 offset = default)
     {
         if (config == null)
         {
@@ -53,6 +70,11 @@ public abstract class Thing
         name = config.DefName;
         description = config.Description;
         statSheet = new StatSheet(config.StatSheet, this);
+
+        if (config.GridLayer > 0)
+        {
+            gridLayer = config.GridLayer;
+        }
     }
 
     public virtual void DestroyNode()

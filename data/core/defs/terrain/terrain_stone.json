@@ -1,9 +1,8 @@
 {
   "Defs": {
     "Gravel": {
-      "Collidable": false,
-      "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "DefName": "Gravel",
+      "Description": "it's made of smaller rocks",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -50,17 +49,18 @@
           "Luminance": 0.745098
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Gravel",
-      "Description": "it's made of smaller rocks"
-    },
-    "Marble": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Marble": {
+      "DefName": "Marble",
+      "Description": "it's white rock which looks nice",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -107,17 +107,18 @@
           "Luminance": 0.9607843
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Marble",
-      "Description": "it's white rock which looks nice"
-    },
-    "Slate": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Slate": {
+      "DefName": "Slate",
+      "Description": "it's a black rock which looks nice",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -164,12 +165,14 @@
           "Luminance": 0.6627451
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Slate",
-      "Description": "it's a black rock which looks nice"
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "Heavy",
+      "SupportReq": "None"
     }
   }
 }

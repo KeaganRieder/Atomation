@@ -39,6 +39,7 @@ public class ChunkHandler
         // GD.PushError("world position conversion not set");
         if (!HasChunk(chunkCord))
         {
+            GD.Print("nope not here");
             return null;
         }
 
@@ -116,7 +117,7 @@ public class ChunkHandler
     /// <summary> generates chunk at given position </summary>
     private void GenerateChunk(Vector2 cord)
     {
-        Map.Instance.GetGenerator().GenerateMap(cord,this);
+        Map.Instance.MapGenerator.GenerateMap(cord, this);
     }
 
     /// <summary> loads chunk at given position </summary>
@@ -126,16 +127,11 @@ public class ChunkHandler
         {
             lastLoadedChunks.Add((Vector2I)cord);
         }
-
         if (!HasChunk(cord))
         {
             Chunk generatedChunk = new Chunk(cord);
             AddChunk(cord, generatedChunk);
             GenerateChunk(cord);
-            return;
-        }
-        if (chunks[cord].Loaded())
-        {
             return;
         }
 
@@ -144,21 +140,18 @@ public class ChunkHandler
 
     /// <summary> unloads chunk at given position </summary>
     public void UnloadChunk(Vector2 cord)
-    {
+    {        
         if (lastLoadedChunks.Contains((Vector2I)cord))
         {
             lastLoadedChunks.Remove((Vector2I)cord);
+            GD.Print($"contains {cord}");
         }
-
         if (!HasChunk(cord))
         {
             GD.PushError($"attempt to unload non existent chunk at {cord}");
             return;
         }
-        if (!chunks[cord].Loaded())
-        {
-            return;
-        }
-        chunks[cord].Unload();
+        
+        chunks[cord].Unload();        
     }
 }

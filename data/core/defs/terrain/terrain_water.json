@@ -1,9 +1,8 @@
 {
   "Defs": {
     "Marsh": {
-      "Collidable": false,
-      "SupportProvided": "Medium",
-      "SupportReq": "None",
+      "DefName": "Marsh",
+      "Description": "it's Marshy",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -50,17 +49,18 @@
           "Luminance": 0.45283842
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Marsh",
-      "Description": "it's Marshy"
-    },
-    "Shallow Ocean": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Medium",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Shallow Ocean": {
+      "DefName": "Shallow Ocean",
+      "Description": "it's Ocean which is shallow",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -107,17 +107,18 @@
           "Luminance": 0.0722
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Shallow Ocean",
-      "Description": "it's Ocean which is shallow"
-    },
-    "Shallow Water": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Medium",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Shallow Water": {
+      "DefName": "Shallow Water",
+      "Description": "it's shallow water",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -164,17 +165,18 @@
           "Luminance": 0.8151726
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Shallow Water",
-      "Description": "it's shallow water"
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "Medium",
+      "SupportReq": "None"
     },
     "Deep Ocean": {
-      "Collidable": false,
-      "SupportProvided": "None",
-      "SupportReq": "None",
+      "DefName": "Deep Ocean",
+      "Description": "it's Ocean which is Deep",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -221,17 +223,18 @@
           "Luminance": 0.03935608
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Deep Ocean",
-      "Description": "it's Ocean which is Deep"
-    },
-    "Deep Water": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "None",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Deep Water": {
+      "DefName": "Deep Water",
+      "Description": "it's deep water, which you have to swim through",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -278,12 +281,14 @@
           "Luminance": 0.41239217
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Deep Water",
-      "Description": "it's deep water, which you have to swim through"
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "None",
+      "SupportReq": "None"
     }
   }
 }

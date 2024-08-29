@@ -60,7 +60,7 @@ public class ThingDatabase
         {
             return TerrainDefs[terrainID];
         }
-        return TerrainDef.Undefined();
+        return TerrainDef.Undefined;
     }
 
     /// <summary>
@@ -90,6 +90,7 @@ public class ThingDatabase
         {
             return StructureDefs[StructureID];
         }
+        GD.PushWarning($"def of id {StructureID} undefined");
         return StructureDef.Undefined();
     }
 

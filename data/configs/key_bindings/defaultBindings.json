@@ -1,0 +1,88 @@
+{
+  "keybindings": {
+    "MoveLeft": {
+      "Pressed": false,
+      "Keycode": 0,
+      "PhysicalKeycode": 65,
+      "KeyLabel": 0,
+      "Unicode": -3617008645356650496,
+      "Echo": false,
+      "CommandOrControlAutoremap": false,
+      "AltPressed": false,
+      "ShiftPressed": false,
+      "CtrlPressed": false,
+      "MetaPressed": false,
+      "WindowId": 0,
+      "Device": 0,
+      "ResourceLocalToScene": false,
+      "ResourcePath": "",
+      "ResourceName": "",
+      "NativeInstance": {
+        "value": 1674844682704
+      }
+    },
+    "MoveRight": {
+      "Pressed": false,
+      "Keycode": 0,
+      "PhysicalKeycode": 68,
+      "KeyLabel": 0,
+      "Unicode": -3617008645356650496,
+      "Echo": false,
+      "CommandOrControlAutoremap": false,
+      "AltPressed": false,
+      "ShiftPressed": false,
+      "CtrlPressed": false,
+      "MetaPressed": false,
+      "WindowId": 0,
+      "Device": 0,
+      "ResourceLocalToScene": false,
+      "ResourcePath": "",
+      "ResourceName": "",
+      "NativeInstance": {
+        "value": 1674844671280
+      }
+    },
+    "MoveDown": {
+      "Pressed": false,
+      "Keycode": 0,
+      "PhysicalKeycode": 83,
+      "KeyLabel": 0,
+      "Unicode": -3617008645356650496,
+      "Echo": false,
+      "CommandOrControlAutoremap": false,
+      "AltPressed": false,
+      "ShiftPressed": false,
+      "CtrlPressed": false,
+      "MetaPressed": false,
+      "WindowId": 0,
+      "Device": 0,
+      "ResourceLocalToScene": false,
+      "ResourcePath": "",
+      "ResourceName": "",
+      "NativeInstance": {
+        "value": 1674844664752
+      }
+    },
+    "MoveUp": {
+      "Pressed": false,
+      "Keycode": 0,
+      "PhysicalKeycode": 87,
+      "KeyLabel": 0,
+      "Unicode": -3617008645356650496,
+      "Echo": false,
+      "CommandOrControlAutoremap": false,
+      "AltPressed": false,
+      "ShiftPressed": false,
+      "CtrlPressed": false,
+      "MetaPressed": false,
+      "WindowId": 0,
+      "Device": 0,
+      "ResourceLocalToScene": false,
+      "ResourcePath": "",
+      "ResourceName": "",
+      "NativeInstance": {
+        "value": 1674844657680
+      }
+    }
+  }
+}

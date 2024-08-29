@@ -21,14 +21,15 @@ public class Grid
     }
 
     /// <summary>
-    /// set value at given position
+    /// set value at given position, if layer < 0 will ignore adding the object to grid
     /// </summary>
     public void SetValue(Vector2 cord, object value, int layer = -1)
     {
         if (layer < 0)
         {
-            layer = 0;
+            return;
         }
+        
         if (!HasLayer(layer))
         {
             AddLayer(layer);

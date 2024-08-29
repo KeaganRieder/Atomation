@@ -20,12 +20,14 @@ public class TerrainDef : ThingDef
 
     [JsonConstructor]
     public TerrainDef() { }
-    public TerrainDef(string name, string description, StatSheet statSheet, GraphicData graphicData)
-    : base(name, description, statSheet, graphicData) { }
+    public TerrainDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = 0)
+    : base(name, description, statSheet, graphicData, gridLayer) { }
 
-    public static TerrainDef Undefined()
+    public static TerrainDef Undefined
     {
-        return new TerrainDef("Undefined Terrain", " ",
+        get
+        {
+            return new TerrainDef("Undefined Terrain", " ",
                       new StatSheet(new Dictionary<string, StatBase> { }, new Dictionary<string, StatModifierBase> { }),
                       new GraphicData()
                       {
@@ -34,15 +36,16 @@ public class TerrainDef : ThingDef
                           color = Colors.Purple,
                           graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                       });
+        }
     }
 
+    [JsonProperty(Order = 2)]
     public bool Collidable { get => collidable; set => collidable = value; }
-    
-    [JsonConverter(typeof(StringEnumConverter))]
-    public SupportType SupportProvided { get => supportProvided; set => supportProvided = value; }
-    [JsonConverter(typeof(StringEnumConverter))]
-    public SupportType SupportReq { get => supportReq; set => supportReq = value; }
 
+    [JsonProperty(Order = 2), JsonConverter(typeof(StringEnumConverter))]
+    public SupportType SupportProvided { get => supportProvided; set => supportProvided = value; }
+    [JsonProperty(Order = 2), JsonConverter(typeof(StringEnumConverter))]
+    public SupportType SupportReq { get => supportReq; set => supportReq = value; }
 
     public override string GetKey()
     {

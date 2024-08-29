@@ -8,11 +8,12 @@ using Godot;
 /// </summary>
 public partial class StaticGraphic : Sprite2D
 {
+
     private Vector2I graphicSize;
     private int variants;
 
     private string texturePath;
-    private Color defaultColor=Colors.White;
+    private Color defaultColor = Colors.White;
     private Color currentColor;
 
     public StaticGraphic()
@@ -20,7 +21,6 @@ public partial class StaticGraphic : Sprite2D
         texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png";
 
         graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
-        Position = graphicSize / 2;
         // SetTexture();
     }
 
@@ -29,7 +29,6 @@ public partial class StaticGraphic : Sprite2D
         this.texturePath = FilePaths.TEXTURE_FOLDER + texturePath;
         this.variants = variants;
         this.graphicSize = graphicSize;
-        Position = graphicSize / 2;
 
         this.defaultColor = defaultColor;
 
@@ -60,6 +59,16 @@ public partial class StaticGraphic : Sprite2D
         }
     }
 
+    public int RenderingLayer
+    {
+        get => ZIndex; 
+        set
+        {
+            ZIndex = value;
+        }
+    }
+
+
     public void SetTexture()
     {
         Texture2D texture;
@@ -74,8 +83,9 @@ public partial class StaticGraphic : Sprite2D
         {
             texture = FileUtility.ReadTexture(texturePath, graphicSize);
         }
+        //make position a multiple of the actual texture size to prevent overlapping
         Texture = texture;
-
+        // GD.Print(graphicSize);
         CurrentColor = DefaultColor;
     }
 

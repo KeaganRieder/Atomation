@@ -8,55 +8,35 @@ using Godot;
 public static class cordUtil
 {
     /// <summary>
-    /// converts world position to tile position which is equal to
-    /// Mathf.FloorToInt(worldPosition / map.CELL_SIZE0
+    /// takes given global position and converts it to world
+    /// this is equal to global /cell size
     /// </summary>
-    public static Vector2I WorldToTile(this Vector2 worldPosition)
+    public static Vector2 GlobalToMap(this Vector2 pos)
     {
-        Vector2I tilePosition = new Vector2I(
-            Mathf.FloorToInt(worldPosition.X / Map.CELL_SIZE),
-            Mathf.FloorToInt(worldPosition.Y / Map.CELL_SIZE)
+        return new Vector2(
+            Mathf.FloorToInt(pos.X / Map.CELL_SIZE),
+            Mathf.FloorToInt(pos.Y / Map.CELL_SIZE)
         );
-        return tilePosition;
+    }
+    /// <summary>
+    /// takes given map position and converts it to world
+    /// this is equal to global * cell size
+    /// </summary>
+    public static Vector2 MapToGlobal(this Vector2 pos)
+    {
+        return new Vector2(
+            pos.X * Map.CELL_SIZE,
+            pos.Y * Map.CELL_SIZE
+        );
+    }
+    /// <summary>
+    /// converts the map position to the chunk position
+    /// </summary>
+    public static Vector2 MapToChunk(this Vector2 pos){
+        return new Vector2(
+            pos.X  / Chunk.CHUNK_SIZE,
+            pos.Y / Chunk.CHUNK_SIZE
+        );
     }
 
-    /// <summary>
-    /// converts tilePosition to worldPosition which is equal to
-    /// Mathf.FloorToInt(tilePosition * map.CELL_SIZE)
-    /// </summary>
-    public static Vector2I TileToWorld(this Vector2 tilePosition)
-    {
-        Vector2I worldPosition = new Vector2I(
-            Mathf.FloorToInt(tilePosition.X * Map.CELL_SIZE),
-            Mathf.FloorToInt(tilePosition.Y * Map.CELL_SIZE)
-        );
-        return worldPosition;
-    }
-
-    /// <summary>
-    /// converts worldPosition to chunkPosition which is equal to
-    /// Mathf.FloorToInt(worldPosition / map.CELL_SIZE / Chunk.CHUNK_SIZE)
-    /// </summary>
-    public static Vector2I WorldToChunk(this Vector2 worldPosition)
-    {
-        Vector2I chunkPosition = new Vector2I(
-            Mathf.FloorToInt(worldPosition.X / Map.CELL_SIZE / Chunk.CHUNK_SIZE),
-            Mathf.FloorToInt(worldPosition.Y / Map.CELL_SIZE / Chunk.CHUNK_SIZE)
-        );
-        // GD.Print($"{worldPosition} {chunkPosition}");
-        return chunkPosition;
-    }
-
-    /// <summary>
-    /// converts chunkPosition to worldPosition which is equal to
-    /// Mathf.FloorToInt(worldPosition * map.CELL_SIZE * Chunk.CHUNK_SIZE)
-    /// </summary>
-    public static Vector2I ChunkToWorld(this Vector2 chunkPosition)
-    {
-        Vector2I worldPosition = new Vector2I(
-            Mathf.FloorToInt(chunkPosition.X / Map.CELL_SIZE / Chunk.CHUNK_SIZE),
-            Mathf.FloorToInt(chunkPosition.Y / Map.CELL_SIZE / Chunk.CHUNK_SIZE)
-        );
-        return worldPosition;
-    }
 }

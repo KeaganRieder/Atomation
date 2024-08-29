@@ -8,27 +8,23 @@ using Godot;
 public partial class Chunk : Node2D
 {
     public const int CHUNK_SIZE = 32;
-    private Sprite2D graphic;
-
-    Vector2 chunkPosition;
+    // private Sprite2D graphic;
+    // private Vector2 chunkPosition;
 
     private bool loaded;
 
     private Grid chunkGrid;
 
-    public Chunk()
-    {
-    }
+    public Chunk() { }
 
     public Chunk(Vector2 position)
     {
-        Name = $"chunk:{position * Map.CELL_SIZE * (CHUNK_SIZE - 1)}";
+        Name = $"chunk:{position}";// * Map.CELL_SIZE * (CHUNK_SIZE - 1)
         Vector2 pos = position * Map.CELL_SIZE * (CHUNK_SIZE - 1); //figure out weird 16 pixel offset
-        SetPosition(pos);
+        ChunkPosition = pos;
 
         chunkGrid = new Grid(false);
-
-        // Unload();
+        loaded = true;
     }
 
     /// <summary>
@@ -40,12 +36,15 @@ public partial class Chunk : Node2D
     }
 
     /// <summary> 
-    /// sets chunks position to given 
-    /// </summary>
-    public void SetPosition(Vector2 cord)
+    /// property for setting and getting the chunks position
+    /// </summary> 
+    public Vector2 ChunkPosition
     {
-        chunkPosition = cord;
-        Position = cord;
+        get => Position; set
+        {
+            // chunkPosition = value;
+            Position = value;
+        }
     }
 
     /// <summary> 
@@ -53,6 +52,10 @@ public partial class Chunk : Node2D
     /// </summary>
     public void SetTerrain(Vector2 cord, Terrain terrain)
     {
+        if (terrain == null)
+        {
+            GD.Print("terrain is null");
+        }
         if (terrain != null)
         {
             AddChild(terrain.Graphic);
@@ -63,21 +66,49 @@ public partial class Chunk : Node2D
     /// <summary> 
     /// gets terrain at given position 
     /// </summary>
-    public Terrain GetTerrain(Vector2 cord)
+    public Terrain GetTerrain(Vector2 cord, int gridLayer = 0)
     {
-        Terrain terrain = null;
-
-        object obj = chunkGrid.GetValue(cord, 1);
+        object obj = chunkGrid.GetValue(cord, gridLayer);
         if (obj is Terrain)
         {
-            terrain = obj as Terrain;
+            return obj as Terrain;
         }
         else
         {
             throw new InvalidOperationException("Object on map layer {terrain} is not terrain");
         }
+    }
 
-        return terrain;
+    /// <summary> 
+    /// sets terrain at given position
+    /// </summary>
+    public void SetStructure(Structure structure, Vector2 cord = default)
+    {
+        if (structure != default ||structure != null)
+        {
+            AddChild(structure.Graphic);
+            chunkGrid.SetValue(structure.Position, structure, structure.GridLayer);
+        }
+        // if (structure == null) //todo deleting structures
+        // {
+        //     chunkGrid.SetValue(cord, structure, 2);
+        // }
+    }
+
+    /// <summary> 
+    /// gets terrain at given position 
+    /// </summary>
+    public Structure GetStructure(Vector2 cord, int gridLayer = 2)
+    {
+        object obj = chunkGrid.GetValue(cord, gridLayer);
+        if (obj is Structure)
+        {
+            return obj as Structure;
+        }
+        else
+        {
+            throw new InvalidOperationException("Object on map layer {structure} is not Structure");
+        }
     }
 
     /// <summary> 

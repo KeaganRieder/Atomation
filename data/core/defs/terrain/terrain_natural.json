@@ -1,18 +1,18 @@
 {
   "Defs": {
     "NaturalTerrainBase": {
-      "Collidable": false,
-      "SupportProvided": "None",
-      "SupportReq": "None",
+      "DefName": "NaturalTerrainBase",
+      "Description": "Todo",
       "StatSheet": null,
       "GraphicData": null,
-      "DefName": "NaturalTerrainBase",
-      "Description": "Todo"
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "None",
+      "SupportReq": "None"
     },
     "Forest Grass": {
-      "Collidable": false,
-      "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "DefName": "Forest Grass",
+      "Description": "it's grass within a forest",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -59,17 +59,18 @@
           "Luminance": 0.2804706
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Forest Grass",
-      "Description": "it's grass within a forest"
-    },
-    "Grass": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Grass": {
+      "DefName": "Grass",
+      "Description": "it's grass",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -116,17 +117,76 @@
           "Luminance": 0.7152
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Grass",
-      "Description": "it's grass"
-    },
-    "Soil": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Dry Grass": {
+      "DefName": "Dry Grass",
+      "Description": "it's Dry Grass",
+      "StatSheet": {
+        "TargetObject": null,
+        "Stats": {
+          "fertility": {
+            "Modifiable": true,
+            "Value": 0.5,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.5,
+            "Description": "The tile's fertility"
+          }
+        },
+        "StatModifers": {
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.5,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
+          }
+        }
+      },
+      "GraphicData": {
+        "texturePath": "terrain/natural/Ice",
+        "variants": 1,
+        "color": {
+          "R": 0.9,
+          "G": 0.9,
+          "B": 0.2,
+          "A": 1.0,
+          "R8": 230,
+          "G8": 230,
+          "B8": 51,
+          "A8": 255,
+          "H": 0.16666667,
+          "S": 0.7777778,
+          "V": 0.9,
+          "Luminance": 0.84945995
+        },
+        "graphicSize": {
+          "X": 32,
+          "Y": 32
+        }
+      },
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "Light",
+      "SupportReq": "None"
+    },
+    "Soil": {
+      "DefName": "Soil",
+      "Description": "it's soil",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -173,17 +233,18 @@
           "Luminance": 0.2672541
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Soil",
-      "Description": "it's soil"
-    },
-    "Rich Soil": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Rich Soil": {
+      "DefName": "Rich Soil",
+      "Description": "it's rich soil, corps grow well here",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -230,17 +291,18 @@
           "Luminance": 0.598302
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Rich Soil",
-      "Description": "it's rich soil, corps grow well here"
-    },
-    "Sand": {
+      "GridLayer": 0,
       "Collidable": false,
       "SupportProvided": "Heavy",
-      "SupportReq": "None",
+      "SupportReq": "None"
+    },
+    "Sand": {
+      "DefName": "Sand",
+      "Description": "it's rough, corse and gets everywhere",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -287,17 +349,18 @@
           "Luminance": 0.9278
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Sand",
-      "Description": "it's rough, corse and gets everywhere"
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "Heavy",
+      "SupportReq": "None"
     },
     "Ice": {
-      "Collidable": false,
-      "SupportProvided": "Light",
-      "SupportReq": "None",
+      "DefName": "Ice",
+      "Description": "it's slippery,and cold",
       "StatSheet": {
         "TargetObject": null,
         "Stats": {
@@ -344,12 +407,72 @@
           "Luminance": 1.0
         },
         "graphicSize": {
-          "X": 16,
-          "Y": 16
+          "X": 32,
+          "Y": 32
         }
       },
-      "DefName": "Ice",
-      "Description": "it's slippery,and cold"
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "Light",
+      "SupportReq": "None"
+    },
+    "Taiga Soil": {
+      "DefName": "Taiga Soil",
+      "Description": "it's lacks nutrients",
+      "StatSheet": {
+        "TargetObject": null,
+        "Stats": {
+          "fertility": {
+            "Modifiable": true,
+            "Value": 0.5,
+            "MaxValue": 2.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "DamageAble": false,
+            "Damage": 0.0,
+            "CurrentValue": 0.5,
+            "Description": "The tile's fertility"
+          }
+        },
+        "StatModifers": {
+          "moveSpeed": {
+            "Name": "MoveSpeed Modifier",
+            "TargetStat": "moveSpeed",
+            "Type": 1,
+            "Value": 0.5,
+            "Order": 0,
+            "Source": true,
+            "Negative": true
+          }
+        }
+      },
+      "GraphicData": {
+        "texturePath": "terrain/natural/Ice",
+        "variants": 1,
+        "color": {
+          "R": 0.3,
+          "G": 0.4,
+          "B": 0.3,
+          "A": 1.0,
+          "R8": 76,
+          "G8": 102,
+          "B8": 76,
+          "A8": 255,
+          "H": 0.33333334,
+          "S": 0.24999999,
+          "V": 0.4,
+          "Luminance": 0.37152
+        },
+        "graphicSize": {
+          "X": 32,
+          "Y": 32
+        }
+      },
+      "GridLayer": 0,
+      "Collidable": false,
+      "SupportProvided": "Light",
+      "SupportReq": "None"
     }
   }
 }

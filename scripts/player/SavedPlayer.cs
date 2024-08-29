@@ -1,4 +1,4 @@
-namespace Atomation.Pawns;
+namespace Atomation.Player;
 
 using Godot;
 using Atomation.Things;
@@ -11,10 +11,10 @@ public class SavedPlayer
     public StatSheet StatSheet;
 
     public SavedPlayer() { }
-    public SavedPlayer(Player toSave)
-    {
-        Name = toSave.Name;
-        Cords = toSave.Position;
-        StatSheet = toSave.GetStatSheet();
-    }
+    // public SavedPlayer(Player toSave)
+    // {
+    //     Name = toSave.Name;
+    //     Cords = toSave.Position;
+    //     StatSheet = toSave.GetStatSheet();
+    // }
 }

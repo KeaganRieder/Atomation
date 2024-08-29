@@ -1,5 +1,6 @@
 namespace Atomation.GameMap;
 
+using System.Collections.Generic;
 using Atomation.Things;
 using Godot;
 
@@ -50,34 +51,6 @@ public class MapGenerator
     }
 
     /// <summary>
-    /// used to generate a map preview
-    /// </summary>
-    public void GenerateMap(Vector2 areaOffset, Node2D node2D = null)
-    {
-        if (node2D == null)
-        {
-            GD.PushError("can't generate sense no parent is set and not making chunks");
-            return;
-        }
-
-        GenerateNoiseMaps(areaOffset, out float[,] elevationMap, out float[,] temperatureMap, out float[,] moistureMap);
-
-        GenStepLandScape genStepTerrain = new GenStepLandScape(elevationMap, temperatureMap, moistureMap);
-        genStepTerrain.Generate(out Terrain[,] generatedTiles, areaOffset, generationArea);
-
-
-        for (int x = 0; x < generationArea.X; x++)
-        {
-            for (int y = 0; y < generationArea.Y; y++)
-            {
-                Terrain tile = generatedTiles[x, y];
-                node2D.AddChild(tile.Graphic);
-            }
-        }
-
-    }
-
-    /// <summary>
     /// run the games map generate
     /// </summary>
     public void GenerateMap(Vector2 areaOffset, ChunkHandler chunkHandler = null)
@@ -91,21 +64,22 @@ public class MapGenerator
         GenerateNoiseMaps(areaOffset * Chunk.CHUNK_SIZE, out float[,] elevationMap, out float[,] temperatureMap, out float[,] moistureMap);
 
         GenStepLandScape genStepTerrain = new GenStepLandScape(elevationMap, temperatureMap, moistureMap);
-        genStepTerrain.Generate(out Terrain[,] generatedTiles, areaOffset, generationArea);
+        genStepTerrain.GenerateLandScape(out Terrain[,] generatedTerrain, out Structure[,] generatedMountains, areaOffset, generationArea);
 
-        // finalizing generation
-        if (InChunkMode())
+        for (int x = 0; x < generationArea.X; x++)
         {
-            // GD.PushError("chunk Generation mode not implemented");
-            // ChunkHandler chunkHandler = Map.Instance.GetChunkHandler();
-
-            for (int x = 0; x < generationArea.X; x++)
+            for (int y = 0; y < generationArea.Y; y++)
             {
-                for (int y = 0; y < generationArea.Y; y++)
+                Terrain terrain = generatedTerrain[x, y];
+                Structure mountainWalls = generatedMountains[x, y];
+
+                if (generatedTerrain[x, y] == null)
                 {
-                    Terrain terrain = generatedTiles[x, y];
-                    chunkHandler.GetChunk(areaOffset).SetTerrain(terrain.Position, terrain);
+                    GD.Print($"null At {x},{y}");
                 }
+                
+                chunkHandler.GetChunk(areaOffset).SetTerrain(new Vector2(x,y), terrain);
+                chunkHandler.GetChunk(areaOffset).SetStructure(mountainWalls);
             }
         }
 

@@ -30,15 +30,22 @@ public abstract class ThingDef : IDef
 
     protected StatSheet statSheet;
     protected GraphicData graphicData;
+    private int gridLayer;
 
-    public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
-    public GraphicData GraphicData { get => graphicData; set => graphicData = value; }
+    [JsonProperty(Order = 1)]
     public string DefName { get => defName; set => defName = value; }
+    [JsonProperty(Order = 1)]
     public string Description { get => description; set => description = value; }
+    [JsonProperty(Order = 1)]
+    public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
+    [JsonProperty(Order = 1)]
+    public GraphicData GraphicData { get => graphicData; set => graphicData = value; }
+    [JsonProperty(Order = 1)]
+    public int GridLayer { get => gridLayer; set => gridLayer = value; }
 
     [JsonConstructor]
     protected ThingDef() { }
-    protected ThingDef(string name, string description, StatSheet statSheet, GraphicData graphicData)
+    protected ThingDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = -1)
     {
         defName = name;
         this.description = description;
@@ -48,6 +55,7 @@ public abstract class ThingDef : IDef
         {
             this.graphicData.graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
         }
+        this.GridLayer = gridLayer;
     }
 
     public virtual string GetKey()

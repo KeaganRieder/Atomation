@@ -20,7 +20,7 @@ public class TerrainDef : ThingDef
 
     [JsonConstructor]
     public TerrainDef() { }
-    public TerrainDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = 0)
+    public TerrainDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = GameLayers.Terrain)
     : base(name, description, statSheet, graphicData, gridLayer) { }
 
     public static TerrainDef Undefined

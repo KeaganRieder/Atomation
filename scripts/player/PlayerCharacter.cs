@@ -38,7 +38,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private PlayerCharacter()
     {
         Name = "player";
-        ZIndex = 1;
+        ZIndex = GameLayers.Player;
     }
 
     public CustomCamera Camera { get => camera; set => camera = value; }

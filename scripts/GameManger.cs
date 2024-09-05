@@ -1,18 +1,18 @@
 namespace Atomation;
 
+using Godot;
+
 using Atomation.GameMap;
 using Atomation.Resources;
 using Atomation.Player;
 using Atomation.Things;
-using Godot;
 using Atomation.Ui;
 using Atomation.Systems;
 using Atomation.Settings;
 
-
-
 /// <summary>
-/// Main class which handles manning the game through different scene
+/// game manger is the main class used to run Atomation. It handles creating the scene tree, and manges 
+/// various thing during the games start up
 /// </summary>
 public partial class GameManger : Node2D
 {
@@ -31,17 +31,11 @@ public partial class GameManger : Node2D
 
    private Map gameMap;
    private PlayerCharacter player;
-   private PlayerKeybindSettings playerKeybindSettings;
+   private CustomCamera playerCam;
 
-   private CustomCamera mainCam;
-
-   // private PauseMenu pauseMenu;
 
    private GameManger() { }
 
-   /// <summary>
-   /// runs upon node creation
-   /// </summary>
    public override void _Ready()
    {
       FormatFiles();
@@ -56,17 +50,17 @@ public partial class GameManger : Node2D
    }
 
    /// <summary>
-   /// used to initialize atomation
+   /// initializes the game by creating the required nodes/objects and beings file loading process
    /// </summary>
    private void InitializeGame()
    {
-      mainCam = new CustomCamera();
-      mainCam.UpdateTarget(this);
+      playerCam = new CustomCamera();
+      playerCam.UpdateTarget(this);
 
       gameMap = Map.Instance;
       AddChild(gameMap);
 
-      playerKeybindSettings = new PlayerKeybindSettings(); //do more work on this
+      new PlayerKeybindSettings(); //do more work on this
    }
 
    /// <summary>
@@ -96,9 +90,26 @@ public partial class GameManger : Node2D
    {
       gameMap.Generate();
 
+      PauseMenu pauseMenu = new PauseMenu(playerCam); 
+
       player = PlayerCharacter.Instance;
-      mainCam.UpdateTarget(player);
+      player.Camera = playerCam;
+      playerCam.UpdateTarget(player);
       AddChild(player);
+   }
+
+   /// <summary>
+   /// handles saving of the game
+   /// </summary>
+   public void SaveGame(){
+      GD.Print("saving not implemented");
+   }
+
+   /// <summary>
+   /// handles Loading of the game
+   /// </summary>
+   public void LoadGame(){
+      GD.Print("loading not implemented");
    }
 
 }

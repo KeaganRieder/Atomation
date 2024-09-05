@@ -144,7 +144,7 @@ public class ChunkHandler
         if (lastLoadedChunks.Contains((Vector2I)cord))
         {
             lastLoadedChunks.Remove((Vector2I)cord);
-            GD.Print($"contains {cord}");
+            // GD.Print($"contains {cord}");
         }
         if (!HasChunk(cord))
         {

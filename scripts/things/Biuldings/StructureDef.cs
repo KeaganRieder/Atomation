@@ -27,7 +27,7 @@ public class StructureDef : ThingDef
 
     [JsonConstructor]
     public StructureDef() { }
-    public StructureDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = 2)
+    public StructureDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = GameLayers.Structure)
     : base(name, description, statSheet, graphicData, gridLayer) { }
 
     public static StructureDef Undefined()

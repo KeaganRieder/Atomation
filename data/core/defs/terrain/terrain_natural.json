@@ -14,7 +14,6 @@
       "DefName": "Forest Grass",
       "Description": "it's grass within a forest",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -23,7 +22,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 1.0,
             "Description": "The tile's fertility"
@@ -72,7 +70,6 @@
       "DefName": "Grass",
       "Description": "it's grass",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -81,7 +78,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 1.0,
             "Description": "The tile's fertility"
@@ -130,7 +126,6 @@
       "DefName": "Dry Grass",
       "Description": "it's Dry Grass",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -139,7 +134,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.5,
             "Description": "The tile's fertility"
@@ -188,7 +182,6 @@
       "DefName": "Soil",
       "Description": "it's soil",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -197,7 +190,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 1.0,
             "Description": "The tile's fertility"
@@ -246,7 +238,6 @@
       "DefName": "Rich Soil",
       "Description": "it's rich soil, corps grow well here",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -255,7 +246,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 2.0,
             "Description": "The tile's fertility"
@@ -304,7 +294,6 @@
       "DefName": "Sand",
       "Description": "it's rough, corse and gets everywhere",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -313,7 +302,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"
@@ -362,7 +350,6 @@
       "DefName": "Ice",
       "Description": "it's slippery,and cold",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -371,7 +358,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"
@@ -420,7 +406,6 @@
       "DefName": "Taiga Soil",
       "Description": "it's lacks nutrients",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -429,7 +414,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.5,
             "Description": "The tile's fertility"

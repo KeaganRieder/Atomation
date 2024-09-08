@@ -4,7 +4,6 @@
       "DefName": "Marsh",
       "Description": "it's Marshy",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -13,7 +12,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"
@@ -62,7 +60,6 @@
       "DefName": "Shallow Ocean",
       "Description": "it's Ocean which is shallow",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -71,7 +68,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"
@@ -120,7 +116,6 @@
       "DefName": "Shallow Water",
       "Description": "it's shallow water",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -129,7 +124,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"
@@ -178,7 +172,6 @@
       "DefName": "Deep Ocean",
       "Description": "it's Ocean which is Deep",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -187,7 +180,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"
@@ -236,7 +228,6 @@
       "DefName": "Deep Water",
       "Description": "it's deep water, which you have to swim through",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -245,7 +236,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"

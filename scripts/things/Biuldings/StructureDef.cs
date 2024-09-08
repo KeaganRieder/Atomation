@@ -20,15 +20,16 @@ public class StructureDef : ThingDef
     private SupportType supportReq;
     private Dictionary<string, int> buildCost;
 
-    [JsonProperty(Order = 2),JsonConverter(typeof(StringEnumConverter))]
-    public SupportType SupportReq { get => supportReq; set => supportReq = value; }
-    [JsonProperty(Order = 2)]
-    public Dictionary<string, int> BuildCost { get => buildCost; set => buildCost = value; }
-
     [JsonConstructor]
     public StructureDef() { }
     public StructureDef(string name, string description, StatSheet statSheet, GraphicData graphicData, int gridLayer = GameLayers.Structure)
     : base(name, description, statSheet, graphicData, gridLayer) { }
+
+    [JsonProperty(Order = 2),JsonConverter(typeof(StringEnumConverter))]
+    public SupportType SupportReq { get => supportReq; set => supportReq = value; }
+    
+    [JsonProperty(Order = 2)]
+    public Dictionary<string, int> BuildCost { get => buildCost; set => buildCost = value; }
 
     public static StructureDef Undefined()
     {

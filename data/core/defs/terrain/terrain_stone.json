@@ -4,7 +4,6 @@
       "DefName": "Gravel",
       "Description": "it's made of smaller rocks",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -13,7 +12,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.5,
             "Description": "The tile's fertility"
@@ -62,7 +60,6 @@
       "DefName": "Marble",
       "Description": "it's white rock which looks nice",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -71,7 +68,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"
@@ -120,7 +116,6 @@
       "DefName": "Slate",
       "Description": "it's a black rock which looks nice",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "fertility": {
             "Modifiable": true,
@@ -129,7 +124,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 0.0,
             "Description": "The tile's fertility"

@@ -12,7 +12,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 200.0,
             "Description": "The health of the wall"
@@ -42,7 +41,7 @@
           "Y": 32
         }
       },
-      "GridLayer": 2,
+      "GridLayer": 3,
       "SupportReq": "Heavy",
       "BuildCost": {
         "Stone": 5
@@ -60,7 +59,6 @@
             "MinValue": 0.0,
             "FlatModifiers": [],
             "PercentageModifiers": [],
-            "DamageAble": false,
             "Damage": 0.0,
             "CurrentValue": 100.0,
             "Description": "The health of the wall"
@@ -90,7 +88,7 @@
           "Y": 32
         }
       },
-      "GridLayer": 2,
+      "GridLayer": 3,
       "SupportReq": "Heavy",
       "BuildCost": {
         "Stone": 5

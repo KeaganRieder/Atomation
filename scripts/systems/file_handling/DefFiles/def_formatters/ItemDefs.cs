@@ -1,6 +1,7 @@
-namespace  Atomation.Resources;
+namespace Atomation.Resources;
 
 using GameMap;
+using StatSystem;
 using Things;
 using Godot;
 using System.Collections.Generic;
@@ -11,31 +12,31 @@ using System.Collections.Generic;
 /// </summary>
 public static class ItemDefs
 {
-    // public static void FormatResourceItemDefs()
-    // {
-    //     Dictionary<string, ItemDef> resourceItems = new Dictionary<string, ItemDef>
-    //     {
-    //         {"Stone", new ItemDef{
-    //             defName = "Stone", 
-    //             description = "It's Stony",
-    //             stackLimit = 64,
-    //             stackable = true,
-    //             graphicData = new GraphicData{
-    //                 texturePath = "item/resource/stone",
-    //                 variants = 1,
-    //                 color = Colors.Black, 
-    //                 graphicSize = new Vector2I(8,8),
-    //             }, 
-    //             StatSheet = new StatSheet(new Dictionary<string, StatBase>{
-                    
-    //             }, 
-    //             new Dictionary<string, StatModifierBase>{
+    public static void FormatResourceItemDefs()
+    {
+        Dictionary<string, ItemDef> resourceItems = new Dictionary<string, ItemDef>
+        {
+            {"Stone", new ItemDef{
+                DefName = "Stone",
+                Description = "It's Stony",
+                StackLimit = 64,
+                GridLayer = GameLayers.Items,
+                GraphicData = new GraphicData{
+                    texturePath = "item/resource/stone",
+                    variants = 1,
+                    color = Colors.Black,
+                    graphicSize = new Vector2I(8,8),
+                },
+                StatSheet = new StatSheet(new Dictionary<string, StatBase>{
 
-    //             }),
-    //         }
-    //         }
-    //     };
+                },
+                new Dictionary<string, StatModifierBase>{
 
-    //     DefFile<ItemDef> resourceDefs = new DefFile<ItemDef>(resourceItems, FilePaths.ITEM_FOLDER, "resource_items");
-    // }
+                }),
+            }
+            }
+        };
+
+        DefFile<ItemDef> resourceDefs = new DefFile<ItemDef>(resourceItems, FilePaths.ITEM_FOLDER, "resource_items");
+    }
 }

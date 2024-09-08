@@ -81,7 +81,7 @@ public partial class PlayerCharacter : CharacterBody2D
         Dictionary<string, StatBase> stats = new Dictionary<string, StatBase>(){
                 {"moveSpeed", new StatBase("moveSpeed", "players moveSpeed", 100,10,200)},
                 {"health", new StatBase("health", "players hit points", 100,0,100)},
-                {"attack", new StatBase("attack", "players Attack dmg", 10,0,1000)}};
+                {"attack", new StatBase("attack", "players Attack dmg", 100,0,1000)}};
 
         statSheet = new StatSheet(stats, new Dictionary<string, StatModifierBase>());
     }

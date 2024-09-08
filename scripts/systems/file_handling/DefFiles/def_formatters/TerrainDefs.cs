@@ -35,7 +35,7 @@ public static class TerrainDefs
                     color = Colors.DarkGreen,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             {"Grass",new TerrainDef("Grass", "it's grass",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -50,7 +50,7 @@ public static class TerrainDefs
                     color = Colors.Green,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             {"Dry Grass",new TerrainDef("Dry Grass", "it's Dry Grass",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -65,7 +65,7 @@ public static class TerrainDefs
                     color = new Color(0.9f, 0.9f, 0.2f),
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Light, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Light, SupportReq = SupportType.None}
             },
             {"Soil",new TerrainDef("Soil", "it's soil",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -80,7 +80,7 @@ public static class TerrainDefs
                     color = Colors.Brown,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             {"Rich Soil",new TerrainDef("Rich Soil", "it's rich soil, corps grow well here",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -95,7 +95,7 @@ public static class TerrainDefs
                     color = Colors.RosyBrown,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             {"Sand",new TerrainDef("Sand", "it's rough, corse and gets everywhere",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -110,7 +110,7 @@ public static class TerrainDefs
                     color = Colors.Yellow,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0,  SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain,  SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             {"Ice",new TerrainDef("Ice", "it's slippery,and cold",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -125,7 +125,7 @@ public static class TerrainDefs
                     color = Colors.White,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0,  SupportProvided = SupportType.Light, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain,  SupportProvided = SupportType.Light, SupportReq = SupportType.None}
             },
             {"Taiga Soil",new TerrainDef("Taiga Soil", "it's lacks nutrients",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -140,7 +140,7 @@ public static class TerrainDefs
                     color = new Color(0.3f, 0.4f, 0.3f),
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0,  SupportProvided = SupportType.Light, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain,  SupportProvided = SupportType.Light, SupportReq = SupportType.None}
             }
         };
         DefFile<TerrainDef> terrainNaturalDefs = new DefFile<TerrainDef>(terrainNatural, FilePaths.TERRAIN_FOLDER, "terrain_natural");
@@ -162,7 +162,7 @@ public static class TerrainDefs
                     color = Colors.Gray,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             {"Marble",new TerrainDef("Marble", "it's white rock which looks nice",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -177,7 +177,7 @@ public static class TerrainDefs
                     color = Colors.WhiteSmoke,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             {"Slate",new TerrainDef("Slate", "it's a black rock which looks nice",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -192,7 +192,7 @@ public static class TerrainDefs
                     color = Colors.DarkGray,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
             };
         DefFile<TerrainDef> terrainStoneDefs = new DefFile<TerrainDef>(terrainRocky, FilePaths.TERRAIN_FOLDER, "terrain_stone");
@@ -214,7 +214,7 @@ public static class TerrainDefs
                 color = Colors.SeaGreen,
                 graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
-                {GridLayer = 0, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
             },
             {"Shallow Ocean",new TerrainDef("Shallow Ocean", "it's Ocean which is shallow",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -229,7 +229,7 @@ public static class TerrainDefs
                 color = Colors.Blue,
                 graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
-                {GridLayer = 0, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
             },
             {"Shallow Water",new TerrainDef("Shallow Water", "it's shallow water",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -244,7 +244,7 @@ public static class TerrainDefs
                 color = Colors.LightBlue,
                 graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
-                {GridLayer = 0, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
             },
             {"Deep Ocean",new TerrainDef("Deep Ocean", "it's Ocean which is Deep",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -259,7 +259,7 @@ public static class TerrainDefs
                 color = Colors.DarkBlue,
                 graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
-                {GridLayer = 0, SupportProvided = SupportType.None, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.None, SupportReq = SupportType.None}
             },
             {"Deep Water",new TerrainDef("Deep Water", "it's deep water, which you have to swim through",
                 new StatSheet(new Dictionary<string, StatBase>{
@@ -274,7 +274,7 @@ public static class TerrainDefs
                     color = Colors.RoyalBlue,
                     graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
-                {GridLayer = 0, SupportProvided = SupportType.None, SupportReq = SupportType.None}
+                {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.None, SupportReq = SupportType.None}
             },
             };
         DefFile<TerrainDef> terrainWaterDefs = new DefFile<TerrainDef>(terrainWater, FilePaths.TERRAIN_FOLDER, "terrain_water");

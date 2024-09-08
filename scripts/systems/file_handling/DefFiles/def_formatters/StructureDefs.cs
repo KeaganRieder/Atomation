@@ -18,7 +18,7 @@ public static class StructureDefs
             {"Slate Wall", new StructureDef{
                 DefName = "Slate Wall",
                 Description = "A rock face made of slate",
-                GridLayer = 2,
+                GridLayer = GameLayers.Structure,
                 StatSheet = new StatSheet(new Dictionary<string, StatBase>{
                     {"health", new StatBase("health","The health of the wall",200,0,200)},
                 },
@@ -38,7 +38,7 @@ public static class StructureDefs
             {"Marble wall", new StructureDef{
                 DefName = "Marble wall",
                 Description = "A rock face made of Marble",
-                GridLayer = 2,
+                GridLayer = GameLayers.Structure,
                 StatSheet = new StatSheet(new Dictionary<string, StatBase>{
                     {"health", new StatBase("health","The health of the wall",100,0,100)},
                 },

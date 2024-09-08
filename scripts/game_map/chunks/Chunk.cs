@@ -136,11 +136,54 @@ public partial class Chunk : Node2D
         }
         else
         {
-            throw new InvalidOperationException("Object on map layer {structure} is not Structure");
+            throw new InvalidOperationException($"Object on map layer {GameLayers.Structure} is not Structure");
         }
     }
 
-    //todo item stuff
+    /// <summary> 
+    /// sets item at given position
+    /// </summary>
+    public void SetItem(Vector2 cord, Item worldItem)
+    {
+        if (worldItem != default || worldItem != null)
+        {
+            AddChild(worldItem.Graphic);
+            chunkGrid.SetValue(cord, worldItem, worldItem.GridLayer);
+            worldItem.Chunk = this;
+        }
+        if (worldItem == null)
+        {
+            RemoveItem(cord);
+        }
+    }
+
+    /// <summary> 
+    /// gets item at given position 
+    /// </summary>
+    public Item GetItem(Vector2 cord, int gridLayer = GameLayers.Items)
+    {
+        object obj = chunkGrid.GetValue(cord, gridLayer);
+        if (obj is Item)
+        {
+            return obj as Item;
+        }
+        else if (obj == default)
+        {
+            return null;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Object on map layer {GameLayers.Items} is not Structure");
+        }
+    }
+
+    /// <summary>
+    /// removes a item from the grid at the given position
+    /// </summary>
+    public void RemoveItem(Vector2 cord, int gridLayer = GameLayers.Items)
+    {
+        chunkGrid.RemoveValue(cord, gridLayer);
+    }
 
     /// <summary> 
     /// unloads chunk 

@@ -25,7 +25,7 @@ public class ThingDatabase
 
     private static DefFile<TerrainDef> TerrainDefs;
     private static DefFile<StructureDef> StructureDefs;
-    // private static DefFile<ItemDef> ItemDefs;
+    private static DefFile<ItemDef> ItemDefs;
     private static DefFile<Biome> BiomeDefs;
     private static bool loaded;
 
@@ -45,7 +45,7 @@ public class ThingDatabase
             // GD.Print("Loading Structure Def Files");
             StructureDefs = new DefFile<StructureDef>(FilePaths.STRUCTURE_FOLDER);
             // GD.Print("Loading Item Def Files");
-            // ItemDefs = new DefFile<ItemDef>(FilePaths.ITEM_FOLDER);
+            ItemDefs = new DefFile<ItemDef>(FilePaths.ITEM_FOLDER);
             loaded = true;
         }
     }
@@ -94,16 +94,13 @@ public class ThingDatabase
         return StructureDef.Undefined();
     }
 
-    // public ItemDef GetItemDef(string itemID)
-    // {
-    //     if (itemID == "Test Item")
-    //     {
-    //         return ItemDef.TestDef();
-    //     }
-    //     if (itemID != null && itemID != "Undefine Item")
-    //     {
-    //         return ItemDefs[itemID];
-    //     }
-    //     return ItemDef.Undefined();
-    // }
+    public ItemDef GetItemDef(string itemID)
+    {
+        
+        if (itemID != null && itemID != "Undefine Item")
+        {
+            return ItemDefs[itemID];
+        }
+        return ItemDef.Undefined();
+    }
 }

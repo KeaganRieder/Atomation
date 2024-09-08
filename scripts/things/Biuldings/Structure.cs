@@ -42,12 +42,13 @@ public class Structure : Thing
         }
         description = def.Description;
         supportReq = def.SupportReq;
+
         resources = new Dictionary<string, int>();
 
-        // foreach (var items in def.BuildCost)
-        // {
-        //     resources.Add(items.Key, items.Value);
-        // }
+        foreach (var item in def.BuildCost)
+        {
+            resources.Add(item.Key, item.Value);
+        }
 
         GridLayer = def.GridLayer;
         graphic.Name = $"{name} {Position}";
@@ -85,19 +86,21 @@ public class Structure : Thing
     {
         //todo make mining damage? or at least have mining effect resources given
         // if approbate
-        
         statSheet.GetStat("health").Damage = statSheet.GetStat("health").Damage + amount;
+        GD.Print($"Health remaining: {statSheet.GetStat("health").CurrentValue}");
 
         if (statSheet.GetStat("health").CurrentValue <= 0)
         {
-            chunk.RemoveStructure(Position.GlobalToMap());
+            Vector2 position = Position.GlobalToMap();
+            chunk.RemoveStructure(position);
 
             foreach (var item in resources)
             {
-                // Item dropped = new Item(Position);
-                // dropped.Configure(ThingDatabase.Instance.GetItemDef(item.Key));
-                // dropped.SetQuantity(item.Value);
-                // WorldMap.Instance.SetItem(cords, dropped);
+                //todo make have to find next valid space
+                Item droppedItem = new Item(position);
+                droppedItem.Configure(ThingDatabase.Instance.GetItemDef(item.Key));
+                droppedItem.CurrentStackSize = item.Value;
+                chunk.SetItem(position, droppedItem);
             }
 
             DestroyNode();
@@ -111,7 +114,6 @@ public class Structure : Thing
     public void Damage(StatSheet statSheet)
     {
         StatBase dmg = statSheet.GetStat("attack");
-
         if (dmg != null)
         {
             Damage(dmg.CurrentValue);

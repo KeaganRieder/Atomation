@@ -134,19 +134,16 @@ public partial class PlayerController : Node2D
                 Vector2 mouseTilePosition = (GetMouseMapPosition() - mouseChunkPosition * Chunk.CHUNK_SIZE).Abs();
 
                 Structure structure = mapTarget.ChunkHandler.GetChunk(mouseChunkPosition).GetStructure(mouseTilePosition);
-                // Terrain terrain = mapTarget.ChunkHandler.GetChunk(mouseChunkPosition).GetTerrain(mouseTilePosition);
+                Item item = mapTarget.ChunkHandler.GetChunk(mouseChunkPosition).GetItem(mouseTilePosition);
                 if (structure != null)
                 {
                     structure.Damage(playerTarget.StatSheet);
                 }
-                // if (terrain.Graphic.Visible)
-                // {
-                //     terrain.Graphic.Visible = false;
-                // }
-                // else if (!terrain.Graphic.Visible)
-                // {
-                //     terrain.Graphic.Visible = true;
-                // }
+                else if (item != null)
+                {
+                    GD.Print($"{item.Name} has {item.CurrentStackSize} stack together");
+                }
+                
             }
         }
     }

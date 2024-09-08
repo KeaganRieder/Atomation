@@ -1,9 +1,14 @@
 {
   "Defs": {
     "Stone": {
-      "stackable": true,
-      "stackLimit": 64,
-      "graphicData": {
+      "StackLimit": 64,
+      "DefName": "Stone",
+      "Description": "It's Stony",
+      "StatSheet": {
+        "Stats": {},
+        "StatModifers": {}
+      },
+      "GraphicData": {
         "texturePath": "item/resource/stone",
         "variants": 1,
         "color": {
@@ -25,12 +30,7 @@
           "Y": 8
         }
       },
-      "statSheet": {
-        "Stats": {},
-        "StatModifers": {}
-      },
-      "defName": "Stone",
-      "description": "It's Stony"
+      "GridLayer": 2
     }
   }
 }

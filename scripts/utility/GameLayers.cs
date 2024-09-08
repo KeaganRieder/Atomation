@@ -7,7 +7,8 @@ namespace Atomation;
 public static class GameLayers
 {
     public const int Terrain = 0;
-    public const int Structure = 2;
+    public const int Structure = 3;
+    public const int Items = 2;
 
     public const int Player = 4;
 

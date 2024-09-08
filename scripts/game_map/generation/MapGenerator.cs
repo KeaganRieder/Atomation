@@ -79,10 +79,9 @@ public class MapGenerator
                 }
                 
                 chunkHandler.GetChunk(areaOffset).SetTerrain(new Vector2(x,y), terrain);
-                chunkHandler.GetChunk(areaOffset).SetStructure(mountainWalls);
+                chunkHandler.GetChunk(areaOffset).SetStructure(new Vector2(x,y),mountainWalls);
             }
         }
-
     }
 
     /// <summary>

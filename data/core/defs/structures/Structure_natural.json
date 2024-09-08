@@ -4,7 +4,6 @@
       "DefName": "Slate Wall",
       "Description": "A rock face made of slate",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "health": {
             "Modifiable": true,
@@ -53,7 +52,6 @@
       "DefName": "Marble wall",
       "Description": "A rock face made of Marble",
       "StatSheet": {
-        "TargetObject": null,
         "Stats": {
           "health": {
             "Modifiable": true,

@@ -19,7 +19,7 @@ public partial class CustomCamera : Camera2D
     private bool processZoomEvent = false;
     private bool processMoveEvent = false;
 
-    public CustomCamera()
+    public CustomCamera(Node parent = null)
     {
         Name = "Main Cam";
         Position = Vector2.Zero;
@@ -30,6 +30,7 @@ public partial class CustomCamera : Camera2D
         maxZoom = 1.25f;
         zoomSpeed = 0.05f;
 
+        UpdateTarget(parent);
     }
 
     /// <summary>
@@ -56,7 +57,7 @@ public partial class CustomCamera : Camera2D
     /// </summary>
     public void SetViewportSize()
     {
-        //todo
+        GD.Print("setting of viewport size hasn't been implemented");
     }
 
     /// <summary>
@@ -64,14 +65,17 @@ public partial class CustomCamera : Camera2D
     /// </summary>
     public void UpdateTarget(Node newParent)
     {
-        Node currentParent = GetParent();
-
-        if (GetParent() != null)
+        if (newParent != null)
         {
-            currentParent.RemoveChild(this);
-        }
+            Node currentParent = GetParent();
 
-        newParent.AddChild(this);
+            if (GetParent() != null)
+            {
+                currentParent.RemoveChild(this);
+            }
+
+            newParent.AddChild(this);
+        }
     }
 
 

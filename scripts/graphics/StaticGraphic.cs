@@ -20,7 +20,7 @@ public partial class StaticGraphic : Sprite2D
     {
         texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png";
 
-        graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
+        graphicSize = new Vector2I(Map.CELL_SIZE-1, Map.CELL_SIZE-1);
         // SetTexture();
     }
 
@@ -72,7 +72,7 @@ public partial class StaticGraphic : Sprite2D
     public void SetTexture()
     {
         Texture2D texture;
-
+        graphicSize-=Vector2I.One;
         if (variants > 1)
         {
             Texture2D[] textureArray = FileUtility.ReadTextureGroup(texturePath, graphicSize, variants);
@@ -93,18 +93,5 @@ public partial class StaticGraphic : Sprite2D
     {
         Modulate = currentColor;
     }
-
-    // public void SetSize(Vector2I size){
-    //     graphicSize = size;
-    //     SetTexture();
-    // }
-    // public void SetScale(Vector2 scale){
-    //     Scale = scale;
-    // }
-
-    // public void SetDefaultColor()
-    // {
-    //     Modulate = defaultColor;
-    // }
 
 }

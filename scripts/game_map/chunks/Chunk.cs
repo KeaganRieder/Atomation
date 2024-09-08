@@ -8,8 +8,6 @@ using Godot;
 public partial class Chunk : Node2D
 {
     public const int CHUNK_SIZE = 32;
-    // private Sprite2D graphic;
-    // private Vector2 chunkPosition;
 
     private bool loaded;
 
@@ -19,8 +17,8 @@ public partial class Chunk : Node2D
 
     public Chunk(Vector2 position)
     {
-        Name = $"chunk:{position}";// * Map.CELL_SIZE * (CHUNK_SIZE - 1)
-        Vector2 pos = position * Map.CELL_SIZE * (CHUNK_SIZE - 1); //figure out weird 16 pixel offset
+        Name = $"chunk:{position}";
+        Vector2 pos = position * Map.CELL_SIZE * CHUNK_SIZE;
         ChunkPosition = pos;
 
         chunkGrid = new Grid(false);
@@ -42,7 +40,6 @@ public partial class Chunk : Node2D
     {
         get => Position; set
         {
-            // chunkPosition = value;
             Position = value;
         }
     }
@@ -52,26 +49,33 @@ public partial class Chunk : Node2D
     /// </summary>
     public void SetTerrain(Vector2 cord, Terrain terrain)
     {
+
         if (terrain == null)
         {
-            GD.Print("terrain is null");
+            RemoveTerrain(cord, GameLayers.Terrain);
         }
         if (terrain != null)
         {
             AddChild(terrain.Graphic);
+            terrain.Chunk = this;
+            chunkGrid.SetValue(cord, terrain, terrain.GridLayer);
+
         }
-        chunkGrid.SetValue(cord, terrain, terrain.GridLayer);
     }
 
     /// <summary> 
     /// gets terrain at given position 
     /// </summary>
-    public Terrain GetTerrain(Vector2 cord, int gridLayer = 0)
+    public Terrain GetTerrain(Vector2 cord, int gridLayer = GameLayers.Terrain)
     {
         object obj = chunkGrid.GetValue(cord, gridLayer);
         if (obj is Terrain)
         {
             return obj as Terrain;
+        }
+        else if (obj == default)
+        {
+            return null;
         }
         else
         {
@@ -79,37 +83,64 @@ public partial class Chunk : Node2D
         }
     }
 
-    /// <summary> 
-    /// sets terrain at given position
+    /// <summary>
+    /// removes a terrain from the grid at the given position
     /// </summary>
-    public void SetStructure(Structure structure, Vector2 cord = default)
+    public void RemoveTerrain(Vector2 cord = default, int gridLayer = GameLayers.Terrain)
     {
-        if (structure != default ||structure != null)
+        if (cord == default)
         {
-            AddChild(structure.Graphic);
-            chunkGrid.SetValue(structure.Position, structure, structure.GridLayer);
+            throw new InvalidOperationException("cord is default, can't remove structure at invalid cord");
         }
-        // if (structure == null) //todo deleting structures
-        // {
-        //     chunkGrid.SetValue(cord, structure, 2);
-        // }
+        GD.Print("terrain removal implementation needed");
     }
 
     /// <summary> 
-    /// gets terrain at given position 
+    /// sets structure at given position
     /// </summary>
-    public Structure GetStructure(Vector2 cord, int gridLayer = 2)
+    public void SetStructure(Vector2 cord, Structure structure)
+    {
+        if (structure != default || structure != null)
+        {
+            AddChild(structure.Graphic);
+            chunkGrid.SetValue(cord, structure, structure.GridLayer);
+            structure.Chunk = this;
+        }
+        if (structure == null)
+        {
+            RemoveStructure(cord);
+        }
+    }
+
+    /// <summary>
+    /// removes a structure from the grid at the given position
+    /// </summary>
+    public void RemoveStructure(Vector2 cord, int gridLayer = GameLayers.Structure)
+    {
+        chunkGrid.RemoveValue(cord, gridLayer);
+    }
+
+    /// <summary> 
+    /// gets structure at given position 
+    /// </summary>
+    public Structure GetStructure(Vector2 cord, int gridLayer = GameLayers.Structure)
     {
         object obj = chunkGrid.GetValue(cord, gridLayer);
         if (obj is Structure)
         {
             return obj as Structure;
         }
+        else if (obj == default)
+        {
+            return null;
+        }
         else
         {
             throw new InvalidOperationException("Object on map layer {structure} is not Structure");
         }
     }
+
+    //todo item stuff
 
     /// <summary> 
     /// unloads chunk 

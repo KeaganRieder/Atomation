@@ -29,7 +29,7 @@ public class Grid
         {
             return;
         }
-        
+
         if (!HasLayer(layer))
         {
             AddLayer(layer);
@@ -39,17 +39,39 @@ public class Grid
     }
 
     /// <summary>
+    /// removes value at given position
+    /// </summary>
+    public void RemoveValue(Vector2 cord, int layer = -1)
+    {
+        if (HasLayer(layer))
+        {
+            if (grid[layer].ContainsKey(cord))
+            {
+                GD.Print("removd");
+                grid[layer].Remove(cord);
+            }
+        }
+    }
+
+    /// <summary>
     /// gets value at given position
     /// </summary>
     public object GetValue(Vector2 cord, int layer)
     {
         if (HasLayer(layer))
         {
-            return grid[layer][cord];
+            if (grid[layer].ContainsKey(cord))
+            {
+
+                return grid[layer][cord];
+
+            }
+
         }
+
         return default;
     }
-    
+
     /// <summary>
     /// returns grids cells as a list
     /// </summary>

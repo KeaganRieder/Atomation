@@ -26,7 +26,7 @@ public class StatBase
     /// <summary>
     /// can teh stat be damaged
     /// </summary>
-    private bool damageAble;
+    // private bool damageAble;
 
     /// <summary>
     /// the base value of a stat, used to calculate the 
@@ -64,7 +64,7 @@ public class StatBase
 
     }
 
-    public StatBase(string name,string description,float value, float minValue, float maxValue, bool modifiable = true)
+    public StatBase(string name, string description, float value, float minValue, float maxValue, bool modifiable = true)
     {
         this.name = name;
         this.description = description;
@@ -77,11 +77,17 @@ public class StatBase
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
+
     public StatBase(StatBase stat)
     {
         name = stat.name;
         description = stat.description;
         modifiable = stat.modifiable;
+
+        //todo copying
+        flatModifiers = new List<StatModifierBase>();
+        percentageModifiers = new List<StatModifierBase>();
+
         updateValue = true;
 
         value = stat.value;
@@ -89,38 +95,44 @@ public class StatBase
         maxValue = stat.maxValue;
     }
 
+    [JsonProperty]
     public bool Modifiable { get => modifiable; set => modifiable = value; }
+    [JsonProperty]
     public float Value { get => value; protected set => this.value = value; }
+    [JsonProperty]
     public float MaxValue { get => maxValue; set => maxValue = value; }
+    [JsonProperty]
     public float MinValue { get => minValue; set => minValue = value; }
+    [JsonProperty]
     public List<StatModifierBase> FlatModifiers { get => flatModifiers; protected set => flatModifiers = value; }
+    [JsonProperty]
     public List<StatModifierBase> PercentageModifiers { get => percentageModifiers; protected set => percentageModifiers = value; }
-    public bool DamageAble { get => damageAble; set => damageAble = value; }
+
+    [JsonProperty]
     public float Damage
     {
         get => damage;
         set
         {
-            if (damageAble)
-            {
-                damage = value < 0 ? 0 : value;
-            }
-            else
-            {
-                damage = 0;
-            }
+            damage = value < 0 ? 0 : value;
+            updateValue = true;
         }
     }
-    public float CurrentValue { get {
-        if (updateValue)
+    [JsonProperty]
+    public float CurrentValue
+    {
+        get
         {
-            UpdateStat();
+            if (updateValue)
+            {
+                UpdateStat();
+            }
+            return currentValue;
         }
-        return currentValue;
-    }  }
+    }
 
+    [JsonProperty]
     public string Description { get => description; set => description = value; }
-
 
     /// <summary>
     /// applies the given modifier to the stat
@@ -219,7 +231,7 @@ public class StatBase
     {
         float finalValue = value;
 
-        finalValue += damage;
+        finalValue -= damage;
 
         foreach (var flatModifier in flatModifiers)
         {

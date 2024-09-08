@@ -55,14 +55,21 @@ public class StatModifierBase
         source = statModifierBase.source;
     }
 
+    [JsonProperty]
     public string Name { get => name; set => name = value; }
+    [JsonProperty]
     public string TargetStat { get => targetStat; set => targetStat = value; }
 
+    [JsonProperty]
     public ModifierType Type { get => type; set => type = value; }
+    [JsonProperty]
     public float Value { get => value; protected set => this.value = value; }
+    [JsonProperty]
     public int Order { get => order; protected set => order = value; }
 
+    [JsonProperty]
     public object Source { get => source; set => source = value; }
+    [JsonProperty]
     public bool Negative { get => negative; protected set => negative = value; }
 
     /// <summary>

@@ -14,6 +14,9 @@ public class PlayerKeybindSettings
     [JsonProperty]
     private Dictionary<string, InputEvent> keybindings;
 
+    // figure out best approach for naming of bindings, maybe making static array 
+    // or something like that  
+
     public PlayerKeybindSettings()
     {
         DefaultBindings();

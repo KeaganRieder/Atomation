@@ -20,6 +20,8 @@ public abstract class Thing
     protected StaticGraphic graphic;
     protected CollisionShape2D collisionBox;
 
+    protected Chunk chunk;
+
     /// <summary>
     /// the rendering/interaction layer the thing is on the grid
     /// </summary>
@@ -60,8 +62,15 @@ public abstract class Thing
         }
     }
 
+    [JsonIgnore]
+    public Chunk Chunk { get => chunk; set => chunk = value; }
+
+    /// <summary>
+    /// configures the thing, using values present in a thingDef file
+    /// </summary>
     public virtual void Configure(ThingDef config, Vector2 offset = default)
     {
+        //maybe make from readFromDef?
         if (config == null)
         {
             GD.PrintErr("can't configure thing from null configs");

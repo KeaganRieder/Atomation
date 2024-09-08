@@ -7,15 +7,15 @@ public class PercentageModifier : StatModifierBase
     {
     }
 
-    public PercentageModifier(PercentageModifier statModifierBase)
+    public PercentageModifier(StatModifierBase statModifierBase)
     {
-        name = statModifierBase.name;
-        targetStat = statModifierBase.targetStat;
+        name = statModifierBase.Name;
+        targetStat = statModifierBase.TargetStat;
 
-        type = statModifierBase.type;
-        value = statModifierBase.value;
-        order = statModifierBase.order;
-        source = statModifierBase.source;
+        type = statModifierBase.Type;
+        value = statModifierBase.Value;
+        order = statModifierBase.Order;
+        source = statModifierBase.Source;
     }
 
     public override float ApplyModifier(float currentValue)

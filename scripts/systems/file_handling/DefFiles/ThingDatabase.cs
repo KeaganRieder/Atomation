@@ -38,13 +38,13 @@ public class ThingDatabase
     {
         if (!loaded)
         {
-            GD.Print("Loading Terrain Def Files");
+            // GD.Print("Loading Terrain Def Files");
             TerrainDefs = new DefFile<TerrainDef>(FilePaths.TERRAIN_FOLDER);
-            GD.Print("Loading Biome Def Files");
+            // GD.Print("Loading Biome Def Files");
             BiomeDefs = new DefFile<Biome>(FilePaths.BIOME_FOLDER);
-            GD.Print("Loading Structure Def Files");
+            // GD.Print("Loading Structure Def Files");
             StructureDefs = new DefFile<StructureDef>(FilePaths.STRUCTURE_FOLDER);
-            GD.Print("Loading Item Def Files");
+            // GD.Print("Loading Item Def Files");
             // ItemDefs = new DefFile<ItemDef>(FilePaths.ITEM_FOLDER);
             loaded = true;
         }

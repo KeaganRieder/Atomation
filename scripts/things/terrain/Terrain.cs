@@ -42,8 +42,6 @@ public class Terrain : Thing
         supportProvided = def.SupportProvided;
         supportReq = def.SupportReq;
 
-        // collisionBox = new CollisionShape2D();
-        // graphic.AddChild(collisionBox);
         GridLayer = def.GridLayer;
         graphic.Name = $"{name} {Position}";
         graphic.Configure(def.GraphicData);

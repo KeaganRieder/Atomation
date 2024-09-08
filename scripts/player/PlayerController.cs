@@ -1,83 +1,154 @@
 namespace Atomation.Player;
 
-using Atomation.Settings;
+using Atomation.GameMap;
+using Atomation.Systems;
+using Atomation.Things;
+using Atomation.Ui;
 using Godot;
 
 /// <summary>
-/// handles receiving inputs made by the player. which it then process and decide
-/// what to todo with it. either handling the input itself or
-/// passing to another class depending on the inputs complexity/purpose
+/// receives input from the player. it then process that input and decide
+/// what action to take/perform. sometime this will pass direction to other class
+/// on how to handle the input their depending on teh complexity of the action
 /// </summary>
-public partial class PlayerController : Node
+public partial class PlayerController : Node2D
 {
-    private PlayerCharacter player;
+    private PlayerCharacter playerTarget;
+    private CustomCamera cameraTarget;
+    private Map mapTarget;
+
+    // private Inventory inventoryTarget; todo
 
     public PlayerController(PlayerCharacter player)
     {
-        Name = "PlayerController";
-        this.player = player;
+        playerTarget = player;
         player.AddChild(this);
+
+        cameraTarget = playerTarget.Camera;
+        new PauseMenu(player.Camera);
     }
 
-    public override void _Process(double delta)
+    /// <summary>
+    /// sets the controls game map target
+    /// </summary>
+    public void SetMapTarget(Map mapTarget)
     {
-        base._Process(delta);
+        this.mapTarget = mapTarget;
     }
 
-    public override void _Input(InputEvent inputEvent)
+    public override void _Input(InputEvent input)
     {
-        base._Input(inputEvent);
+        base._Input(input);
+        HandleGeneralInput();
         HandleMovementInput();
-        HandleCameraInput();
-        HandleUiInput();
+        HandleCameraInputs();
+
+        HandleInteractionInput(input);
+        HandleInventoryInputs(input);
     }
 
     public override void _UnhandledInput(InputEvent inputEvent)
     {
+        //todo
         base._UnhandledInput(inputEvent);
     }
 
-    private void HandleMovementInput()
+    /// <summary>
+    /// gets the mouse position aligned to the map cord,
+    /// using GlobalToMap in cord utility
+    /// </summary>
+    public Vector2 GetMouseMapPosition()
     {
-        if (player == null)
-        {
-            GD.PushWarning("Player character not assigned to player controller");
-            return;
-        }
-        Vector2 inputDirection = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-        player.Velocity = inputDirection * player.StatSheet.GetStat("moveSpeed").CurrentValue;
+        Vector2 globalPosition = GetGlobalMousePosition() + new Vector2(Map.CELL_SIZE / 2, Map.CELL_SIZE / 2);
+
+        return globalPosition.GlobalToMap();
     }
 
-    private void HandleCameraInput(){
+    /// <summary>
+    /// gets the mouse position aligned to the chunk cord,
+    /// using GlobalToMap and MapToChunk in cord utility
+    /// </summary>
+    public Vector2 GetMouseChunkPosition()
+    {
+        Vector2 chunkPosition = GetMouseMapPosition().MapToChunk();
+        return chunkPosition;
+    }
+
+    /// <summary>
+    /// handles input from bindings which relate to
+    /// actions that don't really belong to a category
+    /// </summary>
+    private void HandleGeneralInput()
+    {
+
+    }
+
+    /// <summary>
+    /// handles input from bindings which relate to
+    /// character movement
+    /// </summary>
+    private void HandleMovementInput()
+    {
+        Vector2 inputDirection = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
+        playerTarget.UpdateVelocity(inputDirection);
+    }
+
+    /// <summary>
+    /// handles input from bindings which relate to
+    /// camera movement
+    /// </summary>
+    private void HandleCameraInputs()
+    {
         if (Input.IsActionPressed("ZoomIn"))
         {
-            player.Camera.ZoomIn();
+            cameraTarget.ZoomIn();
         }
         if (Input.IsActionPressed("ZoomOut"))
         {
-            player.Camera.ZoomOut();
+            cameraTarget.ZoomOut();
         }
     }
 
-    private void HandleUiInput(){
-        if (Input.IsActionPressed("Pause"))
+    /// <summary>
+    /// handles input from bindings which relate to
+    /// inventory actions
+    /// </summary>
+    private void HandleInventoryInputs(InputEvent input)
+    {
+        //todo
+    }
+
+    /// <summary>
+    /// handles input from bindings which relate to
+    /// interaction of things
+    /// </summary>
+    private void HandleInteractionInput(InputEvent input)
+    {
+        //todo make hovering interaction, to get some information form tiles
+
+        if (input is InputEventMouseButton)
         {
-            GD.Print("Pause");
-        }
-        if (Input.IsActionPressed("Inventory"))
-        {
-            GD.Print("inventory");
-            
-        }
-        if (Input.IsActionPressed("QuickSave"))
-        {
-            GD.Print("save");
-            
-        }
-        if (Input.IsActionPressed("QuickLoad"))
-        {
-            GD.Print("load");
-            
+            if (input.IsActionPressed("Interact"))
+            {
+                Vector2 mouseChunkPosition = GetMouseChunkPosition();
+                Vector2 mouseTilePosition = (GetMouseMapPosition() - mouseChunkPosition * Chunk.CHUNK_SIZE).Abs();
+
+                Structure structure = mapTarget.ChunkHandler.GetChunk(mouseChunkPosition).GetStructure(mouseTilePosition);
+                // Terrain terrain = mapTarget.ChunkHandler.GetChunk(mouseChunkPosition).GetTerrain(mouseTilePosition);
+                if (structure != null)
+                {
+                    structure.Damage(playerTarget.StatSheet);
+                }
+                // if (terrain.Graphic.Visible)
+                // {
+                //     terrain.Graphic.Visible = false;
+                // }
+                // else if (!terrain.Graphic.Visible)
+                // {
+                //     terrain.Graphic.Visible = true;
+                // }
+            }
         }
     }
+
 }

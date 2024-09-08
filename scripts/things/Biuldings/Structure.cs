@@ -14,7 +14,7 @@ using Atomation.StatSystem;
 /// occurring in the game or is built and placed by the player
 /// </summary>
 public class Structure : Thing
-{    
+{
     private SupportType supportReq;
 
     // private bool buildAble;
@@ -53,10 +53,11 @@ public class Structure : Thing
         graphic.Name = $"{name} {Position}";
         graphic.ZIndex = def.GridLayer;
         graphic.Configure(def.GraphicData);
-        
+
         // collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) };
         // collisionBox.Position = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) / 2;
     }
+
     public override void DestroyNode()
     {
         if (GodotObject.IsInstanceValid(graphic))
@@ -76,12 +77,21 @@ public class Structure : Thing
         return supportReq;
     }
 
+    /// <summary>
+    /// applies the specified damage to the structure. if the damage received 
+    /// is fatal, destroy structure and given back an amount of resources
+    /// </summary>
     public void Damage(float amount)
     {
-        statSheet.GetStat("health").Damage += amount;
+        //todo make mining damage? or at least have mining effect resources given
+        // if approbate
+        
+        statSheet.GetStat("health").Damage = statSheet.GetStat("health").Damage + amount;
+
         if (statSheet.GetStat("health").CurrentValue <= 0)
         {
-            // Map.Instance.SetStructure(Position, null);
+            chunk.RemoveStructure(Position.GlobalToMap());
+
             foreach (var item in resources)
             {
                 // Item dropped = new Item(Position);
@@ -94,6 +104,10 @@ public class Structure : Thing
             return;
         }
     }
+    /// <summary>
+    /// applies the specified damage to the structure.this damage is gotten from 
+    /// the provide stat in the statSheet
+    /// </summary>
     public void Damage(StatSheet statSheet)
     {
         StatBase dmg = statSheet.GetStat("attack");
@@ -103,6 +117,10 @@ public class Structure : Thing
             Damage(dmg.CurrentValue);
         }
     }
+
+    /// <summary>
+    /// applies the specified healing amount to the structure. 
+    /// </summary>
     public void Heal(float amount)
     {
         statSheet.GetStat("health").Damage -= amount;

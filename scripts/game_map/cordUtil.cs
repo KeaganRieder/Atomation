@@ -32,10 +32,11 @@ public static class cordUtil
     /// <summary>
     /// converts the map position to the chunk position
     /// </summary>
-    public static Vector2 MapToChunk(this Vector2 pos){
+    public static Vector2 MapToChunk(this Vector2 pos)
+    {
         return new Vector2(
-            pos.X  / Chunk.CHUNK_SIZE,
-            pos.Y / Chunk.CHUNK_SIZE
+            Mathf.FloorToInt(pos.X / Chunk.CHUNK_SIZE),
+            Mathf.FloorToInt(pos.Y / Chunk.CHUNK_SIZE)
         );
     }
 

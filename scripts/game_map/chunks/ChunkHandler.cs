@@ -30,7 +30,6 @@ public class ChunkHandler
         }
         chunks[chunkCord] = chunk;
         map.AddChild(chunk);
-
     }
 
     /// <summary> gets chunk at given position </summary>
@@ -39,7 +38,7 @@ public class ChunkHandler
         // GD.PushError("world position conversion not set");
         if (!HasChunk(chunkCord))
         {
-            GD.Print("nope not here");
+            GD.PushError($"No Chunk At {chunkCord}");
             return null;
         }
 
@@ -144,7 +143,6 @@ public class ChunkHandler
         if (lastLoadedChunks.Contains((Vector2I)cord))
         {
             lastLoadedChunks.Remove((Vector2I)cord);
-            // GD.Print($"contains {cord}");
         }
         if (!HasChunk(cord))
         {

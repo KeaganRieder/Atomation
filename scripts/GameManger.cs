@@ -31,8 +31,6 @@ public partial class GameManger : Node2D
 
    private Map gameMap;
    private PlayerCharacter player;
-   private CustomCamera playerCam;
-
 
    private GameManger() { }
 
@@ -54,8 +52,8 @@ public partial class GameManger : Node2D
    /// </summary>
    private void InitializeGame()
    {
-      playerCam = new CustomCamera();
-      playerCam.UpdateTarget(this);
+      player = PlayerCharacter.Instance;
+      AddChild(player);
 
       gameMap = Map.Instance;
       AddChild(gameMap);
@@ -68,9 +66,9 @@ public partial class GameManger : Node2D
    /// </summary>
    private void LoadResources()
    {
-      GD.Print("Loading Resources");
+      // GD.Print("Loading Resources");
       ThingDatabase.Instance.LoadDefs();
-      GD.Print("Loading Complete\n");
+      // GD.Print("Loading Complete\n");
    }
 
    /// <summary>
@@ -88,28 +86,7 @@ public partial class GameManger : Node2D
    /// </summary>
    public void StartGame()
    {
-      gameMap.Generate();
-
-      PauseMenu pauseMenu = new PauseMenu(playerCam); 
-
-      player = PlayerCharacter.Instance;
-      player.Camera = playerCam;
-      playerCam.UpdateTarget(player);
-      AddChild(player);
-   }
-
-   /// <summary>
-   /// handles saving of the game
-   /// </summary>
-   public void SaveGame(){
-      GD.Print("saving not implemented");
-   }
-
-   /// <summary>
-   /// handles Loading of the game
-   /// </summary>
-   public void LoadGame(){
-      GD.Print("loading not implemented");
+      gameMap.GenerateMap();
    }
 
 }

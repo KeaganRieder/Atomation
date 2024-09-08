@@ -38,7 +38,8 @@ public partial class PlayerCharacter : CharacterBody2D
     private PlayerCharacter()
     {
         Name = "player";
-        ZIndex = GameLayers.Player;
+        camera = new CustomCamera(this);
+        controller = new PlayerController(this);
     }
 
     public CustomCamera Camera { get => camera; set => camera = value; }
@@ -47,13 +48,6 @@ public partial class PlayerCharacter : CharacterBody2D
 
     public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
     public PlayerController Controller { get => controller; }
-
-    public override void _PhysicsProcess(double delta)
-    {
-        base._PhysicsProcess(delta);
-        MoveAndSlide();
-        ChunkLoader.TryLoading();
-    }
 
     /// <summary>
     /// spawns the player into the game world
@@ -69,10 +63,17 @@ public partial class PlayerCharacter : CharacterBody2D
 
         chunkLoader = new ChunkLoader(Map.Instance.ChunkHandler, this);
         graphic = new StaticGraphic("player", 1, new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE), Colors.Black, this);
-        graphic.RenderingLayer = 1;
-        controller = new PlayerController(this);
+        graphic.RenderingLayer = GameLayers.Player;
+        controller.SetMapTarget(Map.Instance);
 
         Position = spawnCords;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+        MoveAndSlide();
+        ChunkLoader.TryLoading();
     }
 
     private void InitializeStats()
@@ -85,6 +86,13 @@ public partial class PlayerCharacter : CharacterBody2D
         statSheet = new StatSheet(stats, new Dictionary<string, StatModifierBase>());
     }
 
+    /// <summary>
+    /// updates the players velocity 
+    /// </summary>
+    /// <param name="direction"></param>
+    public void UpdateVelocity(Vector2 direction){
+        Velocity = direction * StatSheet.GetStat("moveSpeed").CurrentValue;
+    }
 
     /// <summary>
     /// used to damage player by an amount

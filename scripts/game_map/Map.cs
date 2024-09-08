@@ -32,7 +32,7 @@ public partial class Map : Node2D
 
     private MapGenerator mapGenerator;
     private ChunkHandler chunkHandler;
-    // private ChunkLoader chunkLoader;
+
 
     private Map()
     {
@@ -52,8 +52,6 @@ public partial class Map : Node2D
     public override void _Ready()
     {
         base._Ready();
-
-        // GeneratePreview();
         settings.trueCenter = false;
     }
 
@@ -61,7 +59,6 @@ public partial class Map : Node2D
     {
         // chunkLoader.TryLoading();
     }
-
 
     /// <summary> 
     /// clears the map 
@@ -74,25 +71,25 @@ public partial class Map : Node2D
     }
 
     /// <summary>
-    /// generate the map 
-    /// need to figure out a different way of doing this maybe something 
-    /// like a map generator class
-    /// </summary>
-    public void GeneratePreview()
-    {
-        mapGenerator.updateSize();
-        // mapGenerator.GenerateMap(Vector2I.Zero, this);
-    }
-
-    /// <summary>
     /// finalizes the maps generation based on the specified settings.
     /// this include actually generating the map, and spawning/placing the player
     /// </summary>
-    public void Generate()
+    public void GenerateMap()
     {
+        //todo make it so the player doesn't generate but rather it's generated at 0,0
+        // and then chunks get added to chunkhandler, and then the player is spawned
         PlayerCharacter player = PlayerCharacter.Instance;
         player.SpawnPlayer();
 
         player.ChunkLoader.TryLoading();
     }
+
+    public void FinalizeGeneration(){
+        //todo
+    }
+
+    public void HandleInteraction(){
+        //maybe?
+    }
+
 }

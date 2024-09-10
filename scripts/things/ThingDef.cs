@@ -51,9 +51,9 @@ public abstract class ThingDef : IDef
         this.description = description;
         this.statSheet = statSheet;
         this.graphicData = graphicData;
-        if (graphicData.graphicSize == Vector2I.Zero)
+        if (graphicData.GraphicSize == Vector2I.Zero)
         {
-            this.graphicData.graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
+            this.graphicData.GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
         }
         this.GridLayer = gridLayer;
     }

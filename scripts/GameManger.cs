@@ -76,9 +76,9 @@ public partial class GameManger : Node2D
    /// </summary>
    private void FormatFiles()
    {
-      ItemDefs.FormatResourceItemDefs(); 
-      StructureDefs.FormatNaturalStructureDefs();
-      TerrainDefs.FormatTerrainDefs();
+      // ItemDefs.FormatResourceItemDefs(); 
+      // StructureDefs.FormatNaturalStructureDefs();
+      // TerrainDefs.FormatTerrainDefs();
    }
 
    /// <summary>

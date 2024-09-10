@@ -39,10 +39,10 @@ public class StructureDef : ThingDef
              new Dictionary<string, StatModifierBase> { }),
              new GraphicData()
              {
-                 texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
-                 variants = 1,
-                 color = Colors.Purple,
-                 graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                 TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
+                 Variants = 1,
+                 Color = Colors.Purple,
+                 GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
         { SupportReq = SupportType.Undefined};
     }

@@ -25,10 +25,10 @@ public static class StructureDefs
                 new Dictionary<string, StatModifierBase>{
                 }),
                 GraphicData = new GraphicData(){
-                texturePath = "terrain/natural/rock_wall",
-                variants = 1,
-                color = Colors.SlateGray,
-                graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                TexturePath = "terrain/natural/rock_wall",
+                Variants = 1,
+                Color = Colors.SlateGray,
+                GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 },
                 SupportReq = SupportType.Heavy,
                 BuildCost = new Dictionary<string, int>{
@@ -45,10 +45,10 @@ public static class StructureDefs
                 new Dictionary<string, StatModifierBase>{
                 }),
                 GraphicData = new GraphicData(){
-                texturePath = "terrain/natural/rock_wall",
-                variants = 1,
-                color = Colors.SlateGray,
-                graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                TexturePath = "terrain/natural/rock_wall",
+                Variants = 1,
+                Color = Colors.SlateGray,
+                GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 },
                 SupportReq = SupportType.Heavy,
                 BuildCost = new Dictionary<string, int>{

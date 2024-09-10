@@ -30,10 +30,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.7f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/forest_grass",
-                    variants = 1,
-                    color = Colors.DarkGreen,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/forest_grass",
+                    Variants = 1,
+                    Color = Colors.DarkGreen,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -45,10 +45,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",1f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/grass",
-                    variants = 1,
-                    color = Colors.Green,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/grass",
+                    Variants = 1,
+                    Color = Colors.Green,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -60,10 +60,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/Ice",
-                    variants = 1,
-                    color = new Color(0.9f, 0.9f, 0.2f),
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/Ice",
+                    Variants = 1,
+                    Color = new Color(0.9f, 0.9f, 0.2f),
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Light, SupportReq = SupportType.None}
             },
@@ -75,10 +75,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.7f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/soil",
-                    variants = 1,
-                    color = Colors.Brown,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/soil",
+                    Variants = 1,
+                    Color = Colors.Brown,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -90,10 +90,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.7f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/soil",
-                    variants = 1,
-                    color = Colors.RosyBrown,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/soil",
+                    Variants = 1,
+                    Color = Colors.RosyBrown,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -105,10 +105,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/sand",
-                    variants = 1,
-                    color = Colors.Yellow,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/sand",
+                    Variants = 1,
+                    Color = Colors.Yellow,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain,  SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -120,10 +120,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/Ice",
-                    variants = 1,
-                    color = Colors.White,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/Ice",
+                    Variants = 1,
+                    Color = Colors.White,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain,  SupportProvided = SupportType.Light, SupportReq = SupportType.None}
             },
@@ -135,10 +135,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/Ice",
-                    variants = 1,
-                    color = new Color(0.3f, 0.4f, 0.3f),
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/Ice",
+                    Variants = 1,
+                    Color = new Color(0.3f, 0.4f, 0.3f),
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain,  SupportProvided = SupportType.Light, SupportReq = SupportType.None}
             }
@@ -157,10 +157,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/gravel",
-                    variants = 1,
-                    color = Colors.Gray,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/gravel",
+                    Variants = 1,
+                    Color = Colors.Gray,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -172,10 +172,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/rock_floor",
-                    variants = 1,
-                    color = Colors.WhiteSmoke,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/rock_floor",
+                    Variants = 1,
+                    Color = Colors.WhiteSmoke,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -187,10 +187,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/rock_floor",
-                    variants = 1,
-                    color = Colors.DarkGray,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/rock_floor",
+                    Variants = 1,
+                    Color = Colors.DarkGray,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Heavy, SupportReq = SupportType.None}
             },
@@ -209,10 +209,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.4f)}
                 }),
                 new GraphicData(){
-                texturePath = "terrain/natural/marsh",
-                variants = 1,
-                color = Colors.SeaGreen,
-                graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                TexturePath = "terrain/natural/marsh",
+                Variants = 1,
+                Color = Colors.SeaGreen,
+                GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
             },
@@ -224,10 +224,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                texturePath = "terrain/natural/ocean",
-                variants = 1,
-                color = Colors.Blue,
-                graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                TexturePath = "terrain/natural/ocean",
+                Variants = 1,
+                Color = Colors.Blue,
+                GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
             },
@@ -239,10 +239,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.5f)}
                 }),
                 new GraphicData(){
-                texturePath = "terrain/natural/water",
-                variants = 1,
-                color = Colors.LightBlue,
-                graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                TexturePath = "terrain/natural/water",
+                Variants = 1,
+                Color = Colors.LightBlue,
+                GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.Medium, SupportReq = SupportType.None}
             },
@@ -254,10 +254,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed", 0f)}
                 }),
                 new GraphicData(){
-                texturePath = "terrain/natural/ocean",
-                variants = 1,
-                color = Colors.DarkBlue,
-                graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                TexturePath = "terrain/natural/ocean",
+                Variants = 1,
+                Color = Colors.DarkBlue,
+                GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
              })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.None, SupportReq = SupportType.None}
             },
@@ -269,10 +269,10 @@ public static class TerrainDefs
                     {"moveSpeed", new FlatModifier("MoveSpeed Modifier","moveSpeed",.2f)}
                 }),
                 new GraphicData(){
-                    texturePath = "terrain/natural/water",
-                    variants = 1,
-                    color = Colors.RoyalBlue,
-                    graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
+                    TexturePath = "terrain/natural/water",
+                    Variants = 1,
+                    Color = Colors.RoyalBlue,
+                    GraphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE)
                 })
                 {GridLayer = GameLayers.Terrain, SupportProvided = SupportType.None, SupportReq = SupportType.None}
             },

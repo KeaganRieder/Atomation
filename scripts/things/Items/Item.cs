@@ -20,7 +20,7 @@ public class Item : Thing
 
     public Item(Vector2 position)
     {
-        graphic = new StaticGraphic();
+        graphic = new Graphic();
 
         Position = position * Map.CELL_SIZE;
         currentStackSize = 1;

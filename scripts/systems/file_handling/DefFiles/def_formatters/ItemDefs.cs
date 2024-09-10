@@ -22,10 +22,10 @@ public static class ItemDefs
                 StackLimit = 64,
                 GridLayer = GameLayers.Items,
                 GraphicData = new GraphicData{
-                    texturePath = "item/resource/stone",
-                    variants = 1,
-                    color = Colors.Black,
-                    graphicSize = new Vector2I(8,8),
+                    TexturePath = "item/resource/stone",
+                    Variants = 1,
+                    Color = Colors.Black,
+                    GraphicSize = new Vector2I(8,8),
                 },
                 StatSheet = new StatSheet(new Dictionary<string, StatBase>{
 

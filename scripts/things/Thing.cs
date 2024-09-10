@@ -17,7 +17,7 @@ public abstract class Thing
 
     protected StatSheet statSheet;
 
-    protected StaticGraphic graphic;
+    protected Graphic graphic;
     protected CollisionShape2D collisionBox;
 
     protected Chunk chunk;
@@ -44,7 +44,7 @@ public abstract class Thing
     public Vector2 Position { get => graphic.Position; set => graphic.Position = value; }
 
     [JsonIgnore]
-    public StaticGraphic Graphic { get => graphic; set => graphic = value; }
+    public Graphic Graphic { get => graphic; set => graphic = value; }
     [JsonIgnore]
     public CollisionShape2D CollisionBox { get => collisionBox; set => collisionBox = value; }
 

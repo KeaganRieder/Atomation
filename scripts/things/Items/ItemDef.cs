@@ -25,10 +25,10 @@ public class ItemDef : ThingDef
                     new StatSheet(new Dictionary<string, StatBase> { }, new Dictionary<string, StatModifierBase> { }),
                     new GraphicData()
                     {
-                        texturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
-                        variants = 1,
-                        color = Colors.Purple,
-                        graphicSize = new Vector2I(Map.CELL_SIZE / 2, Map.CELL_SIZE / 2)
+                        TexturePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture.png",
+                        Variants = 1,
+                        Color = Colors.Purple,
+                        GraphicSize = new Vector2I(Map.CELL_SIZE / 2, Map.CELL_SIZE / 2)
                     });
     }
 

@@ -25,9 +25,9 @@ public class Terrain : Thing
 
     public Terrain(Vector2 position)
     {
-        graphic = new StaticGraphic();
+        graphic = new Graphic();
         graphic.Position = position * Map.CELL_SIZE;
-        graphic.SetTexture();
+        // graphic.SetTexture();
     }
 
     public void Configure(TerrainDef def, bool loading = false)

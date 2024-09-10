@@ -30,9 +30,9 @@
         }
       },
       "GraphicData": {
-        "texturePath": "terrain/natural/marsh",
-        "variants": 1,
-        "color": {
+        "TexturePath": "terrain/natural/marsh",
+        "Variants": 1,
+        "Color": {
           "R": 0.18039216,
           "G": 0.54509807,
           "B": 0.34117648,
@@ -46,7 +46,7 @@
           "V": 0.54509807,
           "Luminance": 0.45283842
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 32,
           "Y": 32
         }
@@ -86,9 +86,9 @@
         }
       },
       "GraphicData": {
-        "texturePath": "terrain/natural/ocean",
-        "variants": 1,
-        "color": {
+        "TexturePath": "terrain/natural/ocean",
+        "Variants": 1,
+        "Color": {
           "R": 0.0,
           "G": 0.0,
           "B": 1.0,
@@ -102,7 +102,7 @@
           "V": 1.0,
           "Luminance": 0.0722
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 32,
           "Y": 32
         }
@@ -142,9 +142,9 @@
         }
       },
       "GraphicData": {
-        "texturePath": "terrain/natural/water",
-        "variants": 1,
-        "color": {
+        "TexturePath": "terrain/natural/water",
+        "Variants": 1,
+        "Color": {
           "R": 0.6784314,
           "G": 0.84705883,
           "B": 0.9019608,
@@ -158,7 +158,7 @@
           "V": 0.9019608,
           "Luminance": 0.8151726
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 32,
           "Y": 32
         }
@@ -198,9 +198,9 @@
         }
       },
       "GraphicData": {
-        "texturePath": "terrain/natural/ocean",
-        "variants": 1,
-        "color": {
+        "TexturePath": "terrain/natural/ocean",
+        "Variants": 1,
+        "Color": {
           "R": 0.0,
           "G": 0.0,
           "B": 0.54509807,
@@ -214,7 +214,7 @@
           "V": 0.54509807,
           "Luminance": 0.03935608
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 32,
           "Y": 32
         }
@@ -254,9 +254,9 @@
         }
       },
       "GraphicData": {
-        "texturePath": "terrain/natural/water",
-        "variants": 1,
-        "color": {
+        "TexturePath": "terrain/natural/water",
+        "Variants": 1,
+        "Color": {
           "R": 0.25490198,
           "G": 0.4117647,
           "B": 0.88235295,
@@ -270,7 +270,7 @@
           "V": 0.88235295,
           "Luminance": 0.41239217
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 32,
           "Y": 32
         }

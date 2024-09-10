@@ -6,9 +6,8 @@ namespace Atomation.Resources;
 /// </summary>
 public static class FilePaths
 { 
-    public const string ASSET_FOLDER = "assets/";
 
-    public const string TEXTURE_FOLDER = ASSET_FOLDER + "textures/";
+    public const string TEXTURE_FOLDER = "assets/textures/";
 
     public const string DEFINITION_FOLDER = "data/core/defs/";
     

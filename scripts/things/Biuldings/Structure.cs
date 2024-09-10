@@ -25,7 +25,7 @@ public class Structure : Thing
 
     public Structure(Vector2 position)
     {
-        graphic = new StaticGraphic();
+        graphic = new Graphic();
         collisionBox = new CollisionShape2D();
 
         graphic.AddChild(collisionBox);
@@ -67,15 +67,6 @@ public class Structure : Thing
         }
         collisionBox.QueueFree();
         base.DestroyNode();
-    }
-
-    public StaticGraphic GetGraphic()
-    {
-        return graphic;
-    }
-    public SupportType GetRequiredSupport()
-    {
-        return supportReq;
     }
 
     /// <summary>

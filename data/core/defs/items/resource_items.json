@@ -9,9 +9,9 @@
         "StatModifers": {}
       },
       "GraphicData": {
-        "texturePath": "item/resource/stone",
-        "variants": 1,
-        "color": {
+        "TexturePath": "item/resource/stone",
+        "Variants": 1,
+        "Color": {
           "R": 0.0,
           "G": 0.0,
           "B": 0.0,
@@ -25,7 +25,7 @@
           "V": 0.0,
           "Luminance": 0.0
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 8,
           "Y": 8
         }

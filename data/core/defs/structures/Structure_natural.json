@@ -20,9 +20,9 @@
         "StatModifers": {}
       },
       "GraphicData": {
-        "texturePath": "terrain/natural/rock_wall",
-        "variants": 1,
-        "color": {
+        "TexturePath": "terrain/natural/rock_wall",
+        "Variants": 1,
+        "Color": {
           "R": 0.4392157,
           "G": 0.5019608,
           "B": 0.5647059,
@@ -36,7 +36,7 @@
           "V": 0.5647059,
           "Luminance": 0.49315143
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 32,
           "Y": 32
         }
@@ -67,9 +67,9 @@
         "StatModifers": {}
       },
       "GraphicData": {
-        "texturePath": "terrain/natural/rock_wall",
-        "variants": 1,
-        "color": {
+        "TexturePath": "terrain/natural/rock_wall",
+        "Variants": 1,
+        "Color": {
           "R": 0.4392157,
           "G": 0.5019608,
           "B": 0.5647059,
@@ -83,7 +83,7 @@
           "V": 0.5647059,
           "Luminance": 0.49315143
         },
-        "graphicSize": {
+        "GraphicSize": {
           "X": 32,
           "Y": 32
         }

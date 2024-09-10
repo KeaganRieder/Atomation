@@ -29,7 +29,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
     private PlayerController controller;
     private CustomCamera camera;
-    private StaticGraphic graphic;
+    private Graphic graphic;
 
     private ChunkLoader chunkLoader;
 
@@ -43,7 +43,7 @@ public partial class PlayerCharacter : CharacterBody2D
     }
 
     public CustomCamera Camera { get => camera; set => camera = value; }
-    public StaticGraphic Graphic { get => graphic; set => graphic = value; }
+    public Graphic Graphic { get => graphic; set => graphic = value; }
     public ChunkLoader ChunkLoader { get => chunkLoader; }
 
     public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
@@ -62,7 +62,7 @@ public partial class PlayerCharacter : CharacterBody2D
         InitializeStats();
 
         chunkLoader = new ChunkLoader(Map.Instance.ChunkHandler, this);
-        graphic = new StaticGraphic("player", 1, new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE), Colors.Black, this);
+        graphic = new Graphic("player", 1, new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE), Colors.Black, this);
         graphic.RenderingLayer = GameLayers.Player;
         controller.SetMapTarget(Map.Instance);
 

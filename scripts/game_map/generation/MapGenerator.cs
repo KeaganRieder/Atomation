@@ -19,11 +19,11 @@ public class MapGenerator
     private bool chunkMode;
 
     private Vector2I generationArea;
-    private MapSettings settings;
+    private MapConfigs configs;
 
-    public MapGenerator(MapSettings settings)
+    public MapGenerator(MapConfigs settings)
     {
-        this.settings = settings;
+        this.configs = settings;
         chunkMode = false;
     }
 
@@ -34,7 +34,7 @@ public class MapGenerator
             GD.PushError("chunk Generation mode enabled size can't be changed");
             return;
         }
-        generationArea = settings.worldSize;
+        generationArea = configs.WorldSize;
     }
 
     public void SetChunkMode(bool chunkMode)
@@ -53,7 +53,7 @@ public class MapGenerator
     /// <summary>
     /// run the games map generate
     /// </summary>
-    public void GenerateMap(Vector2 areaOffset, ChunkHandler chunkHandler = null)
+    public void GenerateChunk(Vector2 areaOffset, ChunkHandler chunkHandler = null)
     {
         if (chunkHandler == null)
         {
@@ -63,7 +63,7 @@ public class MapGenerator
 
         GenerateNoiseMaps(areaOffset * Chunk.CHUNK_SIZE, out float[,] elevationMap, out float[,] temperatureMap, out float[,] moistureMap);
 
-        GenStepLandScape genStepTerrain = new GenStepLandScape(elevationMap, temperatureMap, moistureMap);
+        GenStepLandScape genStepTerrain = new GenStepLandScape(elevationMap, temperatureMap, moistureMap, configs);
         genStepTerrain.GenerateLandScape(out Terrain[,] generatedTerrain, out Structure[,] generatedMountains, areaOffset, generationArea);
 
         for (int x = 0; x < generationArea.X; x++)
@@ -91,14 +91,14 @@ public class MapGenerator
     private void GenerateNoiseMaps(Vector2 areaOffset, out float[,] elevation, out float[,] temperature, out float[,] moisture)
     {
         GradientMapGenerator GradientMapGenerator = new GradientMapGenerator();
-        NoiseMapGenerator NoiseMapGenerator = new NoiseMapGenerator(settings.elevationMapConfigs);
+        NoiseMapGenerator NoiseMapGenerator = new NoiseMapGenerator(configs.ElevationMapConfigs);
 
         elevation = NoiseMapGenerator.Generate(areaOffset, generationArea);
-        temperature = GradientMapGenerator.Run(areaOffset, generationArea, settings.worldSize, settings.trueCenter);
-        temperature = GenerationUtil.GenerateTemperatureMap(generationArea, temperature, elevation, settings);
+        temperature = GradientMapGenerator.Run(areaOffset, generationArea, configs.WorldSize, configs.TrueCenter);
+        temperature = GenerationUtil.GenerateTemperatureMap(generationArea, temperature, elevation, configs);
 
-        NoiseMapGenerator = new NoiseMapGenerator(settings.rainfallMapConfigs);
+        NoiseMapGenerator = new NoiseMapGenerator(configs.RainfallMapConfigs);
 
-        moisture = GenerationUtil.GenerateMoisture(generationArea, NoiseMapGenerator.Generate(areaOffset, generationArea), settings);
+        moisture = GenerationUtil.GenerateMoisture(generationArea, NoiseMapGenerator.Generate(areaOffset, generationArea), configs);
     }
 }

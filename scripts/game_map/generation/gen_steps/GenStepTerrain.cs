@@ -1,11 +1,8 @@
 namespace Atomation.GameMap;
 
-using System.Collections.Generic;
 using Atomation.Resources;
 using Atomation.Things;
 using Godot;
-
-// -todo rock types
 
 /// <summary>
 /// defines the step in generation which handles teh creation of the games
@@ -17,20 +14,24 @@ public class GenStepLandScape : Generator<object>
     private float[,] temperature;
     private float[,] moisture;
 
-    private float waterLevel = -0.23f;
-    private float mountainSize = 0.45f;
+    private float waterLevel; //todo move to world settings
+    private float mountainSize; //todo move to world settings
 
 
-    public GenStepLandScape(float[,] elevationMap = default, float[,] temperatureMap = default, float[,] moistureMap = default)
+    public GenStepLandScape(float[,] elevationMap = default, float[,] temperatureMap = default, float[,] moistureMap = default,
+    MapConfigs configs = null)
     {
-        configure(elevationMap, temperatureMap, moistureMap);
+        configure(elevationMap, temperatureMap, moistureMap, configs);
     }
 
-    public void configure(float[,] elevation = default, float[,] temperature = default, float[,] moisture = default)
+    public void configure(float[,] elevation = default, float[,] temperature = default, float[,] moisture = default,
+    MapConfigs configs = null)
     {
         this.elevation = elevation;
         this.temperature = temperature;
         this.moisture = moisture;
+        this.waterLevel = configs.WaterLevel;
+        this.mountainSize = configs.MountainSize;
     }
 
     protected bool Validate()
@@ -47,7 +48,8 @@ public class GenStepLandScape : Generator<object>
     /// runs the genStep and generates the landscape,
     /// consisting of mountains, lakes, rivers, other water bodies and landmass
     /// </summary>
-    public void GenerateLandScape(out Terrain[,] generatedTerrain, out Structure[,] generatedMountains, Vector2 offset = default, Vector2I size = default)
+    public void GenerateLandScape(out Terrain[,] generatedTerrain, out Structure[,] generatedMountains, 
+    Vector2 offset = default, Vector2I size = default)
     {
         if (!Validate())
         {
@@ -76,7 +78,6 @@ public class GenStepLandScape : Generator<object>
                     if (elevation[x, y] > mountainSize + .1)
                     {
                         generatedMountainWall = GetMountainWall(x, y);
-                        // GD.Print(generatedMountainWall.Name);
                     }
                     generatedTile = GetMountainFloorTile(x, y);
 
@@ -89,6 +90,11 @@ public class GenStepLandScape : Generator<object>
                 {
                     generatedTile = GetWaterTile(x, y);
                 }
+
+                generatedTile.Elevation = elevation[x, y];
+                generatedTile.Temperature = temperature[x, y];
+                generatedTile.Moisture = moisture[x, y];
+
                 generatedMountains[x, y] = generatedMountainWall;
                 generatedTerrain[x, y] = generatedTile;
             }

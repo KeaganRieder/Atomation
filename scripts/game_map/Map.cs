@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 // todo readd biomes, and make mountains structures
 // also re integrate chunk loading and that sorta stuff
+//todo make an actual limit
 
 /// <summary>
 /// The Games map
@@ -28,17 +29,17 @@ public partial class Map : Node2D
         }
     }
 
-    private MapSettings settings;
+    private MapConfigs configs;
 
     private MapGenerator mapGenerator;
     private ChunkHandler chunkHandler;
 
-
     private Map()
     {
         Name = "World Map";
-        settings = new MapSettings();
-        mapGenerator = new MapGenerator(settings);
+        configs = new MapConfigs();
+        configs.Seed = 0;
+        mapGenerator = new MapGenerator(configs);
 
         mapGenerator.SetChunkMode(true);
         chunkHandler = new ChunkHandler(this);
@@ -47,12 +48,12 @@ public partial class Map : Node2D
     public MapGenerator MapGenerator { get => mapGenerator; }
     public ChunkHandler ChunkHandler { get => chunkHandler; }
 
-    public MapSettings Settings { get => settings; set => settings = value; }
+    public MapConfigs Settings { get => configs; set => configs = value; }
 
     public override void _Ready()
     {
         base._Ready();
-        settings.trueCenter = false;
+        configs.TrueCenter = false;
     }
 
     public override void _Process(double delta)

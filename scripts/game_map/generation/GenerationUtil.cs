@@ -8,7 +8,7 @@ using Godot;
 /// </summary>
 public static class GenerationUtil
 {
-    public static float[,] GenerateTemperatureMap(Vector2I size, float[,] heatMap, float[,] heightMap, MapSettings settings)
+    public static float[,] GenerateTemperatureMap(Vector2I size, float[,] heatMap, float[,] heightMap, MapConfigs settings)
     {
         float[,] temperatureMap = new float[size.X, size.Y];
 
@@ -19,14 +19,14 @@ public static class GenerationUtil
                 float temperature = heatMap[x, y] * -1;
                 temperature -= heightMap[x, y] * heightMap[x, y];
 
-                temperatureMap[x, y] = temperature + settings.baseTemperature;
+                temperatureMap[x, y] = temperature + settings.BaseTemperature;
             }
         }
 
         return temperatureMap;
     }
 
-    public static float[,] GenerateMoisture(Vector2I size, float[,] rainfallMap, MapSettings settings)
+    public static float[,] GenerateMoisture(Vector2I size, float[,] rainfallMap, MapConfigs settings)
     {
         float[,] moistureMap = new float[size.X, size.Y];
 
@@ -35,7 +35,7 @@ public static class GenerationUtil
             for (int y = 0; y < size.Y; y++)
             {
                 float moisture = rainfallMap[x, y];
-                moistureMap[x, y] = moisture + settings.baseMoisture;
+                moistureMap[x, y] = moisture + settings.BaseMoisture;
             }
         }
         return moistureMap;

@@ -116,7 +116,7 @@ public class ChunkHandler
     /// <summary> generates chunk at given position </summary>
     private void GenerateChunk(Vector2 cord)
     {
-        Map.Instance.MapGenerator.GenerateMap(cord, this);
+        Map.Instance.MapGenerator.GenerateChunk(cord, this);
     }
 
     /// <summary> loads chunk at given position </summary>

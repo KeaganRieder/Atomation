@@ -51,9 +51,10 @@ public class MapGenerator
     }
 
     /// <summary>
-    /// run the games map generate
+    /// generates new chunks based on the current configs, 
+    /// assigning them to the maps chunk handler
     /// </summary>
-    public void GenerateChunk(Vector2 areaOffset, ChunkHandler chunkHandler = null)
+    public void GenerateChunk(Vector2 areaOffset, ChunkHandler chunkHandler)
     {
         if (chunkHandler == null)
         {
@@ -77,9 +78,9 @@ public class MapGenerator
                 {
                     GD.Print($"null At {x},{y}");
                 }
-                
-                chunkHandler.GetChunk(areaOffset).SetTerrain(new Vector2(x,y), terrain);
-                chunkHandler.GetChunk(areaOffset).SetStructure(new Vector2(x,y),mountainWalls);
+
+                chunkHandler.GetChunk(areaOffset).SetTerrain(new Vector2(x, y), terrain);
+                chunkHandler.GetChunk(areaOffset).SetStructure(new Vector2(x, y), mountainWalls);
             }
         }
     }

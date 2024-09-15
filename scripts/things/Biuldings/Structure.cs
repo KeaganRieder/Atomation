@@ -13,7 +13,7 @@ using Atomation.StatSystem;
 /// a structure or building is something that is either naturally
 /// occurring in the game or is built and placed by the player
 /// </summary>
-public class Structure : Thing
+public partial class Structure : Thing
 {
     private SupportType supportReq;
 
@@ -27,10 +27,10 @@ public class Structure : Thing
     {
         graphic = new Graphic();
         collisionBox = new CollisionShape2D();
+        AddChild(graphic);
+        AddChild(collisionBox);
 
-        graphic.AddChild(collisionBox);
-
-        graphic.Position = position * Map.CELL_SIZE;
+        Position = position * Map.CELL_SIZE;
     }
 
     public void Configure(StructureDef def, bool loading = false)

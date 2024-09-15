@@ -69,7 +69,7 @@ public partial class Graphic : Sprite2D
         currentColor = defaultColor;
 
         texturePath = FilePaths.TEXTURE_FOLDER + configs.TexturePath;
-        graphicSize = configs.GraphicSize;// - Vector2I.One; // minus 1 is fro debugging
+        graphicSize = configs.GraphicSize - Vector2I.One; // minus 1 is fro debugging
         graphicVariants = configs.Variants;
 
         SetGraphicTexture();

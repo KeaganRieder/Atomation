@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 /// The base class of all things that make up the games world.
 /// </summary>
 
-public abstract class Thing
+public abstract partial class Thing : Node2D
 {
     protected string name;
     protected string description;
@@ -34,14 +34,14 @@ public abstract class Thing
         Configure(configs);
     }
 
-    [JsonProperty(Order = 1)]
-    public string Name { get => name; private set => name = value; }
+    // [JsonProperty(Order = 1)]
+    // public string Name { get => name; private set => name = value; }
     [JsonIgnore]
     public string Description { get => description; private set => description = value; }
     [JsonProperty(Order = 1)]
     public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
-    [JsonProperty(Order = 1)]
-    public Vector2 Position { get => graphic.Position; set => graphic.Position = value; }
+    // [JsonProperty(Order = 1)]
+    // public Vector2 Position { get => graphic.Position; set => graphic.Position = value; }
 
     [JsonIgnore]
     public Graphic Graphic { get => graphic; set => graphic = value; }
@@ -87,16 +87,17 @@ public abstract class Thing
     }
 
     public virtual void DestroyNode()
-    {
-        if (GodotObject.IsInstanceValid(graphic))
+    {        
+        if (IsInstanceValid(graphic))
         {
             graphic.QueueFree();
             graphic = null;
         }
-        if (GodotObject.IsInstanceValid(collisionBox))
+        if (IsInstanceValid(collisionBox))
         {
             collisionBox.QueueFree();
             collisionBox = null;
         }
+        QueueFree();
     }
 }

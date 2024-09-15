@@ -114,8 +114,10 @@ public class ChunkHandler
     }
 
     /// <summary> generates chunk at given position </summary>
-    private void GenerateChunk(Vector2 cord)
+    public void GenerateChunk(Vector2 cord)
     {
+        Chunk generatedChunk = new Chunk(cord);
+        AddChunk(cord, generatedChunk);
         Map.Instance.MapGenerator.GenerateChunk(cord, this);
     }
 
@@ -128,8 +130,6 @@ public class ChunkHandler
         }
         if (!HasChunk(cord))
         {
-            Chunk generatedChunk = new Chunk(cord);
-            AddChunk(cord, generatedChunk);
             GenerateChunk(cord);
             return;
         }
@@ -139,7 +139,7 @@ public class ChunkHandler
 
     /// <summary> unloads chunk at given position </summary>
     public void UnloadChunk(Vector2 cord)
-    {        
+    {
         if (lastLoadedChunks.Contains((Vector2I)cord))
         {
             lastLoadedChunks.Remove((Vector2I)cord);
@@ -149,7 +149,7 @@ public class ChunkHandler
             GD.PushError($"attempt to unload non existent chunk at {cord}");
             return;
         }
-        
-        chunks[cord].Unload();        
+
+        chunks[cord].Unload();
     }
 }

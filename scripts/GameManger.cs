@@ -87,6 +87,9 @@ public partial class GameManger : Node2D
    public void StartGame()
    {
       gameMap.GenerateMap();
+      gameMap.FinalizeGeneration();
+      GameClock clock = GameClock.Instance;
+      AddChild(clock);
    }
 
 }

@@ -12,7 +12,7 @@ using Atomation.GameMap;
 /// 
 /// Todo make item disappear/get delete if currentStackSize = 0
 /// </summary>
-public class Item : Thing
+public partial class Item : Thing
 {
     private int stackLimit;
 
@@ -21,6 +21,7 @@ public class Item : Thing
     public Item(Vector2 position)
     {
         graphic = new Graphic();
+        AddChild(graphic);
 
         Position = position * Map.CELL_SIZE;
         currentStackSize = 1;

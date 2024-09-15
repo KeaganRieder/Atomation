@@ -56,10 +56,9 @@ public partial class Chunk : Node2D
         }
         if (terrain != null)
         {
-            AddChild(terrain.Graphic);
+            AddChild(terrain);
             terrain.Chunk = this;
             chunkGrid.SetValue(cord, terrain, terrain.GridLayer);
-
         }
     }
 
@@ -102,7 +101,7 @@ public partial class Chunk : Node2D
     {
         if (structure != default || structure != null)
         {
-            AddChild(structure.Graphic);
+            AddChild(structure);
             chunkGrid.SetValue(cord, structure, structure.GridLayer);
             structure.Chunk = this;
         }
@@ -147,7 +146,7 @@ public partial class Chunk : Node2D
     {
         if (worldItem != default || worldItem != null)
         {
-            AddChild(worldItem.Graphic);
+            AddChild(worldItem);
             chunkGrid.SetValue(cord, worldItem, worldItem.GridLayer);
             worldItem.Chunk = this;
         }

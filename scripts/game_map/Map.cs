@@ -77,20 +77,32 @@ public partial class Map : Node2D
     /// </summary>
     public void GenerateMap()
     {
-        //todo make it so the player doesn't generate but rather it's generated at 0,0
-        // and then chunks get added to chunkhandler, and then the player is spawned
+        Vector2I startCords = Vector2I.Zero;
+        int generationRadius = 1;
+
+        for (int x = -generationRadius; x < generationRadius + 1; x++)
+        {
+            for (int y = -generationRadius; y < generationRadius + 1; y++)
+            {
+                Vector2 cords = new Vector2(startCords.X + x, startCords.Y + y);
+
+                chunkHandler.GenerateChunk(cords);
+            }
+        }
+
+    }
+
+    public void FinalizeGeneration()
+    {
         PlayerCharacter player = PlayerCharacter.Instance;
         player.SpawnPlayer();
 
         player.ChunkLoader.TryLoading();
     }
 
-    public void FinalizeGeneration(){
-        //todo
-    }
-
-    public void HandleInteraction(){
-        //maybe?
+    public void HandleInteraction()
+    {
+        // todo/maybe?
     }
 
 }

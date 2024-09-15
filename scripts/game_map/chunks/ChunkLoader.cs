@@ -7,7 +7,7 @@ using Godot;
 /// a chunk loaders handle updating wether or not chunks are loaded (rendered) or not.
 /// this is decided based on the actors position which is updated on set delate
 /// 
-/// todo figure out why it's not re adding some chunks to last loaded
+/// todo add bouldery so chunks only generate if they are within teh world size
 /// </summary>
 public class ChunkLoader
 {
@@ -15,6 +15,7 @@ public class ChunkLoader
 
     protected ChunkHandler chunkHandler;
     protected int renderDistance;
+    
     
     /// <summary>
     /// determines the delay (in milliseconds) between checks. 

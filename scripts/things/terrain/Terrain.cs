@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 /// Terrain make up the floor or ground in the game. it is the building
 /// block in which structure and other things are place on top of 
 /// </summary>
-public class Terrain : Thing
+public partial class Terrain : Thing
 {
     private float elevation;
     private float temperature;
@@ -27,7 +27,7 @@ public class Terrain : Thing
     {
         graphic = new Graphic();
         graphic.Position = position * Map.CELL_SIZE;
-        // graphic.SetTexture();
+        AddChild(graphic);
     }
 
     public void Configure(TerrainDef def, bool loading = false)

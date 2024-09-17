@@ -62,11 +62,14 @@ public partial class PlayerCharacter : CharacterBody2D
         InitializeStats();
 
         chunkLoader = new ChunkLoader(Map.Instance.ChunkHandler, this);
-        graphic = new Graphic("player", 1, new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE), Colors.Black, this);
+        graphic = new Graphic("player", 1, new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE), Colors.Black);
         graphic.RenderingLayer = GameLayers.Player;
         controller.SetMapTarget(Map.Instance);
 
         Position = spawnCords;
+        AddChild(graphic);
+        graphic.UpdateTexture();
+        graphic.SetToDefaultColor();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -89,7 +92,6 @@ public partial class PlayerCharacter : CharacterBody2D
     /// <summary>
     /// updates the players velocity 
     /// </summary>
-    /// <param name="direction"></param>
     public void UpdateVelocity(Vector2 direction){
         Velocity = direction * StatSheet.GetStat("moveSpeed").CurrentValue;
     }

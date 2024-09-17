@@ -5,10 +5,14 @@ using Godot;
 using Atomation.GameMap;
 using Atomation.Resources;
 using Atomation.Player;
+using Atomation.StatSystem;
 using Atomation.Things;
 using Atomation.Ui;
 using Atomation.Systems;
 using Atomation.Settings;
+using System.Collections.Generic;
+
+
 
 /// <summary>
 /// game manger is the main class used to run Atomation. It handles creating the scene tree, and manges 
@@ -36,7 +40,7 @@ public partial class GameManger : Node2D
 
    public override void _Ready()
    {
-      FormatFiles();
+      // FormatFiles();
 
       base._Ready();
 
@@ -67,7 +71,7 @@ public partial class GameManger : Node2D
    private void LoadResources()
    {
       // GD.Print("Loading Resources");
-      ThingDatabase.Instance.LoadDefs();
+      ThingDefDatabase.Instance.LoadDefs();
       // GD.Print("Loading Complete\n");
    }
 
@@ -76,9 +80,21 @@ public partial class GameManger : Node2D
    /// </summary>
    private void FormatFiles()
    {
-      // ItemDefs.FormatResourceItemDefs(); 
-      // StructureDefs.FormatNaturalStructureDefs();
-      // TerrainDefs.FormatTerrainDefs();
+      List<Thing> temp = new List<Thing>(){
+         new Structure(){
+            Name = "structure",
+            StatSheet = new StatSheet(),
+            Graphic = new Graphic(),
+         },
+         new Item(){
+            Name = "item",
+            StatSheet = new StatSheet(),
+            Graphic = new Graphic(),
+         }
+      };
+      new DefFile(temp, FilePaths.DEFINITION_FOLDER, "thingTest");
+      
+
    }
 
    /// <summary>

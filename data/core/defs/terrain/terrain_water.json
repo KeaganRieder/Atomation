@@ -1,64 +1,8 @@
 {
   "Defs": {
-    "Marsh": {
-      "DefName": "Marsh",
-      "Description": "it's Marshy",
-      "StatSheet": {
-        "Stats": {
-          "fertility": {
-            "Modifiable": true,
-            "Value": 0.0,
-            "MaxValue": 2.0,
-            "MinValue": 0.0,
-            "FlatModifiers": [],
-            "PercentageModifiers": [],
-            "Damage": 0.0,
-            "CurrentValue": 0.0,
-            "Description": "The tile's fertility"
-          }
-        },
-        "StatModifers": {
-          "moveSpeed": {
-            "Name": "MoveSpeed Modifier",
-            "TargetStat": "moveSpeed",
-            "Type": 1,
-            "Value": 0.4,
-            "Order": 0,
-            "Source": true,
-            "Negative": true
-          }
-        }
-      },
-      "GraphicData": {
-        "TexturePath": "terrain/natural/marsh",
-        "Variants": 1,
-        "Color": {
-          "R": 0.18039216,
-          "G": 0.54509807,
-          "B": 0.34117648,
-          "A": 1.0,
-          "R8": 46,
-          "G8": 139,
-          "B8": 87,
-          "A8": 255,
-          "H": 0.40681005,
-          "S": 0.66906476,
-          "V": 0.54509807,
-          "Luminance": 0.45283842
-        },
-        "GraphicSize": {
-          "X": 32,
-          "Y": 32
-        }
-      },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "Medium",
-      "SupportReq": "None"
-    },
     "Shallow Ocean": {
-      "DefName": "Shallow Ocean",
-      "Description": "it's Ocean which is shallow",
+      "Description": "it's ocean which is shallow",
+      "GridLayer": 0,
       "StatSheet": {
         "Stats": {
           "fertility": {
@@ -85,10 +29,10 @@
           }
         }
       },
-      "GraphicData": {
+      "Graphic": {
         "TexturePath": "terrain/natural/ocean",
         "Variants": 1,
-        "Color": {
+        "DefaultColor": {
           "R": 0.0,
           "G": 0.0,
           "B": 1.0,
@@ -107,14 +51,12 @@
           "Y": 32
         }
       },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "Medium",
-      "SupportReq": "None"
+      "Supports": 0,
+      "LayerAble": false
     },
-    "Shallow Water": {
-      "DefName": "Shallow Water",
-      "Description": "it's shallow water",
+    "Deep Ocean": {
+      "Description": "it's ocean which is deep",
+      "GridLayer": 0,
       "StatSheet": {
         "Stats": {
           "fertility": {
@@ -141,66 +83,10 @@
           }
         }
       },
-      "GraphicData": {
-        "TexturePath": "terrain/natural/water",
-        "Variants": 1,
-        "Color": {
-          "R": 0.6784314,
-          "G": 0.84705883,
-          "B": 0.9019608,
-          "A": 1.0,
-          "R8": 173,
-          "G8": 216,
-          "B8": 230,
-          "A8": 255,
-          "H": 0.5409357,
-          "S": 0.24782607,
-          "V": 0.9019608,
-          "Luminance": 0.8151726
-        },
-        "GraphicSize": {
-          "X": 32,
-          "Y": 32
-        }
-      },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "Medium",
-      "SupportReq": "None"
-    },
-    "Deep Ocean": {
-      "DefName": "Deep Ocean",
-      "Description": "it's Ocean which is Deep",
-      "StatSheet": {
-        "Stats": {
-          "fertility": {
-            "Modifiable": true,
-            "Value": 0.0,
-            "MaxValue": 2.0,
-            "MinValue": 0.0,
-            "FlatModifiers": [],
-            "PercentageModifiers": [],
-            "Damage": 0.0,
-            "CurrentValue": 0.0,
-            "Description": "The tile's fertility"
-          }
-        },
-        "StatModifers": {
-          "moveSpeed": {
-            "Name": "MoveSpeed Modifier",
-            "TargetStat": "moveSpeed",
-            "Type": 1,
-            "Value": 0.0,
-            "Order": 0,
-            "Source": true,
-            "Negative": true
-          }
-        }
-      },
-      "GraphicData": {
+      "Graphic": {
         "TexturePath": "terrain/natural/ocean",
         "Variants": 1,
-        "Color": {
+        "DefaultColor": {
           "R": 0.0,
           "G": 0.0,
           "B": 0.54509807,
@@ -219,66 +105,8 @@
           "Y": 32
         }
       },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "None",
-      "SupportReq": "None"
-    },
-    "Deep Water": {
-      "DefName": "Deep Water",
-      "Description": "it's deep water, which you have to swim through",
-      "StatSheet": {
-        "Stats": {
-          "fertility": {
-            "Modifiable": true,
-            "Value": 0.0,
-            "MaxValue": 2.0,
-            "MinValue": 0.0,
-            "FlatModifiers": [],
-            "PercentageModifiers": [],
-            "Damage": 0.0,
-            "CurrentValue": 0.0,
-            "Description": "The tile's fertility"
-          }
-        },
-        "StatModifers": {
-          "moveSpeed": {
-            "Name": "MoveSpeed Modifier",
-            "TargetStat": "moveSpeed",
-            "Type": 1,
-            "Value": 0.2,
-            "Order": 0,
-            "Source": true,
-            "Negative": true
-          }
-        }
-      },
-      "GraphicData": {
-        "TexturePath": "terrain/natural/water",
-        "Variants": 1,
-        "Color": {
-          "R": 0.25490198,
-          "G": 0.4117647,
-          "B": 0.88235295,
-          "A": 1.0,
-          "R8": 65,
-          "G8": 105,
-          "B8": 225,
-          "A8": 255,
-          "H": 0.625,
-          "S": 0.71111107,
-          "V": 0.88235295,
-          "Luminance": 0.41239217
-        },
-        "GraphicSize": {
-          "X": 32,
-          "Y": 32
-        }
-      },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "None",
-      "SupportReq": "None"
+      "Supports": 0,
+      "LayerAble": false
     }
   }
 }

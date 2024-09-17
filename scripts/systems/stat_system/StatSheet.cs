@@ -35,7 +35,7 @@ public class StatSheet
         this.statModifers = statModifers;
     }
 
-    public StatSheet(StatSheet statSheet, object targetObject = null)
+    public StatSheet(StatSheet statSheet, object targetObject)
     {
         statModifers = new Dictionary<string, StatModifierBase>();
         stats = new Dictionary<string, StatBase>();

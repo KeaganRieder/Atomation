@@ -112,7 +112,7 @@ public class GenStepLandScape : Generator<object>
         {
             GD.Print("null");
         }
-        mountainWall.Configure(ThingDatabase.Instance.GetStructureDef("Slate Wall"));
+        mountainWall.Configure("Slate Wall");
 
         return mountainWall;
     }
@@ -124,7 +124,7 @@ public class GenStepLandScape : Generator<object>
     {
         Terrain mountainFloorTile = new Terrain(new Vector2(x, y));
 
-        mountainFloorTile.Configure(ThingDatabase.Instance.GetTerrainDef("Slate"));
+        mountainFloorTile.Configure("Slate");
 
         return mountainFloorTile;
     }
@@ -137,7 +137,7 @@ public class GenStepLandScape : Generator<object>
     {
         Terrain terrainFloorTile = new Terrain(new Vector2(x, y));
 
-        terrainFloorTile.Configure(ThingDatabase.Instance.GetTerrainDef(SelectBiome(x, y)));
+        terrainFloorTile.Configure(SelectBiome(x, y));
 
         return terrainFloorTile;
     }
@@ -151,12 +151,12 @@ public class GenStepLandScape : Generator<object>
         Terrain waterTile = new Terrain(new Vector2(x, y));
         if (elevation[x, y] > waterLevel - 0.12)
         {
-            waterTile.Configure(ThingDatabase.Instance.GetTerrainDef("Shallow Ocean"));
+            waterTile.Configure("Shallow Ocean");
             return waterTile;
         }
         else
         {
-            waterTile.Configure(ThingDatabase.Instance.GetTerrainDef("Deep Ocean"));
+            waterTile.Configure("Deep Ocean");
             return waterTile;
         }
     }

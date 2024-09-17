@@ -1,17 +1,20 @@
 {
   "Defs": {
     "Stone": {
-      "StackLimit": 64,
-      "DefName": "Stone",
       "Description": "It's Stony",
+      "GridLayer": 2,
       "StatSheet": {
-        "Stats": {},
-        "StatModifers": {}
+        "Stats": null,
+        "StatModifers": null
       },
-      "GraphicData": {
+      "Graphic": {
         "TexturePath": "item/resource/stone",
+        "GraphicSize": {
+          "X": 8,
+          "Y": 8
+        },
         "Variants": 1,
-        "Color": {
+        "DefaultColor": {
           "R": 0.0,
           "G": 0.0,
           "B": 0.0,
@@ -24,13 +27,9 @@
           "S": 0.0,
           "V": 0.0,
           "Luminance": 0.0
-        },
-        "GraphicSize": {
-          "X": 8,
-          "Y": 8
         }
       },
-      "GridLayer": 2
+      "StackLimit": 64
     }
   }
 }

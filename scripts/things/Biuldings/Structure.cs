@@ -17,7 +17,6 @@ public partial class Structure : Thing
 {
     private SupportType supportReq;
 
-    // private bool buildAble;
     private Dictionary<string, int> resources;
 
     [JsonConstructor]
@@ -25,6 +24,8 @@ public partial class Structure : Thing
 
     public Structure(Vector2 position)
     {
+        Name = position.ToString();
+
         graphic = new Graphic();
         collisionBox = new CollisionShape2D();
         AddChild(graphic);
@@ -33,35 +34,14 @@ public partial class Structure : Thing
         Position = position * Map.CELL_SIZE;
     }
 
-    public void Configure(StructureDef def, bool loading = false)
+    public override void Configure(string defName)
     {
-        if (!loading)
-        {
-            name = def.DefName;
-            statSheet = new StatSheet(def.StatSheet, this);
-        }
-        description = def.Description;
-        supportReq = def.SupportReq;
-
-        resources = new Dictionary<string, int>();
-
-        foreach (var item in def.BuildCost)
-        {
-            resources.Add(item.Key, item.Value);
-        }
-
-        GridLayer = def.GridLayer;
-        graphic.Name = $"{name} {Position}";
-        graphic.ZIndex = def.GridLayer;
-        graphic.Configure(def.GraphicData);
-
-        // collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) };
-        // collisionBox.Position = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) / 2;
+        base.Configure(ThingDefDatabase.Instance.GetStructureDef(defName), defName);
     }
 
     public override void DestroyNode()
     {
-        if (GodotObject.IsInstanceValid(graphic))
+        if (IsInstanceValid(graphic))
         {
             graphic.QueueFree();
         }
@@ -89,7 +69,7 @@ public partial class Structure : Thing
             {
                 //todo make have to find next valid space
                 Item droppedItem = new Item(position);
-                droppedItem.Configure(ThingDatabase.Instance.GetItemDef(item.Key));
+                droppedItem.Configure(item.Key);
                 droppedItem.CurrentStackSize = item.Value;
                 chunk.SetItem(position, droppedItem);
             }
@@ -117,5 +97,34 @@ public partial class Structure : Thing
     public void Heal(float amount)
     {
         statSheet.GetStat("health").Damage -= amount;
+    }
+
+    public override Dictionary<string, object> FormatThingDef()
+    {
+        Dictionary<string, object> thingDef = base.FormatThingDef();
+        thingDef.Add("Resources", resources);
+
+        return thingDef;
+    }
+
+    public override void ConfigureFromDef(Dictionary<string, object> def)
+    {
+        base.ConfigureFromDef(def);
+        if (gridLayer == -1)
+        {
+            gridLayer = GameLayers.Structure;
+        }
+        resources = def.ContainsKey("Resources") ? def["Resources"].ConvertJsonObject<Dictionary<string, int>>() : null;
+    }
+
+    public override void Save()
+    {
+        GD.Print("saving of things not implemented");
+    }
+
+    public override void Load()
+    {
+        GD.Print("loading of things not implemented");
+
     }
 }

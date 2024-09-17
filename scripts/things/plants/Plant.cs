@@ -17,9 +17,6 @@ public partial class Plant : Thing
     private float growth;
     private bool harvestable;
 
-    private int growthInterval;
-    private int lastGrowthCheck;
-
     private Dictionary<string, int> resources; // todo
 
     private int temperatureReq;
@@ -34,8 +31,6 @@ public partial class Plant : Thing
 
         growth = 1;
         harvestable = false;
-        lastGrowthCheck = 0;
-        growthInterval = 24;
         GameClock.Instance.NewHour += AttemptToGrow;
     }
 

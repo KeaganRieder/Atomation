@@ -4,6 +4,8 @@ using Resources;
 using StatSystem;
 using Godot;
 using Atomation.GameMap;
+using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// items are things that are held in the inventories of things in the game.
@@ -18,8 +20,14 @@ public partial class Item : Thing
 
     private int currentStackSize;
 
+    public Item()
+    {
+
+    }
     public Item(Vector2 position)
     {
+        Name = position.ToString();
+
         graphic = new Graphic();
         AddChild(graphic);
 
@@ -30,21 +38,9 @@ public partial class Item : Thing
     public int StackLimit { get => stackLimit; set => stackLimit = value; }
     public int CurrentStackSize { get => currentStackSize; set => currentStackSize = value; }
 
-    public void Configure(ItemDef itemDef, bool loading = false)
+    public override void Configure(string defName)
     {
-        name = itemDef.DefName;
-        description = itemDef.Description;
-
-        stackLimit = itemDef.StackLimit;
-        gridLayer = itemDef.GridLayer;
-        
-        graphic.Configure(itemDef.GraphicData);
-        graphic.Name = name + Position;
-
-        if (!loading)
-        {
-            statSheet = new StatSheet(itemDef.StatSheet, this);
-        }
+        base.Configure(ThingDefDatabase.Instance.GetItemDef(defName), defName);
     }
 
     /// <summary>
@@ -135,5 +131,34 @@ public partial class Item : Thing
     public void DropItem()
     {
         GD.Print("drop implementation required");
+    }
+
+    public override Dictionary<string, object> FormatThingDef()
+    {
+        Dictionary<string, object> thingDef = base.FormatThingDef();
+        thingDef.Add("StackLimit", stackLimit);
+
+        return thingDef;
+    }
+
+    public override void ConfigureFromDef(Dictionary<string, object> def)
+    {
+        base.ConfigureFromDef(def);
+        if (gridLayer == -1)
+        {
+            gridLayer = GameLayers.Items;
+        }
+        stackLimit = def.ContainsKey("StackLimit") ? Convert.ToInt32(def["StackLimit"]) : 1;
+    }
+
+    public override void Save()
+    {
+        GD.Print("saving of things not implemented");
+    }
+
+    public override void Load()
+    {
+        GD.Print("loading of things not implemented");
+
     }
 }

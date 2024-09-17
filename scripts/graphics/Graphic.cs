@@ -1,6 +1,9 @@
 namespace Atomation.Resources;
 
+using System;
+using System.Collections.Generic;
 using System.IO;
+using Atomation.GameMap;
 using Godot;
 
 /// <summary>
@@ -9,9 +12,9 @@ using Godot;
 /// </summary>
 public partial class Graphic : Sprite2D
 {
-    private string texturePath;
+    protected string texturePath;
     protected Vector2I graphicSize;
-    protected int graphicVariants;
+    protected int variants;
 
     protected Color defaultColor = Colors.White;
     protected Color currentColor;
@@ -20,17 +23,15 @@ public partial class Graphic : Sprite2D
     {
         currentColor = defaultColor;
     }
-    public Graphic(string texturePath, int variants, Vector2I graphicSize, Color defaultColor, Node2D parent)
+
+    public Graphic(string texturePath, int variants, Vector2I graphicSize, Color defaultColor)
     {
-        this.texturePath = FilePaths.TEXTURE_FOLDER + texturePath;
-        this.graphicVariants = variants;
+        this.texturePath = texturePath;
+        this.variants = variants;
         this.graphicSize = graphicSize;
 
         this.defaultColor = defaultColor;
         currentColor = defaultColor;
-
-        SetGraphicTexture();
-        parent.AddChild(this);
     }
 
     public Vector2I GraphicSize { get => graphicSize; set => graphicSize = value; }
@@ -45,7 +46,7 @@ public partial class Graphic : Sprite2D
         }
     }
     public Color DefaultColor { get => defaultColor; protected set => defaultColor = value; }
-    public int GraphicVariants { get => graphicVariants; set => graphicVariants = value; }
+    public int GraphicVariants { get => variants; set => variants = value; }
     public int RenderingLayer
     {
         get => ZIndex;
@@ -55,6 +56,10 @@ public partial class Graphic : Sprite2D
         }
     }
 
+    public void SetToDefaultColor(){
+        currentColor = defaultColor;
+        Modulate = currentColor;
+    }
     protected void UpdateColor()
     {
         Modulate = currentColor;
@@ -63,80 +68,76 @@ public partial class Graphic : Sprite2D
     /// <summary>
     /// used to configure that graphic with data from the graphic configs class
     /// </summary>
-    public void Configure(GraphicData configs)
+    public void Configure(Dictionary<string, object> configs)
     {
-        defaultColor = configs.Color;
-        currentColor = defaultColor;
-
-        texturePath = FilePaths.TEXTURE_FOLDER + configs.TexturePath;
-        graphicSize = configs.GraphicSize - Vector2I.One; // minus 1 is fro debugging
-        graphicVariants = configs.Variants;
-
-        SetGraphicTexture();
+        ConfigureFromConfigs(configs);
+        UpdateTexture();
     }
 
     /// <summary>
-    /// sets the texture of the graphic, based on whats read from a file
+    /// used to set texture to png at given path
     /// </summary>
-    protected void SetGraphicTexture()
+    public void UpdateTexture(string texturePath = null, int variants = -1)
     {
         Texture2D texture2D;
-        if (graphicVariants > 1)
+
+        if (texturePath == null)
         {
-            Texture2D[] textureArray = ReadTextureFiles();
+            texturePath = this.texturePath;
+        }
+        if (variants == -1)
+        {
+            variants = this.variants;
+        }
+
+        texturePath = FilePaths.TEXTURE_FOLDER + texturePath;
+
+        if (variants > 1)
+        {
             RandomNumberGenerator rng = new RandomNumberGenerator();
-            texture2D = textureArray[rng.RandiRange(0, graphicVariants - 1)];
+            int variant = rng.RandiRange(1, this.variants);
+            texture2D = fileUtil.ReadPngFile(graphicSize, texturePath + "_" + variant);
         }
         else
         {
-            texture2D = ReadTextureFile(texturePath + "_" + 1);
-            UpdateColor();
+            if (texturePath == FilePaths.TEXTURE_FOLDER + "defaultTexture")
+            {
+                texture2D = fileUtil.ReadPngFile(graphicSize, texturePath);
+            }
+            else
+            {
+                texture2D = fileUtil.ReadPngFile(graphicSize, texturePath + "_" + 1);
+            }
         }
-
         Texture = texture2D;
     }
 
     /// <summary>
-	/// reads in .png files, and converts it to a texture2d object at the given size. if 
-	/// the path doesn't contain a image then set texture to default Undefined one
-	/// </summary>
-    protected Texture2D ReadTextureFile(string filePath)
-    {
-        Image image;
-        filePath += ".png";
-        if (File.Exists(filePath))
-        {
-            image = Image.LoadFromFile(filePath);
-            if (image.GetSize() != graphicSize)
-            {
-                image.Resize(graphicSize.X, graphicSize.Y, Image.Interpolation.Bilinear);
-            }
-        }
-        else
-        {
-            // GD.PushWarning($"texture path {filePath} doesn't exist, setting to default texture");
-            filePath = FilePaths.TEXTURE_FOLDER + "DefaultTexture";
-
-            return ReadTextureFile(filePath);
-        }
-
-        return ImageTexture.CreateFromImage(image);
-    }
-
-    /// <summary>
-    /// reads in a collection of .png files, converting them
-    /// to be a texture2d which is used as objects graphics
+    /// formats the graphic into a graphic configs
     /// </summary>
-    protected Texture2D[] ReadTextureFiles()
+    public Dictionary<string, object> FormatGraphicConfigs()
     {
-        Texture2D[] textureArray = new Texture2D[graphicVariants];
-
-        for (int i = 0; i < graphicVariants; i++)
+        return new Dictionary<string, object>()
         {
-            string filePath = texturePath + "_" + (i + 1);
-            textureArray[i] = ReadTextureFile(filePath);
-        }
+            ["TexturePath"] = texturePath,
+            ["GraphicSize"] = graphicSize,
+            ["Variants"] = variants,
+            ["DefaultColor"] = defaultColor,
+        };
 
-        return textureArray;
     }
+    /// <summary>
+    /// configures graphic using provided configs
+    /// </summary>
+    public void ConfigureFromConfigs(Dictionary<string, object> configs)
+    {
+        texturePath = configs.ContainsKey("TexturePath") ? configs["TexturePath"].ToString() : "defaultTexture";
+        graphicSize = configs.ContainsKey("GraphicSize") ? configs["GraphicSize"].ConvertJsonObject<Vector2I>() : new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
+        variants = configs.ContainsKey("Variants") ? Convert.ToInt32(configs["Variants"]) : 0;
+        defaultColor = configs.ContainsKey("DefaultColor") ? configs["DefaultColor"].ConvertJsonObject<Color>() : Colors.Purple;
+
+        CurrentColor = defaultColor;
+    }
+
+
 }

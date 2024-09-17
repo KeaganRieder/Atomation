@@ -1,8 +1,8 @@
 {
   "Defs": {
     "Gravel": {
-      "DefName": "Gravel",
       "Description": "it's made of smaller rocks",
+      "GridLayer": 0,
       "StatSheet": {
         "Stats": {
           "fertility": {
@@ -29,10 +29,10 @@
           }
         }
       },
-      "GraphicData": {
+      "Graphic": {
         "TexturePath": "terrain/natural/gravel",
         "Variants": 1,
-        "Color": {
+        "DefaultColor": {
           "R": 0.74509805,
           "G": 0.74509805,
           "B": 0.74509805,
@@ -51,14 +51,12 @@
           "Y": 32
         }
       },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "Heavy",
-      "SupportReq": "None"
+      "Supports": 0,
+      "LayerAble": false
     },
     "Marble": {
-      "DefName": "Marble",
       "Description": "it's white rock which looks nice",
+      "GridLayer": 0,
       "StatSheet": {
         "Stats": {
           "fertility": {
@@ -85,10 +83,10 @@
           }
         }
       },
-      "GraphicData": {
+      "Graphic": {
         "TexturePath": "terrain/natural/rock_floor",
         "Variants": 1,
-        "Color": {
+        "DefaultColor": {
           "R": 0.9607843,
           "G": 0.9607843,
           "B": 0.9607843,
@@ -107,14 +105,12 @@
           "Y": 32
         }
       },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "Heavy",
-      "SupportReq": "None"
+      "Supports": 0,
+      "LayerAble": false
     },
     "Slate": {
-      "DefName": "Slate",
       "Description": "it's a black rock which looks nice",
+      "GridLayer": 0,
       "StatSheet": {
         "Stats": {
           "fertility": {
@@ -141,10 +137,10 @@
           }
         }
       },
-      "GraphicData": {
+      "Graphic": {
         "TexturePath": "terrain/natural/rock_floor",
         "Variants": 1,
-        "Color": {
+        "DefaultColor": {
           "R": 0.6627451,
           "G": 0.6627451,
           "B": 0.6627451,
@@ -163,10 +159,8 @@
           "Y": 32
         }
       },
-      "GridLayer": 0,
-      "Collidable": false,
-      "SupportProvided": "Heavy",
-      "SupportReq": "None"
+      "Supports": 0,
+      "LayerAble": false
     }
   }
 }

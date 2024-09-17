@@ -14,6 +14,8 @@ public static class FilePaths
     public const string TERRAIN_FOLDER = DEFINITION_FOLDER + "terrain/";
   
     public const string STRUCTURE_FOLDER = DEFINITION_FOLDER + "structures/";
+    public const string PLANT_FOLDER = DEFINITION_FOLDER + "plants/";
+
     public const string ITEM_FOLDER = DEFINITION_FOLDER + "items/";
 
     public const string BIOME_FOLDER = DEFINITION_FOLDER + "biomes/";

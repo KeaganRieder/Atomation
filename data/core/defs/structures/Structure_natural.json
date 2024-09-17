@@ -1,8 +1,8 @@
 {
   "Defs": {
     "Slate Wall": {
-      "DefName": "Slate Wall",
       "Description": "A rock face made of slate",
+      "GridLayer": 3,
       "StatSheet": {
         "Stats": {
           "health": {
@@ -19,10 +19,14 @@
         },
         "StatModifers": {}
       },
-      "GraphicData": {
+      "Graphic": {
         "TexturePath": "terrain/natural/rock_wall",
+        "GraphicSize": {
+          "X": 32,
+          "Y": 32
+        },
         "Variants": 1,
-        "Color": {
+        "DefaultColor": {
           "R": 0.4392157,
           "G": 0.5019608,
           "B": 0.5647059,
@@ -34,63 +38,10 @@
           "H": 0.5833333,
           "S": 0.22222225,
           "V": 0.5647059,
-          "Luminance": 0.49315143
-        },
-        "GraphicSize": {
-          "X": 32,
-          "Y": 32
+          "Luminance": 0.4931514
         }
       },
-      "GridLayer": 3,
-      "SupportReq": "Heavy",
-      "BuildCost": {
-        "Stone": 5
-      }
-    },
-    "Marble wall": {
-      "DefName": "Marble wall",
-      "Description": "A rock face made of Marble",
-      "StatSheet": {
-        "Stats": {
-          "health": {
-            "Modifiable": true,
-            "Value": 100.0,
-            "MaxValue": 100.0,
-            "MinValue": 0.0,
-            "FlatModifiers": [],
-            "PercentageModifiers": [],
-            "Damage": 0.0,
-            "CurrentValue": 100.0,
-            "Description": "The health of the wall"
-          }
-        },
-        "StatModifers": {}
-      },
-      "GraphicData": {
-        "TexturePath": "terrain/natural/rock_wall",
-        "Variants": 1,
-        "Color": {
-          "R": 0.4392157,
-          "G": 0.5019608,
-          "B": 0.5647059,
-          "A": 1.0,
-          "R8": 112,
-          "G8": 128,
-          "B8": 144,
-          "A8": 255,
-          "H": 0.5833333,
-          "S": 0.22222225,
-          "V": 0.5647059,
-          "Luminance": 0.49315143
-        },
-        "GraphicSize": {
-          "X": 32,
-          "Y": 32
-        }
-      },
-      "GridLayer": 3,
-      "SupportReq": "Heavy",
-      "BuildCost": {
+      "Resources": {
         "Stone": 5
       }
     }

@@ -24,8 +24,8 @@ public partial class GameClock : Node
     [Signal]
     public delegate void NewMinuteEventHandler();
     [Signal]
-
     public delegate void NewHourEventHandler();
+    [Signal]
     public delegate void NewDayEventHandler();
 
     private int lastUpdate = 0;
@@ -49,7 +49,7 @@ public partial class GameClock : Node
     /// </summary>
     private readonly int hoursPerDay = 60;
 
-    protected GameClock() { GameSpeed = 3;}
+    protected GameClock() { GameSpeed = 3; }
 
     public int TotalDays { get => totalDays; private set => totalDays = value; }
     public int TotalHours { get => totalHours; private set => totalHours = value; }
@@ -59,7 +59,7 @@ public partial class GameClock : Node
         get => gameSpeed;
         set
         {
-            if (value <=1)
+            if (value <= 1)
             {
                 gameSpeed = 1;
             }
@@ -71,13 +71,14 @@ public partial class GameClock : Node
             {
                 gameSpeed = value;
             }
-        }}
+        }
+    }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
         UpdateTime();
-        GD.Print(GetTotalTime());
+        // GD.Print(GetTotalTime());
     }
 
     /// <summary>
@@ -110,7 +111,7 @@ public partial class GameClock : Node
         }
         lastUpdate = currentTime;
         totalMinutes += 1;
-        EmitSignal(nameof(NewHourEventHandler));
+        EmitSignal(nameof(NewMinute));
     }
 
 
@@ -126,7 +127,8 @@ public partial class GameClock : Node
         }
         totalMinutes = 0;
         totalHours += 1;
-        EmitSignal("NewHour");
+        EmitSignal(nameof(NewHour));
+
     }
     /// <summary>
     /// checks if enough hours have passed to become an in game day
@@ -139,7 +141,8 @@ public partial class GameClock : Node
         }
         totalHours = 0;
         totalDays += 1;
-        EmitSignal("NewDay");
+        EmitSignal(nameof(NewDay));
+
 
     }
 }

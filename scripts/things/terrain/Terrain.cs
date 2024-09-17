@@ -6,6 +6,8 @@ using StatSystem;
 
 using Godot;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+
 
 /// <summary>
 /// Terrain make up the floor or ground in the game. it is the building
@@ -13,6 +15,7 @@ using Newtonsoft.Json;
 /// </summary>
 public partial class Terrain : Thing
 {
+    private bool layerAble;
     private float elevation;
     private float temperature;
     private float moisture;
@@ -25,31 +28,22 @@ public partial class Terrain : Thing
 
     public Terrain(Vector2 position)
     {
+        Name = position.ToString();
         graphic = new Graphic();
-        graphic.Position = position * Map.CELL_SIZE;
+        Position = position * Map.CELL_SIZE;
         AddChild(graphic);
     }
 
-    public void Configure(TerrainDef def, bool loading = false)
+    public override void Configure(string defName)
     {
-        if (!loading)
+        if (ThingDefDatabase.Instance.GetTerrainDef(defName) == null)
         {
-            name = def.DefName;
-            statSheet = new StatSheet(def.StatSheet, this);
+            GD.Print("terrain is null");
         }
-
-        description = def.Description;
-        supportProvided = def.SupportProvided;
-        supportReq = def.SupportReq;
-
-        GridLayer = def.GridLayer;
-        graphic.Name = $"{name} {Position}";
-        graphic.Configure(def.GraphicData);
-        
-        // UpdateGraphic(VisualizationMode.Default);
-        // collisionBox.Shape = new RectangleShape2D() { Size = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) };
-        // collisionBox.Position = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE) / 2;
+        base.Configure(ThingDefDatabase.Instance.GetTerrainDef(defName),defName);
     }
+
+    public bool LayerAble { get => layerAble; set => layerAble = value; }
 
     public float Elevation { get => elevation; set => elevation = value; }
     public float Temperature { get => temperature; set => temperature = value; }
@@ -58,26 +52,34 @@ public partial class Terrain : Thing
     public SupportType SupportProvided { get => supportProvided; set => supportProvided = value; }
     public SupportType SupportReq { get => supportReq; set => supportReq = value; }
 
+    public override Dictionary<string, object> FormatThingDef()
+    {
+        Dictionary<string, object> thingDef = base.FormatThingDef();
+        thingDef.Add("Supports", SupportProvided);
+        thingDef.Add("LayerAble",layerAble);
 
-    // public void UpdateGraphic(VisualizationMode displayMode)
-    // {
-    //     // if (displayMode == VisualizationMode.Default)
-    //     // {
-    //     //     graphic.SetDefaultColor();
-    //     // }
-    //     // else if (displayMode == VisualizationMode.Height)
-    //     // {
-    //     //     GetHeightColor();
-    //     // }
-    //     // else if (displayMode == VisualizationMode.Heat)
-    //     // {
-    //     //     GetHeatColor();
-    //     // }
-    //     // else
-    //     // {
-    //     //     GetMoistureColor();
-    //     // }
-    // }
+        return thingDef;
+    }
+
+    public override void ConfigureFromDef(Dictionary<string, object> def)
+    {
+        base.ConfigureFromDef(def);
+        if (gridLayer == -1)
+        {
+            gridLayer = GameLayers.Terrain;
+        }
+    }
+
+    public override void Save()
+    {
+        GD.Print("saving of things not implemented");
+    }
+
+    public override void Load()
+    {
+        GD.Print("loading of things not implemented");
+
+    }
 
     public bool CanSupport(SupportType supportReq)
     {

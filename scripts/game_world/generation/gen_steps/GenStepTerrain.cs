@@ -8,79 +8,77 @@ using Godot;
 /// defines the step in generation which handles teh creation of the games
 /// terrain
 /// </summary>
-public class GenStepLandScape : Generator<object>
+public class GenStepLandScape : GenStep
 {
     private float[,] elevation;
     private float[,] temperature;
     private float[,] moisture;
 
-    private float waterLevel; //todo move to world settings
-    private float mountainSize; //todo move to world settings
+    private float waterLevel;
+    private float mountainSize;
 
-
-    public GenStepLandScape(float[,] elevationMap = default, float[,] temperatureMap = default, float[,] moistureMap = default,
-    MapConfigs configs = null)
+    public GenStepLandScape(GeneratedNoiseMaps noiseMaps, WorldSettings configs)
     {
-        configure(elevationMap, temperatureMap, moistureMap, configs);
+        Step = 1;
+        elevation = noiseMaps.ElevationMap;
+        temperature = noiseMaps.TemperatureMap;
+        moisture = noiseMaps.MoistureMap;
+
+        waterLevel = configs.WaterLevel;
+        mountainSize = configs.MountainSize;
     }
 
-    public void configure(float[,] elevation = default, float[,] temperature = default, float[,] moisture = default,
-    MapConfigs configs = null)
+    public override bool Validate()
     {
-        this.elevation = elevation;
-        this.temperature = temperature;
-        this.moisture = moisture;
-        this.waterLevel = configs.WaterLevel;
-        this.mountainSize = configs.MountainSize;
-    }
-
-    protected bool Validate()
-    {
-        if (elevation == null || temperature == null || moisture == null)
+        if (elevation == default)
         {
-            GD.PushError("Can't Generate landscape for required layers haven't been set");
+            GD.PushError("No elevation map given");
+            return false;
+        }
+        if (temperature == default)
+        {
+            GD.PushError("No temperature map given");
+
+            return false;
+        }
+        if (moisture == default)
+        {
+            GD.PushError("No moisture map given");
+
             return false;
         }
         return true;
     }
-
     /// <summary>
     /// runs the genStep and generates the landscape,
     /// consisting of mountains, lakes, rivers, other water bodies and landmass
     /// </summary>
-    public void GenerateLandScape(out Terrain[,] generatedTerrain, out Structure[,] generatedMountains, 
-    Vector2 offset = default, Vector2I size = default)
+    public override void RunStep(GeneratedMapData generatedMapData)
     {
+
         if (!Validate())
         {
-            GD.PushError("Required maps haven't been set, as such can't generate");
-            generatedTerrain = default;
-            generatedMountains = default;
-            return;
+            generatedMapData.GeneratedStructures = default;
+            generatedMapData.GeneratedTerrain = default;
         }
 
-        SetSize(size);
-        SetOffset(offset);
+        SetSize(generatedMapData.GenSize);
 
-        generatedTerrain = new Terrain[genSize.X, genSize.Y];
-        generatedMountains = new Structure[genSize.X, genSize.Y];
-
-        for (int x = 0; x < size.X; x++)
+        for (int x = 0; x < genSize.X; x++)
         {
-            for (int y = 0; y < size.Y; y++)
+            for (int y = 0; y < genSize.Y; y++)
             {
                 Terrain generatedTile;
 
                 Structure generatedMountainWall = default;
 
-                if (elevation[x, y] > mountainSize)
+                if (elevation[x, y] > mountainSize - .08)
                 {
-                    if (elevation[x, y] > mountainSize + .1)
+                    if (elevation[x, y] >= mountainSize)
                     {
                         generatedMountainWall = GetMountainWall(x, y);
                     }
                     generatedTile = GetMountainFloorTile(x, y);
-
                 }
                 else if (elevation[x, y] > waterLevel)
                 {
@@ -90,16 +88,14 @@ public class GenStepLandScape : Generator<object>
                 {
                     generatedTile = GetWaterTile(x, y);
                 }
-
                 generatedTile.Elevation = elevation[x, y];
                 generatedTile.Temperature = temperature[x, y];
                 generatedTile.Moisture = moisture[x, y];
 
-                generatedMountains[x, y] = generatedMountainWall;
-                generatedTerrain[x, y] = generatedTile;
+                generatedMapData.GeneratedStructures[x, y] = generatedMountainWall;
+                generatedMapData.GeneratedTerrain[x, y] = generatedTile;
             }
         }
-
     }
 
     /// <summary>
@@ -149,7 +145,7 @@ public class GenStepLandScape : Generator<object>
     private Terrain GetWaterTile(int x, int y)
     {
         Terrain waterTile = new Terrain(new Vector2(x, y));
-        if (elevation[x, y] > waterLevel - 0.12)
+        if (elevation[x, y] > waterLevel - .1)
         {
             waterTile.Configure("Shallow Ocean");
             return waterTile;

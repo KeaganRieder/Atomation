@@ -1,0 +1,46 @@
+{
+  "Defs": {
+    "Pine": {
+      "Description": "it's a pinTree",
+      "GridLayer": 1,
+      "StatSheet": {
+        "Stats": {
+          "health": {
+            "Modifiable": true,
+            "Value": 100.0,
+            "MaxValue": 200.0,
+            "MinValue": 0.0,
+            "FlatModifiers": [],
+            "PercentageModifiers": [],
+            "Damage": 0.0,
+            "CurrentValue": 200.0,
+            "Description": "The objects of the wall"
+          }
+        },
+        "StatModifers": {}
+      },
+      "Graphic": {
+        "TexturePath": "pine",
+        "GraphicSize": {
+          "X": 32,
+          "Y": 32
+        },
+        "Variants": 0,
+        "DefaultColor": {
+          "R": 0,
+          "G": 0.75,
+          "B": 0,
+          "A": 1.0
+        }
+      },
+      "Harvestable": false,
+      "Resources": {
+        "Wood": 5
+      },
+      "GrowthTime": 0,
+      "FertilityEffect": 0.0,
+      "MoistureReq": 0.0,
+      "TemperatureReq": 0.0
+    }
+  }
+}

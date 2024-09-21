@@ -4,17 +4,13 @@ using Resources;
 using StatSystem;
 using GameMap;
 using Godot;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using System;
-
-
 
 /// <summary>
 /// The base class of all things that make up the games world.
 /// </summary>
-public abstract partial class Thing : Node2D
+public abstract partial class Thing :  Node2D, IThing
 {
     protected string thingName;
     protected string description;
@@ -24,7 +20,7 @@ public abstract partial class Thing : Node2D
     protected Graphic graphic;
     protected CollisionShape2D collisionBox;
 
-    protected Chunk chunk;
+    protected Chunk chunk; //maybe mak this the chunks coordinate?
 
     /// <summary>
     /// the rendering/interaction layer the thing is on the grid
@@ -42,8 +38,9 @@ public abstract partial class Thing : Node2D
         this.graphic = graphic;
     }
 
-    public string Description { get => description; private set => description = value; }
+    public Node Node{get => this;}
 
+    public string Description { get => description; private set => description = value; }
     public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
     public Graphic Graphic { get => graphic; set => graphic = value; }
     public CollisionShape2D CollisionBox { get => collisionBox; set => collisionBox = value; }

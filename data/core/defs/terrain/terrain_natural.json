@@ -325,10 +325,10 @@
         "TexturePath": "terrain/natural/sand",
         "Variants": 4,
         "DefaultColor": {
-          "R": 1.0,
-          "G": 1.0,
+          "R": 0.80,
+          "G": 0.80,
           "B": 0.0,
-          "A": 1.0,
+          "A": 0.80,
           "R8": 255,
           "G8": 255,
           "B8": 0,

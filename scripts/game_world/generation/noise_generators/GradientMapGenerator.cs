@@ -16,7 +16,7 @@ public class GradientMapGenerator : NoiseGenerators
         noiseMap = new float[size.X, size.Y];
     }
 
-    public float[,] Run(Vector2 offset = default, Vector2I size = default, Vector2I totalSize = default, bool trueCenter = false)
+    public float[,] Generate(Vector2 offset = default, Vector2I size = default, Vector2I totalSize = default, bool trueCenter = false)
     {
         SetSize(size);
         SetTotalSize(totalSize);

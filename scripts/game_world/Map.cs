@@ -29,7 +29,7 @@ public partial class Map : Node2D
         }
     }
 
-    private MapConfigs configs;
+    private WorldSettings settings;
 
     private MapGenerator mapGenerator;
     private ChunkHandler chunkHandler;
@@ -37,9 +37,8 @@ public partial class Map : Node2D
     private Map()
     {
         Name = "World Map";
-        configs = new MapConfigs();
-        configs.Seed = 0;
-        mapGenerator = new MapGenerator(configs);
+        settings = new WorldSettings();
+        mapGenerator = new MapGenerator(settings);
 
         mapGenerator.SetChunkMode(true);
         chunkHandler = new ChunkHandler(this);
@@ -48,12 +47,12 @@ public partial class Map : Node2D
     public MapGenerator MapGenerator { get => mapGenerator; }
     public ChunkHandler ChunkHandler { get => chunkHandler; }
 
-    public MapConfigs Settings { get => configs; set => configs = value; }
+    public WorldSettings Settings { get => settings; set => settings = value; }
 
     public override void _Ready()
     {
         base._Ready();
-        configs.TrueCenter = false;
+        settings.TrueCenter = false;
     }
 
     public override void _Process(double delta)

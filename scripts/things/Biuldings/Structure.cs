@@ -39,6 +39,37 @@ public partial class Structure : Thing
         base.Configure(ThingDefDatabase.Instance.GetStructureDef(defName), defName);
     }
 
+    public override Dictionary<string, object> FormatThingDef()
+    {
+        Dictionary<string, object> thingDef = base.FormatThingDef();
+        thingDef.Add("Resources", resources);
+
+        return thingDef;
+    }
+
+    public override void ConfigureFromDef(Dictionary<string, object> def)
+    {
+        base.ConfigureFromDef(def);
+        if (gridLayer == -1)
+        {
+            gridLayer = GameLayers.Structure;
+        }
+        resources = def.ContainsKey("Resources") ? def["Resources"].ConvertJsonObject<Dictionary<string, int>>() : null;
+    }
+
+    public override void Save()
+    {
+        GD.Print("saving of things not implemented");
+    }
+    
+    public override void Load()
+    {
+        GD.Print("loading of things not implemented");
+
+    }
+    /// <summary>
+    /// destroys node
+    /// </summary>
     public override void DestroyNode()
     {
         if (IsInstanceValid(graphic))
@@ -63,7 +94,7 @@ public partial class Structure : Thing
         if (statSheet.GetStat("health").CurrentValue <= 0)
         {
             Vector2 position = Position.GlobalToMap();
-            chunk.RemoveStructure(position);
+            chunk.RemoveGridObject<Structure>(position,gridLayer);
 
             foreach (var item in resources)
             {
@@ -71,13 +102,14 @@ public partial class Structure : Thing
                 Item droppedItem = new Item(position);
                 droppedItem.Configure(item.Key);
                 droppedItem.CurrentStackSize = item.Value;
-                chunk.SetItem(position, droppedItem);
+                chunk.SetGridObject(position, droppedItem);
             }
 
             DestroyNode();
             return;
         }
     }
+    
     /// <summary>
     /// applies the specified damage to the structure.this damage is gotten from 
     /// the provide stat in the statSheet
@@ -99,32 +131,7 @@ public partial class Structure : Thing
         statSheet.GetStat("health").Damage -= amount;
     }
 
-    public override Dictionary<string, object> FormatThingDef()
-    {
-        Dictionary<string, object> thingDef = base.FormatThingDef();
-        thingDef.Add("Resources", resources);
+   
 
-        return thingDef;
-    }
 
-    public override void ConfigureFromDef(Dictionary<string, object> def)
-    {
-        base.ConfigureFromDef(def);
-        if (gridLayer == -1)
-        {
-            gridLayer = GameLayers.Structure;
-        }
-        resources = def.ContainsKey("Resources") ? def["Resources"].ConvertJsonObject<Dictionary<string, int>>() : null;
-    }
-
-    public override void Save()
-    {
-        GD.Print("saving of things not implemented");
-    }
-
-    public override void Load()
-    {
-        GD.Print("loading of things not implemented");
-
-    }
 }

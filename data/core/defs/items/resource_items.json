@@ -30,6 +30,29 @@
         }
       },
       "StackLimit": 64
+    },
+    "Wood": {
+      "Description": "It's a hard brown log",
+      "GridLayer": 2,
+      "StatSheet": {
+        "Stats": null,
+        "StatModifers": null
+      },
+      "Graphic": {
+        "TexturePath": "item/resource/wood",
+        "GraphicSize": {
+          "X": 8,
+          "Y": 8
+        },
+        "Variants": 1,
+        "DefaultColor": {
+          "R": 0.5,
+          "G": 0.5,
+          "B": 0.0,
+          "A": 1.0
+        }
+      },
+      "StackLimit": 64
     }
   }
 }

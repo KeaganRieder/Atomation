@@ -44,77 +44,47 @@ public partial class Chunk : Node2D
         }
     }
 
-    /// <summary> 
-    /// sets terrain at given position
+    /// <summary>
+    /// adds object of type to the chunks grid
     /// </summary>
-    public void SetTerrain(Vector2 cord, Terrain terrain)
+    public void SetGridObject<ObjectType>(Vector2 cord, ObjectType obj, int gridLayer = -1) where ObjectType : IThing
     {
-
-        if (terrain == null)
+        if (gridLayer == -1)
         {
-            RemoveTerrain(cord, GameLayers.Terrain);
+            gridLayer = obj.GridLayer;
         }
-        if (terrain != null)
+        if (obj == null)
         {
-            AddChild(terrain);
-            terrain.Chunk = this;
-            chunkGrid.SetValue(cord, terrain, terrain.GridLayer);
-        }
-    }
-
-    /// <summary> 
-    /// gets terrain at given position 
-    /// </summary>
-    public Terrain GetTerrain(Vector2 cord, int gridLayer = GameLayers.Terrain)
-    {
-        object obj = chunkGrid.GetValue(cord, gridLayer);
-        if (obj is Terrain)
-        {
-            return obj as Terrain;
-        }
-        else if (obj == default)
-        {
-            return null;
+            RemoveGridObject<ObjectType>(cord, gridLayer);
         }
         else
         {
-            throw new InvalidOperationException("Object on map layer {terrain} is not terrain");
+            AddChild(obj.Node);
+            chunkGrid.SetValue(cord, obj, gridLayer);
+            obj.Chunk = this;
         }
+    }
+    /// <summary>
+    /// adds object of type  at cords on the grid
+    /// </summary>
+    public ObjectType GetGridObject<ObjectType>(Vector2 cord, int gridLayer) where ObjectType : class
+    {
+        var obj = chunkGrid.GetValue(cord, gridLayer);
+        if (obj is ObjectType)
+        {
+            return obj as ObjectType;
+        }
+        else if (obj == null)
+        {
+            return null;
+        }
+        throw new InvalidOperationException($"Object on map layer {gridLayer} is not of type {typeof(ObjectType).Name}");
     }
 
     /// <summary>
-    /// removes a terrain from the grid at the given position
+    /// removes object of type from the chunks grid at the cords
     /// </summary>
-    public void RemoveTerrain(Vector2 cord = default, int gridLayer = GameLayers.Terrain)
-    {
-        if (cord == default)
-        {
-            throw new InvalidOperationException("cord is default, can't remove structure at invalid cord");
-        }
-        GD.Print("terrain removal implementation needed");
-    }
-
-    /// <summary> 
-    /// sets structure at given position
-    /// </summary>
-    public void SetStructure(Vector2 cord, Structure structure)
-    {
-        if (structure != default || structure != null)
-        {
-            AddChild(structure);
-            chunkGrid.SetValue(cord, structure, structure.GridLayer);
-            structure.Chunk = this;
-        }
-        if (structure == null)
-        {
-            RemoveStructure(cord);
-        }
-    }
-
-    /// <summary>
-    /// removes a structure from the grid at the given position
-    /// </summary>
-    public void RemoveStructure(Vector2 cord, int gridLayer = GameLayers.Structure)
+    public void RemoveGridObject<ObjectType>(Vector2 cord, int gridLayer) where ObjectType : IThing
     {
         chunkGrid.RemoveValue(cord, gridLayer);
     }
@@ -140,24 +110,26 @@ public partial class Chunk : Node2D
     }
 
     /// <summary> 
-    /// sets item at given position
+    /// gets terrain at given position 
     /// </summary>
-    public void SetItem(Vector2 cord, Item worldItem)
+    public Terrain GetTerrain(Vector2 cord, int gridLayer = GameLayers.Terrain)
     {
-        if (worldItem != default || worldItem != null)
+        object obj = chunkGrid.GetValue(cord, gridLayer);
+        if (obj is Terrain)
         {
-            AddChild(worldItem);
-            chunkGrid.SetValue(cord, worldItem, worldItem.GridLayer);
-            worldItem.Chunk = this;
+            return obj as Terrain;
         }
-        if (worldItem == null)
+        else if (obj == default)
         {
-            RemoveItem(cord);
+            return null;
+        }
+        else
+        {
+            throw new InvalidOperationException("Object on map layer {terrain} is not terrain");
         }
     }
-
     /// <summary> 
-    /// gets item at given position 
+    /// gets an item at given position 
     /// </summary>
     public Item GetItem(Vector2 cord, int gridLayer = GameLayers.Items)
     {
@@ -176,12 +148,24 @@ public partial class Chunk : Node2D
         }
     }
 
-    /// <summary>
-    /// removes a item from the grid at the given position
+    /// <summary> 
+    /// gets a plant at given position 
     /// </summary>
-    public void RemoveItem(Vector2 cord, int gridLayer = GameLayers.Items)
+    public Plant GetPlant(Vector2 cord, int gridLayer = GameLayers.plants)
     {
-        chunkGrid.RemoveValue(cord, gridLayer);
+        object obj = chunkGrid.GetValue(cord, gridLayer);
+        if (obj is Plant)
+        {
+            return obj as Plant;
+        }
+        else if (obj == default)
+        {
+            return null;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Object on map layer {GameLayers.plants} is not Structure");
+        }
     }
 
     /// <summary> 
@@ -208,4 +192,5 @@ public partial class Chunk : Node2D
     {
         return loaded;
     }
+
 }

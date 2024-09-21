@@ -5,11 +5,9 @@ using Godot;
 using Atomation.GameMap;
 using Atomation.Resources;
 using Atomation.Player;
-using Atomation.StatSystem;
-using Atomation.Things;
-using Atomation.Ui;
 using Atomation.Systems;
 using Atomation.Settings;
+using Atomation.Things;
 using System.Collections.Generic;
 
 
@@ -78,24 +76,18 @@ public partial class GameManger : Node2D
    /// <summary>
    /// formats def files if needed
    /// </summary>
-   private void FormatFiles()
-   {
-      List<Thing> temp = new List<Thing>(){
-         new Structure(){
-            Name = "structure",
-            StatSheet = new StatSheet(),
-            Graphic = new Graphic(),
-         },
-         new Item(){
-            Name = "item",
-            StatSheet = new StatSheet(),
-            Graphic = new Graphic(),
-         }
-      };
-      new DefFile(temp, FilePaths.DEFINITION_FOLDER, "thingTest");
-      
+   // private void FormatFiles()
+   // {
+   //    List<Thing> temp = new List<Thing>(){
+   //       new Plant(){
+   //          Name = "structure",
+   //          StatSheet = new StatSystem.StatSheet(),
+   //          Graphic = new Graphic(),
+   //       },
+   //    };
+   //    // new DefFile(temp, FilePaths.DEFINITION_FOLDER, "thingFormatted");    
 
-   }
+   // }
 
    /// <summary>
    /// starts the game this is a temporary function tell the main menu is created

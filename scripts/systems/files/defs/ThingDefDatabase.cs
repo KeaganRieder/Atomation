@@ -39,7 +39,7 @@ public class ThingDefDatabase
         {
             terrainDefs = new DefFile(FilePaths.TERRAIN_FOLDER);
             structureDefs = new DefFile(FilePaths.STRUCTURE_FOLDER);
-            // plantDefs = new DefFile(FilePaths.PLANT_FOLDER);
+            plantDefs = new DefFile(FilePaths.PLANT_FOLDER);
             itemDefs = new DefFile(FilePaths.ITEM_FOLDER);
             loaded = true;
         }

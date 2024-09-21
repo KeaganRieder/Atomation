@@ -123,7 +123,7 @@ public partial class Item : Thing
 
         if (currentStackSize == 0)
         {
-            chunk.RemoveStructure(Position.GlobalToMap());
+            chunk.RemoveGridObject<Item>(Position.GlobalToMap(),gridLayer);
             DestroyNode();
         }
     }

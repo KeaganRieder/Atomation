@@ -6,6 +6,7 @@ using Resources;
 using StatSystem;
 using Atomation.Systems;
 using Godot;
+using Atomation.InventorySystems;
 
 /// <summary>
 /// a class which represents the games player. holding stats and
@@ -33,6 +34,8 @@ public partial class PlayerCharacter : CharacterBody2D
 
     private ChunkLoader chunkLoader;
 
+    private Inventory inventory;
+
     private StatSheet statSheet;
 
     private PlayerCharacter()
@@ -40,14 +43,17 @@ public partial class PlayerCharacter : CharacterBody2D
         Name = "player";
         camera = new CustomCamera(this);
         controller = new PlayerController(this);
+        inventory = new Inventory(Name);
+        camera.AddChild(inventory);
     }
 
     public CustomCamera Camera { get => camera; set => camera = value; }
     public Graphic Graphic { get => graphic; set => graphic = value; }
     public ChunkLoader ChunkLoader { get => chunkLoader; }
+    public PlayerController Controller { get => controller; }
 
     public StatSheet StatSheet { get => statSheet; set => statSheet = value; }
-    public PlayerController Controller { get => controller; }
+    public Inventory Inventory { get => inventory; set => inventory = value; }
 
     /// <summary>
     /// spawns the player into the game world

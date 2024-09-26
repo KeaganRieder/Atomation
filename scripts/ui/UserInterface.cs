@@ -19,8 +19,6 @@ public partial class UserInterface : Control
             parent.AddChild(this);
         }
 
-        FormatUserInterface();
-
         isOpen = false;
         Visible = isOpen;
     }
@@ -33,7 +31,6 @@ public partial class UserInterface : Control
     protected virtual void FormatUserInterface()
     {
         GD.Print("method to format Ui is not implemented");
-
     }
 
     /// <summary>

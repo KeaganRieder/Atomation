@@ -17,6 +17,8 @@ public partial class PauseMenu : UserInterface
 
         settingsMenu = new SettingsMenu(this, parent);
 
+        FormatUserInterface();
+
         paused = false;
     }
 

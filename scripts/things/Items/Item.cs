@@ -6,6 +6,7 @@ using Godot;
 using Atomation.GameMap;
 using System.Collections.Generic;
 using System;
+using Atomation.InventorySystems;
 
 /// <summary>
 /// items are things that are held in the inventories of things in the game.
@@ -20,10 +21,6 @@ public partial class Item : Thing
 
     private int currentStackSize;
 
-    public Item()
-    {
-
-    }
     public Item(Vector2 position)
     {
         Name = position.ToString();
@@ -31,8 +28,17 @@ public partial class Item : Thing
         graphic = new Graphic();
         AddChild(graphic);
 
-        Position = position * Map.CELL_SIZE;
+        Position = position; //move
         currentStackSize = 1;
+    }
+
+    public Item(Item item)
+    {
+        graphic = new Graphic();
+        AddChild(graphic);
+
+        Configure(item.thingName);
+        //todo carrying over stats and such
     }
 
     public int StackLimit { get => stackLimit; set => stackLimit = value; }
@@ -102,9 +108,8 @@ public partial class Item : Thing
     }
 
     /// <summary>
-    /// returns if the item is stackable
+    /// returns true if the item is stackable
     /// </summary>
-    /// <returns></returns>
     public bool Stackable()
     {
         if (stackLimit > 1 && currentStackSize < stackLimit)
@@ -115,7 +120,7 @@ public partial class Item : Thing
         return false;
     }
 
-    public void PickUpItem()
+    public void PickUpItem(Inventory inventory)
     {
         GD.Print("Item picked up");
 
@@ -123,14 +128,9 @@ public partial class Item : Thing
 
         if (currentStackSize == 0)
         {
-            chunk.RemoveGridObject<Item>(Position.GlobalToMap(),gridLayer);
-            DestroyNode();
+            chunk.RemoveGridObject<Item>(Position.GlobalToMap(), gridLayer);
+            // DestroyNode();
         }
-    }
-
-    public void DropItem()
-    {
-        GD.Print("drop implementation required");
     }
 
     public override Dictionary<string, object> FormatThingDef()

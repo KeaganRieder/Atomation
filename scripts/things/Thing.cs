@@ -37,6 +37,7 @@ public abstract partial class Thing :  Node2D, IThing
         this.statSheet = statSheet;
         this.graphic = graphic;
     }
+    protected string ThingName { get => thingName; set => thingName = value; }
 
     public Node Node{get => this;}
 
@@ -60,7 +61,6 @@ public abstract partial class Thing :  Node2D, IThing
 
     public Chunk Chunk { get => chunk; set => chunk = value; }
 
-
     /// <summary>
     /// configures the thing, using values present in a thingDef file
     /// </summary>
@@ -71,6 +71,7 @@ public abstract partial class Thing :  Node2D, IThing
             graphic = new Graphic();
             AddChild(graphic);
         }
+        thingName = defName;
         Name = defName + ":" + Name;
         ConfigureFromDef(def);
     }

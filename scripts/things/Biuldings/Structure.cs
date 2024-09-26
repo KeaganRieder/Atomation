@@ -61,7 +61,7 @@ public partial class Structure : Thing
     {
         GD.Print("saving of things not implemented");
     }
-    
+
     public override void Load()
     {
         GD.Print("loading of things not implemented");
@@ -94,12 +94,12 @@ public partial class Structure : Thing
         if (statSheet.GetStat("health").CurrentValue <= 0)
         {
             Vector2 position = Position.GlobalToMap();
-            chunk.RemoveGridObject<Structure>(position,gridLayer);
+            chunk.RemoveGridObject<Structure>(position, gridLayer);
 
             foreach (var item in resources)
             {
                 //todo make have to find next valid space
-                Item droppedItem = new Item(position);
+                Item droppedItem = new Item(position * Map.CELL_SIZE);
                 droppedItem.Configure(item.Key);
                 droppedItem.CurrentStackSize = item.Value;
                 chunk.SetGridObject(position, droppedItem);
@@ -109,7 +109,7 @@ public partial class Structure : Thing
             return;
         }
     }
-    
+
     /// <summary>
     /// applies the specified damage to the structure.this damage is gotten from 
     /// the provide stat in the statSheet
@@ -131,7 +131,7 @@ public partial class Structure : Thing
         statSheet.GetStat("health").Damage -= amount;
     }
 
-   
+
 
 
 }

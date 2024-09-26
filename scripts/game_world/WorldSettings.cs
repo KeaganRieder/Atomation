@@ -123,4 +123,11 @@ public class WorldSettings
         TreeDensityMap.FractalGain = 0.4f;
         TreeDensityMap.Offset = new Vector3(50, 50, 0);
     }
+
+    public void Save(){
+
+    }
+    public void Load(){
+        
+    }
 }

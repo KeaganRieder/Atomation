@@ -21,6 +21,7 @@ public partial class PlayerController : Node2D
 
     public PlayerController(PlayerCharacter player)
     {
+        Name = "playerController";
         playerTarget = player;
         player.AddChild(this);
 

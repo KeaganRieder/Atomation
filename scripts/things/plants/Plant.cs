@@ -24,7 +24,6 @@ public partial class Plant : Thing
     private float moistureReq;
     private float fertilityEffect;
 
-    public Plant() { }
     public Plant(Vector2 position)
     {
         Name = position.ToString();
@@ -140,7 +139,7 @@ public partial class Plant : Thing
             foreach (var item in resources)
             {
                 //todo make have to find next valid space
-                Item droppedItem = new Item(position);
+                Item droppedItem = new Item(position * Map.CELL_SIZE);
                 droppedItem.Configure(item.Key);
                 droppedItem.CurrentStackSize = item.Value;
                 chunk.SetGridObject(position, droppedItem);

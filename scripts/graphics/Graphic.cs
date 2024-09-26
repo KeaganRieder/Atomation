@@ -34,7 +34,7 @@ public partial class Graphic : Sprite2D
         currentColor = defaultColor;
     }
 
-    public Vector2I GraphicSize { get => graphicSize; set => graphicSize = value; }
+    public Vector2I GraphicSize { get => graphicSize; set => graphicSize = value; } //figure out resize
     public string TexturePath { get => texturePath; set => texturePath = value; }
     public Color CurrentColor
     {

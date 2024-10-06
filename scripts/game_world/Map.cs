@@ -1,6 +1,7 @@
 namespace Atomation.GameMap;
 
 using Atomation.Player;
+using Atomation.Things;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -31,20 +32,18 @@ public partial class Map : Node2D
 
     private WorldSettings settings;
 
-    private MapGenerator mapGenerator;
+    private List<GenStep> genSteps;
+
     private ChunkHandler chunkHandler;
 
     private Map()
     {
         Name = "World Map";
         settings = new WorldSettings();
-        mapGenerator = new MapGenerator(settings);
 
-        mapGenerator.SetChunkMode(true);
         chunkHandler = new ChunkHandler(this);
     }
 
-    public MapGenerator MapGenerator { get => mapGenerator; }
     public ChunkHandler ChunkHandler { get => chunkHandler; }
 
     public WorldSettings Settings { get => settings; set => settings = value; }
@@ -55,29 +54,82 @@ public partial class Map : Node2D
         settings.TrueCenter = false;
     }
 
-    public override void _Process(double delta)
-    {
-        // chunkLoader.TryLoading();
-    }
-
     /// <summary> 
     /// clears the map 
     /// </summary>
     public void ClearMap()
     {
         //make delete kids  if in map preview
-        GD.PushError("clearing not implemented");
+        // GD.PushError("clearing not implemented");
         chunkHandler.Clear();
     }
 
     /// <summary>
-    /// finalizes the maps generation based on the specified settings.
-    /// this include actually generating the map, and spawning/placing the player
+    /// generates new chunks based on the current configs, 
+    /// assigning them to the maps chunk handler
     /// </summary>
-    public void GenerateMap()
+    public void GenerateChunk(Vector2I genOffset)
     {
-        Vector2I startCords = Vector2I.Zero;
-        int generationRadius = 1;
+        if (chunkHandler == null)
+        {
+            GD.PushError("can't generate sense chunk handler not provided");
+            return;
+        }
+        Vector2I genSize = new Vector2I(Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
+        GenStepData GenStepData = new GenStepData(genOffset, genSize,settings);
+        
+        genSteps = new List<GenStep>
+        {
+            new GenStepNoiseMaps(),
+            new GenStepLandScape(),
+            new GenStepPlants()
+        };
+
+        foreach (var genStep in genSteps)
+        {
+            genStep.RunStep(GenStepData);
+        }
+
+        //finalize generation of chunk
+        Chunk chunk = chunkHandler.GetChunk(genOffset);
+        if (chunk == null)
+        {
+            GD.PushError($"Chunk at {genOffset} is null, can't assigned generated values");
+            return;
+        }
+
+        for (int x = 0; x < genSize.X; x++)
+        {
+            for (int y = 0; y < genSize.Y; y++)
+            {
+                chunk.SetGridObject(new Vector2(x, y), GenStepData.GeneratedTerrain[x, y]);
+                Structure structure = GenStepData.GeneratedStructures[x, y];
+                Plant plant = GenStepData.GeneratedFoliage[x, y];
+
+                if (structure != null)
+                {
+                    chunk.SetGridObject(new Vector2(x, y), structure);
+                }
+                if (plant != null)
+                {
+                    chunk.SetGridObject(new Vector2(x, y), plant);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// generates the games map based on current settings
+    /// </summary>
+    public void GenerateMap(Vector2I startCords = default, int generationRadius = 1)
+    {
+        ClearMap();
+
+        if (startCords == default)
+        {
+            startCords = Vector2I.Zero;
+        }
+
 
         for (int x = -generationRadius; x < generationRadius + 1; x++)
         {
@@ -88,20 +140,18 @@ public partial class Map : Node2D
                 chunkHandler.GenerateChunk(cords);
             }
         }
-
     }
 
+    /// <summary>
+    /// finalizes the game's map by assigning the things generated during generateMap
+    /// to correct places
+    /// </summary>
     public void FinalizeGeneration()
     {
         PlayerCharacter player = PlayerCharacter.Instance;
         player.SpawnPlayer();
 
         player.ChunkLoader.TryLoading();
-    }
-
-    public void HandleInteraction()
-    {
-        // todo/maybe?
     }
 
 }

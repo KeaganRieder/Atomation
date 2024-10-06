@@ -9,69 +9,44 @@ using Godot;
 /// </summary>
 public class GenStepPlants : GenStep
 {
-    private float[,] elevationMap;
-    private float[,] treeDensityMap;
-    
-    private float waterLevel;
-    private float mountainSize;
-
-    private float treeDensity;
-
-
-    public GenStepPlants(GeneratedNoiseMaps noiseMaps, WorldSettings configs)
+    private WorldSettings configs;
+    public GenStepPlants()
     {
-        Step = 2;
-        
-        treeDensityMap = noiseMaps.TreeDensityMap;
-        elevationMap = noiseMaps.ElevationMap;
-        waterLevel = configs.WaterLevel;
-        mountainSize = configs.MountainSize;
-        treeDensity = configs.TreeDensity;
     }
 
-    public override bool Validate()
+    public override void RunStep(GenStepData genStepData)
     {
-        if (treeDensityMap == default)
-        {
-            GD.PushError("No tree density map given");
-            return false;
-        }
-
-        return true;
-    }
-
-    public override void RunStep(GeneratedMapData generatedMapData)
-    {
-        if (!Validate())
-        {
-            generatedMapData.GeneratedFoliage = default;
-            return;
-        }
+        configs = genStepData.GenStepConfigs;
 
 
-        SetSize(generatedMapData.GenSize);
+        SetSize(genStepData.GenSize);
 
         for (int x = 0; x < genSize.X; x++)
         {
             for (int y = 0; y < genSize.Y; y++)
             {
+                float elevation = genStepData.GeneratedNoiseMaps.ElevationMap[x, y];
+                float temperature = genStepData.GeneratedNoiseMaps.TemperatureMap[x, y];
+                float moisture = genStepData.GeneratedNoiseMaps.MoistureMap[x, y];
+
                 Plant plant = null;
-                if (elevationMap[x,y] > waterLevel && elevationMap[x,y] < mountainSize-.1)
+                if (elevation > configs.WaterLevel && elevation < configs.MountainSize - .1)
                 {
-                    if (treeDensityMap[x,y] > 1 - treeDensity)
+                    if (genStepData.GeneratedNoiseMaps.TreeDensityMap[x, y] > 1 - configs.TreeDensity)
                     {
-                        plant = new Plant(new Vector2(x,y));
+                        plant = new Plant(new Vector2(x, y));
                         plant.Configure("Pine");
                     }
-                } 
+                }
 
-                generatedMapData.GeneratedFoliage[x,y] = plant;
+                genStepData.GeneratedFoliage[x, y] = plant;
             }
         }
     }
 
-    private void TryToSpawnTree(){
-
+    private void TryToSpawnTree()
+    {
+        //todo
     }
 
 }

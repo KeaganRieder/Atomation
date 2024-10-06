@@ -23,26 +23,6 @@ public partial class Terrain : Thing
     private SupportType supportProvided;
     private SupportType supportReq;
 
-    [JsonConstructor]
-    public Terrain() { }
-
-    public Terrain(Vector2 position)
-    {
-        Name = position.ToString();
-        graphic = new Graphic();
-        Position = position * Map.CELL_SIZE;
-        AddChild(graphic);
-    }
-
-    public override void Configure(string defName)
-    {
-        if (ThingDefDatabase.Instance.GetTerrainDef(defName) == null)
-        {
-            GD.Print("terrain is null");
-        }
-        base.Configure(ThingDefDatabase.Instance.GetTerrainDef(defName),defName);
-    }
-
     public bool LayerAble { get => layerAble; set => layerAble = value; }
 
     public float Elevation { get => elevation; set => elevation = value; }
@@ -56,9 +36,32 @@ public partial class Terrain : Thing
     {
         Dictionary<string, object> thingDef = base.FormatThingDef();
         thingDef.Add("Supports", SupportProvided);
-        thingDef.Add("LayerAble",layerAble);
+        thingDef.Add("LayerAble", layerAble);
 
         return thingDef;
+    }
+
+    [JsonConstructor]
+    public Terrain() { }
+
+    public Terrain(Vector2 position)
+    {
+        graphic = new Graphic();
+        graphic.Position = position * Map.CELL_SIZE;
+    }
+
+    public override void DestroyNode()
+    {
+        base.DestroyNode();
+    }
+
+    public override void Configure(string defId)
+    {
+        if (ThingDefDatabase.Instance.GetTerrainDef(defId) == null)
+        {
+            GD.Print("terrain is null");
+        }
+        base.Configure(ThingDefDatabase.Instance.GetTerrainDef(defId), defId);
     }
 
     public override void ConfigureFromDef(Dictionary<string, object> def)
@@ -89,5 +92,4 @@ public partial class Terrain : Thing
         }
         return false;
     }
-
 }

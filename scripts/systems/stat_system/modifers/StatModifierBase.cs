@@ -19,7 +19,7 @@ public enum ModifierType
 /// </summary>
 public class StatModifierBase
 {
-    protected string name;
+    protected string id;
     protected string targetStat;
     protected object source;
 
@@ -33,10 +33,10 @@ public class StatModifierBase
     [JsonConstructor]
     public StatModifierBase() { }
 
-    public StatModifierBase(string name, string targetStat, float value, ModifierType type = ModifierType.Undefined, 
+    public StatModifierBase(string id, string targetStat, float value, ModifierType type = ModifierType.Undefined, 
     int order = 0, object source = null, bool negative = true)
     {
-        this.name = name;
+        this.id = id;
         this.targetStat = targetStat;
         this.negative = negative;
         this.type = type;
@@ -46,7 +46,7 @@ public class StatModifierBase
     }
     public StatModifierBase(StatModifierBase statModifierBase)
     {
-        name = statModifierBase.name;
+        id = statModifierBase.id;
         targetStat = statModifierBase.targetStat;
 
         type = statModifierBase.type;
@@ -56,7 +56,7 @@ public class StatModifierBase
     }
 
     [JsonProperty]
-    public string Name { get => name; set => name = value; }
+    public string ID { get => id; set => id = value; }
     [JsonProperty]
     public string TargetStat { get => targetStat; set => targetStat = value; }
 

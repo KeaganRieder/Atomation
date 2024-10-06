@@ -64,6 +64,7 @@ public partial class Chunk : Node2D
             obj.Chunk = this;
         }
     }
+    
     /// <summary>
     /// adds object of type  at cords on the grid
     /// </summary>
@@ -192,5 +193,4 @@ public partial class Chunk : Node2D
     {
         return loaded;
     }
-
 }

@@ -19,6 +19,11 @@ public partial class PlayerController : Node2D
 
     // private Inventory inventoryTarget; todo
 
+    //do events
+    //  [Signal]
+    public delegate void WorldInteractionEventHandler(); //https://learn.microsoft.com/en-us/dotnet/standard/events/
+    // public delegate
+
     public PlayerController(PlayerCharacter player)
     {
         Name = "playerController";
@@ -116,6 +121,10 @@ public partial class PlayerController : Node2D
     /// </summary>
     private void HandleInventoryInputs(InputEvent input)
     {
+        if (input.IsActionPressed("Inventory"))
+        {
+            playerTarget.Inventory.ToggleUI();
+        }
         //todo
     }
 
@@ -149,7 +158,7 @@ public partial class PlayerController : Node2D
                 }
                 else if (item != null)
                 {
-                    GD.Print($"{item.Name} has {item.CurrentStackSize} stack together");
+                    GD.Print($"{item.ID} has {item.CurrentStackSize} stack together");
                 }
 
             }

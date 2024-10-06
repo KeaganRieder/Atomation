@@ -2,15 +2,15 @@ namespace Atomation.StatSystem;
 
 public class FlatModifier : StatModifierBase
 {
-    public FlatModifier(string name, string targetStat, float value, int order = 0, bool negative = true)
-        : base(name, targetStat, value, ModifierType.Flat, order, negative)
+    public FlatModifier(string id, string targetStat, float value, int order = 0, bool negative = true)
+        : base(id, targetStat, value, ModifierType.Flat, order, negative)
     {
 
     }
     
     public FlatModifier(StatModifierBase statModifierBase)
     {
-        name = statModifierBase.Name;
+        id = statModifierBase.ID;
         targetStat = statModifierBase.TargetStat;
 
         type = statModifierBase.Type;

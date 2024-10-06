@@ -1,99 +1,59 @@
 namespace Atomation.GameMap;
 
-using Atomation.Resources;
 using Atomation.Things;
 using Godot;
 
 /// <summary>
-/// defines the step in generation which handles teh creation of the games
-/// terrain
+/// defines the step in the generation of the game map, which generates
+/// the games landscape
 /// </summary>
 public class GenStepLandScape : GenStep
 {
-    private float[,] elevation;
-    private float[,] temperature;
-    private float[,] moisture;
+    private WorldSettings configs;
+    public GenStepLandScape() { }
 
-    private float waterLevel;
-    private float mountainSize;
-
-    public GenStepLandScape(GeneratedNoiseMaps noiseMaps, WorldSettings configs)
-    {
-        Step = 1;
-        elevation = noiseMaps.ElevationMap;
-        temperature = noiseMaps.TemperatureMap;
-        moisture = noiseMaps.MoistureMap;
-
-        waterLevel = configs.WaterLevel;
-        mountainSize = configs.MountainSize;
-    }
-
-    public override bool Validate()
-    {
-        if (elevation == default)
-        {
-            GD.PushError("No elevation map given");
-            return false;
-        }
-        if (temperature == default)
-        {
-            GD.PushError("No temperature map given");
-
-            return false;
-        }
-        if (moisture == default)
-        {
-            GD.PushError("No moisture map given");
-
-            return false;
-        }
-        return true;
-    }
     /// <summary>
     /// runs the genStep and generates the landscape,
     /// consisting of mountains, lakes, rivers, other water bodies and landmass
     /// </summary>
-    public override void RunStep(GeneratedMapData generatedMapData)
+    public override void RunStep(GenStepData genStepData)
     {
-
-        if (!Validate())
-        {
-            generatedMapData.GeneratedStructures = default;
-            generatedMapData.GeneratedTerrain = default;
-        }
-
-        SetSize(generatedMapData.GenSize);
+        configs = genStepData.GenStepConfigs;
+        SetSize(genStepData.GenSize);
 
         for (int x = 0; x < genSize.X; x++)
         {
             for (int y = 0; y < genSize.Y; y++)
             {
+                float elevation = genStepData.GeneratedNoiseMaps.ElevationMap[x, y];
+                float temperature = genStepData.GeneratedNoiseMaps.TemperatureMap[x, y];
+                float moisture = genStepData.GeneratedNoiseMaps.MoistureMap[x, y];
                 Terrain generatedTile;
 
                 Structure generatedMountainWall = default;
 
-                if (elevation[x, y] > mountainSize - .08)
+                if (elevation > configs.MountainSize - .08)
                 {
-                    if (elevation[x, y] >= mountainSize)
+                    if (elevation >= configs.MountainSize)
                     {
                         generatedMountainWall = GetMountainWall(x, y);
                     }
                     generatedTile = GetMountainFloorTile(x, y);
                 }
-                else if (elevation[x, y] > waterLevel)
+                else if (elevation > configs.WaterLevel)
                 {
-                    generatedTile = GetTerrainTile(x, y);
+                    generatedTile = GetTerrainTile(x, y,temperature,moisture);
                 }
                 else
                 {
-                    generatedTile = GetWaterTile(x, y);
+                    generatedTile = GetWaterTile(x, y,elevation);
                 }
-                generatedTile.Elevation = elevation[x, y];
-                generatedTile.Temperature = temperature[x, y];
-                generatedTile.Moisture = moisture[x, y];
+                generatedTile.Elevation = elevation;
+                generatedTile.Temperature = temperature;
+                generatedTile.Moisture = moisture;
 
-                generatedMapData.GeneratedStructures[x, y] = generatedMountainWall;
-                generatedMapData.GeneratedTerrain[x, y] = generatedTile;
+                genStepData.GeneratedStructures[x, y] = generatedMountainWall;
+                genStepData.GeneratedTerrain[x, y] = generatedTile;
             }
         }
     }
@@ -129,11 +89,11 @@ public class GenStepLandScape : GenStep
     /// decides what terrain is at the given x, y cords based
     /// on moisture and temperature map 
     /// </summary>
-    private Terrain GetTerrainTile(int x, int y)
+    private Terrain GetTerrainTile(int x, int y, float temperature, float moisture)
     {
         Terrain terrainFloorTile = new Terrain(new Vector2(x, y));
 
-        terrainFloorTile.Configure(SelectBiome(x, y));
+        terrainFloorTile.Configure(SelectBiome(x, y, temperature, moisture));
 
         return terrainFloorTile;
     }
@@ -142,10 +102,10 @@ public class GenStepLandScape : GenStep
     /// decides what water is at the given x, y cords based
     /// on the elevation
     /// </summary>
-    private Terrain GetWaterTile(int x, int y)
+    private Terrain GetWaterTile(int x, int y, float elevation)
     {
         Terrain waterTile = new Terrain(new Vector2(x, y));
-        if (elevation[x, y] > waterLevel - .1)
+        if (elevation > configs.WaterLevel - .1)
         {
             waterTile.Configure("Shallow Ocean");
             return waterTile;
@@ -161,13 +121,13 @@ public class GenStepLandScape : GenStep
     /// selects the cells biome and terrain type based on
     /// the cells temperature and moisture
     /// </summary>
-    private string SelectBiome(int x, int y)
+    private string SelectBiome(int x, int y, float temperature, float moisture)
     {
         // temp:-.8 to .6 moisture:-.8 to .8
         // cold
-        if (temperature[x, y] < -.15f)
+        if (temperature < -.15f)
         {
-            if (moisture[x, y] > 0.0)
+            if (moisture > 0.0)
             {
                 // taiga
                 // return new Color(0.3f, 0.4f, 0.3f);
@@ -181,15 +141,15 @@ public class GenStepLandScape : GenStep
             }
         }
         //temperate
-        else if (temperature[x, y] < .25f)
+        else if (temperature < .25f)
         {
-            if (moisture[x, y] > .4)
+            if (moisture > .4)
             {
                 // Seasonal Forest
                 // return new Color(0.2f, 0.7f, 0.2f);
                 return "Forest Grass";
             }
-            else if (moisture[x, y] > 0)
+            else if (moisture > 0)
             {
                 // grass land
                 // return Colors.LightGreen;
@@ -206,25 +166,25 @@ public class GenStepLandScape : GenStep
         // warmest
         else
         {
-            if (moisture[x, y] > .6)
+            if (moisture > .6)
             {
                 //rain forest
                 return "Rich Soil";
                 // return Colors.DarkGreen;
             }
-            else if (moisture[x, y] > .3)
+            else if (moisture > .3)
             {
                 // temperate forest
                 // return new Color(0.5f, 1.0f, 0.5f);
                 return "Rich Soil";
             }
-            else if (moisture[x, y] > 0.1)
+            else if (moisture > 0.1)
             {
                 // grass land
                 // return Colors.LightGreen;
                 return "Grass";
             }
-            else if (moisture[x, y] > -.20)
+            else if (moisture > -.20)
             {
                 // savanna
                 // return new Color(0.9f, 0.9f, 0.2f);

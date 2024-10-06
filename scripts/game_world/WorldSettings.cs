@@ -79,7 +79,7 @@ public class WorldSettings
 
         WorldSize = new Vector2I(1000, 1000);
 
-        MapSeed = rng.RandiRange(0, 1000);
+        MapSeed =  rng.RandiRange(0, 1000);
         MapZoom = .5f;
 
         WaterLevel = -0.1f;
@@ -92,12 +92,14 @@ public class WorldSettings
 
         TreeDensity = .8f; // between 0 and 1 (0% and 100%)
 
+        //todo make offset for seeds
         ElevationMap.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
         ElevationMap.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
         ElevationMap.FractalOctaves = 5;
         ElevationMap.Frequency = 0.01f;
         ElevationMap.FractalLacunarity = 2.0f;
         ElevationMap.FractalGain = 0.4f;
+        ElevationMap.Seed = MapSeed;
 
         MoistureMap.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
         MoistureMap.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
@@ -106,6 +108,7 @@ public class WorldSettings
         MoistureMap.FractalLacunarity = 2;
         MoistureMap.FractalGain = 0.4f;
         MoistureMap.Offset = new Vector3(100, 100, 0);
+        ElevationMap.Seed = MapSeed;
 
         TemperatureMap.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
         TemperatureMap.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
@@ -114,6 +117,7 @@ public class WorldSettings
         TemperatureMap.FractalLacunarity = 2;
         TemperatureMap.FractalGain = 0.4f;
         TemperatureMap.Offset = new Vector3(200, 200, 0);
+        ElevationMap.Seed = MapSeed;
 
         TreeDensityMap.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
         TreeDensityMap.FractalType = FastNoiseLite.FractalTypeEnum.Fbm;
@@ -122,6 +126,7 @@ public class WorldSettings
         TreeDensityMap.FractalLacunarity = 2f;
         TreeDensityMap.FractalGain = 0.4f;
         TreeDensityMap.Offset = new Vector3(50, 50, 0);
+        ElevationMap.Seed = MapSeed;
     }
 
     public void Save(){

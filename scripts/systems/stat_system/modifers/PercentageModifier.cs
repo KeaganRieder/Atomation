@@ -2,14 +2,14 @@ namespace Atomation.StatSystem;
 
 public class PercentageModifier : StatModifierBase
 {
-    public PercentageModifier(string name, string targetStat, float value, int order = 0, bool negative = true)
-        : base(name, targetStat, value, ModifierType.Percentage, order, negative)
+    public PercentageModifier(string id, string targetStat, float value, int order = 0, bool negative = true)
+        : base(id, targetStat, value, ModifierType.Percentage, order, negative)
     {
     }
 
     public PercentageModifier(StatModifierBase statModifierBase)
     {
-        name = statModifierBase.Name;
+        id = statModifierBase.ID;
         targetStat = statModifierBase.TargetStat;
 
         type = statModifierBase.Type;

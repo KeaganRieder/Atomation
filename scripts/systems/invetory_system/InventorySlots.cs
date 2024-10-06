@@ -41,11 +41,6 @@ public partial class InventorySlot : Panel
         AddChild(itemCount);
     }
 
-    private void SetUpGUiInput()
-    {
-        //todo
-    }
-
     public bool CanAdd(Item item)
     {
         if (item == null)
@@ -53,14 +48,14 @@ public partial class InventorySlot : Panel
             return true;
         }
 
-        return item.Stackable() && item.Name == item.Name;
+        return item.Stackable() && item.ID == item.ID;
     }
 
     /// <summary>
     /// adds item to slot, either adding to existing stack or
     /// starting a new one
     /// </summary>
-    public void AddItem(Item toAdd)
+    public void SetItem(Item toAdd)
     {
         if (item == null)
         {
@@ -86,7 +81,7 @@ public partial class InventorySlot : Panel
         item.Position = size; // center it onto the inventory
 
         item.AddToStack(toAdd.CurrentStackSize);
-        AddChild(item);
+        AddChild(item.Node);
 
         toAdd.CurrentStackSize = 0;
         toAdd.DestroyNode();

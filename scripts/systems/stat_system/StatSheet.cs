@@ -51,7 +51,7 @@ public class StatSheet
 
             if (modifier.Value.Type == ModifierType.Undefined)
             {
-                GD.PushError($"{modifier.Value.Name} attempted to use undefined modifier for configs");
+                GD.PushError($"{modifier.Value.ID} attempted to use undefined modifier for configs");
                 return;
             }
             else if (modifier.Value.Type == ModifierType.Flat)

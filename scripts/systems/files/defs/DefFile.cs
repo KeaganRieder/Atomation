@@ -41,7 +41,7 @@ public class DefFile
 
         foreach (var def in ThingDefs)
         {
-            defs.Add(def.Name, def.FormatThingDef());
+            defs.Add(def.ID, def.FormatThingDef());
         }
         this.WriteJsonFile(filePath, fileName);
     }

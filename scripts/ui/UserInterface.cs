@@ -9,6 +9,7 @@ public partial class UserInterface : Control
     protected bool isOpen;
 
     protected int uiPadding = 5;
+    protected LayoutPreset layoutPreset;
 
     protected UserInterface(Node parent = null, int gameLayer = GameLayers.Ui)
     {
@@ -21,6 +22,7 @@ public partial class UserInterface : Control
 
         isOpen = false;
         Visible = isOpen;
+        
     }
 
     public bool IsOpen { get => isOpen; set => isOpen = value; }
@@ -41,5 +43,4 @@ public partial class UserInterface : Control
         isOpen = !isOpen;
         Visible = isOpen;
     }
-
 }

@@ -12,7 +12,7 @@ using Atomation.StatSystem;
 /// plants are things which can be grown over time, hand harvested for resource or
 /// just for looks. they serve a variety of purposes
 /// </summary>
-public partial class Plant : Thing
+public partial class Plant : Thing 
 {
     private int growthTime;
     private float growth;
@@ -26,14 +26,12 @@ public partial class Plant : Thing
 
     public Plant(Vector2 position)
     {
-        Name = position.ToString();
         graphic = new Graphic();
-        AddChild(graphic);
-        Position = position * Map.CELL_SIZE;
+        graphic.Position = position * Map.CELL_SIZE;
 
         // growth = 1;
         // harvestable = false;
-        // GameClock.Instance.NewHour += AttemptToGrow;
+        // GameClock.Instance.NewHour += AttemptToGrow; make c# event
     }
 
     public float Growth { get => growth; }
@@ -42,9 +40,9 @@ public partial class Plant : Thing
     public float MoistureReq { get => moistureReq; }
     public float FertilityEffect { get => fertilityEffect; }
 
-    public override void Configure(string defName)
+    public override void Configure(string defId)
     {
-        base.Configure(ThingDefDatabase.Instance.GetPlantDef(defName), defName);
+        base.Configure(ThingDefDatabase.Instance.GetPlantDef(defId), defId);
         graphic.CurrentColor = graphic.CurrentColor;
     }
 
@@ -128,12 +126,13 @@ public partial class Plant : Thing
     /// </summary>
     public void Damage(float amount)
     {
+        //clean up
         statSheet.GetStat("health").Damage = statSheet.GetStat("health").Damage + amount;
         GD.Print($"Health remaining: {statSheet.GetStat("health").CurrentValue}");
 
         if (statSheet.GetStat("health").CurrentValue <= 0)
         {
-            Vector2 position = Position.GlobalToMap();
+            Vector2 position = Node.Position.GlobalToMap();
             chunk.RemoveGridObject<Plant>(position, gridLayer);
 
             foreach (var item in resources)
@@ -149,6 +148,7 @@ public partial class Plant : Thing
             return;
         }
     }
+    
     /// <summary>
     /// applies the specified damage to the structure.this damage is gotten from 
     /// the provide stat in the statSheet

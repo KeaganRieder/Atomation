@@ -40,7 +40,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
     private PlayerCharacter()
     {
-        Name = "player";
+        Name = "player"; 
         camera = new CustomCamera(this);
         controller = new PlayerController(this);
         inventory = new Inventory(Name);

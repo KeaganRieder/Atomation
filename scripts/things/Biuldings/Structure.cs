@@ -24,14 +24,11 @@ public partial class Structure : Thing
 
     public Structure(Vector2 position)
     {
-        Name = position.ToString();
-
         graphic = new Graphic();
         collisionBox = new CollisionShape2D();
-        AddChild(graphic);
-        AddChild(collisionBox);
+        graphic.AddChild(collisionBox);
 
-        Position = position * Map.CELL_SIZE;
+        graphic.Position = position * Map.CELL_SIZE;
     }
 
     public override void Configure(string defName)
@@ -67,15 +64,12 @@ public partial class Structure : Thing
         GD.Print("loading of things not implemented");
 
     }
+    
     /// <summary>
     /// destroys node
     /// </summary>
     public override void DestroyNode()
     {
-        if (IsInstanceValid(graphic))
-        {
-            graphic.QueueFree();
-        }
         collisionBox.QueueFree();
         base.DestroyNode();
     }
@@ -93,7 +87,7 @@ public partial class Structure : Thing
 
         if (statSheet.GetStat("health").CurrentValue <= 0)
         {
-            Vector2 position = Position.GlobalToMap();
+            Vector2 position = Node.Position.GlobalToMap();
             chunk.RemoveGridObject<Structure>(position, gridLayer);
 
             foreach (var item in resources)

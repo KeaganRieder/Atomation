@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 /// </summary>
 public class StatBase
 {
-    protected string name;
+    protected string id;
     protected string description;
 
     /// <summary>
@@ -64,9 +64,9 @@ public class StatBase
 
     }
 
-    public StatBase(string name, string description, float value, float minValue, float maxValue, bool modifiable = true)
+    public StatBase(string id, string description, float value, float minValue, float maxValue, bool modifiable = true)
     {
-        this.name = name;
+        this.id = id;
         this.description = description;
         flatModifiers = new List<StatModifierBase>();
         percentageModifiers = new List<StatModifierBase>();
@@ -80,7 +80,7 @@ public class StatBase
 
     public StatBase(StatBase stat)
     {
-        name = stat.name;
+        id = stat.id;
         description = stat.description;
         modifiable = stat.modifiable;
 
@@ -145,7 +145,7 @@ public class StatBase
         }
         else if (statModifier.Type == ModifierType.Undefined)
         {
-            GD.PushError($"{statModifier.Name} is of undefined type");
+            GD.PushError($"{statModifier.ID} is of undefined type");
             return;
         }
         else if (statModifier.Type == ModifierType.Flat)
@@ -177,7 +177,7 @@ public class StatBase
         }
         else if (statModifier.Type == ModifierType.Undefined)
         {
-            GD.PushError($"{statModifier.Name} is of undefined type");
+            GD.PushError($"{statModifier.ID} is of undefined type");
             return false;
         }
         else if (statModifier.Type == ModifierType.Flat)

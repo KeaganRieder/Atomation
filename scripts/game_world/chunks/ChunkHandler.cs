@@ -118,7 +118,7 @@ public class ChunkHandler
     {
         Chunk generatedChunk = new Chunk(cord);
         AddChunk(cord, generatedChunk);
-        Map.Instance.MapGenerator.GenerateChunk(new Vector2I(Mathf.RoundToInt(cord.X),Mathf.RoundToInt(cord.Y)), this);
+        Map.Instance.GenerateChunk(new Vector2I(Mathf.RoundToInt(cord.X),Mathf.RoundToInt(cord.Y)));
     }
 
     /// <summary> loads chunk at given position </summary>

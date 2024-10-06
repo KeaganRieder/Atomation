@@ -23,30 +23,25 @@ public partial class Item : Thing
 
     public Item(Vector2 position)
     {
-        Name = position.ToString();
-
         graphic = new Graphic();
-        AddChild(graphic);
 
-        Position = position; //move
+        graphic.Position = position;
         currentStackSize = 1;
     }
 
     public Item(Item item)
     {
         graphic = new Graphic();
-        AddChild(graphic);
 
-        Configure(item.thingName);
-        //todo carrying over stats and such
+        Configure(item.id);
     }
 
     public int StackLimit { get => stackLimit; set => stackLimit = value; }
     public int CurrentStackSize { get => currentStackSize; set => currentStackSize = value; }
 
-    public override void Configure(string defName)
+    public override void Configure(string defId)
     {
-        base.Configure(ThingDefDatabase.Instance.GetItemDef(defName), defName);
+        base.Configure(ThingDefDatabase.Instance.GetItemDef(defId), defId);
     }
 
     /// <summary>
@@ -128,8 +123,8 @@ public partial class Item : Thing
 
         if (currentStackSize == 0)
         {
-            chunk.RemoveGridObject<Item>(Position.GlobalToMap(), gridLayer);
-            // DestroyNode();
+            chunk.RemoveGridObject<Item>(Node.Position.GlobalToMap(), gridLayer);
+            DestroyNode();
         }
     }
 

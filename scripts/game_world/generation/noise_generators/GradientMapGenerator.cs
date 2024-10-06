@@ -6,8 +6,16 @@ public class GradientMapGenerator : NoiseGenerators
 {
     private float center;
 
+    private bool configured;
+
     public GradientMapGenerator()
     {
+        configured = false;
+    }
+
+    public GradientMapGenerator(Vector2 offset = default, Vector2I size = default, Vector2I totalSize = default, bool trueCenter = false)
+    {
+        Configure(offset, size, totalSize, trueCenter);
     }
 
     public override void SetSize(Vector2I size = default)
@@ -16,18 +24,30 @@ public class GradientMapGenerator : NoiseGenerators
         noiseMap = new float[size.X, size.Y];
     }
 
-    public float[,] Generate(Vector2 offset = default, Vector2I size = default, Vector2I totalSize = default, bool trueCenter = false)
+    public void Configure(Vector2 offset = default, Vector2I size = default, Vector2I totalSize = default, bool trueCenter = false)
     {
         SetSize(size);
         SetTotalSize(totalSize);
         SetOffset(offset);
-        float[,] noiseMap = new float[size.X, size.Y];
-
         center = trueCenter ? this.totalSize.Y / 2 : 1;
 
-        for (int x = 0; x < size.X; x++)
+        configured = true;
+
+    }
+
+    public float[,] Generate()
+    {
+        if (!configured)
         {
-            for (int y = 0; y < size.Y; y++)
+            GD.PushError("Can't generate gradient noise sense it's not configured");
+            return default;
+        }
+
+        float[,] noiseMap = new float[genSize.X, genSize.Y];
+
+        for (int x = 0; x < genSize.X; x++)
+        {
+            for (int y = 0; y < genSize.Y; y++)
             {
                 float val = DistanceFromCenter(y) / totalSize.Y;
                 noiseMap[x, y] = val;
@@ -35,6 +55,15 @@ public class GradientMapGenerator : NoiseGenerators
         }
 
         return noiseMap;
+    }
+
+    /// <summary>
+    /// gets equator heat at given y position
+    /// </summary>
+    public float GetGradientNoiseValue(int y)
+    {
+        float temperature = DistanceFromCenter(y) / totalSize.Y;
+        return temperature;
     }
 
     /// <summary>

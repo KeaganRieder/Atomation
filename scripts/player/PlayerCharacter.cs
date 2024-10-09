@@ -44,7 +44,15 @@ public partial class PlayerCharacter : CharacterBody2D
         camera = new CustomCamera(this);
         controller = new PlayerController(this);
         inventory = new Inventory(Name);
+
         camera.AddChild(inventory);
+    }
+
+    public override void _Ready()
+    {
+        camera.MakeCurrent();
+
+        base._Ready();
     }
 
     public CustomCamera Camera { get => camera; set => camera = value; }

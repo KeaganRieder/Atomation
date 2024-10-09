@@ -19,20 +19,18 @@ public partial class Inventory : UserInterface
     private GridContainer slotContainer;
 
     public Inventory(string parentName, int columns = 10, int rows = 10, int padding = 10)
-    : base()
+    : base(null, GameLayers.Ui, padding)
     {
         Name = parentName + "_" + "Inventory";
-        uiPadding = padding;
 
         this.rows = rows;
         this.columns = columns;
 
-        FormatUserInterface();
+        CreateUIElements();      
     }
 
-    protected override void FormatUserInterface()
+    protected override void CreateUIElements()
     {
-
         background = new PanelContainer();
         background.CustomMinimumSize = new Vector2(300, 300);
 
@@ -57,39 +55,23 @@ public partial class Inventory : UserInterface
 
         AddChild(background);
         SetAnchor(LayoutPreset.Center);
+
+        base.CreateUIElements();
     }
 
     public override void ToggleUI()
     {
-        GD.Print(background.Size);
-        background.SetAnchorsAndOffsetsPreset(layoutPreset);
+        SetToCurrentAnchor();
 
         base.ToggleUI();
     }
 
-    public void SetAnchor(LayoutPreset preset)
+    public override void SetAnchor(LayoutPreset preset)
     {
-        background.LayoutMode = 1;
-        layoutPreset = preset;
-
-        background.SetAnchorsAndOffsetsPreset(layoutPreset);
+        base.SetAnchor(preset);
 
         slotContainer.SetAnchorsAndOffsetsPreset(layoutPreset);
     }
 
-//  /// <summary>
-//     /// sets item at slot if it works
-//     /// </summary>
-//     public void SetItem(int x, int y, Item item)
-//     {
-//         //work on
-//         if (x >= 0 && y >= 0 && x < rows && y < columns)
-//         {
-//             slots[x, y].AddItem(item);
-//         }
-//         else
-//         {
-//             GD.PushError($"{x},{y} are out of bounds for current inventory");
-//         }
-//     }
+
 }

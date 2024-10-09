@@ -134,6 +134,7 @@ public partial class PlayerController : Node2D
     /// </summary>
     private void HandleInteractionInput(InputEvent input)
     {
+        //need to track states
         //todo make hovering interaction, to get some information form tiles
 
         if (input is InputEventMouseButton)

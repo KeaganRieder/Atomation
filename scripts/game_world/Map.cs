@@ -30,7 +30,9 @@ public partial class Map : Node2D
         }
     }
 
+    private bool mapGenerated;
     private WorldSettings settings;
+    WorldConfigs configs;
 
     private List<GenStep> genSteps;
 
@@ -39,6 +41,7 @@ public partial class Map : Node2D
     private Map()
     {
         Name = "World Map";
+        mapGenerated = false;
         settings = new WorldSettings();
 
         chunkHandler = new ChunkHandler(this);
@@ -76,8 +79,8 @@ public partial class Map : Node2D
             return;
         }
         Vector2I genSize = new Vector2I(Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
-        GenStepData GenStepData = new GenStepData(genOffset, genSize,settings);
-        
+        GenStepData GenStepData = new GenStepData(genOffset, genSize, settings);
+
         genSteps = new List<GenStep>
         {
             new GenStepNoiseMaps(),
@@ -140,6 +143,27 @@ public partial class Map : Node2D
                 chunkHandler.GenerateChunk(cords);
             }
         }
+        mapGenerated = true;
+    }
+
+    public void GenerateMap(WorldConfigs settings)
+    {
+        ClearMap();
+
+        configs = settings;
+        int generationRadius = 1;
+        Vector2I startCords = Vector2I.Zero;
+
+        for (int x = -generationRadius; x < generationRadius + 1; x++)
+        {
+            for (int y = -generationRadius; y < generationRadius + 1; y++)
+            {
+                Vector2 cords = new Vector2(startCords.X + x, startCords.Y + y);
+
+                chunkHandler.GenerateChunk(cords);
+            }
+        }
+        mapGenerated = true;
     }
 
     /// <summary>
@@ -148,9 +172,28 @@ public partial class Map : Node2D
     /// </summary>
     public void FinalizeGeneration()
     {
+        if (mapGenerated == false)
+        {
+            GenerateMap();
+        }
+
         PlayerCharacter player = PlayerCharacter.Instance;
         player.SpawnPlayer();
 
+        player.ChunkLoader.TryLoading();
+    }
+    public void FinalizeGeneration(WorldConfigs settings)
+    {
+        GD.Print("setWorld");
+        if (mapGenerated == false)
+        {
+            GenerateMap(settings);
+        }
+        GD.Print("FinalizeWorld");
+
+        PlayerCharacter player = PlayerCharacter.Instance;
+        player.SpawnPlayer();
+        GetParent().AddChild(player);
         player.ChunkLoader.TryLoading();
     }
 

@@ -33,7 +33,7 @@ public class ThingDefDatabase
         loaded = false;
     }
 
-    public void LoadDefs()
+    public void ReadFiles()
     {
         if (!loaded)
         {

@@ -6,11 +6,10 @@ using Atomation.GameMap;
 using Atomation.Resources;
 using Atomation.Player;
 using Atomation.Systems;
-using Atomation.Settings;
+using Atomation.GameSettings;
 using Atomation.Things;
 using System.Collections.Generic;
-
-
+using Atomation.Ui;
 
 /// <summary>
 /// game manger is the main class used to run Atomation. It handles creating the scene tree, and manges 
@@ -31,73 +30,56 @@ public partial class GameManger : Node2D
       }
    }
 
+   private CustomCamera mainMenuCam;
+   private MainMenu mainMenu;
+
    private Map gameMap;
-   private PlayerCharacter player;
+   // private PlayerCharacter player;
 
    private GameManger() { }
 
    public override void _Ready()
    {
-      // FormatFiles();
-
       base._Ready();
-
-      InitializeGame();
-
-      LoadResources();
-
-      StartGame();
+      SetupGame();
    }
 
    /// <summary>
-   /// initializes the game by creating the required nodes/objects and beings file loading process
+   /// initializes the game, this is performed during start up
    /// </summary>
-   private void InitializeGame()
+   private void SetupGame()
    {
-      player = PlayerCharacter.Instance;
-      AddChild(player);
+      mainMenuCam = new CustomCamera(this);
+
+      ThingDefDatabase.Instance.ReadFiles();
+
+      new PlayerKeybindSettings();//read in keybindings
+
+      FinalizeGameSetup();
+   }
+
+   /// <summary>
+   /// finalizes the games setup, but finishing tasks and creating creating
+   /// objects like the main menu
+   /// </summary>
+   private void FinalizeGameSetup()
+   {
+      // GetViewport().get
+      // mainMenuCam.MakeCurrent();
+      mainMenu = new MainMenu();
+      mainMenuCam.AddChild(mainMenu);
 
       gameMap = Map.Instance;
       AddChild(gameMap);
 
-      new PlayerKeybindSettings(); //do more work on this
+      //figure out where to put maybe spawn in when game worlds created
+      // GameClock clock = GameClock.Instance;
+      // AddChild(clock);
    }
 
-   /// <summary>
-   /// loads all resources required by the game
-   /// </summary>
-   private void LoadResources()
-   {
-      // GD.Print("Loading Resources");
-      ThingDefDatabase.Instance.LoadDefs();
-      // GD.Print("Loading Complete\n");
-   }
-
-   /// <summary>
-   /// formats def files if needed
-   /// </summary>
-   // private void FormatFiles()
-   // {
-   //    List<Thing> temp = new List<Thing>(){
-   //       new Plant(){
-   //          Name = "structure",
-   //          StatSheet = new StatSystem.StatSheet(),
-   //          Graphic = new Graphic(),
-   //       },
-   //    };
-   //    // new DefFile(temp, FilePaths.DEFINITION_FOLDER, "thingFormatted");    
-
-   // }
-
-   /// <summary>
-   /// starts the game this is a temporary function tell the main menu is created
-   /// </summary>
-   public void StartGame()
-   {
-      gameMap.GenerateMap();
-      gameMap.FinalizeGeneration();
-      GameClock clock = GameClock.Instance;
-      AddChild(clock);
+   public void addPlayer(PlayerCharacter playerCharacter){
+      GD.Print("adding child");
+      AddChild(playerCharacter);
    }
 
 }

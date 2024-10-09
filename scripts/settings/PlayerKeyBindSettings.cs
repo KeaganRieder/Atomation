@@ -1,4 +1,4 @@
-namespace Atomation.Settings;
+namespace Atomation.GameSettings;
 
 using System.Collections.Generic;
 using Godot;

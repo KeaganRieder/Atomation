@@ -14,14 +14,11 @@ public partial class SettingsMenu : UserInterface
         Name = "SettingsMenu";
         ProcessMode = ProcessModeEnum.Always;
         this.pauseMenu = menu;
+
+        CreateUIElements();      
     }
 
-    public override void ToggleUI()
-    {
-        base.ToggleUI();
-    }
-
-    protected override void FormatUserInterface()
+    protected override void CreateUIElements()
     {
         background = new PanelContainer()
         {
@@ -38,11 +35,11 @@ public partial class SettingsMenu : UserInterface
         AddChild(background);
 
         Button generalButton = new Button { Text = "General" };
-        generalButton.Pressed += OnGeneralPressed;
+        generalButton.Pressed += () => GD.Print("general settings button not implemented");;
         container.AddChild(generalButton);
 
         Button controlsButton = new Button { Text = "Controls" };
-        controlsButton.Pressed += OnControlsPressed;
+        controlsButton.Pressed += () =>  GD.Print("control settings button not implemented");;
         container.AddChild(controlsButton);
 
         Button backButton = new Button { Text = "Back" };
@@ -51,22 +48,7 @@ public partial class SettingsMenu : UserInterface
 
         background.SetAnchorsAndOffsetsPreset(LayoutPreset.Center);
 
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void OnGeneralPressed()
-    {
-        GD.Print("general settings button not implemented");
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void OnControlsPressed()
-    {
-        GD.Print("control settings button not implemented");
+        base.CreateUIElements();
     }
 
     /// <summary>

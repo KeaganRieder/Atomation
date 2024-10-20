@@ -142,14 +142,20 @@ public abstract partial class Thing : IThing
     {
         if (def == null)
         {
-            GD.Print("it's null");
+            description = "default description";
+            gridLayer = -1;
+            graphic.Configure(null);
+
         }
-        description = def.ContainsKey("Description") ? def["Description"].ToString() : "default description";
-        gridLayer = def.ContainsKey("GridLayer") ? Convert.ToInt32(def["GridLayer"]) : -1;
 
-        statSheet = def.ContainsKey("StatSheet") ? def["StatSheet"].ConvertJsonObject<StatSheet>() : default;
+        else
+        {
+            description = def.ContainsKey("Description") ? def["Description"].ToString() : "default description";
+            gridLayer = def.ContainsKey("GridLayer") ? Convert.ToInt32(def["GridLayer"]) : -1;
+            statSheet = def.ContainsKey("StatSheet") ? def["StatSheet"].ConvertJsonObject<StatSheet>() : default;
+            graphic.Configure(def.ContainsKey("Graphic") ? def["Graphic"].ConvertJsonObject<Dictionary<string, object>>() : null);
+        }
 
-        graphic.Configure(def.ContainsKey("Graphic") ? def["Graphic"].ConvertJsonObject<Dictionary<string, object>>() : null);
     }
 
     /// <summary>

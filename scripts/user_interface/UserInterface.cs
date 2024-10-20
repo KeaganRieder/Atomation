@@ -7,6 +7,11 @@ public partial class UserInterface : Control
 {
     protected PanelContainer background;
 
+    /// <summary>
+    /// used to determine if the ui element is visible or not
+    /// when initially made. by default it's hidden
+    /// </summary>
+    protected bool OffWhenCreated;
     protected bool isOpen;
 
     protected int uiPadding = 5;
@@ -21,9 +26,28 @@ public partial class UserInterface : Control
         {
             parent.AddChild(this);
         }
+
+        OffWhenCreated = true;
     }
 
     public bool IsOpen { get => isOpen; set => isOpen = value; }
+
+    public override void _Ready()
+    {
+        CreateUIElements();
+
+        if (OffWhenCreated)
+        {
+            isOpen = false;
+            Visible = isOpen;
+        }
+        else
+        {
+            isOpen = true;
+        }
+
+        base._Ready();
+    }
 
     /// <summary>
     /// used to either hide or show the user interface
@@ -56,9 +80,11 @@ public partial class UserInterface : Control
     /// </summary>
     protected virtual void CreateUIElements()
     {
-        background.LayoutMode = 1;
-        isOpen = false;
-        Visible = isOpen;
+        if (background != null)
+        {
+            background.LayoutMode = 1;
+
+        }
     }
 
     /// <summary>
@@ -90,5 +116,5 @@ public partial class UserInterface : Control
         return hBox;
     }
 
-    
+
 }

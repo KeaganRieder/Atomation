@@ -31,10 +31,9 @@ public partial class Map : Node2D
     }
 
     private bool mapGenerated;
-    private WorldSettings settings;
+    // private WorldSettings settings;
     WorldConfigs configs;
-
-    private List<GenStep> genSteps;
+    private List<GenStepNew> genSteps;
 
     private ChunkHandler chunkHandler;
 
@@ -42,20 +41,18 @@ public partial class Map : Node2D
     {
         Name = "World Map";
         mapGenerated = false;
-        settings = new WorldSettings();
+        // settings = new WorldSettings();
 
         chunkHandler = new ChunkHandler(this);
     }
 
     public ChunkHandler ChunkHandler { get => chunkHandler; }
 
-    public WorldSettings Settings { get => settings; set => settings = value; }
-
     public override void _Ready()
     {
         base._Ready();
-        settings.TrueCenter = false;
     }
+
 
     /// <summary> 
     /// clears the map 
@@ -66,6 +63,60 @@ public partial class Map : Node2D
         // GD.PushError("clearing not implemented");
         chunkHandler.Clear();
     }
+
+    // /// <summary>
+    // /// generates new chunks based on the current configs, 
+    // /// assigning them to the maps chunk handler
+    // /// </summary>
+    // public void GenerateChunk(Vector2I genOffset)
+    // {
+    //     if (chunkHandler == null)
+    //     {
+    //         GD.PushError("can't generate sense chunk handler not provided");
+    //         return;
+    //     }
+    //     Vector2I genSize = new Vector2I(Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
+    //     GenStepData GenStepData = new GenStepData(genOffset, genSize, settings);
+
+    //     genSteps = new List<GenStep>
+    //     {
+    //         new GenStepNoiseMaps(),
+    //         new GenStepLandScape(),
+    //         new GenStepPlants()
+    //     };
+
+    //     foreach (var genStep in genSteps)
+    //     {
+    //         genStep.RunStep(GenStepData);
+    //     }
+
+    //     //finalize generation of chunk
+    //     Chunk chunk = chunkHandler.GetChunk(genOffset);
+    //     if (chunk == null)
+    //     {
+    //         GD.PushError($"Chunk at {genOffset} is null, can't assigned generated values");
+    //         return;
+    //     }
+
+    //     for (int x = 0; x < genSize.X; x++)
+    //     {
+    //         for (int y = 0; y < genSize.Y; y++)
+    //         {
+    //             chunk.SetGridObject(new Vector2(x, y), GenStepData.GeneratedTerrain[x, y]);
+    //             Structure structure = GenStepData.GeneratedStructures[x, y];
+    //             Plant plant = GenStepData.GeneratedFoliage[x, y];
+
+    //             if (structure != null)
+    //             {
+    //                 chunk.SetGridObject(new Vector2(x, y), structure);
+    //             }
+    //             if (plant != null)
+    //             {
+    //                 chunk.SetGridObject(new Vector2(x, y), plant);
+    //             }
+    //         }
+    //     }
+    // }
 
     /// <summary>
     /// generates new chunks based on the current configs, 
@@ -79,18 +130,18 @@ public partial class Map : Node2D
             return;
         }
         Vector2I genSize = new Vector2I(Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE);
-        GenStepData GenStepData = new GenStepData(genOffset, genSize, settings);
 
-        genSteps = new List<GenStep>
+        GenStepDataNew GenStepData = new GenStepDataNew(genOffset * Chunk.CHUNK_SIZE, genSize);
+
+        genSteps = new List<GenStepNew>
         {
-            new GenStepNoiseMaps(),
-            new GenStepLandScape(),
-            new GenStepPlants()
+            new GenStepNoiseMapsNew(),
+            new GenStepTerrainNew(),
         };
 
         foreach (var genStep in genSteps)
         {
-            genStep.RunStep(GenStepData);
+            genStep.RunStep(configs, GenStepData);
         }
 
         //finalize generation of chunk
@@ -105,18 +156,18 @@ public partial class Map : Node2D
         {
             for (int y = 0; y < genSize.Y; y++)
             {
-                chunk.SetGridObject(new Vector2(x, y), GenStepData.GeneratedTerrain[x, y]);
-                Structure structure = GenStepData.GeneratedStructures[x, y];
-                Plant plant = GenStepData.GeneratedFoliage[x, y];
+                chunk.SetGridObject(new Vector2(x, y), GenStepData.MapLayers["terrain"][x, y]);
+                Structure structure = (Structure)GenStepData.MapLayers["mountains"][x, y];
+                // Plant plant = GenStepData.GeneratedFoliage[x, y];
 
                 if (structure != null)
                 {
                     chunk.SetGridObject(new Vector2(x, y), structure);
                 }
-                if (plant != null)
-                {
-                    chunk.SetGridObject(new Vector2(x, y), plant);
-                }
+                // if (plant != null)
+                // {
+                //     chunk.SetGridObject(new Vector2(x, y), plant);
+                // }
             }
         }
     }
@@ -124,28 +175,6 @@ public partial class Map : Node2D
     /// <summary>
     /// generates the games map based on current settings
     /// </summary>
-    public void GenerateMap(Vector2I startCords = default, int generationRadius = 1)
-    {
-        ClearMap();
-
-        if (startCords == default)
-        {
-            startCords = Vector2I.Zero;
-        }
-
-
-        for (int x = -generationRadius; x < generationRadius + 1; x++)
-        {
-            for (int y = -generationRadius; y < generationRadius + 1; y++)
-            {
-                Vector2 cords = new Vector2(startCords.X + x, startCords.Y + y);
-
-                chunkHandler.GenerateChunk(cords);
-            }
-        }
-        mapGenerated = true;
-    }
-
     public void GenerateMap(WorldConfigs settings)
     {
         ClearMap();
@@ -154,15 +183,15 @@ public partial class Map : Node2D
         int generationRadius = 1;
         Vector2I startCords = Vector2I.Zero;
 
-        for (int x = -generationRadius; x < generationRadius + 1; x++)
-        {
-            for (int y = -generationRadius; y < generationRadius + 1; y++)
-            {
-                Vector2 cords = new Vector2(startCords.X + x, startCords.Y + y);
+        // for (int x = -generationRadius; x < generationRadius + 1; x++)
+        // {
+        //     for (int y = -generationRadius; y < generationRadius + 1; y++)
+        //     {
+                Vector2 cords = new Vector2(startCords.X , startCords.Y);
 
                 chunkHandler.GenerateChunk(cords);
-            }
-        }
+        //     }
+        // }
         mapGenerated = true;
     }
 
@@ -170,31 +199,16 @@ public partial class Map : Node2D
     /// finalizes the game's map by assigning the things generated during generateMap
     /// to correct places
     /// </summary>
-    public void FinalizeGeneration()
-    {
-        if (mapGenerated == false)
-        {
-            GenerateMap();
-        }
-
-        PlayerCharacter player = PlayerCharacter.Instance;
-        player.SpawnPlayer();
-
-        player.ChunkLoader.TryLoading();
-    }
     public void FinalizeGeneration(WorldConfigs settings)
     {
-        GD.Print("setWorld");
         if (mapGenerated == false)
         {
             GenerateMap(settings);
         }
-        GD.Print("FinalizeWorld");
-
-        PlayerCharacter player = PlayerCharacter.Instance;
-        player.SpawnPlayer();
-        GetParent().AddChild(player);
-        player.ChunkLoader.TryLoading();
+        // PlayerCharacter player = PlayerCharacter.Instance;
+        // player.SpawnPlayer();
+        // GetParent().AddChild(player);
+        // player.ChunkLoader.TryLoading();
     }
 
 }

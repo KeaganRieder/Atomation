@@ -7,6 +7,7 @@ public partial class SettingsMenu : UserInterface
     private VBoxContainer container;
 
     private PauseMenu pauseMenu;
+    private bool fromMainMenu;//maybe
 
     public SettingsMenu(PauseMenu menu, Node parent = null, int gameLayer = GameLayers.Ui) :
     base(parent, gameLayer)
@@ -14,8 +15,6 @@ public partial class SettingsMenu : UserInterface
         Name = "SettingsMenu";
         ProcessMode = ProcessModeEnum.Always;
         this.pauseMenu = menu;
-
-        CreateUIElements();      
     }
 
     protected override void CreateUIElements()
@@ -34,30 +33,19 @@ public partial class SettingsMenu : UserInterface
         background.AddChild(marginContainer);
         AddChild(background);
 
-        Button generalButton = new Button { Text = "General" };
-        generalButton.Pressed += () => GD.Print("general settings button not implemented");;
-        container.AddChild(generalButton);
+        container.AddChild(CreateButton("General",() => GD.Print("general settings button not implemented")));
 
-        Button controlsButton = new Button { Text = "Controls" };
-        controlsButton.Pressed += () =>  GD.Print("control settings button not implemented");;
-        container.AddChild(controlsButton);
+        container.AddChild(CreateButton("Controls",() => GD.Print("control settings button not implemented")));
 
-        Button backButton = new Button { Text = "Back" };
-        backButton.Pressed += OnBackPressed;
-        container.AddChild(backButton);
+        container.AddChild(CreateButton("Back", () =>
+        {
+            ToggleUI();
+            pauseMenu.ToggleUI();
+        }));
 
         background.SetAnchorsAndOffsetsPreset(LayoutPreset.Center);
-
         base.CreateUIElements();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void OnBackPressed()
-    {
-        ToggleUI();
-        pauseMenu.ToggleUI();
 
-    }
 }

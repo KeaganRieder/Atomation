@@ -32,6 +32,7 @@ public partial class Terrain : Thing
     public SupportType SupportProvided { get => supportProvided; set => supportProvided = value; }
     public SupportType SupportReq { get => supportReq; set => supportReq = value; }
 
+
     public override Dictionary<string, object> FormatThingDef()
     {
         Dictionary<string, object> thingDef = base.FormatThingDef();
@@ -47,7 +48,7 @@ public partial class Terrain : Thing
     public Terrain(Vector2 position)
     {
         graphic = new Graphic();
-        graphic.Position = position * Map.CELL_SIZE;
+        graphic.Position = position ;//* Map.CELL_SIZE;
     }
 
     public override void DestroyNode()
@@ -57,10 +58,6 @@ public partial class Terrain : Thing
 
     public override void Configure(string defId)
     {
-        if (ThingDefDatabase.Instance.GetTerrainDef(defId) == null)
-        {
-            GD.Print("terrain is null");
-        }
         base.Configure(ThingDefDatabase.Instance.GetTerrainDef(defId), defId);
     }
 

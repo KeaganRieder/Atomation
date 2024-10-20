@@ -56,7 +56,8 @@ public partial class Graphic : Sprite2D
         }
     }
 
-    public void SetToDefaultColor(){
+    public void SetToDefaultColor()
+    {
         currentColor = defaultColor;
         Modulate = currentColor;
     }
@@ -131,10 +132,21 @@ public partial class Graphic : Sprite2D
     /// </summary>
     public void ConfigureFromConfigs(Dictionary<string, object> configs)
     {
-        texturePath = configs.ContainsKey("TexturePath") ? configs["TexturePath"].ToString() : "defaultTexture";
-        graphicSize = configs.ContainsKey("GraphicSize") ? configs["GraphicSize"].ConvertJsonObject<Vector2I>() : new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
-        variants = configs.ContainsKey("Variants") ? Convert.ToInt32(configs["Variants"]) : 0;
-        defaultColor = configs.ContainsKey("DefaultColor") ? configs["DefaultColor"].ConvertJsonObject<Color>() : Colors.Purple;
+        if (configs == null)
+        {
+            texturePath = "defaultTexture";
+            graphicSize = new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
+            variants = 0;
+            defaultColor = Colors.Purple;
+        }
+        else
+        {
+            texturePath = configs.ContainsKey("TexturePath") ? configs["TexturePath"].ToString() : "defaultTexture";
+            graphicSize = configs.ContainsKey("GraphicSize") ? configs["GraphicSize"].ConvertJsonObject<Vector2I>() : new Vector2I(Map.CELL_SIZE, Map.CELL_SIZE);
+            variants = configs.ContainsKey("Variants") ? Convert.ToInt32(configs["Variants"]) : 0;
+            defaultColor = configs.ContainsKey("DefaultColor") ? configs["DefaultColor"].ConvertJsonObject<Color>() : Colors.Purple;
+        }
+
 
         CurrentColor = defaultColor;
     }

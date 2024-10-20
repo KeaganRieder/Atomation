@@ -26,7 +26,7 @@ public partial class Inventory : UserInterface
         this.rows = rows;
         this.columns = columns;
 
-        CreateUIElements();      
+        // CreateUIElements();      
     }
 
     protected override void CreateUIElements()

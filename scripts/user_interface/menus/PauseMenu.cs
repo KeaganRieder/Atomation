@@ -15,12 +15,11 @@ public partial class PauseMenu : UserInterface
     {
         Name = "pause Menu";
         ProcessMode = ProcessModeEnum.Always;
-
         settingsMenu = new SettingsMenu(this, parent);
 
         paused = false;
 
-        CreateUIElements();
+        // CreateUIElements();
     }
 
     public override void _Input(InputEvent @event)
@@ -58,6 +57,8 @@ public partial class PauseMenu : UserInterface
         
         container.AddChild(CreateButton("Save Game",()=>  GD.Print("saving ui Not implemented")));
         container.AddChild(CreateButton("Load Game", () =>  GD.Print("Loading ui Not implemented")));
+        container.AddChild(CreateButton("Main Menu",() =>  GD.Print("Main Menu Fall back not implemented")));
+
         container.AddChild(CreateButton("Quit",() =>  GetTree().Quit()));
 
         background.SetAnchorsAndOffsetsPreset(LayoutPreset.Center);

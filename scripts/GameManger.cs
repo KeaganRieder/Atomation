@@ -36,12 +36,19 @@ public partial class GameManger : Node2D
    private Map gameMap;
    // private PlayerCharacter player;
 
-   private GameManger() { }
+   private GameManger()
+   {
+      mainMenuCam = new CustomCamera(this);
+
+      ThingDefDatabase.Instance.ReadFiles();
+      new PlayerKeybindSettings();//read in keybindings
+
+   }
 
    public override void _Ready()
    {
-      base._Ready();
       SetupGame();
+      base._Ready();
    }
 
    /// <summary>
@@ -49,11 +56,11 @@ public partial class GameManger : Node2D
    /// </summary>
    private void SetupGame()
    {
-      mainMenuCam = new CustomCamera(this);
+      mainMenu = new MainMenu();
+      mainMenuCam.AddChild(mainMenu);
 
-      ThingDefDatabase.Instance.ReadFiles();
-
-      new PlayerKeybindSettings();//read in keybindings
+      gameMap = Map.Instance;
+      AddChild(gameMap);
 
       FinalizeGameSetup();
    }
@@ -66,18 +73,15 @@ public partial class GameManger : Node2D
    {
       // GetViewport().get
       // mainMenuCam.MakeCurrent();
-      mainMenu = new MainMenu();
-      mainMenuCam.AddChild(mainMenu);
 
-      gameMap = Map.Instance;
-      AddChild(gameMap);
 
       //figure out where to put maybe spawn in when game worlds created
       // GameClock clock = GameClock.Instance;
       // AddChild(clock);
    }
 
-   public void addPlayer(PlayerCharacter playerCharacter){
+   public void addPlayer(PlayerCharacter playerCharacter)
+   {
       GD.Print("adding child");
       AddChild(playerCharacter);
    }

@@ -25,9 +25,16 @@ public partial class WorldSettingsUi : UserInterface
         settings = new();
         Name = "World Settings Ui";
 
-        isOpen = true;
+        OffWhenCreated = true;
+    }
 
-        CreateUIElements();
+    public override void ToggleUI()
+    {
+        if (!isOpen)
+        {
+            Map.Instance.FinalizeGeneration(settings);
+        }
+        base.ToggleUI();
     }
 
     /// <summary>
@@ -74,12 +81,14 @@ public partial class WorldSettingsUi : UserInterface
             CreateSection("Elevation", new SettingsElement[]{
                 new SettingsSlider{
                     Name = "WaterLevel",
+                    Value = 0.3f,
                     MinValue = 0,
                     MaxValue = 1,
                     Step = 0.1f,
                 },
                 new SettingsSlider{
                     Name = "MountainSize",
+                    Value = 0.0f,
                     MinValue = 0,
                     MaxValue = 1,
                     Step = 0.1f,
@@ -89,8 +98,9 @@ public partial class WorldSettingsUi : UserInterface
 
             CreateSection("Temperature", new SettingsElement[]{
                 new SettingsSlider{
-                    Name = "Average",
-                    MinValue = 0, //maybe make negative?
+                    Name = "Base",
+                    Value = 0f,
+                    MinValue = -1,
                     MaxValue = 1,
                     Step = 0.1f,
                 },
@@ -103,19 +113,21 @@ public partial class WorldSettingsUi : UserInterface
 
             CreateSection("Moisture", new SettingsElement[]{
                 new SettingsSlider{
-                    Name = "Average",
-                    MinValue = 0, //maybe make negative?
+                    Name = "Base",
+                    Value = 0,
+                    MinValue = -1, 
                     MaxValue = 1,
-                    Step = 0.1f,
+                    Step = 0.5f,
                 },
             }),
 
             CreateSection("Vegetation", new SettingsElement[]{
                 new SettingsSlider{
                     Name = "Density",
-                    MinValue = 0, //maybe make negative?
+                    Value = 0,
+                    MinValue = -1, 
                     MaxValue = 1,
-                    Step = 0.1f,
+                    Step = 0.5f,
                 },
             })
         };
@@ -127,7 +139,7 @@ public partial class WorldSettingsUi : UserInterface
             configsContainer.AddChild(section);
         }
 
-        configsContainer.AddChild(CreateButton("Generate", () => {Map.Instance.FinalizeGeneration(settings); ToggleUI();}));
+        configsContainer.AddChild(CreateButton("Generate", () => { Map.Instance.FinalizeGeneration(settings); ToggleUI(); }));
 
         marginContainer.AddChild(configsContainer);
 
@@ -143,20 +155,22 @@ public partial class WorldSettingsUi : UserInterface
     {
         string sectionName = "General";
         PanelContainer panelContainer = new PanelContainer();
-        VBoxContainer vbox = new VBoxContainer();
+        VBoxContainer vBox = new VBoxContainer();
 
         var marginContainer = new MarginContainer();
         marginContainer.AddMargin(uiPadding);
         panelContainer.AddChild(marginContainer);
 
-        vbox.AddChild(new Label
+        vBox.AddChild(new Label
         {
             Text = sectionName,
             HorizontalAlignment = HorizontalAlignment.Center
         });
 
-        CreateSeedRandomizer(vbox);
-        vbox.AddChild(CreateToggle(sectionName, new SettingsToggle
+        CreateWorldSizeInput(vBox);
+        CreateSeedRandomizer(vBox);
+        
+        vBox.AddChild(CreateToggle(sectionName, new SettingsToggle
         {
             Name = "UpdateOnEdit",
             Toggled = false
@@ -169,9 +183,9 @@ public partial class WorldSettingsUi : UserInterface
             Value = "1"
         }));
 
-        vbox.AddChild(hBox);
+        vBox.AddChild(hBox);
 
-        marginContainer.AddChild(vbox);
+        marginContainer.AddChild(vBox);
 
         return panelContainer;
     }
@@ -308,13 +322,34 @@ public partial class WorldSettingsUi : UserInterface
 
         var RandomizeSeed = CreateButton("Randomize Seed", () =>
         {
-            string temp = GenerateRandomText(10);
-            seedEdit.Text = temp;
+            string seed = GenerateRandomText(10);
+            seedEdit.Text = seed;
+            settings.Values[FormatSettingKey("General", "Seed")] = seed;
         });
 
         var hBox = CreateHBox("Seed", new Vector2(90, 0));
         hBox.AddChild(seedEdit);
         vBox.AddChild(hBox);
         vBox.AddChild(RandomizeSeed);
+    }
+
+    private void CreateWorldSizeInput(VBoxContainer vBox)
+    {
+        LineEdit WidthEdit = CreateLineEdit("General", new SettingsLineEdit
+        {
+            Name = "Width",
+            Value = "1000",
+        });
+
+        LineEdit HeightEdit = CreateLineEdit("General", new SettingsLineEdit
+        {
+            Name = "Height",
+            Value = "1000",
+        });
+
+        var hBox = CreateHBox("WorldSize", new Vector2(90, 0));
+        hBox.AddChild(WidthEdit);
+        hBox.AddChild(HeightEdit);
+        vBox.AddChild(hBox);
     }
 }

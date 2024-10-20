@@ -28,7 +28,7 @@ public partial class Structure : Thing
         collisionBox = new CollisionShape2D();
         graphic.AddChild(collisionBox);
 
-        graphic.Position = position * Map.CELL_SIZE;
+        graphic.Position = position;
     }
 
     public override void Configure(string defName)
